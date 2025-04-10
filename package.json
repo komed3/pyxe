@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "Universal color model and transformation framework",
   "author": {
-    "name" : "komed3 (Paul Köhler)",
-    "email" : "webmaster@komed3.de",
-    "url" : "https://komed3.de"
+    "name": "komed3 (Paul Köhler)",
+    "email": "webmaster@komed3.de",
+    "url": "https://komed3.de"
   },
   "license": "MIT",
   "homepage": "https://pyxe.de",
