@@ -8,7 +8,13 @@
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@pyxe/core": [ "packages/core" ],
+      "@pyxe/library-ral": [ "packages/library-ral" ],
+      "@pyxe/types": [ "packages/types" ]
+    }
   },
   "include": [ "packages" ]
 }
