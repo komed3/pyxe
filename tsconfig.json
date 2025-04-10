@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@pyxe/*": [ "packages/*/src" ]
+    },
     "target": "ES2022",
     "module": "ES2022",
     "moduleResolution": "Node",
@@ -9,12 +13,6 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@pyxe/core": [ "packages/core" ],
-      "@pyxe/library-ral": [ "packages/library-ral" ],
-      "@pyxe/types": [ "packages/types" ]
-    }
-  },
-  "include": [ "packages" ]
+    "composite": true
+  }
 }
