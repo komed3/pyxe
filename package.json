@@ -25,6 +25,7 @@
   "type": "module",
   "workspaces": [ "packages/*" ],
   "scripts": {
-    "build": "npx tsc -b tsconfig.build.json"
+    "build": "npx tsc -b tsconfig.build.json",
+    "test": "cd ./test && npm install"
   }
 }
