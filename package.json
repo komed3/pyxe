@@ -23,5 +23,8 @@
     "url": "https://github.com/komed3/pyxe/issues"
   },
   "type": "module",
-  "workspaces": [ "packages/*" ]
+  "workspaces": [ "packages/*" ],
+  "scripts": {
+    "build": "npx tsc -b tsconfig.build.json"
+  }
 }
