@@ -19,13 +19,13 @@
  * @license MIT
  */
 
-import type { ColorInput, ParsedColor, ColorSpaceId } from '@pyxe/types';
+import type { ColorInput, ColorObject, ColorSpaceId } from '@pyxe/types';
 
 /**
  * Type definition for a parser callback.
  * Each parser attempts to match and convert the input to a specific color model.
  */
-export type ParserCallback = ( input: ColorInput ) => ParsedColor | undefined;
+export type ParserCallback = ( input: ColorInput ) => ColorObject | undefined;
 
 /**
  * Type definition for the parser map.
@@ -92,7 +92,7 @@ export class Parser {
   
     /**
      * Attempts to parse the input using registered color parsers.
-     * Returns a fully parsed and validated ParsedColor object or throws an error.
+     * Returns a fully parsed and validated ColorObject object or throws an error.
      * 
      * @param input - Color input
      * @returns Parsed color object
@@ -100,7 +100,7 @@ export class Parser {
      */
     parse (
         input: ColorInput
-    ) : ParsedColor {
+    ) : ColorObject {
 
         for ( const [ , callback ] of this.registry.getAll() ) {
 
@@ -110,7 +110,7 @@ export class Parser {
 
                 if ( result ) {
 
-                    return result as ParsedColor;
+                    return result as ColorObject;
 
                 }
 

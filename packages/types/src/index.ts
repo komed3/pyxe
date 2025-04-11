@@ -1,10 +1,10 @@
 /**
- * HEX Color Type
+ * HEX Color Type.
  */
 export type HexColor = `#${string}`;
 
 /**
- * RGB Color Type with optional Alpha channel
+ * RGB Color Type with optional Alpha channel.
  */
 export interface RGB {
   r: number; // 0 - 255
@@ -14,7 +14,7 @@ export interface RGB {
 }
 
 /**
- * CIELAB Color Type
+ * CIELAB Color Type.
  */
 export interface Lab {
   L: number; // 0 - 100
@@ -44,31 +44,32 @@ export interface NamedColor {
 }
 
 /**
- * A full set of named colors, mapped by their key (e.g. "RAL 1000")
+ * A full set of named colors, mapped by their key (e.g. "RAL 1000").
  */
 export type NamedColorList = Record<string, NamedColor>;
 
 /**
- * Optional identifier for supported color spaces
- * Used for parser registry and conversion graph
+ * Optional identifier for supported color spaces.
+ * Used for parser registry and conversion graph.
  */
 export type ColorSpaceId =
   | 'RGB' | 'HEX' | 'XYZ' | 'Lab';
 
 /**
- * Generic representation of a color space conversion
+ * Generic representation of a color space conversion.
  */
 export type ColorInstance = RGB | Lab;
 
 /**
- * Standard input variants accepted by parser modules
+ * Standard input variants accepted by parser modules.
  */
 export type ColorInput = string | RGB | HexColor;
 
 /**
- * Resulting object after parsing or conversion
+ * Generic representation of a color.
+ * Containing color space, value and other data.
  */
-export interface ParsedColor {
+export interface ColorObject {
   space: ColorSpaceId;
   value: ColorInstance;
 }
