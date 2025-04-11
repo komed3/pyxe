@@ -28,16 +28,11 @@ import type { ColorInput, ColorObject, ColorSpaceId } from '@pyxe/types';
 export type ParserCallback = ( input: ColorInput ) => ColorObject | undefined;
 
 /**
- * Type definition for the parser map.
- */
-export type ParserMap = Map<ColorSpaceId, ParserCallback>;
-
-/**
  * Registry managing all available parser functions for known color spaces.
  */
 export class ParserRegistry {
 
-    private registry: ParserMap = new Map ();
+    private registry: Map<ColorSpaceId, ParserCallback> = new Map ();
 
     /**
      * Registers a parser for a specific color space ID.
@@ -59,7 +54,7 @@ export class ParserRegistry {
      * 
      * @returns Map of registered parsers
      */
-    getAll () : ParserMap {
+    getAll () : Map<ColorSpaceId, ParserCallback> {
 
         return this.registry;
 
@@ -160,7 +155,7 @@ export class Parser {
 }
 
 /**
- * Singleton instances of the global parser and parser registry
+ * Singleton instances of the global parser and its registry
  */
 export const parserRegistry = new ParserRegistry ();
-export const colorParser = new Parser ( parserRegistry );
+export const parser = new Parser ( parserRegistry );

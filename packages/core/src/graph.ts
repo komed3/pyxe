@@ -31,10 +31,9 @@ interface ConversionPath {
 }
 
 /**
- * A directed graph that stores color space conversions.
- * It allows finding the shortest conversion path and composing transformations.
+ * Registry managing all available color space conversions.
  */
-export class ConversionGraph {
+export class ConversionGraphRegistry {
 
     private graph: Map<ColorSpaceId, ConversionPath[]> = new Map ();
 
@@ -64,6 +63,32 @@ export class ConversionGraph {
     }
 
     /**
+     * Get all registered edges for a given color space.
+     *
+     * @param from - Source color space ID
+     * @returns Array of conversion paths
+     */
+    getConversions (
+        from: ColorSpaceId
+    ) : ConversionPath[] {
+
+        return this.graph.get( from ) || [];
+
+    }
+
+}
+
+/**
+ * A directed graph that stores color space conversions.
+ * It allows finding the shortest conversion path and composing transformations.
+ */
+export class ConversionGraph {
+
+    constructor (
+        private registry: ConversionGraphRegistry
+    ) {}
+
+    /**
      * Find the shortest path from one color space to another.
      *
      * @param from - Source color space ID
@@ -88,7 +113,7 @@ export class ConversionGraph {
 
             visited.add( current );
 
-            const edges = this.graph.get( current ) || [];
+            const edges = this.registry.getConversions( current );
 
             for ( const edge of edges ) {
 
@@ -140,7 +165,7 @@ export class ConversionGraph {
             const current = path[ i ];
             const next = path[ i + 1 ];
 
-            const edge = ( this.graph.get( current ) || [] ).find(
+            const edge = ( this.registry.getConversions( current ) ).find(
                 ( e ) => e.to === next
             );
 
@@ -181,25 +206,10 @@ export class ConversionGraph {
 
     }
 
-    /**
-     * List all directly reachable color spaces from a given source.
-     *
-     * @param from - Source color space ID
-     * @returns Array of target color space IDs
-     */
-    getTargets (
-        from: ColorSpaceId
-    ) : ColorSpaceId[] {
-
-        return ( this.graph.get( from ) || [] ).map(
-            ( edge ) => edge.to
-        );
-
-    }
-
 }
 
 /**
- * Singleton instance of the global conversion graph
+ * Singleton instances of the global conversion graph and its registy
  */
-export const conversionGraph = new ConversionGraph ();
+export const conversionGraphRegistry = new ConversionGraphRegistry ();
+export const conversionGraph = new ConversionGraph ( conversionGraphRegistry );
