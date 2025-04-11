@@ -4,5 +4,11 @@
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": [ "dist" ]
+  "files": [ "dist" ],
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "dependencies": {
+    "@pyxe/types": "^0.1.0"
+  }
 }

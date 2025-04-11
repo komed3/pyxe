@@ -1,5 +1,8 @@
 {
   "extends": "../../tsconfig",
+  "references": [
+    { "path": "../types" }
+  ],
   "compilerOptions": {
     "outDir": "./dist"
   }
