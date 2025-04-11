@@ -4,12 +4,12 @@
  * 
  * The ConversionGraph class allows registering and resolving paths to transform a source
  * color space into a target color space. As not every color space is transformed directly
- * into another, the conversion takes place in stages, e.g. "rgb → xyz → lab".
+ * into another, the conversion takes place stepwise, e.g. "rgb → xyz → lab".
  * 
- * Each color space dynamically registers existing transformation functions. As soon as
+ * Each color space dynamically registers existing transformation callbacks. As soon as
  * this has been done, the graph can be accessed via pyxe's central API and one color
- * space can be converted into another. If there is no path between two color spaces, the
- * method throws an error.
+ * space can be converted into another. If there is no path between two color spaces,
+ * the method throws an error.
  * 
  * @package @pyxe/core
  * @author Paul Köhler (komed3)
@@ -19,13 +19,13 @@
 import type { ColorSpaceId } from '@pyxe/types';
 
 /**
- * Function type to transform one color space into another.
+ * Type of a callable function to transform one color space into another.
  */
-export type ConversionFn = ( input: any ) => any;
+export type ConversionCallback = ( input: any ) => any;
 
 interface ConversionPath {
     to: ColorSpaceId;
-    fn: ConversionFn;
+    cb: ConversionCallback;
 }
 
 /**
@@ -41,12 +41,12 @@ export class ConversionGraph {
      *
      * @param from - Source color space ID
      * @param to - Target color space ID
-     * @param fn - Conversion function from source to target
+     * @param cb - Conversion callback from source to target
      */
     register (
         from: ColorSpaceId,
         to: ColorSpaceId,
-        fn: ConversionFn
+        cb: ConversionCallback
     ) : void {
 
         if ( !this.graph.has( from ) ) {
@@ -55,7 +55,7 @@ export class ConversionGraph {
 
         }
 
-        this.graph.get( from )!.push( { to, fn } );
+        this.graph.get( from )!.push( { to, cb } );
 
     }
 
@@ -66,7 +66,7 @@ export class ConversionGraph {
      * @param to - Target color space ID
      * @returns Array of color space IDs representing the path, or null if no path exists
      */
-    findPath(
+    findPath (
         from: ColorSpaceId,
         to: ColorSpaceId
     ) : ColorSpaceId[] | null {
@@ -107,17 +107,17 @@ export class ConversionGraph {
     }
 
     /**
-     * Get a composed conversion function from one color space to another.
+     * Get a composed conversion callback from one color space to another.
      *
      * @param from - Source color space ID
      * @param to - Target color space ID
-     * @returns Conversion function composed from registered edges
+     * @returns Conversion callback composed from registered edges
      * @throws Throws an error if no path exists
      */
     resolve (
         from: ColorSpaceId,
         to: ColorSpaceId
-    ) : ConversionFn {
+    ) : ConversionCallback {
 
         const path = this.findPath( from, to );
 
@@ -129,7 +129,7 @@ export class ConversionGraph {
 
         }
 
-        const fns: ConversionFn[] = [];
+        const fns: ConversionCallback[] = [];
 
         for ( let i = 0; i < path.length - 1; i++ ) {
 
@@ -148,12 +148,12 @@ export class ConversionGraph {
 
             }
 
-            fns.push( edge.fn );
+            fns.push( edge.cb );
 
         }
 
         return ( input: any ) => fns.reduce(
-            ( acc, fn ) => fn( acc ),
+            ( acc, cb ) => cb( acc ),
             input
         );
 
@@ -166,7 +166,7 @@ export class ConversionGraph {
      * @param to - Target color space ID
      * @returns A string like "rgb → xyz → lab", or "n/a" if no path exists
      */
-    describePath(
+    describePath (
         from: ColorSpaceId,
         to: ColorSpaceId
     ) : string {
@@ -183,7 +183,7 @@ export class ConversionGraph {
      * @param from - Source color space ID
      * @returns Array of target color space IDs
      */
-    getAvailableTargets(
+    getTargets (
         from: ColorSpaceId
     ) : ColorSpaceId[] {
 

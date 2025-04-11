@@ -55,7 +55,7 @@ export type NamedColorList = Record<string, NamedColor>;
 export type ColorSpaceId =
   | 'rgb'
   | 'lab'
-  | 'hex'; // Not a true color space, but supported for parsing
+  | 'hex';
 
 /**
  * Generic representation of a color space conversion
