@@ -25,17 +25,35 @@ import type {
 } from '@pyxe/types';
 
 import {
+    validatorRegistry,
+    validator,
+    type Validator
+} from './validator.js';
+
+import {
     parserRegistry,
+    parser,
+    type Parser
+} from './parser.js';
+
+import {
     conversionGraphRegistry,
-    outputRegistry
-} from './index.js';
+    conversionGraph,
+    type ConversionGraph
+} from './graph.js';
+
+import {
+    outputRegistry,
+    output,
+    type Output
+} from './output.js';
 
 /**
- * Central registry class for managing color space modules and extensions.
+ * Central registry class for managing color space modules.
  */
-export class Registry {
+export class ColorSpaceRegistry {
 
-    private spaces: Set<ColorSpaceId> = new Set ();
+    private registry: Set<ColorSpaceId> = new Set ();
 
     /**
      * Register a new color space module with all its features.
@@ -49,7 +67,14 @@ export class Registry {
         const { id, validator, parser, conversions, outputs } = options;
 
         /** Register color space */
-        this.spaces.add( id );
+        this.registry.add( id );
+
+        /** Register validator */
+        if ( validator ) {
+
+            validatorRegistry.add( id, validator );
+
+        }
 
         /** Register parser module */
         if ( parser ) {
@@ -74,9 +99,64 @@ export class Registry {
 
     }
 
+    /**
+     * Returns all registered color spaces.
+     * 
+     * @returns Set of registered color spaces
+     */
+    getSpaces () : Set<ColorSpaceId> {
+
+        return this.registry;
+    
+    }
+
+    /**
+     * Returns the validator class.
+     * 
+     * @returns Validator class
+     */
+    getValidator () : Validator {
+
+        return validator;
+
+    }
+
+    /**
+     * Returns the parser class.
+     * 
+     * @returns Parser class
+     */
+    getParser () : Parser {
+
+        return parser;
+
+    }
+
+    /**
+     * Returns the conversion graph class.
+     * 
+     * @returns ConversionGraph class
+     */
+    getConversionGraph () : ConversionGraph {
+
+        return conversionGraph;
+
+    }
+
+    /**
+     * Returns the output class.
+     * 
+     * @returns Output class
+     */
+    getOutput () : Output {
+
+        return output;
+
+    }
+
 }
 
 /**
- * Singleton instance of the pyxe Registry
+ * Singleton instance of the pyxe registries
  */
-export const registry = new Registry ();
+export const colorSpaceRegistry = new ColorSpaceRegistry ();

@@ -32,7 +32,7 @@ export class ConversionGraphRegistry {
     private graph: Map<ColorSpaceId, ConversionPath[]> = new Map ();
 
     /**
-     * Register a new color space conversion.
+     * Adds a new color space conversion.
      *
      * @param from - Source color space ID
      * @param to - Target color space ID

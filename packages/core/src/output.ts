@@ -27,7 +27,7 @@ export class OutputRegistry {
     private registry: Map<ColorSpaceId, OutputMethods> = new Map ();
 
     /**
-     * Register output methods for a specific color space.
+     * Adds output methods for a specific color space.
      * 
      * @param id - Color space ID
      * @param methods - Output methods to register
