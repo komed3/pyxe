@@ -19,7 +19,12 @@
  * @license MIT
  */
 
-import type { ColorInput, ColorObject, ColorSpaceId, ParserCallback } from '@pyxe/types';
+import type {
+    ColorSpaceId,
+    ColorInput,
+    ColorObject,
+    ParserCallback
+} from '@pyxe/types';
 
 /**
  * Registry managing all available parser functions for known color spaces.

@@ -13,7 +13,11 @@
  * @license MIT
  */
 
-import type { ColorSpaceId, ColorObject, OutputMethods } from '@pyxe/types';
+import type {
+    ColorSpaceId,
+    ColorObject,
+    OutputMethods
+} from '@pyxe/types';
 
 /**
  * Internal registry for output methods.

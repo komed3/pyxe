@@ -23,7 +23,7 @@ import type {
     ColorSpaceId,
     ColorSpaceRegistrationOptions
 } from '@pyxe/types';
-  
+
 import {
     parserRegistry,
     conversionGraphRegistry,

@@ -18,7 +18,11 @@
  * @license MIT
  */
 
-import type { ColorSpaceId, ConversionCallback, ConversionPath } from '@pyxe/types';
+import type {
+    ColorSpaceId,
+    ConversionCallback,
+    ConversionPath
+} from '@pyxe/types';
 
 /**
  * Registry managing all available color space conversions.
