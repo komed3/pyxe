@@ -13,20 +13,7 @@
  * @license MIT
  */
 
-import type { ColorObject, ColorSpaceId } from '@pyxe/types';
-
-/**
- * Available output formats supported by the framework.
- */
-export type OutputFormat = 'string' | 'json';
-
-/**
- * Interface for a set of output callbacks.
- */
-export interface OutputMethods {
-    toString?: ( color: ColorObject ) => string;
-    toJSON?: ( color: ColorObject ) => unknown;
-}
+import type { ColorSpaceId, ColorObject, OutputMethods } from '@pyxe/types';
 
 /**
  * Internal registry for output methods.
@@ -41,7 +28,7 @@ export class OutputRegistry {
      * @param id - Color space ID
      * @param methods - Output methods to register
      */
-    register (
+    add (
         id: ColorSpaceId,
         methods: OutputMethods
     ) : void {
@@ -104,7 +91,7 @@ export class Output {
      * @param color - Color representation
      * @returns -serializable structure
      */
-    toJSON(
+    toJSON (
         color: ColorObject
     ) : unknown {
 

@@ -19,13 +19,7 @@
  * @license MIT
  */
 
-import type { ColorInput, ColorObject, ColorSpaceId } from '@pyxe/types';
-
-/**
- * Type definition for a parser callback.
- * Each parser attempts to match and convert the input to a specific color model.
- */
-export type ParserCallback = ( input: ColorInput ) => ColorObject | undefined;
+import type { ColorInput, ColorObject, ColorSpaceId, ParserCallback } from '@pyxe/types';
 
 /**
  * Registry managing all available parser functions for known color spaces.
@@ -35,12 +29,12 @@ export class ParserRegistry {
     private registry: Map<ColorSpaceId, ParserCallback> = new Map ();
 
     /**
-     * Registers a parser for a specific color space ID.
+     * Adds a parser for a specific color space ID.
      * 
      * @param id - Color space ID
      * @param callback - Parser callback
      */
-    register (
+    add (
         id: ColorSpaceId,
         parser: ParserCallback
     ) : void {

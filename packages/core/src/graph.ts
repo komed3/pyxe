@@ -18,17 +18,7 @@
  * @license MIT
  */
 
-import type { ColorSpaceId } from '@pyxe/types';
-
-/**
- * Type of a callable function to transform one color space into another.
- */
-export type ConversionCallback = ( input: any ) => any;
-
-interface ConversionPath {
-    to: ColorSpaceId;
-    callback: ConversionCallback;
-}
+import type { ColorSpaceId, ConversionCallback, ConversionPath } from '@pyxe/types';
 
 /**
  * Registry managing all available color space conversions.
@@ -44,7 +34,7 @@ export class ConversionGraphRegistry {
      * @param to - Target color space ID
      * @param callback - Conversion callback from source to target
      */
-    register (
+    add (
         from: ColorSpaceId,
         to: ColorSpaceId,
         callback: ConversionCallback
@@ -59,6 +49,24 @@ export class ConversionGraphRegistry {
         this.graph.get( from )!.push(
             { to, callback }
         );
+
+    }
+
+    /**
+     * Register multiple color space conversions at once.
+     *
+     * @param conversions - An array of objects containing `from`, `to`, and `callback` properties
+     */
+    addMany (
+        from: ColorSpaceId,
+        conversions: ConversionPath[]
+    ) : void {
+
+        for ( const { to, callback } of conversions ) {
+
+            this.add( from, to, callback );
+
+        }
 
     }
 
