@@ -12,6 +12,8 @@
  * the method throws an error.
  * 
  * @package @pyxe/core
+ * @requires @pyxe/types
+ * 
  * @author Paul Köhler (komed3)
  * @license MIT
  */
@@ -25,7 +27,7 @@ export type ConversionCallback = ( input: any ) => any;
 
 interface ConversionPath {
     to: ColorSpaceId;
-    cb: ConversionCallback;
+    callback: ConversionCallback;
 }
 
 /**
@@ -34,19 +36,19 @@ interface ConversionPath {
  */
 export class ConversionGraph {
 
-    private graph = new Map<ColorSpaceId, ConversionPath[]> ();
+    private graph: Map<ColorSpaceId, ConversionPath[]> = new Map ();
 
     /**
      * Register a new color space conversion.
      *
      * @param from - Source color space ID
      * @param to - Target color space ID
-     * @param cb - Conversion callback from source to target
+     * @param callback - Conversion callback from source to target
      */
     register (
         from: ColorSpaceId,
         to: ColorSpaceId,
-        cb: ConversionCallback
+        callback: ConversionCallback
     ) : void {
 
         if ( !this.graph.has( from ) ) {
@@ -55,7 +57,9 @@ export class ConversionGraph {
 
         }
 
-        this.graph.get( from )!.push( { to, cb } );
+        this.graph.get( from )!.push(
+            { to, callback }
+        );
 
     }
 
@@ -148,12 +152,12 @@ export class ConversionGraph {
 
             }
 
-            cbs.push( edge.cb );
+            cbs.push( edge.callback );
 
         }
 
         return ( input: any ) => cbs.reduce(
-            ( acc, cb ) => cb( acc ),
+            ( acc, callback ) => callback( acc ),
             input
         );
 

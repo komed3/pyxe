@@ -53,9 +53,7 @@ export type NamedColorList = Record<string, NamedColor>;
  * Used for parser registry and conversion graph
  */
 export type ColorSpaceId =
-  | 'rgb'
-  | 'lab'
-  | 'hex';
+  | 'RGB' | 'HEX' | 'XYZ' | 'Lab';
 
 /**
  * Generic representation of a color space conversion
@@ -73,6 +71,4 @@ export type ColorInput = string | RGB | HexColor;
 export interface ParsedColor {
   space: ColorSpaceId;
   value: ColorInstance;
-  alpha?: number;
-  original?: unknown;
 }
