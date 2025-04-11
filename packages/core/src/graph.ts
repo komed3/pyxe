@@ -129,7 +129,7 @@ export class ConversionGraph {
 
         }
 
-        const fns: ConversionCallback[] = [];
+        const cbs: ConversionCallback[] = [];
 
         for ( let i = 0; i < path.length - 1; i++ ) {
 
@@ -148,11 +148,11 @@ export class ConversionGraph {
 
             }
 
-            fns.push( edge.cb );
+            cbs.push( edge.cb );
 
         }
 
-        return ( input: any ) => fns.reduce(
+        return ( input: any ) => cbs.reduce(
             ( acc, cb ) => cb( acc ),
             input
         );
