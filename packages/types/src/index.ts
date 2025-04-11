@@ -58,7 +58,7 @@ export type ColorSpaceId =
 /**
  * Generic representation of a color space conversion.
  */
-export type ColorInstance = RGB | Lab;
+export type ColorInstance = RGB | HexColor | Lab;
 
 /**
  * Standard input variants accepted by parser modules.
@@ -73,6 +73,11 @@ export interface ColorObject {
     space: ColorSpaceId;
     value: ColorInstance;
 }
+
+/**
+ * Type definition for a validation callback.
+ */
+export type ValidatorCallback = ( input: ColorInput ) => ColorObject;
 
 /**
  * Type definition for a parser callback.
@@ -111,7 +116,7 @@ export interface OutputMethods {
  */
 export interface ColorSpaceRegistrationOptions {
     id: ColorSpaceId;
-    validator: ( input: ColorInput ) => ColorObject;
+    validator?: ValidatorCallback;
     parser?: ParserCallback;
     conversions?: ConversionPath[];
     outputs?: OutputMethods;
