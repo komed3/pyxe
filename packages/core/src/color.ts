@@ -20,6 +20,7 @@ import type {
     ColorObject
 } from '@pyxe/types';
 
+import { registry } from './registry.js';
 import { parser } from './parser.js';
 import { validator } from './validator.js';
 import { colorLib } from './library.js';
@@ -36,6 +37,9 @@ export class Color {
     private constructor (
         color: ColorObject
     ) {
+
+        /** Checks if the color space is registered */
+        registry.check( color.space );
 
         /** Validates the color object or throws an error */
         validator.validate( color.space, color.value );

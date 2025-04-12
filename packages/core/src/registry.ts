@@ -103,6 +103,39 @@ export class Registry {
     
     }
 
+    /**
+     * Checks if a color space is registered.
+     * 
+     * @param id - Color space ID
+     * @returns True if the color space exists, false otherwise
+     */
+    has (
+        id: ColorSpaceId
+    ) : boolean {
+
+        return this.registry.has( id );
+
+    }
+
+    /**
+     * Throws an error, if the requested color space is not defined.
+     * @param id - Color space ID
+     * @throws Throws an error for invalid color space ids
+     */
+    check (
+        id: ColorSpaceId
+    ) : void {
+
+        if ( !this.has( id ) ) {
+
+            throw new Error (
+                `The color space <${id}> is not registered`
+            );
+
+        }
+
+    }
+
 }
 
 /**
