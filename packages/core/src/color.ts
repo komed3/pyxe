@@ -231,7 +231,25 @@ export class Color {
             strict
         );
 
-        //
+        if ( result && typeof result === 'object' ) {
+
+            if ( Array.isArray( result ) ) {
+
+                return result.every( ( obj ) => obj?.space && obj?.value )
+                    ? result.map( ( obj ) => new Color( obj ) )
+                    : result;
+
+            }
+
+            if ( result.space && result.value ) {
+
+                return new Color( result );
+
+            }
+
+        }
+
+        return result;
 
     }
 
