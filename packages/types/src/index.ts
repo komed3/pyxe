@@ -151,23 +151,16 @@ export type NamedColorList = Record<string, NamedColor>;
  * Metadata for a color library.
  * Contains additional data, e.g. source, version, license, tags, etc.
  */
-export interface ColorLibraryMeta {
+export interface ColorLibMeta {
     id: string;
-    title: string;
+    title?: string;
     description?: string;
     version?: string;
     license?: string;
     source?: string;
     author?: string;
     tags?: string[];
-}
-
-/**
- * A full color library package with metadata and list.
- */
-export interface ColorLibrary {
-    meta: ColorLibraryMeta;
-    colors: NamedColorList;
+    count: number;
 }
 
 /**

@@ -157,6 +157,6 @@ export class ColorSpaceRegistry {
 }
 
 /**
- * Singleton instance of the pyxe registries
+ * Singleton instance of the pyxe registries.
  */
 export const colorSpaceRegistry = new ColorSpaceRegistry ();

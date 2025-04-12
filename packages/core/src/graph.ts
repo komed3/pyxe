@@ -276,7 +276,7 @@ export class ConversionGraph {
 }
 
 /**
- * Singleton instances of the global conversion graph and its registy
+ * Singleton instances of the global conversion graph and its registy.
  */
 export const conversionGraphRegistry = new ConversionGraphRegistry ();
 export const conversionGraph = new ConversionGraph ( conversionGraphRegistry );

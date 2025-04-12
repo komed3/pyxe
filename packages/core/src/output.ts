@@ -117,7 +117,7 @@ export class Output {
 }
 
 /**
- * Singleton instances of the ouput system and its registry
+ * Singleton instances of the ouput system and its registry.
  */
 export const outputRegistry = new OutputRegistry ();
 export const output = new Output ( outputRegistry );

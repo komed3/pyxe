@@ -154,7 +154,7 @@ export class Parser {
 }
 
 /**
- * Singleton instances of the global parser and its registry
+ * Singleton instances of the global parser and its registry.
  */
 export const parserRegistry = new ParserRegistry ();
 export const parser = new Parser ( parserRegistry );

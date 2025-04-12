@@ -146,7 +146,7 @@ export class Validator {
 }
 
 /**
- * Singleton instance of the validator and its registry
+ * Singleton instance of the validator and its registry.
  */
 export const validatorRegistry = new ValidatorRegistry ();
 export const validator = new Validator ( validatorRegistry );
