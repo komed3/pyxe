@@ -125,7 +125,7 @@ export interface ColorObject {
 
 /**
  * --------------------------------------------------------------------------------
- * Color Libraries / Names Color Lists
+ * Names Color Lists / Color Libraries
  * --------------------------------------------------------------------------------
  */
 
@@ -146,6 +146,29 @@ export interface NamedColor {
  * A full set of named colors, mapped by their key (e.g. "RAL 1000").
  */
 export type NamedColorList = Record<string, NamedColor>;
+
+/**
+ * Metadata for a color library.
+ * Contains additional data, e.g. source, version, license, tags, etc.
+ */
+export interface ColorLibraryMeta {
+    id: string;
+    title: string;
+    description?: string;
+    version?: string;
+    license?: string;
+    source?: string;
+    author?: string;
+    tags?: string[];
+}
+
+/**
+ * A full color library package with metadata and list.
+ */
+export interface ColorLibrary {
+    meta: ColorLibraryMeta;
+    colors: NamedColorList;
+}
 
 /**
  * --------------------------------------------------------------------------------
