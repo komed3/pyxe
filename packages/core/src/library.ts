@@ -168,7 +168,7 @@ export class ColorLib {
     }
 
     /**
-     * Convert a given key to a color object.
+     * Convert a given color key from a library to a color object.
      *
      * @param libId - Library ID
      * @param colorId - Color key (e.g., 'RAL 1000')
@@ -190,21 +190,18 @@ export class ColorLib {
 
         }
 
-        registry.getSpaces().forEach( ( space ) => {
+        for ( const space of registry.getSpaces() ) {
 
             if ( entry[ space ] ) {
 
                 return {
-                    space,
-                    value: entry[ space ],
-                    meta: {
-                        source: entry
-                    }
+                    space, value: entry[ space ],
+                    meta: { source: entry }
                 };
 
             }
 
-        } );
+        }
 
         throw new Error (
             `No compatible color space value found for <${colorId}> in <${libId}>`
