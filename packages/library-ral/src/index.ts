@@ -29,9 +29,9 @@ export const RAL : ColorLibrary = {
         id: 'RAL',
         title: 'RAL Classic Colors',
         description: 'Standardized color list for industrial applications, primarily in Europe.',
-        version: '1.0.0',
+        version: '0.1.0',
         license: 'Open Data / RAL® references',
-        source: 'https://www.ral-farben.de/',
+        source: 'https://www.ral-farben.de',
         tags: [ 'standard', 'RAL', 'industry', 'europe' ]
     },
     colors: {
