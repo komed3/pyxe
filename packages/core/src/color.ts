@@ -37,6 +37,9 @@ export class Color {
         color: ColorObject
     ) {
 
+        /** Validates the color object or throws an error */
+        validator.validate( color.space, color.value );
+
         this.color = color;
 
     }
@@ -72,11 +75,9 @@ export class Color {
 
         try {
 
-            const parsed = parser.parse( input );
-
-            validator.validate( parsed.space, parsed.value );
-
-            return new Color ( parsed );
+            return new Color (
+                parser.parse( input )
+            );
 
         } catch ( err ) {
 
@@ -92,23 +93,12 @@ export class Color {
      * @static
      * @param input - A valid color object
      * @returns Color instance
-     * @throws Throws an error, if the input cannot be validated
      */
     static from (
         input: ColorObject
     ) : Color {
 
-        try {
-
-            validator.validate( input.space, input.value );
-
-            return new Color ( input );
-
-        } catch ( err ) {
-
-            throw err;
-
-        }
+        return new Color ( input );
 
     }
 
@@ -127,9 +117,9 @@ export class Color {
 
         try {
 
-            const color = colorLib.from( libId, colorId );
-
-            return new Color ( color );
+            return new Color (
+                colorLib.from( libId, colorId )
+            );
 
         } catch ( err ) {
 
@@ -152,9 +142,9 @@ export class Color {
 
         try {
 
-            const converted = conversionGraph.convert( this.color, target );
-
-            return new Color ( converted );
+            return new Color (
+                conversionGraph.convert( this.color, target )
+            );
 
         } catch ( err ) {
 
