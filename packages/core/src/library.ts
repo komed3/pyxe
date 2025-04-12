@@ -18,6 +18,7 @@
  */
 
 import type {
+    ColorObject,
     NamedColorList,
     NamedColor,
     ColorLibMeta
@@ -66,6 +67,25 @@ export class ColorLibRegistry {
     }
 
     /**
+     * Searches metadata by tag or partial description.
+     * 
+     * @param query - Tag or string to search
+     * @returns Array of matching color libraries
+     */
+    search (
+        query: string
+    ) : ColorLibMeta[] {
+
+        return this.list().filter(
+            ( meta ) =>
+                meta.title?.toLowerCase().includes( query.toLowerCase() ) ||
+                meta.description?.toLowerCase().includes( query.toLowerCase() ) ||
+                meta.tags?.includes( query.toLowerCase() )
+        );
+
+    }
+
+    /**
      * Returns metadata for a specific library.
      * 
      * @param id - Library ID
@@ -107,6 +127,17 @@ export class ColorLibRegistry {
 
     }
 
+    /**
+     * Returns an iterable of library ID, color list pairs.
+     * 
+     * @returns Iterable with library IDs and color lists
+     */
+    getAll () : MapIterator<[string, NamedColorList]> {
+
+        return this.libraries.entries();
+
+    }
+
 }
 
 /**
@@ -131,6 +162,26 @@ export class ColorLib {
     ) : NamedColor | undefined {
 
         return this.registry.get( libId )?.[ colorId ];
+
+    }
+
+    /**
+     * Convert a given key to a color object.
+     *
+     * @param libId - Library ID
+     * @param colorId - Color key (e.g., 'RAL 1000')
+     * @returns Color object or undefined
+     */
+    from (
+        libId: string,
+        colorId: string
+    ) : ColorObject | undefined {
+
+        const entry = this.get( libId, colorId );
+
+        if ( !entry ) return;
+
+        //
 
     }
 
@@ -166,7 +217,7 @@ export class ColorLib {
             color: NamedColor
         }[] = [];
 
-        for ( const [ libId, lib ] of this.registry[ 'libraries' ].entries() ) {
+        for ( const [ libId, lib ] of this.registry.getAll() ) {
 
             for ( const [ key, color ] of Object.entries( lib ) ) {
 
@@ -181,25 +232,6 @@ export class ColorLib {
         }
 
         return results;
-
-    }
-
-    /**
-     * Searches metadata by tag or partial description.
-     * 
-     * @param query - Tag or string to search
-     * @returns Array of matching color libraries
-     */
-    searchLibraries (
-        query: string
-    ) : ColorLibMeta[] {
-
-        return this.registry.list().filter(
-            ( meta ) =>
-                meta.title?.toLowerCase().includes( query.toLowerCase() ) ||
-                meta.description?.toLowerCase().includes( query.toLowerCase() ) ||
-                meta.tags?.includes( query.toLowerCase() )
-        );
 
     }
 
