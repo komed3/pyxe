@@ -176,7 +176,7 @@ export class ColorLib {
      * @param preferredSpaces - Preferred color spaces
      * @param options - Additional options, e.g. strict mode
      * @returns Color object or undefined
-     * @throws Throws an error, if the color does not exist
+     * @throws Throws an error, if the color does not exist or no compatible color space was found
      */
     from (
         libId: string,
