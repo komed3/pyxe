@@ -240,7 +240,7 @@ export interface ColorSpaceDefinition {
 /**
  * Definition for registering a new module.
  * Contains method name, handler, supported color spaces and optional parameters.
- * If "expose=true", the module will be attached as method to the Color class.
+ * If "expose" is true, the module will be attached as method to the Color class.
  */
 export interface ModuleDefinition {
     id: string;
