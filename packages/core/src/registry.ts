@@ -2,15 +2,15 @@
  * Registry
  * src/registy.ts
  * 
- * The Registry class provides a central place to register all decentralized modules, including
- * in particular color spaces, but also other components such as color tables (libraries, e.g.
- * RAL, HTML, …), calculation modules (e.g. for contrast or color distance) and much more. The
- * registry is a distributor for other services, such as color space parsers, output methods,
- * transformations, etc. and is deeply rooted within the core package.
+ * The main registry class is implemented as an essential interface to dynamically add all
+ * decentralized color spaces, making them available for calculations, transformations, etc.
+ * The registry is merely a distributor for other services such as the color space parser,
+ * output methods and transformations between color spaces and is deeply anchored in the
+ * core package.
  * 
- * The registry is called automatically by loaded packages and provides all the methods
- * required for subsequent calculations, transformations and so on. The registry can check
- * whether mandatory components are missing and provide precise information.
+ * Loaded packages automatically call the registry, which delegates all methods that are
+ * required for further calculations, transformations, etc. The registry can check whether
+ * mandatory components are missing and provide precise information.
  * 
  * @package @pyxe/core
  * @requires @pyxe/types
@@ -25,33 +25,25 @@ import type {
 } from '@pyxe/types';
 
 import {
-    validatorRegistry,
-    validator,
-    type Validator
+    validatorRegistry
 } from './validator.js';
 
 import {
-    parserRegistry,
-    parser,
-    type Parser
+    parserRegistry
 } from './parser.js';
 
 import {
-    conversionGraphRegistry,
-    conversionGraph,
-    type ConversionGraph
+    conversionGraphRegistry
 } from './graph.js';
 
 import {
-    outputRegistry,
-    output,
-    type Output
+    outputRegistry
 } from './output.js';
 
 /**
  * Central registry class for managing color space modules.
  */
-export class ColorSpaceRegistry {
+export class Registry {
 
     private registry: Set<ColorSpaceId> = new Set ();
 
@@ -74,12 +66,24 @@ export class ColorSpaceRegistry {
 
             validatorRegistry.add( id, validator );
 
+        } else {
+
+            console.warn(
+                `Missing validator for color space <${id}> detected.`
+            );
+
         }
 
         /** Register parser module */
         if ( parser ) {
 
             parserRegistry.add( id, parser );
+
+        } else {
+
+            console.warn(
+                `Missing parser for color space <${id}> detected.`
+            );
 
         }
 
@@ -110,53 +114,9 @@ export class ColorSpaceRegistry {
     
     }
 
-    /**
-     * Returns the validator class.
-     * 
-     * @returns Validator class
-     */
-    getValidator () : Validator {
-
-        return validator;
-
-    }
-
-    /**
-     * Returns the parser class.
-     * 
-     * @returns Parser class
-     */
-    getParser () : Parser {
-
-        return parser;
-
-    }
-
-    /**
-     * Returns the conversion graph class.
-     * 
-     * @returns ConversionGraph class
-     */
-    getConversionGraph () : ConversionGraph {
-
-        return conversionGraph;
-
-    }
-
-    /**
-     * Returns the output class.
-     * 
-     * @returns Output class
-     */
-    getOutput () : Output {
-
-        return output;
-
-    }
-
 }
 
 /**
- * Singleton instance of the pyxe registries.
+ * Singleton instance of the pyxe color space registry.
  */
-export const colorSpaceRegistry = new ColorSpaceRegistry ();
+export const registry = new Registry ();
