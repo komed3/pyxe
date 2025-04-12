@@ -17,7 +17,8 @@
 import type {
     ColorSpaceId,
     ColorInput,
-    ColorObject
+    ColorObject,
+    ModuleDefinition
 } from '@pyxe/types';
 
 import { registry } from './registry.js';
@@ -26,6 +27,7 @@ import { validator } from './validator.js';
 import { colorLib } from './library.js';
 import { conversionGraph } from './graph.js';
 import { output } from './output.js';
+import { moduleEngine } from './module.js';
 
 /**
  * The main Color class serves as the central user API.
@@ -208,4 +210,71 @@ export class Color {
 
     }
 
+    /**
+     * Applying a module to execute a calculation.
+     * 
+     * @param id - Module name
+     * @param options - Optional arguments for the handler
+     * @param strict - Enable strict mode
+     * @returns Color instance(s) or the handlers return value
+     * @throws Throws an error, if the calculation cannot be executed
+     */
+    apply (
+        id: string,
+        options?: Record<string, any>,
+        strict = false
+    ) : Color | Color[] | any {
+
+        const result = moduleEngine.apply(
+            id, this.color,
+            options,
+            strict
+        );
+
+        //
+
+    }
+
 }
+
+/**
+ * Dynamically adds methods to the Color class to call modules.
+ */
+export const ColorMethodRegistry = {
+
+    /**
+     * Adds a new method to the Color class
+     * 
+     * @param module - Module definition
+     * @throws Throws an error, if the method cannot be added
+     */
+    add (
+        module: ModuleDefinition
+    ) : void {
+
+        const { id, exposeAsMethod = false } = module;
+
+        if ( exposeAsMethod && ! ( id in Color.prototype ) ) {
+
+            ( Color.prototype as any )[ id ] = function (
+                options?: Record<string, any>,
+                strict = false
+            ) {
+
+                return this.apply( null, [
+                    id, options || {}, strict
+                ] );
+
+            };
+
+        } else {
+
+            throw new Error (
+                `Cannot add method for module <${id}> to the Color class.`
+            );
+
+        }
+
+    }
+
+};

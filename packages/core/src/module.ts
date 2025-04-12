@@ -26,6 +26,8 @@ import type {
     ModuleDefinition
 } from '@pyxe/types';
 
+import { ColorMethodRegistry } from './color.js';
+
 /**
  * Internal registry for all (calculation) modules.
  */
@@ -43,13 +45,13 @@ export class ModuleRegistry {
         module: ModuleDefinition
     ) : void {
 
-        const { id, exposeAsMethod } = module;
+        const { id, exposeAsMethod = false } = module;
 
         this.registry.set( id, module );
 
         if ( exposeAsMethod ) {
 
-            //
+            ColorMethodRegistry.add( module );
 
         }
 

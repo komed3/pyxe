@@ -245,7 +245,7 @@ export interface ColorSpaceDefinition {
 export interface ModuleDefinition {
     id: string;
     handler: ( color: ColorObject, options?: any ) => any;
+    options?: Record<string, any>;
     spaces?: ColorSpaceId[];
-    args?: Record<string, any>;
     exposeAsMethod?: boolean
 }
