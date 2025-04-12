@@ -25,6 +25,8 @@ import type {
     ConversionPath
 } from '@pyxe/types';
 
+import { registry } from './registry.js';
+
 /**
  * Registry managing all available color space conversions.
  */
@@ -161,6 +163,9 @@ export class ConversionGraph {
         from: ColorSpaceId,
         to: ColorSpaceId
     ) : ConversionCallback {
+
+        registry.check( from );
+        registry.check( to );
 
         const path = this.findPath( from, to );
 
