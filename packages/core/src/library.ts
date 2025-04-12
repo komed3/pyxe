@@ -21,7 +21,8 @@ import type {
     ColorObject,
     NamedColorList,
     NamedColor,
-    ColorLibMeta
+    ColorLibMeta,
+    ColorSpaceId
 } from '@pyxe/types';
 
 import { registry } from './registry.js';
@@ -172,12 +173,18 @@ export class ColorLib {
      *
      * @param libId - Library ID
      * @param colorId - Color key (e.g., 'RAL 1000')
+     * @param preferredSpaces - Preferred color spaces
+     * @param options - Additional options, e.g. strict mode
      * @returns Color object or undefined
      * @throws Throws an error, if the color does not exist
      */
     from (
         libId: string,
-        colorId: string
+        colorId: string,
+        preferredSpaces?: ColorSpaceId[] | ColorSpaceId,
+        options?: {
+            strict?: boolean
+        }
     ) : ColorObject {
 
         const entry = this.get( libId, colorId );
@@ -190,9 +197,14 @@ export class ColorLib {
 
         }
 
-        for ( const space of registry.getSpaces() ) {
+        const candidates = [ ...new Set ( [
+            ...( Array.isArray( preferredSpaces ) ? preferredSpaces : [ preferredSpaces ] ),
+            ...( options?.strict ? [] : registry.getSpaces() )
+        ].filter( Boolean ) ) ];
 
-            if ( entry[ space ] ) {
+        for ( const space of candidates ) {
+
+            if ( space && entry[ space ] ) {
 
                 return {
                     space, value: entry[ space ],
@@ -203,8 +215,9 @@ export class ColorLib {
 
         }
 
-        throw new Error (
-            `No compatible color space value found for <${colorId}> in <${libId}>`
+        throw new Error ( options?.strict
+            ? `None of the preferred color spaces are available for <${colorId}> in <${libId}>`
+            : `No compatible color space value found for <${colorId}> in <${libId}>`
         );
 
     }

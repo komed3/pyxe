@@ -111,18 +111,24 @@ export class Color {
      * 
      * @param libId - Library ID
      * @param colorId - Color key (e.g., 'RAL 1000')
+     * @param preferredSpaces - Preferred color spaces
+     * @param options - Additional options, e.g. strict mode
      * @returns Color instance
      * @throws Throws an error, if the color cannot be loaded from the library
      */
     static fromLib (
         libId: string,
-        colorId: string
+        colorId: string,
+        preferredSpaces?: ColorSpaceId[] | ColorSpaceId,
+        options?: {
+            strict?: boolean
+        }
     ) : Color {
 
         try {
 
             return new Color (
-                colorLib.from( libId, colorId )
+                colorLib.from( libId, colorId, preferredSpaces, options )
             );
 
         } catch ( err ) {
