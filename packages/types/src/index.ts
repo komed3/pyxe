@@ -1,10 +1,33 @@
 /**
- * HEX Color Type.
+ * Pyxe Type Definitions
+ * src/index.ts
+ *
+ * This file contains all type declarations used across the Pyxe framework. It provides
+ * a centralized and consistent set of types for color spaces, conversions, parsers, and
+ * outputs. These types are designed to be reusable and extendable, serving as a
+ * foundation for all packages and modules within the framework.
+ *
+ * @package @pyxe/types
+ * 
+ * @author Paul Köhler (komed3)
+ * @license MIT
  */
-export type HexColor = `#${string}`;
+
+/**
+ * --------------------------------------------------------------------------------
+ * Color Types
+ * --------------------------------------------------------------------------------
+ */
+
+/**
+ * HEX Color Type (short, long, alpha).
+ * Represents a hexadecimal color string, e.g., "#ffffff".
+ */
+export type HEX = `#${string}`;
 
 /**
  * RGB Color Type with optional Alpha channel.
+ * Represents a color in the RGB color space.
  */
 export interface RGB {
     r: number; // 0 - 255
@@ -14,7 +37,49 @@ export interface RGB {
 }
 
 /**
+ * HSL Color Type.
+ * Represents a color in the HSL (Hue, Saturation, Lightness) color space.
+ */
+export interface HSL {
+    h: number; // 0 - 360 (degrees)
+    s: number; // 0 - 1 (percentage as a decimal)
+    l: number; // 0 - 1 (percentage as a decimal)
+}
+
+/**
+ * HSV Color Type.
+ * Represents a color in the HSV (Hue, Saturation, Value) color space.
+ */
+export interface HSV {
+    h: number; // 0 - 360 (degrees)
+    s: number; // 0 - 1 (percentage as a decimal)
+    v: number; // 0 - 1 (percentage as a decimal)
+}
+
+/**
+ * CMYK Color Type.
+ * Represents a color in the CMYK (Cyan, Magenta, Yellow, Key/Black) color space.
+ */
+export interface CMYK {
+    c: number; // 0 - 1
+    m: number; // 0 - 1
+    y: number; // 0 - 1
+    k: number; // 0 - 1
+}
+
+/**
+ * XYZ Color Type.
+ * Represents a color in the CIE 1931 XYZ color space.
+ */
+export interface XYZ {
+    x: number; // 0 - 1
+    y: number; // 0 - 1
+    z: number; // 0 - 1
+}
+
+/**
  * CIELAB Color Type.
+ * Represents a color in the CIELAB color space.
  */
 export interface Lab {
     L: number; // 0 - 100
@@ -23,24 +88,58 @@ export interface Lab {
 }
 
 /**
+ * --------------------------------------------------------------------------------
+ * Color Spaces
+ * --------------------------------------------------------------------------------
+ */
+
+/**
+ * Identifier for supported color spaces.
+ * Used for registries, the conversion graph and identifying color spaces.
+ */
+export type ColorSpaceId =
+    | 'HEX' | 'RGB'
+    | 'HSL' | 'HSV'
+    | 'CMYK'
+    | 'XYZ' | 'Lab';
+
+/**
+ * Generic representation of a color space conversion.
+ */
+export type ColorInstance = HEX | RGB | HSL | HSV | CMYK | XYZ | Lab;
+
+/**
+ * Standard input variants accepted by parser modules.
+ */
+export type ColorInput = string | ColorInstance;
+
+/**
+ * Generic representation of a color.
+ * Contains the color space, value, and other metadata.
+ */
+export interface ColorObject {
+    space: ColorSpaceId;
+    value: ColorInstance;
+    meta?: Record<string, any>
+}
+
+/**
+ * --------------------------------------------------------------------------------
+ * Color Libraries / Names Color Lists
+ * --------------------------------------------------------------------------------
+ */
+
+/**
  * A named color entry in a color library (e.g. RAL, HTML, etc.)
  * Supports optional alternative representations.
  */
 export interface NamedColor {
-    /** Canonical name, e.g. "Signal yellow" */
-    name?: string;
-
-    /** HEX string representation */
-    hex?: HexColor;
-
-    /** RGB(A) representation */
-    rgb?: RGB;
-
-    /** Lab representation */
-    lab?: Lab;
-
-    /** Optional metadata, e.g. source, tags */
-    meta?: Record<string, unknown>;
+    name?: string; // canonical name
+    meta?: Record<string, unknown>; // Optional metadata, e.g. source, tags
+    HEX?: HEX; RGB?: RGB;
+    HSL?: HSL; HSV?: HSV;
+    CMYK?: CMYK;
+    XYZ?: XYZ; Lab?: Lab;
 }
 
 /**
@@ -49,54 +148,10 @@ export interface NamedColor {
 export type NamedColorList = Record<string, NamedColor>;
 
 /**
- * Optional identifier for supported color spaces.
- * Used for parser registry and conversion graph.
+ * --------------------------------------------------------------------------------
+ * Output Formats
+ * --------------------------------------------------------------------------------
  */
-export type ColorSpaceId =
-    | 'RGB' | 'HEX' | 'XYZ' | 'Lab';
-
-/**
- * Generic representation of a color space conversion.
- */
-export type ColorInstance = RGB | HexColor | Lab;
-
-/**
- * Standard input variants accepted by parser modules.
- */
-export type ColorInput = string | RGB | HexColor;
-
-/**
- * Generic representation of a color.
- * Containing color space, value and other data.
- */
-export interface ColorObject {
-    space: ColorSpaceId;
-    value: ColorInstance;
-}
-
-/**
- * Type definition for a validation callback.
- */
-export type ValidatorCallback = ( input: ColorInput ) => ColorObject;
-
-/**
- * Type definition for a parser callback.
- * Each parser attempts to match and convert the input to a specific color model.
- */
-export type ParserCallback = ( input: ColorInput ) => ColorObject | undefined;
-
-/**
- * Type of a callable function to transform one color space into another.
- */
-export type ConversionCallback = ( input: ColorObject ) => ColorObject | undefined;
-
-/**
- * Interface for a set of conversion callbacks
- */
-export interface ConversionPath {
-    to: ColorSpaceId;
-    callback: ConversionCallback;
-}
 
 /**
  * Available output formats supported by the framework.
@@ -112,7 +167,51 @@ export interface OutputMethods {
 }
 
 /**
+ * --------------------------------------------------------------------------------
+ * Callbacks
+ * --------------------------------------------------------------------------------
+ */
+
+/**
+ * Type definition for a validation callback.
+ * Validates and converts input into a `ColorObject`.
+ */
+export type ValidatorCallback = (
+    input: ColorInput
+) => ColorObject | undefined;
+
+/**
+ * Type definition for a parser callback.
+ * Attempts to match and convert the input to a specific color model.
+ */
+export type ParserCallback = (
+    input: ColorInput
+) => ColorObject | undefined;
+
+/**
+ * Type of a callable function to transform one color space into another.
+ */
+export type ConversionCallback = (
+    color: ColorObject
+) => ColorObject | undefined;
+
+/**
+ * Interface for a set of conversion callbacks.
+ */
+export interface ConversionPath {
+    to: ColorSpaceId;
+    callback: ConversionCallback;
+}
+
+/**
+ * --------------------------------------------------------------------------------
+ * Registries
+ * --------------------------------------------------------------------------------
+ */
+
+/**
  * Options for registering a new color space.
+ * Contains color space name, callbacks, output formats and transformations.
  */
 export interface ColorSpaceRegistrationOptions {
     id: ColorSpaceId;

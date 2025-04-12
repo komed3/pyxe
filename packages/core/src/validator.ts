@@ -91,7 +91,7 @@ export class Validator {
     validate (
         id: ColorSpaceId,
         input: ColorInput
-    ) : ColorObject {
+    ) : ColorObject | undefined {
 
         const callback = this.registry.get( id );
 
