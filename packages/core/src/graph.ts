@@ -238,7 +238,7 @@ export class ConversionGraph {
         const _subtree = (
             current: ColorSpaceId,
             depth: number
-        ) => {
+        ) : void => {
 
             if (
                 !visited.has( current ) &&
