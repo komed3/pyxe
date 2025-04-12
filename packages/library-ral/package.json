@@ -9,6 +9,7 @@
     ".": "./dist/index.js"
   },
   "dependencies": {
+    "@pyxe/core": "^0.1.0",
     "@pyxe/types": "^0.1.0"
   }
 }

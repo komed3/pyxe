@@ -42,7 +42,7 @@ export class ColorLibRegistry {
     add (
         id: string,
         colors: NamedColorList,
-        meta?: ColorLibMeta
+        meta?: Partial<ColorLibMeta>
     ) : void {
 
         this.libraries.set( id, colors );
