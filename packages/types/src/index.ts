@@ -221,18 +221,31 @@ export interface ConversionPath {
 
 /**
  * --------------------------------------------------------------------------------
- * Registries
+ * Definitions / Registries
  * --------------------------------------------------------------------------------
  */
 
 /**
- * Options for registering a new color space.
+ * Definition for registering a new color space.
  * Contains color space name, callbacks, output formats and transformations.
  */
-export interface ColorSpaceRegistrationOptions {
+export interface ColorSpaceDefinition {
     id: ColorSpaceId;
     validator?: ValidatorCallback;
     parser?: ParserCallback;
     conversions?: ConversionPath[];
     outputs?: OutputMethods;
+}
+
+/**
+ * Definition for registering a new module.
+ * Contains method name, handler, supported color spaces and optional parameters.
+ * If "expose=true", the module will be attached as method to the Color class.
+ */
+export interface ModuleDefinition {
+    id: string;
+    handler: ( color: ColorObject, options?: any ) => any;
+    spaces?: ColorSpaceId[];
+    args?: Record<string, any>;
+    exposeAsMethod?: boolean
 }
