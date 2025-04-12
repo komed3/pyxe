@@ -1,19 +1,13 @@
 {
   "name": "@pyxe/core",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [ "dist" ],
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "./library": {
-      "types": "./dist/library.d.ts",
-      "default": "./dist/library.js"
-    }
+    ".": "./dist/index.js",
+    "./library": "./dist/library.js"
   },
   "dependencies": {
     "@pyxe/types": "^0.1.0"

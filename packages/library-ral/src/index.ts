@@ -21,7 +21,7 @@
  */
 
 import type { NamedColorList } from '@pyxe/types';
-import { colorLibRegistry } from '@pyxe/core/dist/src/library';
+import { colorLibRegistry } from '@pyxe/core/dist/src/library.js';
 
 /**
  * Color table of classic RAL colors.
