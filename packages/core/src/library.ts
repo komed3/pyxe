@@ -24,6 +24,8 @@ import type {
     ColorLibMeta
 } from '@pyxe/types';
 
+import { registry } from './registry.js';
+
 /**
  * Internal registry for all named color libraries.
  */
@@ -171,17 +173,42 @@ export class ColorLib {
      * @param libId - Library ID
      * @param colorId - Color key (e.g., 'RAL 1000')
      * @returns Color object or undefined
+     * @throws Throws an error, if the color does not exist
      */
     from (
         libId: string,
         colorId: string
-    ) : ColorObject | undefined {
+    ) : ColorObject {
 
         const entry = this.get( libId, colorId );
 
-        if ( !entry ) return;
+        if ( !entry ) {
 
-        //
+            throw new Error(
+                `Requested color <${colorId}> does not appear in the <${libId}> library`
+            );
+
+        }
+
+        registry.getSpaces().forEach( ( space ) => {
+
+            if ( entry[ space ] ) {
+
+                return {
+                    space,
+                    value: entry[ space ],
+                    meta: {
+                        source: entry
+                    }
+                };
+
+            }
+
+        } );
+
+        throw new Error (
+            `No compatible color space value found for <${colorId}> in <${libId}>`
+        );
 
     }
 

@@ -15,13 +15,14 @@
  */
 
 import type {
+    ColorSpaceId,
     ColorInput,
-    ColorObject,
-    ColorSpaceId
+    ColorObject
 } from '@pyxe/types';
 
 import { parser } from './parser.js';
 import { validator } from './validator.js';
+import { colorLib } from './library.js';
 import { conversionGraph } from './graph.js';
 import { output } from './output.js';
 
@@ -75,7 +76,7 @@ export class Color {
 
             validator.validate( parsed.space, parsed.value );
 
-            return new Color( parsed );
+            return new Color ( parsed );
 
         } catch ( err ) {
 
@@ -101,7 +102,34 @@ export class Color {
 
             validator.validate( input.space, input.value );
 
-            return new Color( input );
+            return new Color ( input );
+
+        } catch ( err ) {
+
+            throw err;
+
+        }
+
+    }
+
+    /**
+     * Creates a Color instance from a color, registered in a library.
+     * 
+     * @param libId - Library ID
+     * @param colorId - Color key (e.g., 'RAL 1000')
+     * @returns Color instance
+     * @throws Throws an error, if the color cannot be loaded from the library
+     */
+    static fromLib (
+        libId: string,
+        colorId: string
+    ) : Color {
+
+        try {
+
+            const color = colorLib.from( libId, colorId );
+
+            return new Color ( color );
 
         } catch ( err ) {
 
@@ -126,7 +154,7 @@ export class Color {
 
             const converted = conversionGraph.convert( this.color, target );
 
-            return new Color( converted );
+            return new Color ( converted );
 
         } catch ( err ) {
 
