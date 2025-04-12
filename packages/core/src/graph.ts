@@ -59,7 +59,8 @@ export class ConversionGraphRegistry {
     /**
      * Register multiple color space conversions at once.
      *
-     * @param conversions - An array of objects containing `from`, `to`, and `callback` properties
+     * @param from - Source color space ID
+     * @param conversions - An array of objects containing `to`, and `callback` properties
      */
     addMany (
         from: ColorSpaceId,
@@ -215,6 +216,60 @@ export class ConversionGraph {
         const path = this.findPath( from, to );
 
         return path ? path.join( ' → ' ) : 'n/a';
+
+    }
+
+    /**
+     * Visualize all color space conversions from a given one to all other spaces
+     * using a simple ASCII tree structure. Hides edges pointing back.
+     *
+     * @param from - Source color space ID
+     * @param maxDepth - Maximal tree depth (default is 99)
+     * @returns A string representing the tree structure
+     */
+    tree (
+        from: ColorSpaceId,
+        maxDepth: number = 99
+    ) : string {
+
+        const visited = new Set<ColorSpaceId> ();
+        const result : string[] = [];
+
+        const _subtree = (
+            current: ColorSpaceId,
+            depth: number
+        ) => {
+
+            if (
+                !visited.has( current ) &&
+                depth < maxDepth
+            ) {
+
+                visited.add( current );
+
+                const edges = this.registry.getConversions( current );
+
+                for ( const edge of edges ) {
+
+                    if ( edge.to !== from ) {
+
+                        result.push( `${ '  '.repeat( depth ) }├─ ${edge.to}` );
+
+                        _subtree( edge.to, depth + 1 );
+
+                    }
+
+                }
+
+            }
+
+        };
+
+        result.push( `─ ${from}` );
+
+        _subtree( from, 1 );
+
+        return result.join( '\n' );
 
     }
 
