@@ -20,6 +20,7 @@
 
 import type {
     ColorSpaceId,
+    ColorObject,
     ConversionCallback,
     ConversionPath
 } from '@pyxe/types';
@@ -198,6 +199,35 @@ export class ConversionGraph {
             ( acc, callback ) => callback( acc ),
             input
         );
+
+    }
+
+    /**
+     * Converts a color from one into another color space.
+     * 
+     * @param input - Color object to convert
+     * @param to - Target color space ID
+     * @returns Converted color object
+     * @throws Throws an error, if the conversion has failed
+     */
+    convert (
+        input: ColorObject,
+        to: ColorSpaceId
+    ) : ColorObject {
+
+        try {
+
+            const callback = this.resolve( input.space, to );
+
+            return callback( input );
+
+        } catch ( err ) {
+
+            throw new Error (
+                `The conversion from color space <${ input.space }> to <${to}> has failed.`
+            );
+
+        }
 
     }
 

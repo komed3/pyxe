@@ -24,21 +24,10 @@ import type {
     ColorSpaceRegistrationOptions
 } from '@pyxe/types';
 
-import {
-    validatorRegistry
-} from './validator.js';
-
-import {
-    parserRegistry
-} from './parser.js';
-
-import {
-    conversionGraphRegistry
-} from './graph.js';
-
-import {
-    outputRegistry
-} from './output.js';
+import { validatorRegistry } from './validator.js';
+import { parserRegistry } from './parser.js';
+import { conversionGraphRegistry } from './graph.js';
+import { outputRegistry } from './output.js';
 
 /**
  * Central registry class for managing color space modules.

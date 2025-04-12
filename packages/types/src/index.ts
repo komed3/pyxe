@@ -209,7 +209,7 @@ export type ParserCallback = (
  */
 export type ConversionCallback = (
     color: ColorObject
-) => ColorObject | undefined;
+) => ColorObject;
 
 /**
  * Interface for a set of conversion callbacks.
