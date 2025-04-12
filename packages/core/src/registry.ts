@@ -60,7 +60,7 @@ export class ColorSpaceRegistry {
      * 
      * @param options - Configuration for the new color space
      */
-    addColorSpace (
+    add (
         options: ColorSpaceRegistrationOptions
     ): void {
 
