@@ -26,7 +26,7 @@ import type {
 } from '@pyxe/types';
 
 import { ColorMethodRegistry } from './color.js';
-import { conversionGraph } from './graph.js';
+import { convert } from './convert.js';
 
 /**
  * Internal registry for all (calculation) modules.
@@ -136,7 +136,6 @@ export class ModuleEngine {
         /** Get module from registry, save initial color space */
         const { handler, spaces, options: defaultOptions } = this.registry.get( id ) as ModuleDefinition;
         const inputSpace = color.space;
-        
 
         /** Check whether the color space is compatible */
         if ( ! spaces.includes( inputSpace ) ) {
@@ -150,7 +149,7 @@ export class ModuleEngine {
 
                     try {
 
-                        converted = conversionGraph.convert( color, target );
+                        converted = convert.convert( color, target );
                         color = converted;
 
                         break;
@@ -196,29 +195,7 @@ export class ModuleEngine {
         }
 
         /** Convert back if needed and return result */
-        try {
-
-            const _tryConvert = ( obj: any ) : any =>
-                ( obj?.space && obj?.value && obj.space !== inputSpace )
-                    ? ( strict
-                        ? conversionGraph.convert( obj, inputSpace )
-                        : ( () => {
-                            try { return conversionGraph.convert( obj, inputSpace ); }
-                            catch { return obj; }
-                        } )() )
-                    : obj;
-
-            return Array.isArray( result )
-                ? result.map( _tryConvert )
-                : _tryConvert( result );
-
-        } catch ( err ) {
-
-            throw new Error(
-                `Module <${id}>: Failed to convert result back to <${inputSpace}>: ${err}`
-            );
-
-        }
+        return convert.tryConvertMany( result, inputSpace, strict );
 
     }
 

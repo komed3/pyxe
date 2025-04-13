@@ -29,28 +29,19 @@ import {
     conversionGraph
 } from './graph.js';
 
+import {
+    debug,
+    debugTemplates
+} from './debug.js';
+
 /**
  * Converts color objects from one into another color space.
  */
 export class Convert {
 
     constructor (
-        private graph: ConversionGraph,
-        private debug: boolean = false
+        private graph: ConversionGraph
     ) {}
-
-    /**
-     * Activate debug mode to enable conversion step logging.
-     * 
-     * @param enabled - Enable / disable debugging
-     */
-    debugMode (
-        enabled: boolean
-    ) : void {
-
-        this.debug = enabled;
-
-    }
 
     /**
      * Converts a color from one into another color space.
@@ -70,22 +61,12 @@ export class Convert {
             const callback = this.graph.resolve( input.space, to );
             const result = callback( input );
 
-            if ( this.debug && input?.meta ) {
+            if ( debug.on() ) {
 
-                /**
-                 * Debug mode:
-                 * Store conversion step in result color object
-                 */
-
-                result.meta!.debug = input.meta.debug || [];
-
-                result.meta!.debug.push( {
-                    step: 'convert',
-                    from: input.space,
-                    to,
-                    via: this.graph.findPath( input.space, to ),
-                    timestamp: Date.now()
-                } );
+                debug.trace( result, debugTemplates.convert(
+                    input, result,
+                    this.graph.findPath( input.space, to )
+                ) );
 
             }
 

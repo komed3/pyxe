@@ -249,3 +249,22 @@ export interface ModuleDefinition {
     options?: Record<string, any>;
     exposeAsMethod?: boolean
 }
+
+/**
+ * --------------------------------------------------------------------------------
+ * Debugging
+ * --------------------------------------------------------------------------------
+ */
+
+/**
+ * Interface for tracing color object transformations / calculations.
+ */
+export interface DebugTrace {
+    action: string;
+    timestamp: Date | number;
+    meta?: {
+        origin?: ColorObject | unknown;
+        result?: ColorObject | unknown;
+        [ key: string ] : any;
+    };
+}

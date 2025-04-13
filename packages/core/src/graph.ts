@@ -20,7 +20,6 @@
 
 import type {
     ColorSpaceId,
-    ColorObject,
     ConversionCallback,
     ConversionPath
 } from '@pyxe/types';

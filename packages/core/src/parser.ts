@@ -26,6 +26,11 @@ import type {
     ParserCallback
 } from '@pyxe/types';
 
+import {
+    debug,
+    debugTemplates
+} from './debug.js';
+
 /**
  * Registry managing all available parser functions for known color spaces.
  */
@@ -96,7 +101,7 @@ export class Parser {
         input: ColorInput
     ) : ColorObject {
 
-        for ( const [ , callback ] of this.registry.getAll() ) {
+        for ( const callback of this.registry.getAll().values() ) {
 
             try {
 
@@ -104,7 +109,15 @@ export class Parser {
 
                 if ( result ) {
 
-                    return result as ColorObject;
+                    if ( debug.on() ) {
+
+                        debug.trace( result, debugTemplates.parse(
+                            input, result
+                        ) );
+
+                    }
+
+                    return result;
 
                 }
 
@@ -133,21 +146,17 @@ export class Parser {
         input: ColorInput
     ) : boolean {
 
-        for ( const callback of this.registry.getAll().values() ) {
+        try {
 
-            try {
+            this.parse( input );
 
-                if ( callback( input ) ) return true;
+            return true;
 
-            } catch {
+        } catch {
 
-                continue;
-
-            }
+            return false;
 
         }
-
-        return false;
 
     }
 
