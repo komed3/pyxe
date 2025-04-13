@@ -18,7 +18,7 @@ import type {
     ColorSpaceId,
     ColorInput,
     ColorObject,
-    ModuleDefinition
+    ModuleFactory
 } from '@pyxe/types';
 
 import { registry } from './registry.js';
@@ -264,7 +264,7 @@ export const ColorMethodRegistry = {
      * @throws Throws an error, if the method cannot be added
      */
     add (
-        module: ModuleDefinition
+        module: ModuleFactory
     ) : void {
 
         const { id, exposeAsMethod = false } = module;

@@ -21,20 +21,18 @@
  */
 
 import type {
-    ColorSpaceId,
-    ColorObject,
-    ModuleDefinition
+    ModuleFactory,
+    ColorObject
 } from '@pyxe/types';
 
 import { ColorMethodRegistry } from './color.js';
-import { convert } from './convert.js';
 
 /**
  * Internal registry for all (calculation) modules.
  */
 export class ModuleRegistry {
 
-    private registry = new Map<string, ModuleDefinition> ();
+    private registry = new Map<string, ModuleFactory> ();
 
     /**
      * Adds a new module to the registry.
@@ -43,7 +41,7 @@ export class ModuleRegistry {
      * @param module - Module definition
      */
     add (
-        module: ModuleDefinition
+        module: ModuleFactory
     ) : void {
 
         const { id, exposeAsMethod = false } = module;
@@ -80,7 +78,7 @@ export class ModuleRegistry {
      */
     get (
         id: string
-    ) : ModuleDefinition | undefined {
+    ) : ModuleFactory | undefined {
 
         return this.registry.get( id );
 
@@ -91,7 +89,7 @@ export class ModuleRegistry {
      * 
      * @returns Array for module definitions
      */
-    getModules () : ModuleDefinition[] {
+    getModules () : ModuleFactory[] {
 
         return Array.from( this.registry.values() );
 
@@ -114,7 +112,7 @@ export class ModuleEngine {
      * @param id - Module name
      * @param input - Primary input color object
      * @param args - Additional colors or parameters (ColorObject[], options?, strict?)
-     * @returns The module result (converted back to original input space if applicable)
+     * @returns The module handlers result
      * @throws Throws an error, if the handler cannot run or encounters an error
      */
     apply (
@@ -123,46 +121,27 @@ export class ModuleEngine {
         ...args: any[]
     ) : ColorObject | ColorObject[] | any {
 
-        /** Check if the module is registered */
-        if ( ! this.registry.has( id ) ) {
+        if ( this.registry.has( id ) ) {
 
-            throw new Error(
+            throw new Error (
                 `Module <${id}> is not registered.`
             );
 
         }
 
-        /** Get module from registry */
-        const {
-            handler, spaces, multiInput = false,
-            options: defaultOptions = []
-        } = this.registry.get( id ) as ModuleDefinition;
+        try {
 
-        /** Extract optional options from the tail */
-        const options = (
-            typeof args.at( -1 ) === 'object' &&
-            !Array.isArray( args.at( -1 ) )
-        ) ? args.pop() : {};
+            const { handler } = this.registry.get( id ) as ModuleFactory;
 
-        /** Check, if strict mode is enabled */
-        const strict = options?.strict ?? false;
+            return handler( input, ...args );
 
-        /** Collect all color inputs */
-        const allColors = [
-            input, ...args.filter(
-                ( val ) => val && typeof val === 'object' && 'space' in val
-            )
-        ];
+        } catch ( err ) {
 
-        /** Map original color spaces */
-        const originalSpaces = allColors.map(
-            ( obj ) => obj.space
-        );
+            throw new Error (
+                `Error occurred in module <${id}>: ${err}`
+            );
 
-        /** Convert color object to desired color space */
-        let convertedColors: ColorObject[];
-
-        // ...
+        }
 
     }
 

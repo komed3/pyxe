@@ -221,15 +221,15 @@ export interface ConversionPath {
 
 /**
  * --------------------------------------------------------------------------------
- * Definitions / Registries
+ * Factories
  * --------------------------------------------------------------------------------
  */
 
 /**
- * Definition for registering a new color space.
+ * Factory for registering a new color space.
  * Contains color space name, callbacks, output formats and transformations.
  */
-export interface ColorSpaceDefinition {
+export interface ColorSpaceFactory {
     id: ColorSpaceId;
     validator?: ValidatorCallback;
     parser?: ParserCallback;
@@ -238,11 +238,11 @@ export interface ColorSpaceDefinition {
 }
 
 /**
- * Definition for registering a new module.
+ * Factory for registering a new module.
  * Contains method name, handler, supported color spaces and optional parameters.
  * If "expose" is true, the module will be attached as method to the Color class.
  */
-export interface ModuleDefinition {
+export interface ModuleFactory {
     id: string;
     handler: ( ...args: any [] ) => any;
     spaces: ColorSpaceId[];

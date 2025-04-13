@@ -21,7 +21,7 @@
 
 import type {
     ColorSpaceId,
-    ColorSpaceDefinition
+    ColorSpaceFactory
 } from '@pyxe/types';
 
 import { validatorRegistry } from './validator.js';
@@ -42,7 +42,7 @@ export class Registry {
      * @param options - Configuration for the new color space
      */
     add (
-        options: ColorSpaceDefinition
+        options: ColorSpaceFactory
     ): void {
 
         const { id, validator, parser, conversions, outputs } = options;
