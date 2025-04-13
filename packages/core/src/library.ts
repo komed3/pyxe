@@ -189,7 +189,7 @@ export class ColorLib {
 
         const entry = this.get( libId, colorId );
 
-        if ( !entry ) {
+        if ( ! entry ) {
 
             throw new Error(
                 `Requested color <${colorId}> does not appear in the <${libId}> library`

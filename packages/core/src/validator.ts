@@ -95,7 +95,7 @@ export class Validator {
 
         const callback = this.registry.get( id );
 
-        if ( !callback ) {
+        if ( ! callback ) {
 
             throw new Error(
                 `No validator registered for color space <${id}>`

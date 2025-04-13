@@ -126,7 +126,7 @@ export class Registry {
         id: ColorSpaceId
     ) : void {
 
-        if ( !this.has( id ) ) {
+        if ( ! this.has( id ) ) {
 
             throw new Error (
                 `The color space <${id}> is not registered`

@@ -47,7 +47,7 @@ export class ConversionGraphRegistry {
         callback: ConversionCallback
     ) : void {
 
-        if ( !this.graph.has( from ) ) {
+        if ( ! this.graph.has( from ) ) {
 
             this.graph.set( from, [] );
 
@@ -169,7 +169,7 @@ export class ConversionGraph {
 
         const path = this.findPath( from, to );
 
-        if ( !path || path.length < 2 ) {
+        if ( ! path || path.length < 2 ) {
 
             throw new Error(
                 `No conversion path from <${from}> to <${to}>`
@@ -188,7 +188,7 @@ export class ConversionGraph {
                 ( e ) => e.to === next
             );
 
-            if ( !edge ) {
+            if ( ! edge ) {
 
                 throw new Error(
                     `Missing conversion step from <${current}> to <${next}>`
@@ -276,7 +276,7 @@ export class ConversionGraph {
         ) : void => {
 
             if (
-                !visited.has( current ) &&
+                ! visited.has( current ) &&
                 depth < maxDepth
             ) {
 
