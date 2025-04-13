@@ -195,51 +195,30 @@ export class ModuleEngine {
 
         }
 
-        /** Convert back if needed */
-        if ( result && typeof result === 'object' ) {
+        /** Convert back if needed and return result */
+        try {
 
-            const _convertBack = ( obj: any ) : any => {
+            const _tryConvert = ( obj: any ) : any =>
+                ( obj?.space && obj?.value && obj.space !== inputSpace )
+                    ? ( strict
+                        ? conversionGraph.convert( obj, inputSpace )
+                        : ( () => {
+                            try { return conversionGraph.convert( obj, inputSpace ); }
+                            catch { return obj; }
+                        } )() )
+                    : obj;
 
-                if ( obj?.space && obj?.value && obj.space !== inputSpace ) {
+            return Array.isArray( result )
+                ? result.map( _tryConvert )
+                : _tryConvert( result );
 
-                    try {
+        } catch ( err ) {
 
-                        return conversionGraph.convert( obj, inputSpace );
-
-                    } catch ( err ) {
-
-                        if ( strict ) {
-
-                            throw new Error(
-                                `Module <${id}>: Failed to convert result back to <${inputSpace}>: ${err}`
-                            );
-
-                        }
-
-                        /**
-                         * Result remains in the returned color space if not reversible
-                         */
-
-                    }
-
-                }
-
-                return obj;
-
-            };
-
-            if ( Array.isArray( result ) ) {
-
-                return result.map( _convertBack );
-
-            }
-
-            return _convertBack( result );
+            throw new Error(
+                `Module <${id}>: Failed to convert result back to <${inputSpace}>: ${err}`
+            );
 
         }
-
-        /** Return non color object results */
-        return result;
 
     }
 
