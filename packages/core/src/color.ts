@@ -27,7 +27,7 @@ import { validator } from './validator.js';
 import { colorLib } from './library.js';
 import { convert } from './convert.js';
 import { output } from './output.js';
-import { moduleEngine } from './module.js';
+import { module } from './module.js';
 
 /**
  * The main Color class serves as the central user API.
@@ -223,7 +223,7 @@ export class Color {
         ...args: any[]
     ) : Color | Color[] | any {
 
-        const result = moduleEngine.apply(
+        const result = module.apply(
             id, this.toObject(),
             ...args
         );

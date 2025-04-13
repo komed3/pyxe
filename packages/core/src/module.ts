@@ -100,7 +100,7 @@ export class ModuleRegistry {
 /**
  * The central module engine for apply handler functions.
  */
-export class ModuleEngine {
+export class Module {
 
     constructor (
         private registry: ModuleRegistry
@@ -121,7 +121,7 @@ export class ModuleEngine {
         ...args: any[]
     ) : ColorObject | ColorObject[] | any {
 
-        if ( this.registry.has( id ) ) {
+        if ( ! this.registry.has( id ) ) {
 
             throw new Error (
                 `Module <${id}> is not registered.`
@@ -151,4 +151,4 @@ export class ModuleEngine {
  * Singleton instances of the module engine and registry.
  */
 export const moduleRegistry = new ModuleRegistry ();
-export const moduleEngine = new ModuleEngine ( moduleRegistry );
+export const module = new Module ( moduleRegistry );
