@@ -35,8 +35,22 @@ import {
 export class Convert {
 
     constructor (
-        private graph: ConversionGraph
+        private graph: ConversionGraph,
+        private debug: boolean = false
     ) {}
+
+    /**
+     * Activate debug mode to enable conversion step logging.
+     * 
+     * @param enabled - Enable / disable debugging
+     */
+    debugMode (
+        enabled: boolean
+    ) : void {
+
+        this.debug = enabled;
+
+    }
 
     /**
      * Converts a color from one into another color space.
@@ -54,8 +68,28 @@ export class Convert {
         try {
 
             const callback = this.graph.resolve( input.space, to );
+            const result = callback( input );
 
-            return callback( input );
+            if ( this.debug && input?.meta ) {
+
+                /**
+                 * Debug mode:
+                 * Store conversion step in result color object
+                 */
+
+                result.meta!.debug = input.meta.debug || [];
+
+                result.meta!.debug.push( {
+                    step: 'convert',
+                    from: input.space,
+                    to,
+                    via: this.graph.findPath( input.space, to ),
+                    timestamp: Date.now()
+                } );
+
+            }
+
+            return result;
 
         } catch ( err ) {
 
@@ -108,7 +142,7 @@ export class Convert {
         input: any,
         to: ColorSpaceId,
         strict: boolean = false
-    ) : any {
+    ) : ColorObject | unknown {
 
         try {
 
@@ -146,7 +180,7 @@ export class Convert {
         input: any,
         to: ColorSpaceId,
         strict: boolean = false
-    ) : any {
+    ) : ColorObject[] | ColorObject | unknown {
 
         try {
 
