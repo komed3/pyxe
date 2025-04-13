@@ -6,8 +6,7 @@
   "types": "dist/index.d.ts",
   "files": [ "dist" ],
   "exports": {
-    ".": "./dist/index.js",
-    "./library": "./dist/library.js"
+    ".": "./dist/index.js"
   },
   "dependencies": {
     "@pyxe/types": "^0.1.0",

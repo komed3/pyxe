@@ -1,6 +1,12 @@
 {
+  "name": "pyxe",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "type": "module",
   "scripts": {
     "build": "npx tsc -b tsconfig.build.json",
-    "test": "cd ./test && npm install"
+    "test": "npm install && node ./test/index.js"
   }
 }
