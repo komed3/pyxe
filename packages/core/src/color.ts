@@ -25,7 +25,7 @@ import { registry } from './registry.js';
 import { parser } from './parser.js';
 import { validator } from './validator.js';
 import { colorLib } from './library.js';
-import { conversionGraph } from './graph.js';
+import { convert } from './convert.js';
 import { output } from './output.js';
 import { moduleEngine } from './module.js';
 
@@ -155,7 +155,7 @@ export class Color {
         try {
 
             return new Color (
-                conversionGraph.convert( this.color, target )
+                convert.convert( this.color, target )
             );
 
         } catch ( err ) {
