@@ -4,14 +4,10 @@
  * 
  * The Module Engine is an essential element of the pyxe core package and is used for
  * both the registration and execution of (calculation) modules containing a handler
- * function, supported color spaces and further arguments. During registration, if
- * specified, a method will be dynamically attached to the Color class to enable simple,
- * user-friendly API calls.
+ * function, supported color spaces and further arguments.
  * 
- * If a handler does not support a given color space, the module engine automatically
- * attempts to transform the color into a compatible one. After the calculation is
- * complete, the color will be converted back to its original color space. This behavior
- * can be prevented using the strict mode.
+ * During registration, if specified, a method will be dynamically attached to the
+ * Color class to enable simple, user-friendly API calls.
  * 
  * @package @pyxe/core
  * @requires @pyxe/types
