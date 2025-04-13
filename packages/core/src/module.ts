@@ -125,7 +125,6 @@ export class ModuleEngine {
     ) : any {
 
         /** Check if the module is registered */
-
         if ( ! this.registry.has( id ) ) {
 
             throw new Error(
@@ -135,17 +134,14 @@ export class ModuleEngine {
         }
 
         /** Get module from registry, save initial color space */
-
         const { handler, spaces, options: defaultOptions } = this.registry.get( id ) as ModuleDefinition;
         const inputSpace = color.space;
         
 
         /** Check whether the color space is compatible */
-
         if ( ! spaces.includes( inputSpace ) ) {
 
             /** Try to convert color into supported color space */
-
             if ( ! strict && spaces.length ) {
 
                 let converted = null;
@@ -182,7 +178,6 @@ export class ModuleEngine {
         }
 
         /** Call the module handler function */
-
         let result: any;
 
         try {
@@ -201,7 +196,6 @@ export class ModuleEngine {
         }
 
         /** Convert back if needed */
-
         if ( result && typeof result === 'object' ) {
 
             const _convertBack = ( obj: any ) : any => {
@@ -224,7 +218,7 @@ export class ModuleEngine {
 
                         /**
                          * Result remains in the returned color space if not reversible
-                         **/
+                         */
 
                     }
 
@@ -245,7 +239,6 @@ export class ModuleEngine {
         }
 
         /** Return non color object results */
-
         return result;
 
     }
