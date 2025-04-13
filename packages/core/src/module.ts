@@ -21,6 +21,7 @@
  */
 
 import type {
+    ColorSpaceId,
     ColorObject,
     ModuleDefinition
 } from '@pyxe/types';
@@ -108,21 +109,19 @@ export class ModuleEngine {
     ) {}
 
     /**
-     * Applying a module handler function.
-     * 
+     * Applies a registered color module.
+     *
      * @param id - Module name
-     * @param color - Input color object
-     * @param options - Optional arguments for the handler
-     * @param strict - Enable strict mode
-     * @returns The handlers return value (e.g. color object, numeric value etc.)
-     * @throws Throws an error, if the handler cannot run or gets an error
+     * @param input - Primary input color object
+     * @param args - Additional colors or parameters (ColorObject[], options?, strict?)
+     * @returns The module result (converted back to original input space if applicable)
+     * @throws Throws an error, if the handler cannot run or encounters an error
      */
     apply (
         id: string,
-        color: ColorObject,
-        options?: Record<string, any>,
-        strict = false
-    ) : any {
+        input: ColorObject,
+        ...args: any[]
+    ) : ColorObject | ColorObject[] | any {
 
         /** Check if the module is registered */
         if ( ! this.registry.has( id ) ) {
@@ -133,69 +132,37 @@ export class ModuleEngine {
 
         }
 
-        /** Get module from registry, save initial color space */
-        const { handler, spaces, options: defaultOptions } = this.registry.get( id ) as ModuleDefinition;
-        const inputSpace = color.space;
+        /** Get module from registry */
+        const {
+            handler, spaces, multiInput = false,
+            options: defaultOptions = []
+        } = this.registry.get( id ) as ModuleDefinition;
 
-        /** Check whether the color space is compatible */
-        if ( ! spaces.includes( inputSpace ) ) {
+        /** Extract optional options from the tail */
+        const options = (
+            typeof args.at( -1 ) === 'object' &&
+            !Array.isArray( args.at( -1 ) )
+        ) ? args.pop() : {};
 
-            /** Try to convert color into supported color space */
-            if ( ! strict && spaces.length ) {
+        /** Check, if strict mode is enabled */
+        const strict = options?.strict ?? false;
 
-                let converted = null;
+        /** Collect all color inputs */
+        const allColors = [
+            input, ...args.filter(
+                ( val ) => val && typeof val === 'object' && 'space' in val
+            )
+        ];
 
-                for ( const target of spaces ) {
+        /** Map original color spaces */
+        const originalSpaces = allColors.map(
+            ( obj ) => obj.space
+        );
 
-                    try {
+        /** Convert color object to desired color space */
+        let convertedColors: ColorObject[];
 
-                        converted = convert.convert( color, target );
-                        color = converted;
-
-                        break;
-
-                    } catch {
-
-                        /**
-                         * Individual conversion failed, continue
-                         */
-
-                    }
-
-                }
-
-                if ( ! converted ) {
-
-                    throw new Error(
-                        `Module <${id}> could not convert from <${inputSpace}> to any supported space.`
-                    );
-
-                }
-
-            }
-
-        }
-
-        /** Call the module handler function */
-        let result: any;
-
-        try {
-
-            result = handler( color, {
-                ...defaultOptions,
-                ...options
-            } );
-
-        } catch ( err ) {
-
-            throw new Error(
-                `Module <${id}> handler failed: ${err}`
-            );
-
-        }
-
-        /** Convert back if needed and return result */
-        return convert.tryConvertMany( result, inputSpace, strict );
+        // ...
 
     }
 

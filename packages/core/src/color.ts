@@ -155,7 +155,7 @@ export class Color {
         try {
 
             return new Color (
-                convert.convert( this.color, target )
+                convert.convert( this.toObject(), target )
             );
 
         } catch ( err ) {
@@ -184,7 +184,7 @@ export class Color {
      */
     toString () : string {
 
-        return output.toString( this.color );
+        return output.toString( this.toObject() );
 
     }
 
@@ -195,7 +195,7 @@ export class Color {
      */
     toJSON () : unknown {
 
-        return output.toJSON( this.color );
+        return output.toJSON( this.toObject() );
 
     }
 
@@ -206,7 +206,7 @@ export class Color {
      */
     getSpace () : ColorSpaceId {
 
-        return this.color.space;
+        return this.toObject().space;
 
     }
 
@@ -214,21 +214,18 @@ export class Color {
      * Applying a module to execute a calculation.
      * 
      * @param id - Module name
-     * @param options - Optional arguments for the handler
-     * @param strict - Enable strict mode
+     * @param args - Additional colors or parameters (ColorObject[], options?, strict?)
      * @returns Color instance(s) or the handlers return value
      * @throws Throws an error, if the calculation cannot be executed
      */
     apply (
         id: string,
-        options?: Record<string, any>,
-        strict = false
+        ...args: any[]
     ) : Color | Color[] | any {
 
         const result = moduleEngine.apply(
-            id, this.color,
-            options,
-            strict
+            id, this.toObject(),
+            ...args
         );
 
         if ( result && typeof result === 'object' ) {
@@ -275,13 +272,10 @@ export const ColorMethodRegistry = {
         if ( exposeAsMethod && ! ( id in Color.prototype ) ) {
 
             ( Color.prototype as any )[ id ] = function (
-                options?: Record<string, any>,
-                strict = false
-            ) {
+                ...args: any[]
+            ) : Color | Color[] | any {
 
-                return this.apply( null, [
-                    id, options || {}, strict
-                ] );
+                return this.apply( id, ...args );
 
             };
 

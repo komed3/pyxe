@@ -244,10 +244,12 @@ export interface ColorSpaceDefinition {
  */
 export interface ModuleDefinition {
     id: string;
-    handler: ( color: ColorObject, options?: any ) => any;
+    handler: ( ...args: any [] ) => any;
     spaces: ColorSpaceId[];
     options?: Record<string, any>;
-    exposeAsMethod?: boolean
+    exposeAsMethod?: boolean;
+    multiInput?: boolean;
+    returnType?: string;
 }
 
 /**
