@@ -21,12 +21,12 @@
  */
 
 import type {
-    ColorSpaceId,
     ColorObject,
     ModuleDefinition
 } from '@pyxe/types';
 
 import { ColorMethodRegistry } from './color.js';
+import { conversionGraph } from './graph.js';
 
 /**
  * Internal registry for all (calculation) modules.
@@ -124,7 +124,129 @@ export class ModuleEngine {
         strict = false
     ) : any {
 
-        //
+        /** Check if the module is registered */
+
+        if ( ! this.registry.has( id ) ) {
+
+            throw new Error(
+                `Module <${id}> is not registered.`
+            );
+
+        }
+
+        /** Get module from registry, save initial color space */
+
+        const { handler, spaces, options: defaultOptions } = this.registry.get( id ) as ModuleDefinition;
+        const inputSpace = color.space;
+        
+
+        /** Check whether the color space is compatible */
+
+        if ( ! spaces.includes( inputSpace ) ) {
+
+            /** Try to convert color into supported color space */
+
+            if ( ! strict && spaces.length ) {
+
+                let converted = null;
+
+                for ( const target of spaces ) {
+
+                    try {
+
+                        converted = conversionGraph.convert( color, target );
+                        color = converted;
+
+                        break;
+
+                    } catch {
+
+                        /**
+                         * Individual conversion failed, continue
+                         */
+
+                    }
+
+                }
+
+                if ( ! converted ) {
+
+                    throw new Error(
+                        `Module <${id}> could not convert from <${inputSpace}> to any supported space.`
+                    );
+
+                }
+
+            }
+
+        }
+
+        /** Call the module handler function */
+
+        let result: any;
+
+        try {
+
+            result = handler( color, {
+                ...defaultOptions,
+                ...options
+            } );
+
+        } catch ( err ) {
+
+            throw new Error(
+                `Module <${id}> handler failed: ${err}`
+            );
+
+        }
+
+        /** Convert back if needed */
+
+        if ( result && typeof result === 'object' ) {
+
+            const _convertBack = ( obj: any ) : any => {
+
+                if ( obj?.space && obj?.value && obj.space !== inputSpace ) {
+
+                    try {
+
+                        return conversionGraph.convert( obj, inputSpace );
+
+                    } catch ( err ) {
+
+                        if ( strict ) {
+
+                            throw new Error(
+                                `Module <${id}>: Failed to convert result back to <${inputSpace}>: ${err}`
+                            );
+
+                        }
+
+                        /**
+                         * Result remains in the returned color space if not reversible
+                         **/
+
+                    }
+
+                }
+
+                return obj;
+
+            };
+
+            if ( Array.isArray( result ) ) {
+
+                return result.map( _convertBack );
+
+            }
+
+            return _convertBack( result );
+
+        }
+
+        /** Return non color object results */
+
+        return result;
 
     }
 
