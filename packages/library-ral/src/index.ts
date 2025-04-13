@@ -20,6 +20,8 @@
  * @license MIT
  */
 
+'use strict';
+
 import type { NamedColorList } from '@pyxe/types';
 import { colorLibRegistry } from '@pyxe/core/dist/src/library.js';
 

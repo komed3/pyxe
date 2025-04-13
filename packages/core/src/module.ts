@@ -16,6 +16,8 @@
  * @license MIT
  */
 
+'use strict';
+
 import type {
     ModuleFactory,
     ColorObject

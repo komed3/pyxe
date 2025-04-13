@@ -17,6 +17,8 @@
  * @license MIT
  */
 
+'use strict';
+
 import type {
     ColorObject,
     NamedColorList,

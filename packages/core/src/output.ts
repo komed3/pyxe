@@ -13,6 +13,8 @@
  * @license MIT
  */
 
+'use strict';
+
 import type {
     ColorSpaceId,
     ColorObject,
