@@ -7,6 +7,6 @@
   "type": "module",
   "scripts": {
     "build": "npx tsc -b tsconfig.build.json",
-    "test": "npm install && node ./test/index.js"
+    "test": "node ./test/index.js"
   }
 }
