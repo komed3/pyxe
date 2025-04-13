@@ -13,12 +13,14 @@
  * 
  * This component serves for visual tracing, logging and runtime analysis.
  * 
- * @package @pyxe/core
+ * @package @pyxe/utils
  * @requires @pyxe/types
  * 
  * @author Paul Köhler (komed3)
  * @license MIT
  */
+
+'use strict';
 
 import {
     DebugTrace,

@@ -23,7 +23,7 @@
 'use strict';
 
 import type { NamedColorList } from '@pyxe/types';
-import { colorLibRegistry } from '@pyxe/core/dist/src/library.js';
+import { colorLibRegistry } from '@pyxe/core';
 
 /**
  * Color table of classic RAL colors.

@@ -14,6 +14,7 @@
  * 
  * @package @pyxe/core
  * @requires @pyxe/types
+ * @requires @pyxe/utils
  * 
  * @author Paul Köhler (komed3)
  * @license MIT
@@ -31,7 +32,7 @@ import type {
 import {
     debug,
     debugTemplates
-} from './debug.js';
+} from '@pyxe/utils';
 
 /**
  * Registry managing all available parser functions for known color spaces.

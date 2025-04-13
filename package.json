@@ -1,29 +1,4 @@
 {
-  "name": "pyxe",
-  "version": "0.0.1",
-  "description": "Universal color model and transformation framework",
-  "author": {
-    "name": "komed3 (Paul Köhler)",
-    "email": "webmaster@komed3.de",
-    "url": "https://komed3.de"
-  },
-  "license": "MIT",
-  "homepage": "https://pyxe.de",
-  "keywords": [
-    "color",
-    "color-space",
-    "color-model",
-    "color-conversion"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/komed3/pyxe.git"
-  },
-  "bugs": {
-    "url": "https://github.com/komed3/pyxe/issues"
-  },
-  "type": "module",
-  "workspaces": [ "packages/*" ],
   "scripts": {
     "build": "npx tsc -b tsconfig.build.json",
     "test": "cd ./test && npm install"

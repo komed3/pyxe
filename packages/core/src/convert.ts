@@ -14,6 +14,7 @@
  * 
  * @package @pyxe/core
  * @requires @pyxe/types
+ * @requires @pyxe/utils
  * 
  * @author Paul Köhler (komed3)
  * @license MIT
@@ -27,14 +28,14 @@ import {
 } from '@pyxe/types';
 
 import {
+    debug,
+    debugTemplates
+} from '@pyxe/utils';
+
+import {
     type ConversionGraph,
     conversionGraph
 } from './graph.js';
-
-import {
-    debug,
-    debugTemplates
-} from './debug.js';
 
 /**
  * Converts color objects from one into another color space.
