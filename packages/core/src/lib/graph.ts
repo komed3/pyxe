@@ -173,46 +173,56 @@ export class ConversionGraph {
     }
 
     tree (
-        source: ColorSpaceName,
-        maxDepth: number = 9
+        root: ColorSpaceName,
+        maxDepth: number = 99
     ) : string {
 
-        let result = [ source ];
+        const visited: Set<string> = new Set ();
+        const seenNodes: Set<ColorSpaceName> = new Set ();
+        const result: string[] = [ root ];
 
         const _subtree = (
-            source: ColorSpaceName,
-            maxDepth: number,
+            current: ColorSpaceName,
+            depth: number,
             prefix: string = ''
         ) : void => {
 
-            const paths = this.registry.get( source );
+            const paths = this.registry.get( current );
 
-            if ( paths ) {
+            if ( depth > 0 && paths && paths.length > 0 ) {
 
-                for ( const [ i, path ] of paths.entries() ) {
+                const filtered = paths.filter( p => !seenNodes.has( p.target ) );
 
-                    const connector = i === paths.length - 1 ? '└───' : '├───';
+                filtered.forEach( ( path, idx ) => {
 
-                    result.push( `${prefix}${connector}${path.target}` );
+                    const pathKey = `${current}::${path.target}`;
+                    const isLast = idx === filtered.length - 1;
 
-                    if ( maxDepth > 0 ) {
+                    if ( ! visited.has( pathKey ) ) {
+
+                        seenNodes.add( path.target );
+                        visited.add( pathKey );
+
+                        result.push( `${prefix}${ (
+                            isLast ? '└───' : '├───'
+                        ) }${path.target}` );
 
                         _subtree(
-                            path.target, maxDepth - 1,
-                            `${prefix}${ (
-                                i === paths.length - 1 ? '    ' : '│   '
-                            ) }`
+                            path.target, depth - 1,
+                            prefix + ( isLast ? '    ' : '│   ' )
                         );
 
                     }
 
-                }
+                } );
 
             }
 
         };
 
-        _subtree( source, maxDepth );
+        seenNodes.add( root );
+
+        _subtree( root, maxDepth );
 
         return result.join( '\n' );
 

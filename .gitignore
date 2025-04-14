@@ -3,3 +3,4 @@ package-lock.json
 tsconfig.tsbuildinfo
 dist/
 node_modules/
+test/

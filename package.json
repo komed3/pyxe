@@ -1,5 +1,4 @@
 {
-  "name": "pyxe",
   "private": true,
   "workspaces": [
     "packages/*"

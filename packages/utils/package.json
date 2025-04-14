@@ -13,7 +13,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
-    "./errorHandler": "./dist/lib/errorHandler.js"
+    "./lib/errorHandler": "./dist/lib/errorHandler.js"
   },
   "files": [
     "README.md",
