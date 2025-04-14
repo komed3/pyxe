@@ -1,10 +1,9 @@
 'use strict';
 
-import { ColorSpaceID, ColorObject } from '@pyxe/types';
+import type { ColorSpaceID, ColorObject } from '@pyxe/types';
 
 import { ErrorHandler } from '@pyxe/utils/lib/errorHandler.js';
 import { tracer, tracerTemplates } from '@pyxe/utils/lib/tracer.js';
-
 import { conversionGraph, type ConversionGraph } from './graph.js';
 
 export class Convert {
@@ -15,30 +14,46 @@ export class Convert {
 
     convert (
         input: ColorObject,
-        target: ColorSpaceID
-    ) : ColorObject {
+        target: ColorSpaceID | ColorSpaceID[]
+    ) : ColorObject | undefined {
+
+        const targets = Array.isArray( target ) ? target : [ target ];
 
         try {
 
-            const handler = this.graph.resolve( input.space, target );
-            const result = handler( input );
+            for ( const t of targets ) {
 
-            if ( tracer.on() ) {
+                try {
 
-                tracer._trace( result, tracerTemplates.convert(
-                    input, result,
-                    this.graph.findPath( input.space, target )
-                ) );
+                    const handler = this.graph.resolve( input.space, t );
+                    const result = handler( input );
+
+                    if ( result && tracer.on() ) {
+
+                        tracer._trace( result, tracerTemplates.convert(
+                            input, result,
+                            this.graph.findPath( input.space, t )
+                        ) );
+
+                    }
+
+                    return result as ColorObject;
+
+                } catch {
+
+                    /** Ignore individual conversion errors and continue */
+
+                }
 
             }
-
-            return result;
 
         } catch ( err ) {
 
             ErrorHandler.throw( {
                 err, method: 'Convert',
-                msg: `Conversion from color space <${input.space}> to <${target}> has failed`
+                msg: `Conversion from color space <${input.space}> to any of <${
+                    targets.join( ', ' )
+                }> has failed`
             } );
 
         }
@@ -47,14 +62,14 @@ export class Convert {
 
     convertMany (
         input: ColorObject[],
-        target: ColorSpaceID
+        target: ColorSpaceID | ColorSpaceID[]
     ) : ColorObject[] {
 
         try {
 
             return input.map(
                 ( obj ) => this.convert( obj, target )
-            );
+            ) as ColorObject[];
 
         } catch ( err ) {
 
@@ -66,28 +81,28 @@ export class Convert {
 
     tryConvert (
         input: any,
-        target: ColorSpaceID,
+        target: ColorSpaceID | ColorSpaceID[],
         strict: boolean = false
     ) : ColorObject | unknown {
 
         try {
 
-            return ( input?.space && input?.value && input.space !== target )
-                ? ( strict
-                    ? this.convert( input, target )
-                    : ( () => {
-                        try { return this.convert( input, target ); }
-                        catch { return input; }
-                    } )()
-                )
-                : input;
+            return this.convert( input, target );
 
         } catch ( err ) {
 
-            ErrorHandler.throw( {
-                err, method: 'Convert',
-                msg: `Strict mode: The color space conversion has failed`
-            } );
+            if ( strict ) {
+
+                ErrorHandler.throw( {
+                    err, method: 'Convert',
+                    msg: `Strict mode: The color space conversion has failed`
+                } );
+
+            } else {
+
+                return input;
+
+            }
 
         }
 
@@ -95,7 +110,7 @@ export class Convert {
 
     tryConvertMany (
         input: any,
-        target: ColorSpaceID,
+        target: ColorSpaceID | ColorSpaceID[],
         strict: boolean = false
     ) : ColorObject[] | ColorObject | unknown {
 
