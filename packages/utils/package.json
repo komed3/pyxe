@@ -13,7 +13,8 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
-    "./lib/errorHandler": "./dist/lib/errorHandler.js"
+    "./lib/errorHandler": "./dist/lib/errorHandler.js",
+    "./lib/tracer": "./dist/lib/tracer.js"
   },
   "files": [
     "README.md",

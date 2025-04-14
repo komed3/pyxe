@@ -3,6 +3,7 @@
 import { ColorSpaceName, ColorObject } from '@pyxe/types';
 
 import { ErrorHandler } from '@pyxe/utils/lib/errorHandler.js';
+import { tracer, tracerTemplates } from '@pyxe/utils/lib/tracer.js';
 
 import { conversionGraph, type ConversionGraph } from './graph.js';
 
@@ -21,6 +22,15 @@ export class Convert {
 
             const handler = this.graph.resolve( input.space, target );
             const result = handler( input );
+
+            if ( tracer.on() ) {
+
+                tracer._trace( result, tracerTemplates.convert(
+                    input, result,
+                    this.graph.findPath( input.space, target )
+                ) );
+
+            }
 
             return result;
 

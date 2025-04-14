@@ -3,6 +3,7 @@
 import type { ColorInput, ColorObject, ColorSpaceFactory } from '@pyxe/types';
 
 import { ErrorHandler } from '@pyxe/utils/lib/errorHandler.js';
+import { tracer, tracerTemplates } from '@pyxe/utils/lib/tracer.js';
 
 import { colorSpace } from './colorSpace.js';
 
@@ -25,6 +26,14 @@ export class Parser {
                         const result = handler( input );
 
                         if ( result ) {
+
+                            if ( tracer.on() ) {
+
+                                tracer._trace( result, tracerTemplates.parse(
+                                    input, result
+                                ) );
+        
+                            }
 
                             return result;
 

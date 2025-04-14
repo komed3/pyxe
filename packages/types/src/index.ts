@@ -35,3 +35,13 @@ export interface ErrorHandlerFactory {
     msg?: string;
     err?: Error | string | any;
 }
+
+export interface TracerFactory {
+    action: string;
+    timestamp: Date | number;
+    meta?: {
+        origin?: ColorObject | unknown;
+        result?: ColorObject | unknown;
+        [ key: string ] : any;
+    };
+}
