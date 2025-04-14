@@ -2,6 +2,8 @@
 
 import type { ColorSpaceName, ColorSpaceFactory } from '@pyxe/types';
 
+import { ErrorHandler } from '@pyxe/utils/lib/errorHandler';
+
 export class ColorSpace {
 
     private registry: Map<ColorSpaceName, ColorSpaceFactory> = new Map ();
@@ -17,9 +19,10 @@ export class ColorSpace {
 
         } else {
 
-            throw new Error (
-                ``
-            );
+            ErrorHandler.throw( {
+                method: 'ColorSpace',
+                msg: `Color space named <${name}> is already declared.`
+            } );
 
         }
 
@@ -35,9 +38,10 @@ export class ColorSpace {
 
         } else {
 
-            throw new Error (
-                ``
-            );
+            ErrorHandler.throw( {
+                method: 'ColorSpace',
+                msg: `Color space named <${name}> does not exist.`
+            } );
 
         }
 
@@ -54,9 +58,10 @@ export class ColorSpace {
 
         } else if ( save ) {
 
-            throw new Error (
-                ``
-            );
+            ErrorHandler.throw( {
+                method: 'ColorSpace',
+                msg: `Color space named <${name}> does not exist.`
+            } );
 
         }
 

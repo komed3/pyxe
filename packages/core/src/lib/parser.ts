@@ -1,6 +1,9 @@
 'use strict';
 
 import type { ColorInput, ColorObject, ColorSpaceFactory } from '@pyxe/types';
+
+import { ErrorHandler } from '@pyxe/utils/lib/errorHandler.js';
+
 import { colorSpace } from './colorSpace.js';
 
 export class Parser {
@@ -35,9 +38,12 @@ export class Parser {
 
         } catch ( err ) {
 
-            throw new Error (
-                ``
-            );
+            ErrorHandler.throw( {
+                err, method: 'Parser',
+                msg: `No suitable parser found for input <${
+                    JSON.stringify( input )
+                }>`
+            } );
 
         }
 

@@ -1,6 +1,6 @@
 {
-  "name": "@pyxe/core",
-  "description": "Core package of the pyxe color framework",
+  "name": "@pyxe/utils",
+  "description": "Utils package of the pyxe color framework",
   "version": "0.1.0",
   "license": "MIT",
   "author": {
@@ -12,7 +12,8 @@
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/index.js",
+    "./errorHandler": "./dist/lib/errorHandler.js"
   },
   "files": [
     "README.md",
@@ -20,13 +21,12 @@
     "dist"
   ],
   "dependencies": {
-    "@pyxe/types": "^0.1.0",
-    "@pyxe/utils": "^0.1.0"
+    "@pyxe/types": "^0.1.0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/komed3/pyxe.git",
-    "directory": "packages/core"
+    "directory": "packages/utils"
   },
   "bugs": {
     "url": "https://github.com/komed3/pyxe/issues"

@@ -5,7 +5,11 @@
     "moduleResolution": "Node",
     "baseUrl": ".",
     "paths": {
-      "@pyxe/*": [ "packages/*/src" ]
+      "@pyxe/core": [ "packages/core/src" ],
+      "@pyxe/core/*": [ "packages/core/src/*" ],
+      "@pyxe/types": [ "packages/types/src" ],
+      "@pyxe/utils": [ "packages/utils/src" ],
+      "@pyxe/utils/*": [ "packages/utils/src/*" ]
     },
     "declaration": true,
     "declarationMap": false,

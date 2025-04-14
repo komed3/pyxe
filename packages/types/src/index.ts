@@ -29,3 +29,9 @@ export interface ColorSpaceFactory {
     parser: ParserHandler;
     transformations?: ConversionPath[];
 }
+
+export interface ErrorHandlerFactory {
+    method: string;
+    msg?: string;
+    err?: Error | string | any;
+}
