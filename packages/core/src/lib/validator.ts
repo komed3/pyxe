@@ -54,7 +54,7 @@ export class Validator {
     static validate (
         space: ColorSpaceID,
         input: ColorObject
-    ) : ColorObject {
+    ) : ColorObject | undefined {
 
         try {
 

@@ -54,7 +54,7 @@ export class Parser {
      */
     static parse (
         input: ColorInput
-    ) : ColorObject {
+    ) : ColorObject | undefined {
 
         try {
 

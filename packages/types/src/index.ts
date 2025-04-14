@@ -1,10 +1,16 @@
 'use strict';
 
+export type ColorSpaceID = string;
+
 export type ColorInput = any;
 
-export type ColorObject = any;
+export type ColorInstance = any;
 
-export type ColorSpaceID = string;
+export interface ColorObject {
+    space: ColorSpaceID;
+    value: ColorInstance;
+    meta?: Record<string, any>;
+};
 
 export type ParserHandler = (
     input: ColorInput
@@ -15,7 +21,7 @@ export type ValidatorHandler = (
 ) => ColorObject | undefined;
 
 export type ConversionHandler = (
-    input: ColorObject
+    input: ColorObject | undefined
 ) => ColorObject | undefined;
 
 export interface ConversionPath {

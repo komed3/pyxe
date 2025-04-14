@@ -234,7 +234,7 @@ export class ConversionGraph {
 
         }
 
-        return ( input: ColorObject ) => handler.reduce(
+        return ( input: ColorObject | undefined ) => handler.reduce(
             ( acc, cb ) => cb( acc ), input
         );
 
