@@ -4,7 +4,7 @@ export type ColorInput = any;
 
 export type ColorObject = any;
 
-export type ColorSpaceName = string;
+export type ColorSpaceID = string;
 
 export type ParserHandler = (
     input: ColorInput
@@ -19,12 +19,12 @@ export type ConversionHandler = (
 ) => ColorObject | undefined;
 
 export interface ConversionPath {
-    target: ColorSpaceName;
+    target: ColorSpaceID;
     handler: ConversionHandler;
 }
 
 export interface ColorSpaceFactory {
-    name: ColorSpaceName;
+    id: ColorSpaceID;
     validator: ValidatorHandler;
     parser: ParserHandler;
     conversions?: ConversionPath[];

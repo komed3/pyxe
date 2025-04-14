@@ -1,6 +1,6 @@
 'use strict';
 
-import type { ColorSpaceName, ColorInput, ColorObject, ColorSpaceFactory } from '@pyxe/types';
+import type { ColorSpaceID, ColorInput, ColorObject, ColorSpaceFactory } from '@pyxe/types';
 
 import { ErrorHandler } from '@pyxe/utils/lib/errorHandler.js';
 
@@ -9,7 +9,7 @@ import { colorSpace } from './colorSpace.js';
 export class Validator {
 
     static validate (
-        space: ColorSpaceName,
+        space: ColorSpaceID,
         input: ColorInput
     ) : ColorObject | undefined {
 
@@ -37,7 +37,7 @@ export class Validator {
     }
 
     static try (
-        space: ColorSpaceName,
+        space: ColorSpaceID,
         input: ColorInput
     ) : boolean {
 

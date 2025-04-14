@@ -1,6 +1,6 @@
 'use strict';
 
-import { ColorSpaceName, ColorObject } from '@pyxe/types';
+import { ColorSpaceID, ColorObject } from '@pyxe/types';
 
 import { ErrorHandler } from '@pyxe/utils/lib/errorHandler.js';
 import { tracer, tracerTemplates } from '@pyxe/utils/lib/tracer.js';
@@ -15,7 +15,7 @@ export class Convert {
 
     convert (
         input: ColorObject,
-        target: ColorSpaceName
+        target: ColorSpaceID
     ) : ColorObject {
 
         try {
@@ -47,7 +47,7 @@ export class Convert {
 
     convertMany (
         input: ColorObject[],
-        target: ColorSpaceName
+        target: ColorSpaceID
     ) : ColorObject[] {
 
         try {
@@ -66,7 +66,7 @@ export class Convert {
 
     tryConvert (
         input: any,
-        target: ColorSpaceName,
+        target: ColorSpaceID,
         strict: boolean = false
     ) : ColorObject | unknown {
 
@@ -95,7 +95,7 @@ export class Convert {
 
     tryConvertMany (
         input: any,
-        target: ColorSpaceName,
+        target: ColorSpaceID,
         strict: boolean = false
     ) : ColorObject[] | ColorObject | unknown {
 

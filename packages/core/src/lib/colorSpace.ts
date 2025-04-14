@@ -1,6 +1,6 @@
 'use strict';
 
-import type { ColorSpaceName, ColorSpaceFactory } from '@pyxe/types';
+import type { ColorSpaceID, ColorSpaceFactory } from '@pyxe/types';
 
 import { conversionGraph } from './graph.js';
 
@@ -8,20 +8,20 @@ import { ErrorHandler } from '@pyxe/utils/lib/errorHandler';
 
 export class ColorSpace {
 
-    private registry: Map<ColorSpaceName, ColorSpaceFactory> = new Map ();
+    private registry: Map<ColorSpaceID, ColorSpaceFactory> = new Map ();
 
     _register (
-        name: ColorSpaceName,
+        id: ColorSpaceID,
         factory: ColorSpaceFactory
     ) : void {
 
-        if ( ! this.has( name ) ) {
+        if ( ! this.has( id ) ) {
 
-            this.registry.set( name, factory );
+            this.registry.set( id, factory );
 
             if ( factory.conversions ) {
 
-                conversionGraph._registerMany( name, factory.conversions );
+                conversionGraph._registerMany( id, factory.conversions );
 
             }
 
@@ -29,7 +29,7 @@ export class ColorSpace {
 
             ErrorHandler.throw( {
                 method: 'ColorSpace',
-                msg: `Color space named <${name}> is already declared`
+                msg: `Color space named <${id}> is already declared`
             } );
 
         }
@@ -37,22 +37,22 @@ export class ColorSpace {
     }
 
     has (
-        name: ColorSpaceName
+        id: ColorSpaceID
     ) : boolean {
 
-        return this.registry.has( name );
+        return this.registry.has( id );
 
     }
 
     check (
-        name: ColorSpaceName
+        id: ColorSpaceID
     ) : void {
 
-        if ( ! this.has( name ) ) {
+        if ( ! this.has( id ) ) {
 
             ErrorHandler.throw( {
                 method: 'ColorSpace',
-                msg: `The color space <${name}> is not registered`
+                msg: `The color space <${id}> is not registered`
             } );
 
         }
@@ -60,21 +60,21 @@ export class ColorSpace {
     }
 
     get (
-        name: ColorSpaceName,
+        id: ColorSpaceID,
         safe = true
     ) : ColorSpaceFactory | undefined {
 
         if ( safe ) {
 
-            this.check( name );
+            this.check( id );
 
         }
 
-        return this.registry.get( name );
+        return this.registry.get( id );
 
     }
 
-    getSpaces () : ColorSpaceName[] {
+    getSpaces () : ColorSpaceID[] {
 
         return Array.from( this.registry.keys() );
 

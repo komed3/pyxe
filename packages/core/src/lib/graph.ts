@@ -1,6 +1,6 @@
 'use strict';
 
-import type { ColorSpaceName, ColorObject, ConversionHandler, ConversionPath } from '@pyxe/types';
+import type { ColorSpaceID, ColorObject, ConversionHandler, ConversionPath } from '@pyxe/types';
 
 import { colorSpace } from './colorSpace.js';
 
@@ -8,13 +8,13 @@ import { ErrorHandler } from '@pyxe/utils/lib/errorHandler';
 
 export class ConversionGraph {
 
-    private registry: Map<ColorSpaceName, ConversionPath[]> = new Map ();
+    private registry: Map<ColorSpaceID, ConversionPath[]> = new Map ();
 
-    private cache: Map<string, ColorSpaceName[] | null> = new Map ();
+    private cache: Map<string, ColorSpaceID[] | null> = new Map ();
 
     _register (
-        source: ColorSpaceName,
-        target: ColorSpaceName,
+        source: ColorSpaceID,
+        target: ColorSpaceID,
         handler: ConversionHandler
     ) : void {
 
@@ -31,7 +31,7 @@ export class ConversionGraph {
     }
 
     _registerMany (
-        source: ColorSpaceName,
+        source: ColorSpaceID,
         paths: ConversionPath[]
     ) : void {
 
@@ -50,7 +50,7 @@ export class ConversionGraph {
     }
 
     getFrom (
-        source: ColorSpaceName
+        source: ColorSpaceID
     ) : ConversionPath[] {
 
         return this.registry.get( source ) || [];
@@ -58,9 +58,9 @@ export class ConversionGraph {
     }
 
     findPath (
-        source: ColorSpaceName,
-        target: ColorSpaceName
-    ) : ColorSpaceName[] | null {
+        source: ColorSpaceID,
+        target: ColorSpaceID
+    ) : ColorSpaceID[] | null {
 
         if ( source === target ) return [ source ];
 
@@ -68,12 +68,12 @@ export class ConversionGraph {
 
         if ( this.cache.has( cacheKey ) ) {
 
-            return this.cache.get( cacheKey ) as ColorSpaceName[] | null;
+            return this.cache.get( cacheKey ) as ColorSpaceID[] | null;
 
         }
 
-        const visited: Set<ColorSpaceName> = new Set ();
-        const queue: [ ColorSpaceName, ColorSpaceName[] ][] = [
+        const visited: Set<ColorSpaceID> = new Set ();
+        const queue: [ ColorSpaceID, ColorSpaceID[] ][] = [
             [ source, [ source ] ]
         ];
 
@@ -112,8 +112,8 @@ export class ConversionGraph {
     }
 
     resolve (
-        source: ColorSpaceName,
-        target: ColorSpaceName
+        source: ColorSpaceID,
+        target: ColorSpaceID
     ) : ConversionHandler {
 
         colorSpace.check( source );
@@ -161,8 +161,8 @@ export class ConversionGraph {
     }
 
     describePath (
-        source: ColorSpaceName,
-        target: ColorSpaceName
+        source: ColorSpaceID,
+        target: ColorSpaceID
     ) : string {
 
         const path = this.findPath( source, target );
@@ -172,16 +172,16 @@ export class ConversionGraph {
     }
 
     tree (
-        root: ColorSpaceName,
+        root: ColorSpaceID,
         maxDepth: number = 99
     ) : string {
 
         const visited: Set<string> = new Set ();
-        const seenNodes: Set<ColorSpaceName> = new Set ();
+        const seenNodes: Set<ColorSpaceID> = new Set ();
         const result: string[] = [ root ];
 
         const _subtree = (
-            current: ColorSpaceName,
+            current: ColorSpaceID,
             depth: number,
             prefix: string = ''
         ) : void => {
