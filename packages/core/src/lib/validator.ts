@@ -1,27 +1,66 @@
+/**
+ * Class Validator
+ * src/lib/validator.ts
+ * 
+ * The `Validator` class provides a centralized interface for validating color objects
+ * against specific color space definitions. It delegates the validation logic to the
+ * validator function of the targeted color space, as retrieved via the `ColorSpace`
+ * registry.
+ *
+ * This validator ensures that input values conform to the expected structure and coordinate
+ * boundaries for a given color space. If a space does not implement a validator, a failure
+ * is automatically reported via the `ErrorHandler`.
+ *
+ * Like the `Parser`, this module is intentionally standalone for modularity and to
+ * support potential server-side validation use cases.
+ * 
+ * @package @pyxe/core
+ * @requires @pyxe/types
+ * @requires @pyxe/utils
+ * 
+ * @author Paul Köhler (komed3)
+ * @license MIT
+ */
+
 'use strict';
 
-import type { ColorSpaceID, ColorInput, ColorObject, ColorSpaceFactory } from '@pyxe/types';
+import type {
+    ColorSpaceID, ColorObject,
+    ColorSpaceFactory
+} from '@pyxe/types';
 
 import { ErrorHandler } from '@pyxe/utils/lib/errorHandler.js';
-
 import { colorSpace } from './colorSpace.js';
 
+/**
+ * Color object validator for registered color spaces.
+ * Delegates to space-specific `validator()` implementations stored in the registry.
+ * This class cannot be instantiated. All methods are static.
+ */
 export class Validator {
 
+    /**
+     * Validates a given color object against the specified color space.
+     * 
+     * Delegates to the color space’s registered `validator()` function. If validation fails
+     * or the validator is missing, an error is thrown. Otherwise, a standardized `ColorObject`
+     * is returned.
+     *
+     * @param space - The ID of the color space to validate against (e.g., 'RGB', 'Lab')
+     * @param input - The raw color object to be validated
+     * @returns A validated `ColorObject` representing the input
+     * @throws If validation fails or the color space is unknown
+     */
     static validate (
         space: ColorSpaceID,
-        input: ColorInput
-    ) : ColorObject | undefined {
+        input: ColorObject
+    ) : ColorObject {
 
         try {
 
             const { validator: handler } = colorSpace.get( space ) as ColorSpaceFactory;
 
-            if ( handler && typeof handler === 'function' ) {
-
-                return handler( input );
-
-            }
+            return handler( input );
 
         } catch ( err ) {
 
@@ -36,9 +75,19 @@ export class Validator {
 
     }
 
+    /**
+     * Lightweight validation check for a specific color space.
+     * 
+     * This method returns a boolean indicating whether the input passes validation,
+     * without throwing an error or returning the parsed result. Useful for pre-checks.
+     *
+     * @param space - Target color space to check
+     * @param input - The color object to validate
+     * @returns `true` if the input is valid, otherwise `false`
+     */
     static try (
         space: ColorSpaceID,
-        input: ColorInput
+        input: ColorObject
     ) : boolean {
 
         try {

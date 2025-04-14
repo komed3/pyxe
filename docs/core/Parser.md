@@ -1,4 +1,4 @@
-# Unified Color Input Parser
+# Color Input Parser
 
 The `Parser` class is responsible for automatically identifying and converting arbitrary color inputs (`ColorInput`) into validated internal `ColorObjects`.
 
