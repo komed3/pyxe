@@ -2,8 +2,6 @@
   "files": [],
   "references": [
     { "path": "packages/core" },
-    { "path": "packages/library-ral" },
-    { "path": "packages/types" },
-    { "path": "packages/utils" }
+    { "path": "packages/types" }
   ]
 }

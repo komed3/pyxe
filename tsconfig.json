@@ -8,8 +8,11 @@
       "@pyxe/*": [ "packages/*/src" ]
     },
     "declaration": true,
+    "declarationMap": false,
+    "sourceMap": false,
     "outDir": "dist",
     "strict": true,
+    "emitDeclarationOnly": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,

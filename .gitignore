@@ -1,5 +1,5 @@
-node_modules/
-dist/
-test/
-tsconfig.tsbuildinfo
+.gitignore
 package-lock.json
+tsconfig.tsbuildinfo
+dist/
+node_modules/
