@@ -72,7 +72,7 @@ export class ConversionGraph {
 
         }
 
-        const visited = new Set<ColorSpaceName> ();
+        const visited: Set<ColorSpaceName> = new Set ();
         const queue: [ ColorSpaceName, ColorSpaceName[] ][] = [
             [ source, [ source ] ]
         ];
@@ -85,28 +85,27 @@ export class ConversionGraph {
 
             visited.add( current );
 
-            const edges = this.getFrom( current );
+            for ( const { target: next } of this.getFrom( current ) ) {
 
-            for ( const edge of edges ) {
+                if ( visited.has( next ) ) continue;
 
-                if ( edge.target === target ) {
+                const newPath = [ ...path, next ];
 
-                    const result = [ ...path, edge.target ];
+                if ( next === target ) {
 
-                    this.cache.set( cacheKey, result );
+                    this.cache.set( cacheKey, newPath );
 
-                    return result;
+                    return newPath;
 
                 }
 
-                queue.push( [
-                    edge.target,
-                    [ ...path, edge.target ]
-                ] );
+                queue.push( [ next, newPath ] );
 
             }
 
         }
+
+        this.cache.set( cacheKey, null );
 
         return null;
 
