@@ -18,7 +18,7 @@ export class Parser {
 
                 try {
 
-                    const { parser: handler } = colorSpace._get( space ) as ColorSpaceFactory;
+                    const { parser: handler } = colorSpace.get( space ) as ColorSpaceFactory;
 
                     if ( handler && typeof handler === 'function' ) {
 

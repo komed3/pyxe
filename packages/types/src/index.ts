@@ -15,7 +15,7 @@ export type ValidatorHandler = (
 ) => ColorObject | undefined;
 
 export type ConversionHandler = (
-    color: ColorObject
+    input: ColorObject
 ) => ColorObject | undefined;
 
 export interface ConversionPath {
@@ -27,7 +27,7 @@ export interface ColorSpaceFactory {
     name: ColorSpaceName;
     validator: ValidatorHandler;
     parser: ParserHandler;
-    transformations?: ConversionPath[];
+    conversions?: ConversionPath[];
 }
 
 export interface ErrorHandlerFactory {

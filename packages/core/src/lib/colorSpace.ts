@@ -2,6 +2,8 @@
 
 import type { ColorSpaceName, ColorSpaceFactory } from '@pyxe/types';
 
+import { conversionGraph } from './graph.js';
+
 import { ErrorHandler } from '@pyxe/utils/lib/errorHandler';
 
 export class ColorSpace {
@@ -17,50 +19,17 @@ export class ColorSpace {
 
             this.registry.set( name, factory );
 
-        } else {
+            if ( factory.conversions ) {
 
-            ErrorHandler.throw( {
-                method: 'ColorSpace',
-                msg: `Color space named <${name}> is already declared.`
-            } );
+                conversionGraph._registerMany( name, factory.conversions );
 
-        }
-
-    }
-
-    _deregister (
-        name: ColorSpaceName
-    ) : void {
-
-        if ( this.has( name ) ) {
-
-            this.registry.delete( name );
+            }
 
         } else {
 
             ErrorHandler.throw( {
                 method: 'ColorSpace',
-                msg: `Color space named <${name}> does not exist.`
-            } );
-
-        }
-
-    }
-
-    _get (
-        name: ColorSpaceName,
-        save = true
-    ) : ColorSpaceFactory | undefined {
-
-        if ( this.has( name ) ) {
-
-            return this.registry.get( name );
-
-        } else if ( save ) {
-
-            ErrorHandler.throw( {
-                method: 'ColorSpace',
-                msg: `Color space named <${name}> does not exist.`
+                msg: `Color space named <${name}> is already declared`
             } );
 
         }
@@ -72,6 +41,36 @@ export class ColorSpace {
     ) : boolean {
 
         return this.registry.has( name );
+
+    }
+
+    check (
+        name: ColorSpaceName
+    ) : void {
+
+        if ( ! this.has( name ) ) {
+
+            ErrorHandler.throw( {
+                method: 'ColorSpace',
+                msg: `The color space <${name}> is not registered`
+            } );
+
+        }
+
+    }
+
+    get (
+        name: ColorSpaceName,
+        safe = true
+    ) : ColorSpaceFactory | undefined {
+
+        if ( safe ) {
+
+            this.check( name );
+
+        }
+
+        return this.registry.get( name );
 
     }
 

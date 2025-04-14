@@ -15,7 +15,7 @@ export class Validator {
 
         try {
 
-            const { validator: handler } = colorSpace._get( space ) as ColorSpaceFactory;
+            const { validator: handler } = colorSpace.get( space ) as ColorSpaceFactory;
 
             if ( handler && typeof handler === 'function' ) {
 
