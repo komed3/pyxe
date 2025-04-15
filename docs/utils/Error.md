@@ -110,3 +110,17 @@ info (
 Logs the error using `console.info()`. Omits stack trace by default.
 
 @param `trace` - Whether to include the stack trace (default: `false`)
+
+## Readable Instance Variables
+
+After instancing a new (not thrown out) error, the following variables become available in addition to the above described methods:
+
+`.header` - Formatted header line including timestamp, method and message
+
+`.timestamp` - Time of error creation, formatted as `HH:MM:SS`
+
+`.method` - Name of the method or module where the error originated
+
+`.msg` - Optional error message provided at creation
+
+`.extra` - Optional extracted message from nested `Error` or any other input
