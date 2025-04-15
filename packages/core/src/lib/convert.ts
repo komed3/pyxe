@@ -1,3 +1,22 @@
+/**
+ * Class Convert
+ * src/lib/convert.js
+ * 
+ * Provides color space conversion utilities based on the central `ConversionGraph`.
+ * This class supports strict and fault-tolerant conversions and allows prioritizing
+ * a list of fallback target color spaces in order of preference.
+ * 
+ * All conversions are tracked via a tracer if enabled. It is safe to use in
+ * production environments due to internal error handling and optional strict modes.
+ * 
+ * @package @pyxe/core
+ * @requires @pyxe/types
+ * @requires @pyxe/utils
+ * 
+ * @author Paul Köhler (komed3)
+ * @license MIT
+ */
+
 'use strict';
 
 import type { ColorSpaceID, ColorObject } from '@pyxe/types';
@@ -6,12 +25,30 @@ import { ErrorHandler } from '@pyxe/utils/lib/errorHandler.js';
 import { tracer, tracerTemplates } from '@pyxe/utils/lib/tracer.js';
 import { conversionGraph, type ConversionGraph } from './graph.js';
 
+/**
+ * Handles conversion between color spaces using the central directed graph.
+ * Supports fallback target spaces and strict vs. tolerant operation modes.
+ */
 export class Convert {
 
+    /**
+     * Creates a new Convert instance using the given conversion graph.
+     * 
+     * @param graph - The internal conversion graph used to resolve paths
+     */
     constructor (
         private graph: ConversionGraph
     ) {}
 
+    /**
+     * Converts a color object from its current space to a target space or
+     * the first successfully resolved space in a list of fallbacks.
+     * 
+     * @param input - The source color object
+     * @param target - The target color space ID or an array of fallback space IDs
+     * @returns The converted color object, or undefined if all targets fail
+     * @throws Will rethrow the last encountered error if all attempts fail
+     */
     convert (
         input: ColorObject,
         target: ColorSpaceID | ColorSpaceID[]
@@ -41,7 +78,7 @@ export class Convert {
 
                 } catch {
 
-                    /** Ignore individual conversion errors and continue */
+                    /** Skip failed target and continue */
 
                 }
 
@@ -60,6 +97,13 @@ export class Convert {
 
     }
 
+    /**
+     * Converts an array of color objects to the given target space(s).
+     * 
+     * @param input - Array of source color objects
+     * @param target - A single or list of fallback target color space IDs
+     * @returns An array of converted color objects
+     */
     convertMany (
         input: ColorObject[],
         target: ColorSpaceID | ColorSpaceID[]
@@ -79,6 +123,15 @@ export class Convert {
 
     }
 
+    /**
+     * Tries to convert a color object, optionally throwing if conversion fails.
+     * Returns the input unchanged if conversion fails and strict mode is disabled.
+     * 
+     * @param input - The color object to convert
+     * @param target - The target or list of fallback target spaces
+     * @param strict - If true, throws on failure; otherwise returns original input
+     * @returns The converted color object or the original input
+     */
     tryConvert (
         input: any,
         target: ColorSpaceID | ColorSpaceID[],
@@ -108,6 +161,15 @@ export class Convert {
 
     }
 
+    /**
+     * Tries to convert a single or array of color objects, optionally enforcing
+     * strict failure mode.
+     * 
+     * @param input - The color object or array of objects to convert
+     * @param target - The target or list of fallback target spaces
+     * @param strict - If true, throws on failure; otherwise returns unchanged input(s)
+     * @returns Converted object(s) or the original input(s)
+     */
     tryConvertMany (
         input: any,
         target: ColorSpaceID | ColorSpaceID[],
@@ -133,4 +195,8 @@ export class Convert {
 
 }
 
+/**
+ * Singleton instance of the Convert class.
+ * Used for color space conversions using the global conversion graph.
+ */
 export const convert = new Convert ( conversionGraph );

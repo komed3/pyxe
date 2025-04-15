@@ -3,16 +3,16 @@
  * src/lib/graph.js
  * 
  * ConversionGraph manages directional color space conversion paths.
- *
+ * 
  * It acts as a directed graph structure, where each node represents a color space
  * and each edge represents a direct conversion handler from one space to another.
- *
+ * 
  * The graph supports:
  * - Dynamic registration of conversion paths
  * - Path resolution from one space to another, including multi-step conversions
  * - Caching of resolved paths for performance
  * - Tree visualization of conversion routes for debugging or documentation
- *
+ * 
  * This is a core component of the pyxe color framework, enabling all dynamic,
  * extensible color transformations across arbitrary color models.
  * 
@@ -53,7 +53,7 @@ export class ConversionGraph {
 
     /**
      * Registers a direct conversion from a source to a target color space.
-     *
+     * 
      * @param source - The source color space ID
      * @param target - The target color space ID
      * @param handler - The function that converts between the two spaces
@@ -78,7 +78,7 @@ export class ConversionGraph {
 
     /**
      * Registers multiple conversion paths from a single source space.
-     *
+     * 
      * @param source - The source color space ID
      * @param paths - A list of target/handler pairs to register
      */
@@ -107,7 +107,7 @@ export class ConversionGraph {
 
     /**
      * Returns all direct conversion paths from a given source color space.
-     *
+     * 
      * @param source - The source color space ID
      * @returns A list of all direct conversion targets and handlers
      */
@@ -122,7 +122,7 @@ export class ConversionGraph {
     /**
      * Resolves the shortest path (if any) from source to target color space.
      * Uses BFS to find the first available route.
-     *
+     * 
      * @param source - Starting color space ID
      * @param target - Target color space ID
      * @returns An ordered list of color space IDs representing the conversion
@@ -185,7 +185,7 @@ export class ConversionGraph {
     /**
      * Returns a composed conversion handler function for a full path
      * from source to target. The handler applies each step in sequence.
-     *
+     * 
      * @param source - Starting color space ID
      * @param target - Target color space ID
      * @returns A composed handler function to convert from source to target
@@ -243,7 +243,7 @@ export class ConversionGraph {
     /**
      * Describes the path from source to target as a readable string,
      * or returns "n/a" if no path is available.
-     *
+     * 
      * @param source - Starting color space ID
      * @param target - Target color space ID
      * @returns A string such as "rgb → xyz → lab" or "n/a"
@@ -262,7 +262,7 @@ export class ConversionGraph {
     /**
      * Returns a tree-style string visualization of all reachable conversions
      * from a given root color space, optionally limited in depth.
-     *
+     * 
      * @param root - The root color space to start the tree from
      * @param maxDepth - Maximum depth of the tree (default: 99)
      * @returns A multiline string representing the conversion tree

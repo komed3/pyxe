@@ -6,11 +6,11 @@
  * against specific color space definitions. It delegates the validation logic to the
  * validator function of the targeted color space, as retrieved via the `ColorSpace`
  * registry.
- *
+ * 
  * This validator ensures that input values conform to the expected structure and coordinate
  * boundaries for a given color space. If a space does not implement a validator, a failure
  * is automatically reported via the `ErrorHandler`.
- *
+ * 
  * Like the `Parser`, this module is intentionally standalone for modularity and to
  * support potential server-side validation use cases.
  * 
@@ -45,7 +45,7 @@ export class Validator {
      * Delegates to the color space’s registered `validator()` function. If validation fails
      * or the validator is missing, an error is thrown. Otherwise, a standardized `ColorObject`
      * is returned.
-     *
+     * 
      * @param space - The ID of the color space to validate against (e.g., 'RGB', 'Lab')
      * @param input - The raw color object to be validated
      * @returns A validated `ColorObject` representing the input
@@ -80,7 +80,7 @@ export class Validator {
      * 
      * This method returns a boolean indicating whether the input passes validation,
      * without throwing an error or returning the parsed result. Useful for pre-checks.
-     *
+     * 
      * @param space - Target color space to check
      * @param input - The color object to validate
      * @returns `true` if the input is valid, otherwise `false`

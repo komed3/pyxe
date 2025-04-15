@@ -47,7 +47,7 @@ export class Parser {
      * 
      * The method returns the first successful `ColorObject`, or throws an error if
      * no parser accepts the input. Parsing success is automatically traced if enabled.
-     *
+     * 
      * @param input - The color input to be parsed (string, array, object, etc.)
      * @returns A validated `ColorObject` with color coordinates and metadata
      * @throws If no registered parser can handle the input
@@ -110,7 +110,7 @@ export class Parser {
      * without throwing an error.
      * 
      * This is a utility method useful for input validation, preview rendering, etc.
-     *
+     * 
      * @param input - A color input to test
      * @returns `true` if the input is parsable, otherwise `false`
      */
