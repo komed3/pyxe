@@ -23,10 +23,7 @@
 
 'use strict';
 
-import {
-    ColorInput, ColorObject,
-    TracerFactory
-} from '@pyxe/types';
+import { ColorInput, ColorObject, TracerFactory } from '@pyxe/types';
 
 /**
  * Manages tracing of color operations by storing structured trace entries on color

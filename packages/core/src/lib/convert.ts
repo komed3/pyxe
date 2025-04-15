@@ -20,10 +20,7 @@
 
 'use strict';
 
-import type {
-    ColorSpaceID, ColorObject
-} from '@pyxe/types';
-
+import type { ColorSpaceID, ColorObject } from '@pyxe/types';
 import { Utils } from '@pyxe/utils';
 import { conversionGraph, type ConversionGraph } from './graph.js';
 

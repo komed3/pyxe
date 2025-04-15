@@ -1,10 +1,50 @@
 'use strict';
 
-export type ColorSpaceID = string;
+export type HEX = `#${string}`;
 
-export type ColorInput = any;
+export interface RGB {
+    r: number;
+    g: number;
+    b: number;
+    a?: number;
+}
 
-export type ColorInstance = any;
+export interface HSL {
+    h: number;
+    s: number;
+    l: number;
+}
+
+export interface HSV {
+    h: number;
+    s: number;
+    v: number;
+}
+
+export interface CMYK {
+    c: number;
+    m: number;
+    y: number;
+    k: number;
+}
+
+export interface XYZ {
+    x: number;
+    y: number;
+    z: number;
+}
+
+export interface Lab {
+    L: number;
+    a: number;
+    b: number;
+}
+
+export type ColorSpaceID = 'HEX' | 'RGB' | 'HSL' | 'HSV' | 'CMYK' | 'XYZ' | 'Lab';
+
+export type ColorInstance = HEX | RGB | HSL | HSV | CMYK | XYZ | Lab;
+
+export type ColorInput = ColorInstance | string;
 
 export interface ColorObject {
     space: ColorSpaceID;
@@ -17,7 +57,7 @@ export type ParserHandler = (
 ) => ColorObject | undefined;
 
 export type ValidatorHandler = (
-    input: ColorInput
+    input: ColorObject
 ) => ColorObject | undefined;
 
 export type ConversionHandler = (
@@ -34,6 +74,17 @@ export interface ColorSpaceFactory {
     validator: ValidatorHandler;
     parser: ParserHandler;
     conversions?: ConversionPath[];
+    meta?: Record<string, any>
+}
+
+export interface ModuleFactory {
+    id: string;
+    handler: ( ...args: any [] ) => any;
+    spaces: ColorSpaceID[];
+    options?: Record<string, any>;
+    exposeAsMethod?: boolean;
+    multiInput?: boolean;
+    returnType?: string;
     meta?: Record<string, any>
 }
 

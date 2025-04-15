@@ -24,11 +24,7 @@
 
 'use strict';
 
-import type {
-    ColorSpaceID, ColorObject,
-    ColorSpaceFactory
-} from '@pyxe/types';
-
+import type { ColorSpaceID, ColorObject, ColorSpaceFactory } from '@pyxe/types';
 import { Utils } from '@pyxe/utils';
 import { colorSpace } from './colorSpace.js';
 

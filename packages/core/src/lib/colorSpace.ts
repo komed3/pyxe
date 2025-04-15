@@ -24,10 +24,7 @@
 
 'use strict';
 
-import type {
-    ColorSpaceID, ColorSpaceFactory
-} from '@pyxe/types';
-
+import type { ColorSpaceID, ColorSpaceFactory } from '@pyxe/types';
 import { Utils } from '@pyxe/utils';
 import { conversionGraph } from './graph.js';
 
@@ -45,9 +42,9 @@ export class ColorSpace {
     /**
      * Registers a new color space and optionally its conversions.
      * If the color space has already been registered, an error is thrown.
-     *
-     * This method is intended to be called by color space modules during setup.
-     *
+     * 
+     * This method is intended to be called by color spaces during setup.
+     * 
      * @param id - Unique identifier of the color space
      * @param factory - Factory object implementing the color space definition
      * @throws Error if the color space ID has already been registered
@@ -83,7 +80,7 @@ export class ColorSpace {
      * If the color space is not registered, an error is thrown.
      * 
      * This method is intended for internal use, e.g., in testing or plugin unloading.
-     *
+     * 
      * @param id - Color space ID to remove
      * @throws Error if the color space does not exist
      */
@@ -103,7 +100,7 @@ export class ColorSpace {
 
     /**
      * Checks if a color space with the given ID is registered.
-     *
+     * 
      * @param id - The color space ID to look up
      * @returns `true` if the color space is registered, `false` otherwise
      */
@@ -117,7 +114,7 @@ export class ColorSpace {
 
     /**
      * Verifies that a color space is registered and throws an error if not
-     *
+     * 
      * @param id - Color space ID to check
      * @returns `true` if the color space exists
      * @throws Error if the color space is not registered
@@ -141,7 +138,7 @@ export class ColorSpace {
 
     /**
      * Retrieves a color space factory by its ID.
-     *
+     * 
      * @param id - Color space ID to retrieve
      * @param safe - Whether to throw an error if the space does not exist (default: `true`)
      * @returns The factory if found, or `undefined` if `safe` is `false` and not found
@@ -162,7 +159,7 @@ export class ColorSpace {
 
     /**
      * Returns a list of all registered color space IDs.
-     *
+     * 
      * @returns An array of registered color space identifiers
      */
     getSpaces () : ColorSpaceID[] {
@@ -176,7 +173,7 @@ export class ColorSpace {
     /**
      * Retrieves optional meta-information associated with a color space.
      * Returns `undefined` if no metadata is defined.
-     *
+     * 
      * @param id - Color space ID
      * @returns The `meta` field from the color space factory, if defined
      * @throws Error if the color space is not registered
