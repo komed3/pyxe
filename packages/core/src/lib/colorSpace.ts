@@ -113,7 +113,7 @@ export class ColorSpace {
     }
 
     /**
-     * Verifies that a color space is registered and throws an error if not
+     * Verifies that a color space is registered and throws an error if not.
      * 
      * @param id - Color space ID to check
      * @returns `true` if the color space exists

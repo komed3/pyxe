@@ -115,7 +115,7 @@ export class Module {
     }
 
     /**
-     * Verifies that a module is registered and throws an error if not
+     * Verifies that a module is registered and throws an error if not.
      * 
      * @param id - Module ID to check
      * @returns `true` if the module exists
