@@ -13,7 +13,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
-    "./errorHandler": "./dist/lib/errorHandler.js",
+    "./error": "./dist/lib/error.js",
     "./tracer": "./dist/lib/tracer.js"
   },
   "files": [

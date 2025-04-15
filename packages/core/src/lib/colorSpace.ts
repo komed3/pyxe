@@ -28,7 +28,7 @@ import type {
     ColorSpaceID, ColorSpaceFactory
 } from '@pyxe/types';
 
-import { ErrorHandler } from '@pyxe/utils/lib/errorHandler';
+import { Utils } from '@pyxe/utils';
 import { conversionGraph } from './graph.js';
 
 /**
@@ -69,7 +69,7 @@ export class ColorSpace {
 
         } else {
 
-            ErrorHandler.throw( {
+            throw new Utils.error( {
                 method: 'ColorSpace',
                 msg: `Color space named <${id}> is already declared`
             } );
@@ -128,7 +128,7 @@ export class ColorSpace {
 
         if ( ! this.has( id ) ) {
 
-            ErrorHandler.throw( {
+            throw new Utils.error( {
                 method: 'ColorSpace',
                 msg: `The color space <${id}> is not registered`
             } );

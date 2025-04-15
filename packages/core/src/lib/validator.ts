@@ -29,7 +29,7 @@ import type {
     ColorSpaceFactory
 } from '@pyxe/types';
 
-import { ErrorHandler } from '@pyxe/utils/lib/errorHandler.js';
+import { Utils } from '@pyxe/utils';
 import { colorSpace } from './colorSpace.js';
 
 /**
@@ -64,7 +64,7 @@ export class Validator {
 
         } catch ( err ) {
 
-            ErrorHandler.throw( {
+            throw new Utils.error( {
                 err, method: 'Validator',
                 msg: `Validation failed for color space <${space}> with input <${
                     JSON.stringify( input )

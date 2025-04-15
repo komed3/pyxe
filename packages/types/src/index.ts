@@ -37,7 +37,7 @@ export interface ColorSpaceFactory {
     meta?: Record<string, any>
 }
 
-export interface ErrorHandlerFactory {
+export interface ErrorFactory {
     method: string;
     msg?: string;
     err?: Error | string | any;

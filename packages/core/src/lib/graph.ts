@@ -31,7 +31,7 @@ import type {
     ConversionHandler, ConversionPath
 } from '@pyxe/types';
 
-import { ErrorHandler } from '@pyxe/utils/lib/errorHandler';
+import { Utils } from '@pyxe/utils';
 import { colorSpace } from './colorSpace.js';
 
 /**
@@ -216,10 +216,10 @@ export class ConversionGraph {
 
         if ( ! path || path.length < 2 ) {
 
-            throw new Error ( ErrorHandler.get( {
+            throw new Utils.error( {
                 method: 'ConversionGraph',
                 msg: `No conversion path from <${source}> to <${target}>`
-            } ) );
+            } );
 
         }
 
@@ -236,10 +236,10 @@ export class ConversionGraph {
 
             if ( ! edge ) {
 
-                throw new Error( ErrorHandler.get( {
+                throw new Utils.error( {
                     method: 'ConversionGraph',
                     msg: `Missing conversion step from <${current}> to <${next}>`
-                } ) );
+                } );
 
             }
 

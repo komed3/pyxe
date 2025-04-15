@@ -24,7 +24,6 @@ import type {
     ColorSpaceID, ColorObject
 } from '@pyxe/types';
 
-import { ErrorHandler } from '@pyxe/utils/lib/errorHandler.js';
 import { Utils } from '@pyxe/utils';
 import { conversionGraph, type ConversionGraph } from './graph.js';
 
@@ -89,7 +88,7 @@ export class Convert {
 
         } catch ( err ) {
 
-            ErrorHandler.throw( {
+            throw new Utils.error( {
                 err, method: 'Convert',
                 msg: `Conversion from color space <${input.space}> to any of <${
                     targets.join( ', ' )
@@ -149,7 +148,7 @@ export class Convert {
 
             if ( strict ) {
 
-                ErrorHandler.throw( {
+                throw new Utils.error( {
                     err, method: 'Convert',
                     msg: `Strict mode: The color space conversion has failed`
                 } );
@@ -187,7 +186,7 @@ export class Convert {
 
         } catch ( err ) {
 
-            ErrorHandler.throw( {
+            throw new Utils.error( {
                 err, method: 'Convert',
                 msg: `Strict mode: A color space conversion has failed`
             } );
