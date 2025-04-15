@@ -7,7 +7,8 @@
  * a list of fallback target color spaces in order of preference.
  * 
  * All conversions are tracked via a tracer if enabled. It is safe to use in
- * production environments due to internal error handling and optional strict modes.
+ * production environments due to internal error handling and optional strict
+ * mode.
  * 
  * @package @pyxe/core
  * @requires @pyxe/types
@@ -173,7 +174,7 @@ export class Convert {
      * @returns Converted object(s) or the original input(s)
      */
     tryConvertMany (
-        input: any,
+        input: any | any[],
         target: ColorSpaceID | ColorSpaceID[],
         strict: boolean = false
     ) : ColorObject[] | ColorObject | unknown {
