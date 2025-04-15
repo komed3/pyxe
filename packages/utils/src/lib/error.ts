@@ -1,8 +1,8 @@
 /**
- * Utils Class Err (extends Error)
+ * Utils Class PyxeError (extends Error)
  * src/lib/error.ts
  * 
- * This module defines the `Err` class, a custom error type for consistent and
+ * This module defines the `PyxeError` class, a custom error type for consistent and
  * informative error handling throughout the `pyxe` framework. It extends the native
  * `Error` class and adds support for formatted timestamps, method tagging, optional
  * extra error information, and multiple logging methods (log, warn, info). It is
@@ -31,7 +31,7 @@ import { ErrorFactory } from '@pyxe/types';
  * Custom error class for standardized error formatting and output.
  * Used across the pyxe framework for consistent developer-facing error messages.
  */
-export class Err extends Error {
+export class PyxeError extends Error {
 
     /** Formatted header line including timestamp, method and message */
     readonly header: string;
@@ -49,7 +49,7 @@ export class Err extends Error {
     readonly extra?: string;
 
     /**
-     * Constructs a new Err instance using the given factory object.
+     * Constructs a new PyxeError instance using the given factory object.
      * 
      * @param factory - An object containing method name, optional message and inner error
      */
