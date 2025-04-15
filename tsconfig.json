@@ -6,10 +6,10 @@
     "baseUrl": ".",
     "paths": {
       "@pyxe/core": [ "packages/core/src" ],
-      "@pyxe/core/*": [ "packages/core/src/*" ],
+      "@pyxe/core/*": [ "packages/core/src/lib/*" ],
       "@pyxe/types": [ "packages/types/src" ],
       "@pyxe/utils": [ "packages/utils/src" ],
-      "@pyxe/utils/*": [ "packages/utils/src/*" ]
+      "@pyxe/utils/*": [ "packages/utils/src/lib/*" ]
     },
     "declaration": true,
     "declarationMap": false,

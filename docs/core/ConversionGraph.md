@@ -14,11 +14,11 @@ This class allows `pyxe` to:
 
 ## Internal Properties
 
-`private registry: Map<ColorSpaceID, ConversionPath[]>`
+### `private registry: Map<ColorSpaceID, ConversionPath[]>`
 
 Stores the adjacency list of conversion edges for each source color space. Each edge contains a target and a handler function.
 
-`private cache: Map<string, ColorSpaceID[] | null>`
+### `private cache: Map<string, ColorSpaceID[] | null>`
 
 Caches resolved paths (or failed lookups) between two color spaces, identified by the key format `source::target`.
 

@@ -8,7 +8,7 @@ Provides centralized color space management and internal APIs for registration a
 
 ## Internal Properties
 
-`private registry: Map<ColorSpaceID, ColorSpaceFactory>`
+### `private registry: Map<ColorSpaceID, ColorSpaceFactory>`
 
 Stores all registered color space definitions.
 

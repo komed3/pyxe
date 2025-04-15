@@ -11,7 +11,7 @@ It is a central component of the `pyxe` core system.
 
 ## Internal Properties
 
-`private graph: ConversionGraph`
+### `private graph: ConversionGraph`
 
 The internal conversion graph used to resolve paths. The `Convert` class relies on the `ConversionGraph` class, which provides the path finding logic.
 
