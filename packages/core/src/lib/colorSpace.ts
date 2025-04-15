@@ -1,10 +1,11 @@
 'use strict';
 
-import type { ColorSpaceID, ColorSpaceFactory } from '@pyxe/types';
-
-import { conversionGraph } from './graph.js';
+import type {
+    ColorSpaceID, ColorSpaceFactory
+} from '@pyxe/types';
 
 import { ErrorHandler } from '@pyxe/utils/lib/errorHandler';
+import { conversionGraph } from './graph.js';
 
 export class ColorSpace {
 
@@ -36,6 +37,20 @@ export class ColorSpace {
 
     }
 
+    _unregister (
+        id: ColorSpaceID
+    ) : void {
+
+        if ( this.check( id ) ) {
+
+            this.registry.delete( id );
+
+            conversionGraph._unregisterAll( id );
+
+        }
+
+    }
+
     has (
         id: ColorSpaceID
     ) : boolean {
@@ -46,9 +61,11 @@ export class ColorSpace {
 
     check (
         id: ColorSpaceID
-    ) : void {
+    ) : boolean {
 
-        if ( ! this.has( id ) ) {
+        const has = this.has( id );
+
+        if ( ! has ) {
 
             ErrorHandler.throw( {
                 method: 'ColorSpace',
@@ -57,6 +74,8 @@ export class ColorSpace {
 
         }
 
+        return has;
+
     }
 
     get (
@@ -64,19 +83,27 @@ export class ColorSpace {
         safe = true
     ) : ColorSpaceFactory | undefined {
 
-        if ( safe ) {
+        if ( ! safe || this.check( id ) ) {
 
-            this.check( id );
+            return this.registry.get( id );
 
         }
-
-        return this.registry.get( id );
 
     }
 
     getSpaces () : ColorSpaceID[] {
 
-        return Array.from( this.registry.keys() );
+        return Array.from(
+            this.registry.keys()
+        );
+
+    }
+
+    getMeta (
+        id: ColorSpaceID
+    ) : any {
+
+        return this.get( id )?.meta;
 
     }
 

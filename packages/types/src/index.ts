@@ -34,6 +34,7 @@ export interface ColorSpaceFactory {
     validator: ValidatorHandler;
     parser: ParserHandler;
     conversions?: ConversionPath[];
+    meta?: Record<string, any>
 }
 
 export interface ErrorHandlerFactory {

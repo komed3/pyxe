@@ -7,6 +7,7 @@ Each transformation is defined from one color space to another via a conversion 
 This class allows `pyxe` to:
 
 - Register one or multiple conversion handlers
+- Unregister all paths from a source color space
 - Dynamically resolve composite conversion functions
 - Visualize the conversion tree
 - Cache and reuse computed paths
@@ -52,6 +53,18 @@ Registers multiple outbound conversion paths from a given source color space.
 
 @param `source` - The common source color space  
 @param `paths` - Array of `{ target, handler }` objects
+
+### `_unregisterAll( source )`
+
+```ts
+_unregisterAll (
+  source: ColorSpaceID
+) : void
+```
+
+Unregister all conversion paths starting from a color space.
+
+@param ``source` - The source color space ID
 
 ### `_flush()`
 

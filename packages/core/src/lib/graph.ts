@@ -8,7 +8,7 @@
  * and each edge represents a direct conversion handler from one space to another.
  * 
  * The graph supports:
- * - Dynamic registration of conversion paths
+ * - Dynamic registration / deregistration of conversion paths
  * - Path resolution from one space to another, including multi-step conversions
  * - Caching of resolved paths for performance
  * - Tree visualization of conversion routes for debugging or documentation
@@ -92,6 +92,19 @@ export class ConversionGraph {
             this._register( source, target, handler );
 
         }
+
+    }
+
+    /**
+     * Unregister all conversion paths starting from a color space.
+     * 
+     * @param source - The source color space ID
+     */
+    _unregisterAll (
+        source: ColorSpaceID
+    ) : void {
+
+        this.registry.delete( source );
 
     }
 
