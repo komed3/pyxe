@@ -47,7 +47,7 @@ export interface TracerFactory {
     action: string;
     timestamp: Date | number;
     meta?: {
-        origin?: ColorObject | unknown;
+        input?: ColorObject | unknown;
         result?: ColorObject | unknown;
         [ key: string ] : any;
     };

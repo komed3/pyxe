@@ -25,7 +25,7 @@ import type {
 } from '@pyxe/types';
 
 import { ErrorHandler } from '@pyxe/utils/lib/errorHandler.js';
-import { tracer, tracerTemplates } from '@pyxe/utils/lib/tracer.js';
+import { Utils } from '@pyxe/utils';
 import { conversionGraph, type ConversionGraph } from './graph.js';
 
 /**
@@ -68,9 +68,9 @@ export class Convert {
                     const handler = this.graph.resolve( input.space, t );
                     const result = handler( input );
 
-                    if ( result && tracer.on() ) {
+                    if ( result && Utils.tracer.isReady() ) {
 
-                        tracer._trace( result, tracerTemplates.convert(
+                        Utils.tracer._add( result, Utils.tracerTemplates.convert(
                             input, result,
                             this.graph.findPath( input.space, t )
                         ) );

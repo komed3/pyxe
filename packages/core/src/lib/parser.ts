@@ -33,7 +33,7 @@ import type {
 } from '@pyxe/types';
 
 import { ErrorHandler } from '@pyxe/utils/lib/errorHandler.js';
-import { tracer, tracerTemplates } from '@pyxe/utils/lib/tracer.js';
+import { Utils } from '@pyxe/utils';
 import { colorSpace } from './colorSpace.js';
 
 /**
@@ -70,9 +70,9 @@ export class Parser {
 
                         if ( result ) {
 
-                            if ( tracer.on() ) {
+                            if ( Utils.tracer.isReady() ) {
 
-                                tracer._trace( result, tracerTemplates.parse(
+                                Utils.tracer._add( result, Utils.tracerTemplates.parse(
                                     input, result
                                 ) );
         
