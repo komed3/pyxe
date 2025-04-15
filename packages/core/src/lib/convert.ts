@@ -19,7 +19,9 @@
 
 'use strict';
 
-import type { ColorSpaceID, ColorObject } from '@pyxe/types';
+import type {
+    ColorSpaceID, ColorObject
+} from '@pyxe/types';
 
 import { ErrorHandler } from '@pyxe/utils/lib/errorHandler.js';
 import { tracer, tracerTemplates } from '@pyxe/utils/lib/tracer.js';
