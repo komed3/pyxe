@@ -4,16 +4,21 @@ The `Parser` class is responsible for automatically identifying and converting a
 
 It iterates over all registered color spaces using the centralized `ColorSpace` registry and invokes the corresponding parser functions until one of them returns a valid result. This process enables flexible input handling without requiring users to specify a color mode upfront.
 
-The class is completely static and does not require instantiation.
-
-## Internals
-
-The Parser class delegates all actual parsing logic to the `parser` handler function of each registered `ColorSpaceFactory`. It operates in two modes:
-
-- `parse(…)` – Returns the first successful ColorObject
-- `try(…)` – Boolean check without throwing
-
 Debug tracing is automatically integrated and invoked via `tracer._trace(…)` if enabled.
+
+**The class is completely static and does not require instantiation.**
+
+## Usage
+
+The parser class is used by the central Color API via `Color.parse( <input> )`. However, the parser can also be used outside of the Color class by importing additionally. Because all of its methods are static, the parser does not need to be instantiated and works “out of the box”.
+
+```ts
+import { Parser } from 'pyxe';
+
+Parser.parse( 'rgba( 124 63 250 / 0.6 )' );
+Parser.parse( '#ff00ff' );
+Parser.parse( 'hsl( 109, 0.42, 0.27 )' );
+```
 
 ## Methods
 
