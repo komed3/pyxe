@@ -8,7 +8,9 @@ import {
 import { Utils } from '@pyxe/utils';
 import { Validator } from './validator.js';
 import { Parser } from './parser.js';
+import { ColorLib } from './colorLib.js';
 import { Output } from './output.js';
+
 import { colorSpace } from './colorSpace.js';
 import { convert } from './convert.js';
 import { module } from './module.js';
@@ -57,7 +59,42 @@ export class Color {
 
         } catch ( err ) {
 
-            throw err;
+            throw new Utils.error( {
+                err, method: 'Color',
+                msg: `Failed to load parsed color`
+            } );
+
+        }
+
+    }
+
+    static async fromLib (
+        colorLib: string,
+        colorID: string,
+        preferredSpaces?: ColorSpaceID[],
+        options: {
+            sources?: string[];
+            strict?: boolean;
+            fallback?: boolean;
+        } = {}
+    ) {
+
+        try {
+
+            const lib = new ColorLib( colorLib );
+
+            return new Color(
+                await lib.getColor(
+                    colorID, preferredSpaces, options
+                ) as ColorObject
+            );
+
+        } catch ( err ) {
+
+            throw new Utils.error( {
+                err, method: 'Color',
+                msg: `Failed to load color <${colorID}> from library <${colorLib}>`
+            } );
 
         }
 
