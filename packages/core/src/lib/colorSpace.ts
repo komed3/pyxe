@@ -147,7 +147,7 @@ export class ColorSpace {
      */
     get (
         id: ColorSpaceID,
-        safe = true
+        safe: boolean = true
     ) : ColorSpaceFactory | undefined {
 
         if ( ! safe || this.check( id ) ) {

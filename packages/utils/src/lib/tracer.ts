@@ -51,7 +51,7 @@ export class Tracer {
     _add (
         obj: ColorObject,
         entry: Partial<TracerFactory>,
-        flush = false
+        flush: boolean = false
     ) : void {
 
         if ( this.state ) {

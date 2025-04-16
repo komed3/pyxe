@@ -151,7 +151,7 @@ export class Module {
      */
     get (
         id: string,
-        safe = true
+        safe: boolean = true
     ) : ModuleFactory | undefined {
 
         if ( ! safe || this.check( id ) ) {

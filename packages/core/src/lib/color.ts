@@ -75,7 +75,7 @@ export class Color {
         options: {
             sources?: string[];
             strict?: boolean;
-            fallback?: boolean;
+            tryConvert?: boolean;
         } = {}
     ) {
 

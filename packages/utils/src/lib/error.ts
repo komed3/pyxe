@@ -92,7 +92,7 @@ export class PyxeError extends Error {
      * @returns A human-readable error message
      */
     toString (
-        trace = true
+        trace: boolean = true
     ) : string {
 
         if ( trace ) {
@@ -113,7 +113,7 @@ export class PyxeError extends Error {
      * @param trace - Whether to include the full stack trace (default: true)
      */
     log (
-        trace = true
+        trace: boolean = true
     ) : void {
 
         console.error( this.toString( trace ) );
@@ -126,7 +126,7 @@ export class PyxeError extends Error {
      * @param trace - Whether to include the stack trace (default: false)
      */
     warn (
-        trace = false
+        trace: boolean = false
     ) : void {
 
         console.warn( this.toString( trace ) );
@@ -139,7 +139,7 @@ export class PyxeError extends Error {
      * @param trace - Whether to include the stack trace (default: false)
      */
     info (
-        trace = false
+        trace: boolean = false
     ) : void {
 
         console.info( this.toString( trace ) );
