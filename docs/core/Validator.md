@@ -4,10 +4,10 @@ The `Validator` class is a utility that enables standardized validation of color
 
 Features are:
 
-- Delegates validation to space-specific handler functions registered in `ColorSpace`
-- Throws structured errors for invalid input
-- Supports boolean validation checks without throwing
-- Ensures all `ColorObject` instances are well-formed and normalized
+- delegates validation to space-specific handler functions registered in `ColorSpace`
+- throws structured errors for invalid input
+- supports boolean validation checks without throwing
+- ensures all `ColorObject` instances are well-formed and normalized
 
 By encapsulating all validation logic in one place, the system remains consistent, extensible, and decoupled from specific implementations.
 

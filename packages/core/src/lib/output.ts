@@ -2,19 +2,21 @@
  * Class Output
  * src/lib/output.ts
  * 
- * The `Output` class provides centralized formatting capabilities for `ColorObject` instances.
+ * The `Output` class provides centralized formatting capabilities for `ColorObject`
+ * instances.
  * 
  * It dynamically delegates string and JSON output operations to the appropriate handlers
- * defined by the color space’s output configuration. If no handler is defined for a requested
- * format, the class returns a minimal fallback or throws a detailed error, depending on the
- * method used.
+ * defined by the color space’s output configuration. If no handler is defined for a
+ * requested format, the class returns a minimal fallback or throws a detailed error,
+ * depending on the method used.
  * 
- * Color spaces may define their own output behavior by implementing one or more output handlers
- * under the keys `string`, `json`, or any other `OutputTypes` format.
+ * Color spaces may define their own output behavior by implementing one or more output
+ * handlers under the keys `string`, `json`, or any other `OutputTypes` format.
  * 
- * This class is stateless and static, serving as a utility layer between internal representations
- * and user-facing outputs. Typical usage is handled internally by the `Color` class, but direct
- * usage of `Output.toString()`, `Output.toJSON()`, or `Output.format()` is also supported.
+ * This class is stateless and static, serving as a utility layer between internal
+ * representations and user-facing outputs. Typical usage is handled internally by the
+ * `Color` class, but direct usage of `Output.toString()`, `Output.toJSON()`, or
+ * `Output.format()` is also supported.
  * 
  * @package @pyxe/core
  * @requires @pyxe/types
@@ -28,7 +30,7 @@
 
 import {
     ColorSpaceID, ColorObject, OutputTypes,
-    OutputHandler,ColorSpaceFactory
+    OutputHandler, ColorSpaceFactory
 } from '@pyxe/types';
 
 import { Utils } from '@pyxe/utils';
@@ -44,12 +46,12 @@ export class Output {
      * Retrieves the output handler for a given color space and format type.
      * 
      * @param id - The identifier of the color space
-     * @param handler - The output format type (e.g. "string", "json")
-     * @returns The output handler function, if defined and valid.
+     * @param format - The output format type (e.g. "string", "json")
+     * @returns The output handler function, if defined and valid
      */
     private static _getHandler (
         id: ColorSpaceID,
-        handler: OutputTypes
+        format: OutputTypes
     ) : OutputHandler | undefined {
 
         if ( colorSpace.has( id ) ) {
@@ -57,11 +59,11 @@ export class Output {
             const { output } = colorSpace.get( id ) as ColorSpaceFactory;
 
             if (
-                output && handler in output &&
-                typeof output[ handler ] === 'function'
+                output && format in output &&
+                typeof output[ format ] === 'function'
             ) {
 
-                return output[ handler ];
+                return output[ format ];
 
             }
 
