@@ -110,3 +110,29 @@ export interface TracerFactory {
         [ key: string ] : any;
     };
 }
+
+export interface ColorLibMeta {
+    id: string;
+    name?: string;
+    description?: string;
+    author?: string;
+    license?: string;
+    tags?: string[];
+    version?: string;
+}
+
+export interface ColorLibEntry {
+    id: string;
+    name?: string | Record<string, string>;
+    spaces: Record<ColorSpaceID, ColorInstance>;
+    meta?: Record<string, any>;
+}
+
+export type ColorLibList = ColorLibEntry[];
+
+export type ColorLibLoader = () => Promise<ColorLibList>;
+
+export interface ColorLibFactory {
+    meta: ColorLibMeta;
+    sources: Record<string, ColorLibLoader>;
+}
