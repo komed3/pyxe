@@ -20,20 +20,33 @@ The central `Module` class in `@pyxe/core` provides all necessary capabilities t
 
 This system is intentionally kept lean and modular to allow third-party and community-developed modules to plug into the ecosystem with minimal effort.
 
+**This class is not typically used directly by consumers of the library.**
+
 ## Typical Workflow
 
 This design enables rich and composable operations while preserving a clean separation between core logic and optional features.
 
-1. A module is defined using the `ModuleFactory` interface.
-2. On load, it registers itself via `module._register( … )`.
-3. If `exposeAsMethod` is enabled, it becomes available as a direct method on all `Color` instances.
-4. You can then apply the module via `color.<method>()` or `module.apply( … )`.
+**(1)** - A module is defined using the `ModuleFactory` interface.  
+**(2)** - On load, it registers itself via `module._register( … )`.  
+**(3)** - If `exposeAsMethod` is enabled, it becomes available as a direct method on all `Color` instances.  
+**(4)** - You can then apply the module via `color.<method>()` or `module.apply( … )`.
 
-## Internal Properties
+## Module Factory
 
-### `private registry: Map<string, ModuleFactory>`
+New modules are described via the `ModuleFactory`, an interface that provides essential information about the module itself. The minimum information includes the module ID (unique name), the called handler function and supported color spaces. In addition, things such as metadata, the handler's return value and default options can be defined.
 
-The internal registry for all declared modules. Each entry is a module ID mapped to its corresponding factory.
+```ts
+interface ModuleFactory {
+  id: string;
+  handler: ( ...args: any [] ) => any;
+  spaces: ColorSpaceID[];
+  options?: Record<string, any>;
+  exposeAsMethod?: boolean;
+  multiInput?: boolean;
+  returnType?: string;
+  meta?: Record<string, any>
+}
+```
 
 ## Methods
 

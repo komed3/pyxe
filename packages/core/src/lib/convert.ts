@@ -10,6 +10,10 @@
  * production environments due to internal error handling and optional strict
  * mode.
  * 
+ * This class is *not* typically used directly by consumers of the library. Color
+ * space conversions are performed directly via the central API using `Color.convert()`
+ * or used internally by some modules.
+ * 
  * @package @pyxe/core
  * @requires @pyxe/types
  * @requires @pyxe/utils

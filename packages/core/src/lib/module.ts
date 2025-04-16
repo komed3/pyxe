@@ -13,6 +13,9 @@
  * This design encourages separation of concerns and ensures that each module can define 
  * its own argument structure, constraints, and return types.
  * 
+ * This class is *not* typically used directly by consumers of the library. Some of its
+ * methods can be used by importing `Services`.
+ * 
  * @package @pyxe/core
  * @requires @pyxe/types
  * @requires @pyxe/utils

@@ -6,6 +6,14 @@ Provides centralized color space management and internal APIs for registration a
 
 **This class is not intended for direct use by application developers but is essential for the infrastructure behind color space management.**
 
+## Typical Workflow
+
+The dynamic loading of color spaces allows `pyxe` to be extended modularly without having to make changes to its core.
+
+**(1)** - A color space is defined using the `ColorSpaceFactory` interface.  
+**(2)** - On load, it registers itself via `colorSpace._register( … )`.  
+**(3)** - You can then use the color space throughout the framework.
+
 ## Color Space Factory
 
 A new color space is defined by the `ColorSpaceFactory`, an interface consisting of rudimentary and mandatory specifications, including the ID of the color space (e.g. `HEX` or `RGB`), parser and validator handler functions and additional arguments, which include metadata as well as an array of supported color space conversions.

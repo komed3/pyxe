@@ -1,19 +1,13 @@
 # Color Space Conversion Utility
 
-The `Convert` class is responsible for transforming color objects between color spaces using the internal `ConversionGraph`. It supports:
+The `Convert` class is responsible for transforming color objects between color spaces using the internal `ConversionGraph`. It is a central component of the `pyxe` core system and supports:
 
-- Fallback conversions (e.g., try RGB, then HSL, etc.)
+- Fallback conversions (e.g., try `RGB`, then `HSL`, etc.)
 - Strict vs. tolerant error handling
 - Batch conversions
 - Integrated tracing when enabled
 
-It is a central component of the `pyxe` core system.
-
-## Internal Properties
-
-### `private graph: ConversionGraph`
-
-The internal conversion graph used to resolve paths. The `Convert` class relies on the `ConversionGraph` class, which provides the path finding logic.
+**This class is not typically used directly by consumers of the library.** Color space conversions are performed directly via the central API using `Color.convert()` or used internally by some modules.
 
 ## Methods
 
