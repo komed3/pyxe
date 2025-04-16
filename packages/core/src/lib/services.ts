@@ -6,6 +6,7 @@ import { conversionGraph } from './graph.js';
 
 export { Parser } from './parser.js';
 export { Validator } from './validator.js';
+export { Output } from './output.js';
 
 export const Services = {
 

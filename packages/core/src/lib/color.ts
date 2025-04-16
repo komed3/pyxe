@@ -1,6 +1,10 @@
 'use strict';
 
-import { ColorInput, ColorInstance, ColorObject, ColorSpaceID, ModuleFactory } from '@pyxe/types';
+import {
+    ColorInput, ColorInstance, ColorObject, ColorSpaceID,
+    ModuleFactory, OutputTypes
+} from '@pyxe/types';
+
 import { Utils } from '@pyxe/utils';
 import { Validator } from './validator.js';
 import { Parser } from './parser.js';
@@ -98,6 +102,14 @@ export class Color {
     toJSON () : unknown {
 
         return Output.toJSON( this.toObject() );
+
+    }
+
+    format (
+        format: OutputTypes
+    ) : unknown {
+
+        return Output.format( format, this.toObject() );
 
     }
 

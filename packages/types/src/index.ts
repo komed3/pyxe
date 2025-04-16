@@ -52,7 +52,7 @@ export interface ColorObject {
     meta?: Record<string, any>;
 };
 
-export type OutputTypes = 'string' | 'json';
+export type OutputTypes = 'string' | 'json' | string;
 
 export type OutputHandler = (
     input: ColorObject
