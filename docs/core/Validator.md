@@ -1,6 +1,6 @@
 # Color Object Validator
 
-The `Validator` class is a utility that enables standardized validation of color objects for any registered color space within the `@pyxe/core` module. It leverages the central `ColorSpace` registry to access validator functions defined by individual color spaces.
+The `Validator` class is a utility that enables standardized validation of color objects or instances for any registered color space within the `@pyxe/core` module. It leverages the central `ColorSpace` registry to access validator functions defined by individual color spaces.
 
 Features are:
 
@@ -11,42 +11,64 @@ Features are:
 
 By encapsulating all validation logic in one place, the system remains consistent, extensible, and decoupled from specific implementations.
 
-## Internals
+**This class cannot be instantiated. All methods are static.**
 
-The Validator class delegates all actual parsing logic to the `validator` handler function of each registered `ColorSpaceFactory`. It operates in two modes:
+## Usage
 
-- `validate(…)` – Returns the well-formed ColorObject
-- `try(…)` – Boolean check without throwing
+Although the class is used at many internal spots to match the input with color space specifications, users may also find the class helpful in some scenarios and use it by importing it individually. However, the methods `Color.validate()` and `Color.instanceOf( <space> )` can also be used for an instantiated color.
+
+```ts
+import { Validator } from 'pyxe';
+
+const color = { space: 'HEX', value: '#ff00ff' };
+
+console.log( Validator.try( color ) );
+
+Validator.instanceOf( 'RGB', color.value );
+// will throw an error
+```
 
 ## Methods
 
-### `validate( space, input )`
+### `instanceOf( space, input )`
+
+```ts
+static instanceOf (
+  space: ColorSpaceID,
+  input: ColorInstance
+) : ColorObject
+```
+
+Validates the given color instance against the specified color space using its registered validator.
+
+@param `space` - The ID of the color space to validate against (e.g., `'RGB'`, `'Lab'`)  
+@param `input` - The raw color instance to be validated  
+@returns A validated `ColorObject` representing the input  
+@throws If validation fails or the color space is unknown
+
+### `validate( input )`
 
 ```ts
 static validate (
-  space: ColorSpaceID,
   input: ColorObject
 ) : ColorObject
 ```
 
-Validates the input color object against the specified color space using its registered validator.
+Validates the input color object.
 
-@param `space` - The ID of the color space to validate against (e.g., `'RGB'`, `'Lab'`)  
-@param `input` - The raw color object to be validated  
+@param `input` - The color object to be validated  
 @returns A validated `ColorObject` representing the input  
 @throws If validation fails or the color space is unknown
 
-### `try( space, input )`
+### `try( input )`
 
 ```ts
 static try (
-  space: ColorSpaceID,
   input: ColorObject
 ) : boolean
 ```
 
 Performs a non-throwing validation test. Returns a boolean indicating whether the input would pass validation.
 
-@param `space` - The ID of the color space to validate against (e.g., `'RGB'`, `'Lab'`)  
-@param `input` - The raw color object to be validated  
+@param `input` - The color object to be validated  
 @return `true` if validation is successful, `false` if not
