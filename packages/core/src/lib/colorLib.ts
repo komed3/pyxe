@@ -1,8 +1,8 @@
 'use strict';
 
 import {
-    ColorSpaceID, ColorObject, ColorLibFactory, ColorLibLoader,
-    ColorLibList, ColorLibEntry
+    ColorSpaceID, ColorInstance, ColorObject, ColorLibFactory,
+    ColorLibLoader, ColorLibList, ColorLibEntry
 } from '@pyxe/types';
 
 import { Utils } from '@pyxe/utils';
@@ -74,7 +74,7 @@ export class ColorLib {
 
     }
 
-    private async _getByID (
+    private async _getColor (
         colorID: string,
         sources?: string[]
     ) : Promise<ColorLibEntry | undefined> {
@@ -126,7 +126,7 @@ export class ColorLib {
 
             const { sources, strict = false, tryConvert = false } = options;
 
-            const entry = await this._getByID( colorID, sources );
+            const entry = await this._getColor( colorID, sources );
 
             if ( entry ) {
 
@@ -138,7 +138,7 @@ export class ColorLib {
                     if ( space in entry.spaces ) {
 
                         let color: ColorObject = {
-                            space, value: entry.spaces[ space ],
+                            space, value: entry.spaces[ space ] as ColorInstance,
                             meta: { source: entry }
                         };
 

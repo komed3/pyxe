@@ -115,16 +115,16 @@ export interface ColorLibMeta {
     id: string;
     name?: string;
     description?: string;
+    version?: string;
     author?: string;
     license?: string;
     tags?: string[];
-    version?: string;
 }
 
 export interface ColorLibEntry {
     id: string;
     name?: string | Record<string, string>;
-    spaces: Record<ColorSpaceID, ColorInstance>;
+    spaces: Partial<Record<ColorSpaceID, ColorInstance>>;
     meta?: Record<string, any>;
 }
 

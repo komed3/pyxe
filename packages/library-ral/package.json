@@ -1,6 +1,6 @@
 {
-  "name": "@pyxe/core",
-  "description": "Core package of the pyxe color framework",
+  "name": "@pyxe/library-ral",
+  "description": "RAL color library",
   "version": "0.1.0",
   "license": "MIT",
   "author": {
@@ -12,8 +12,7 @@
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js",
-    "./colorLib": "./dist/lib/colorLib.js"
+    ".": "./dist/index.js"
   },
   "files": [
     "README.md",
@@ -22,12 +21,12 @@
   ],
   "dependencies": {
     "@pyxe/types": "^0.1.0",
-    "@pyxe/utils": "^0.1.0"
+    "@pyxe/core": "^0.1.0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/komed3/pyxe.git",
-    "directory": "packages/core"
+    "directory": "packages/library-ral"
   },
   "bugs": {
     "url": "https://github.com/komed3/pyxe/issues"
