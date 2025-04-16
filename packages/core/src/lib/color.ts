@@ -81,7 +81,7 @@ export class Color {
 
         try {
 
-            const lib = new ColorLib( colorLib );
+            const lib = ColorLib.getInstance( colorLib );
 
             return new Color(
                 await lib.getColor(

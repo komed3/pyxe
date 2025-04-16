@@ -25,7 +25,7 @@ export const Services = {
     },
 
     colorLib: {
-        list: colorLibRegisty.getLibaries,
+        list: colorLibRegisty.getLibraries,
         has: colorLibRegisty.has,
         meta: colorLibRegisty.getMeta
     },
