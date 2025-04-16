@@ -40,7 +40,7 @@ try { … } catch ( err ) {
 }
 ```
 
-Optionally, the `pyxe` error environment can also be imported separately and the PyxeError class instantiated directly:
+Optionally, the `pyxe` error environment can also be imported separately and the `PyxeError` class instantiated directly:
 
 ```ts
 import { PyxeError } from '@pyxe/utils/error';
@@ -49,18 +49,6 @@ throw new PyxeError( { … } );
 ```
 
 ## Methods
-
-### Instantiation: `construct( factory )`
-
-```ts
-constructor (
-  factory: ErrorFactory
-)
-```
-
-Constructs a new `PyxeError` instance using the given factory object.
-
-@param `factory` - An object containing method name, optional message and inner error
 
 ### `toString( [ trace = true ] )`
 
