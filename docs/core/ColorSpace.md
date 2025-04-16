@@ -16,7 +16,7 @@ The dynamic loading of color spaces allows `pyxe` to be extended modularly witho
 
 ## Color Space Factory
 
-A new color space is defined by the `ColorSpaceFactory`, an interface consisting of rudimentary and mandatory specifications, including the ID of the color space (e.g. `HEX` or `RGB`), parser and validator handler functions and additional arguments, which include metadata as well as an array of supported color space conversions.
+A new color space is defined by the `ColorSpaceFactory`, an interface consisting of rudimentary and mandatory specifications, including the ID of the color space (e.g. `HEX` or `RGB`), parser and validator handler functions and additional arguments, which include metadata as well as an array of supported color space conversions and ouput handlers.
 
 ```ts
 interface ColorSpaceFactory {
@@ -24,6 +24,7 @@ interface ColorSpaceFactory {
   validator: ValidatorHandler;
   parser: ParserHandler;
   conversions?: ConversionPath[];
+  output?: Record<OutputTypes, OutputHandler>;
   meta?: Record<string, any>
 }
 ```

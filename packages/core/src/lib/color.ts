@@ -4,6 +4,7 @@ import { ColorInput, ColorInstance, ColorObject, ColorSpaceID, ModuleFactory } f
 import { Utils } from '@pyxe/utils';
 import { Validator } from './validator.js';
 import { Parser } from './parser.js';
+import { Output } from './output.js';
 import { colorSpace } from './colorSpace.js';
 import { convert } from './convert.js';
 import { module } from './module.js';
@@ -85,6 +86,18 @@ export class Color {
     toObject () : ColorObject {
 
         return this.color;
+
+    }
+
+    toString () : string {
+
+        return Output.toString( this.toObject() );
+
+    }
+
+    toJSON () : unknown {
+
+        return Output.toJSON( this.toObject() );
 
     }
 

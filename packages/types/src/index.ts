@@ -1,5 +1,7 @@
 'use strict';
 
+export type ColorSpaceID = 'HEX' | 'RGB' | 'HSL' | 'HSV' | 'CMYK' | 'XYZ' | 'Lab';
+
 export type HEX = `#${string}`;
 
 export interface RGB {
@@ -40,8 +42,6 @@ export interface Lab {
     b: number;
 }
 
-export type ColorSpaceID = 'HEX' | 'RGB' | 'HSL' | 'HSV' | 'CMYK' | 'XYZ' | 'Lab';
-
 export type ColorInstance = HEX | RGB | HSL | HSV | CMYK | XYZ | Lab;
 
 export type ColorInput = ColorInstance | string;
@@ -51,6 +51,12 @@ export interface ColorObject {
     value: ColorInstance;
     meta?: Record<string, any>;
 };
+
+export type OutputTypes = 'string' | 'json';
+
+export type OutputHandler = (
+    input: ColorObject
+) => string | unknown;
 
 export type ParserHandler = (
     input: ColorInput
@@ -74,6 +80,7 @@ export interface ColorSpaceFactory {
     validator: ValidatorHandler;
     parser: ParserHandler;
     conversions?: ConversionPath[];
+    output?: Record<OutputTypes, OutputHandler>;
     meta?: Record<string, any>
 }
 
