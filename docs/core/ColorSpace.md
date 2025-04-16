@@ -1,16 +1,24 @@
 # Main Color Space Registry
 
-The `ColorSpace` class manages internal registration and lookup of all color spaces supported by the `pyxe` framework. It serves as a central registry used by components such as parsers, conversion graphs, validators, and output modules.  
-
-This class is **not** intended for direct use by application developers but is essential for the infrastructure behind color space management.
+The `ColorSpace` class manages internal registration and lookup of all color spaces supported by the `pyxe` framework. It serves as a central registry used by components such as parsers, conversion graphs, validators, and output modules.
 
 Provides centralized color space management and internal APIs for registration and querying.
 
-## Internal Properties
+**This class is not intended for direct use by application developers but is essential for the infrastructure behind color space management.**
 
-### `private registry: Map<ColorSpaceID, ColorSpaceFactory>`
+## Color Space Factory
 
-Stores all registered color space definitions.
+A new color space is defined by the `ColorSpaceFactory`, an interface consisting of rudimentary and mandatory specifications, including the ID of the color space (e.g. `HEX` or `RGB`), parser and validator handler functions and additional arguments, which include metadata as well as an array of supported color space conversions.
+
+```ts
+interface ColorSpaceFactory {
+  id: ColorSpaceID;
+  validator: ValidatorHandler;
+  parser: ParserHandler;
+  conversions?: ConversionPath[];
+  meta?: Record<string, any>
+}
+```
 
 ## Methods
 

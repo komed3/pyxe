@@ -12,7 +12,8 @@
  * are provided.
  * 
  * This class is *not* typically used directly by consumers of the library. Instead,
- * it powers core logic such as parsing, transformation, and introspection.
+ * it powers core logic such as parsing, transformation, and introspection. Some of
+ * its methods can be used by importing `Services`.
  * 
  * @package @pyxe/core
  * @requires @pyxe/types

@@ -1,6 +1,5 @@
 'use strict';
 
 export { Color } from './lib/color.js';
-export { Validator } from './lib/validator.js';
-export { Parser } from './lib/parser.js';
+export { Services, Parser, Validator } from './lib/services.js';
 export { Utils } from '@pyxe/utils';

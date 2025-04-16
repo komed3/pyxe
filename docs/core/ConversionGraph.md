@@ -12,15 +12,7 @@ This class allows `pyxe` to:
 - Visualize the conversion tree
 - Cache and reuse computed paths
 
-## Internal Properties
-
-### `private registry: Map<ColorSpaceID, ConversionPath[]>`
-
-Stores the adjacency list of conversion edges for each source color space. Each edge contains a target and a handler function.
-
-### `private cache: Map<string, ColorSpaceID[] | null>`
-
-Caches resolved paths (or failed lookups) between two color spaces, identified by the key format `source::target`.
+**This class is not intended for direct use by application developers but is essential for the infrastructure behind color space conversions.**
 
 ## Methods
 

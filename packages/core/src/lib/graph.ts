@@ -16,6 +16,9 @@
  * This is a core component of the pyxe color framework, enabling all dynamic,
  * extensible color transformations across arbitrary color models.
  * 
+ * This class is *not* typically used directly by consumers of the library.
+ * Some of its methods can be used by importing `Services`.
+ * 
  * @package @pyxe/core
  * @requires @pyxe/types
  * @requires @pyxe/utils
