@@ -6,6 +6,7 @@ import {
 } from '@pyxe/types';
 
 import { Utils } from '@pyxe/utils';
+import { convert } from './convert.js';
 
 export class ColorLib {
 
@@ -117,11 +118,53 @@ export class ColorLib {
         options: {
             sources?: string[];
             strict?: boolean;
-            fallback?: boolean;
+            tryConvert?: boolean;
         } = {}
     ) : Promise<ColorObject | undefined> {
 
-        return ;
+        try {
+
+            const { sources, strict = false, tryConvert = false } = options;
+
+            const entry = await this._getByID( colorID, sources );
+
+            if ( entry ) {
+
+                for ( const space of [ ...new Set ( [
+                    ...preferredSpaces ?? [],
+                    ...strict ? Object.keys( entry.spaces ) as ColorSpaceID[] : []
+                ].filter( Boolean ) ) ] ) {
+
+                    if ( space in entry.spaces ) {
+
+                        let color: ColorObject = {
+                            space, value: entry.spaces[ space ],
+                            meta: { source: entry }
+                        };
+
+                        if (
+                            preferredSpaces &&
+                            ! preferredSpaces.includes( space ) &&
+                            tryConvert
+                        ) {
+
+                            color = convert.tryConvert(
+                                color, preferredSpaces
+                            ) as ColorObject;
+
+                        }
+
+                        return color;
+
+                    }
+
+                }
+
+            }
+
+        } catch {}
+
+        return undefined;
 
     }
 
@@ -135,7 +178,7 @@ export class ColorLib {
 
     hasSource (
         source: string,
-        loaded = false
+        loaded: boolean = false
     ) : boolean {
 
         return loaded
@@ -209,7 +252,7 @@ export class ColorLibRegisty {
 
     get (
         id: string,
-        safe = true
+        safe: boolean = true
     ) : ColorLibFactory | undefined {
 
         if ( ! safe || this.check( id ) ) {
