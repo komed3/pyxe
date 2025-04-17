@@ -23,7 +23,15 @@ export const Services = {
     module: {
         list: () => module.getModules(),
         has: ( id: string ) => module.has( id ),
-        meta: ( id: string ) => module.getMeta( id )
+        meta: ( id: string ) => module.getMeta( id ),
+
+        method: {
+            list: () => module.getMethodMap(),
+            filter: ( filter?: string ) => module.getMethods( filter ),
+            has: ( id: string ) => module.hasMethod( id ),
+            meta: ( id: string ) => module.getMethodMeta( id ),
+        }
+
     },
 
     colorLib: {
