@@ -13,6 +13,8 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
+    "./services": "./dist/services.js",
+    "./dev": "./dist/dev.js",
     "./colorLib": "./dist/lib/colorLib.js"
   },
   "files": [

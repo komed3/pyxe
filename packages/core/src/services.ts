@@ -1,14 +1,14 @@
 'use strict';
 
-import { colorSpace } from './colorSpace.js';
-import { module } from './module.js';
-import { conversionGraph } from './graph.js';
-import { colorLibRegisty } from './colorLib.js';
+import { colorSpace } from './lib/colorSpace.js';
+import { module } from './lib/module.js';
+import { conversionGraph } from './lib/graph.js';
+import { colorLibRegisty } from './lib/colorLib.js';
 
-export { Parser } from './parser.js';
-export { Validator } from './validator.js';
-export { Output } from './output.js';
-export { ColorLib } from './colorLib.js';
+export { Parser } from './lib/parser.js';
+export { Validator } from './lib/validator.js';
+export { Output } from './lib/output.js';
+export { ColorLib } from './lib/colorLib.js';
 
 export const Services = {
 

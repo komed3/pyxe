@@ -1,9 +1,9 @@
 'use strict';
 
-import { colorLibRegisty } from '@pyxe/core/colorLib';
+import { _ColorLib } from '@pyxe/core/dev';
 import { RAL_Classic } from './colors/classic.js';
 
-colorLibRegisty._register( 'RAL', {
+_ColorLib.colorLibRegisty._register( 'RAL', {
     meta: {
         id: 'RAL',
         name: 'RAL color library',
