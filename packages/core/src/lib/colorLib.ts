@@ -304,7 +304,7 @@ export class ColorLib {
 
                 for ( const space of [ ...new Set ( [
                     ...preferredSpaces ?? [],
-                    ...strict ? Object.keys( entry.spaces ) as ColorSpaceID[] : []
+                    ...strict ? [] : Object.keys( entry.spaces ) as ColorSpaceID[]
                 ].filter( Boolean ) ) ] ) {
 
                     if ( space in entry.spaces ) {
@@ -493,7 +493,7 @@ export class ColorLibRegisty {
     getLibraries () : string[] {
 
         return Array.from(
-            this.registry.keys()
+            this.registry?.keys() ?? []
         );
 
     }

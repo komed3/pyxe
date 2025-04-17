@@ -166,7 +166,7 @@ export class ColorSpace {
     getSpaces () : ColorSpaceID[] {
 
         return Array.from(
-            this.registry.keys()
+            this.registry?.keys() ?? []
         );
 
     }

@@ -170,7 +170,7 @@ export class Module {
     getModules () : string[] {
 
         return Array.from(
-            this.registry.keys()
+            this.registry?.keys() ?? []
         );
 
     }
