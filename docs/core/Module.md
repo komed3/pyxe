@@ -1,24 +1,31 @@
 # Core Module Manager
 
-The `pyxe` framework comes with a flexible and extensible **module system** to perform dynamic operations on color objects. These modules provide a standardized way to apply color transformations, generate gradients, calculate contrast, invert values, and much more—without embedding this logic directly in the core API.
+The `pyxe` framework features a **modular and dynamic computation system** designed to extend color operations in a highly scalable and maintainable way. This system allows developers to implement advanced color transformations, generate gradients, invert colors, calculate contrast, and more—without embedding any of that logic directly in the core framework.
 
-Modules are implemented as self-contained logic blocks that are:
+Modules are implemented as isolated, self-contained logic units that are:
 
-- independently defined (e.g. in packages like `@pyxe/invert`, `@pyxe/gradient`, etc.)
-- dynamically registered at runtime via the `Module` registry
-- optionally exposed as methods on the `Color` class (e.g. `color.invert()`), depending on the module definition
-- self-responsible for validating input and handling custom parameters
+- defined independently, often as standalone packages (e.g., `@pyxe/invert`, `@pyxe/gradient`, etc.)
+- dynamically registered at runtime through the centralized `Module` class
+- optionally exposed as callable methods on `Color` instances (e.g., `color.invert()`), depending on the module definition
+- fully responsible for input validation, parameter handling, and compatible color space enforcement
 
-Each module is defined via a `ModuleFactory` interface, which includes metadata, supported color spaces, expected return types, and a handler function that contains the actual transformation logic.
+Each module follows a strict structure via the `ModuleFactory` interface, which defines:
 
-The central `Module` class in `@pyxe/core` provides all necessary capabilities to:
+- a unique identifier
+- transformation methods (`ModuleMethodFactory[]`) with optional binding instructions
+- supported color spaces
+- optional metadata
+- a transformation `handler` for each method
 
-- register new modules using `_register( id, factory )`
-- safely access or remove registered modules
-- apply any registered module using `apply( id, color, ...args )`
-- automatically bind selected modules as methods on `Color` instances
+The central `Module` class in `@pyxe/core` manages the module lifecycle and provides functionality to:
 
-This system is intentionally kept lean and modular to allow third-party and community-developed modules to plug into the ecosystem with minimal effort.
+- **register** modules dynamically using `_register( id, factory )`
+- **unregister** modules and their associated methods
+- **apply** module methods directly using `apply( key, color, ...args )`
+- **bind** or **unbind** module methods on the `Color` class using an internal registry
+- **inspect** available modules and their methods for introspection and tooling
+
+This architecture is explicitly designed to be lightweight, decoupled, and extensible—making it easy for third-party or community-driven modules to integrate seamlessly into the `pyxe` ecosystem.
 
 **This class is not typically used directly by consumers of the library.**
 
@@ -28,22 +35,30 @@ This design enables rich and composable operations while preserving a clean sepa
 
 **(1)** - A module is defined using the `ModuleFactory` interface.  
 **(2)** - On load, it registers itself via `module._register( … )`.  
-**(3)** - If `exposeAsMethod` is enabled, it becomes available as a direct method on all `Color` instances.  
-**(4)** - You can then apply the module via `color.<method>()` or `module.apply( … )`.
+**(3)** - Registers methods and binds them directly to the `Color` class, if so defined.  
+**(4)** - Methods can be applied via `color.<method>()` or in general `module.apply( … )`.
 
 ## Module Factory
 
-New modules are described via the `ModuleFactory`, an interface that provides essential information about the module itself. The minimum information includes the module ID (unique name), the called handler function and supported color spaces. In addition, things such as metadata, the handler's return value and default options can be defined.
+New modules are described via the `ModuleFactory`, an interface that provides essential information about the module itself. The minimum information includes the module ID (unique name) and the array of handler functions with their supported color spaces. In addition, metadata can be added.
 
 ```ts
+type ModuleMethodHandler = (
+  input: ColorObject,
+  ...args: any[]
+) => ColorObject | ColorObject[] | any;
+
+interface ModuleMethodFactory {
+  id: string;
+  handler: ModuleMethodHandler;
+  spaces: ColorSpaceID[];
+  bindAs?: string;
+  meta?: Record<string, any>
+}
+
 interface ModuleFactory {
   id: string;
-  handler: ( ...args: any [] ) => any;
-  spaces: ColorSpaceID[];
-  options?: Record<string, any>;
-  exposeAsMethod?: boolean;
-  multiInput?: boolean;
-  returnType?: string;
+  methods: ModuleMethodFactory[],
   meta?: Record<string, any>
 }
 ```
@@ -59,11 +74,11 @@ _register (
 ) : void
 ```
 
-Registers a new module by ID. If the module's `exposeAsMethod` flag is set to true it is automatically exposed on the Color instance via `ColorMethodRegistry`.
+Registers a module and its associated methods. Throws an error if the module ID already exists. This method is intended to be called by modules during setup.
 
-@param `id` - Unique identifier for the module  
-@param `factory` - Factory object implementing the module definition  
-@throws Error if a module with the same ID is already registered
+@param `id` - Unique module identifier  
+@param `factory` - Module definition (methods, meta info, etc.)  
+@throws If the module is already declared
 
 ### `_unregister( id )`
 
@@ -73,10 +88,36 @@ _unregister (
 ) : void
 ```
 
-Unregisters a module, including its `Color` method binding. If the module is not registered, an error is thrown.
+Unregisters a module, including its Color method binding. If the module is not registered, an error is thrown. This method is intended for internal use, e.g., in testing or plugin unloading.
 
-@param `id` - Module ID to remove  
-@throws Error if the module does not exist
+@param `id` - ID of the module to remove
+
+### `_registerMethods( id [, bind = true ] )`
+
+```ts
+_registerMethods (
+  id: string,
+  bind: boolean = true
+) : void
+```
+
+Registers all methods of a given module and binds them to the `Color` class if specified.
+
+@param `id` - Module ID  
+@param `bind` - Whether to bind methods to `ColorMethodRegistry`  
+@throws If the module is already declared
+
+### `_unregisterMethods( id )`
+
+```ts
+_unregisterMethods (
+  id: string
+) : void
+```
+
+Unbinds all methods associated with a module.
+
+@param `id` - Module ID
 
 ### `has( id )`
 
@@ -105,6 +146,21 @@ Ensures a module is registered, or throws.
 @returns `true` if the module exists  
 @throws Error if the module is not registered
 
+### `get( id [, safe = true ] )`
+
+```ts
+get (
+  id: string,
+  safe: boolean = true
+) : ModuleFactory | undefined
+```
+
+Retrieves a module factory by its ID.
+
+@param `id` - Module ID to retrieve  
+@param `safe` - Whether to throw an error if the module does not exist (default: `true`)  
+@returns The factory if found or `undefined` in safe mode
+
 ### `getModules()`
 
 ```ts
@@ -126,20 +182,82 @@ getMeta (
 Retrieves optional meta-information associated with a module. Returns `undefined` if no metadata is defined.
 
 @param `id` - Module ID  
-@returns The `meta` field from the module factory, if defined  
-@throws Error if the module is not registered
+@returns The `meta` field from the module factory, if defined
+
+### `hasMethod( key )`
+
+```ts
+hasMethod (
+  key: string
+) : boolean
+```
+
+Checks whether a module method is registered.
+
+@param `id` - Method key in the format `<moduleId>::<methodId>`  
+@returns `true` if registered
+
+### `checkMethod( key )`
+
+```ts
+checkMethod (
+  key: string
+) : boolean
+```
+
+Ensures a module method is registered. Throws an error if not.
+
+@param `id` - Method key  
+@returns `true` if check passes  
+@throws If the method is not registered
+
+### `getMethods( [ filter ] )`
+
+```ts
+getMethods (
+  filter?: string
+) : string[]
+```
+
+Returns all registered method keys, optionally filtered by string through regex.
+
+@param `filter` - Optional string (`regex`) to filter method keys  
+@returns Array of (filtered) method keys
+
+### `getMethodMap()`
+
+```ts
+getMethodMap () : Record<string, string[]>
+```
+
+Returns a map of all registered methods grouped by module ID.
+
+@returns Object with keys as module IDs and values as arrays of method names
+
+### `getMethodMeta( key )`
+
+```ts
+getMethodMeta (
+  key: string
+) : any
+```
+
+Returns metadata associated with a specific method.
+
+@param `key` - Method key `<moduleId>::<methodId>`  
+@returns Metadata object or undefined
 
 ### `apply( id, input, ...args )`
 
 ```ts
 apply (
-  id: string,
+  key: string,
   input: ColorObject,
   ...args: any[]
 ) : ColorObject | ColorObject[] | any
 ```
 
-Applies a registered module's logic to the input color object and optional arguments. Modules are responsible for input validation and must adhere to the expected behavior defined in their `ModuleFactory.handler`.
+Applies a registered method's logic to the input color object and optional arguments. Module methods are responsible for input validation and must adhere to the expected behavior defined in their `ModuleMethodFactory.handler`.
 
 @param `id` - Module ID  
 @param `input` - The color object to be processed  
