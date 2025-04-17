@@ -48,7 +48,7 @@ private async _ensureLoaded (
 ) : Promise<void>
 ```
 
-Ensures that all specified or available sources are loaded.
+Ensures that all specified or available sources are loaded. By default, the sources defined with `autoLoad` or all.
 
 @param `sources` - Optional list of sources to load
 

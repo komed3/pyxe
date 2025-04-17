@@ -44,6 +44,7 @@ _ColorLib.colorLibRegisty._register( 'RAL', {
         license: 'Open Data / RAL® references',
         tags: [ 'standard', 'RAL', 'industry', 'europe' ]
     },
+    autoLoad: [ 'classic' ],
     sources: {
         classic: RAL_Classic,
         design: RAL_Design,

@@ -140,5 +140,6 @@ export type ColorLibLoader = () => Promise<ColorLibList>;
 
 export interface ColorLibFactory {
     meta: ColorLibMeta;
+    autoLoad?: string[];
     sources: Record<string, ColorLibLoader>;
 }

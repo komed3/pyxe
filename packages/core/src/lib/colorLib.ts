@@ -161,6 +161,7 @@ export class ColorLib {
 
     /**
      * Ensures that all specified or available sources are loaded.
+     * By default, the sources defined with `autoLoad` or all.
      *
      * @param sources - Optional list of sources to load
      */
@@ -168,7 +169,10 @@ export class ColorLib {
         sources?: string[]
     ) : Promise<void> {
 
-        for ( const source of ( sources ?? this.getSources() ) ) {
+        for ( const source of (
+            sources ?? this.factory?.autoLoad ??
+            this.getSources() ?? []
+        ) ) {
 
             await this._loadSource( source );
 
