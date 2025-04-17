@@ -1,7 +1,9 @@
 'use strict';
 
 import { _ColorLib } from '@pyxe/core/dev';
+
 import { RAL_Classic } from './colors/classic.js';
+import { RAL_Effect } from './colors/effect.js';
 
 _ColorLib.colorLibRegisty._register( 'RAL', {
     meta: {
@@ -13,6 +15,7 @@ _ColorLib.colorLibRegisty._register( 'RAL', {
         tags: [ 'standard', 'RAL', 'industry', 'europe' ]
     },
     sources: {
-        classic: RAL_Classic
+        classic: RAL_Classic,
+        effect: RAL_Effect
     }
 } );
