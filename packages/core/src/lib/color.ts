@@ -1,8 +1,8 @@
 'use strict';
 
 import {
-    ColorInput, ColorInstance, ColorObject, ColorSpaceID,
-    ModuleFactory, OutputTypes
+    ColorInput, ColorInstance, ColorObject,
+    ColorSpaceID, OutputTypes
 } from '@pyxe/types';
 
 import { Utils } from '@pyxe/utils';
@@ -171,6 +171,16 @@ export class Color {
 
     }
 
+    tryConvert (
+        target: ColorSpaceID
+    ) : Color {
+
+        return new Color (
+            convert.tryConvert( this.toObject(), target ) as ColorObject
+        );
+
+    }
+
     getSpace () : ColorSpaceID {
 
         return this.toObject().space;
@@ -184,12 +194,12 @@ export class Color {
     }
 
     apply (
-        id: string,
+        key: string,
         ...args: any[]
     ) : Color | Color[] | any {
 
         const result = module.apply(
-            id, this.toObject(),
+            key, this.toObject(),
             ...args
         );
 
@@ -205,7 +215,7 @@ export class Color {
 
             }
 
-            if ( result.space && result.value ) {
+            if ( result?.space && result?.value ) {
 
                 return new Color( result );
 
@@ -221,22 +231,20 @@ export class Color {
 
 export const ColorMethodRegistry = {
 
-    add (
-        name: string,
-        factory: ModuleFactory
+    bind (
+        method: string,
+        name: string
     ) : void {
 
         try {
 
-            const { exposeAsMethod = false } = factory;
-
-            if ( exposeAsMethod && ! ( name in Color.prototype ) ) {
+            if ( ! ( name in Color.prototype ) ) {
 
                 ( Color.prototype as any )[ name ] = function (
                     ...args: any[]
                 ) : Color | Color[] | any {
 
-                    return this.apply( name, ...args );
+                    return this.apply( method, ...args );
 
                 };
 
@@ -246,26 +254,26 @@ export const ColorMethodRegistry = {
 
             throw new Utils.error( {
                 err, method: 'ColorMethodRegistry',
-                msg: `Cannot add method for module <${name}> to the Color class.`
+                msg: `Cannot bind method <${method}> as <${name}> to the Color class.`
             } );
 
         }
 
     },
 
-    remove (
-        name: string
+    unbind (
+        key: string
     ) : void {
 
-        if ( name in Color.prototype ) {
+        if ( key in Color.prototype ) {
 
-            delete ( Color.prototype as any )[ name ];
+            delete ( Color.prototype as any )[ key ];
 
         } else {
 
             throw new Utils.error( {
                 method: 'ColorMethodRegistry',
-                msg: `Method for module <${name}> is not bound to the Color class`
+                msg: `Method <${key}> is not bound to the Color class`
             } );
 
         }

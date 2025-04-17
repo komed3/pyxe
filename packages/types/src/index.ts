@@ -90,14 +90,22 @@ export interface ColorSpaceFactory {
     meta?: Record<string, any>
 }
 
+export type ModuleMethodHandler = (
+    input: ColorObject,
+    ...args: any[]
+) => ColorObject | ColorObject[] | any;
+
+export interface ModuleMethodFactory {
+    id: string;
+    handler: ModuleMethodHandler;
+    spaces: ColorSpaceID[];
+    bindAs?: string;
+    meta?: Record<string, any>
+}
+
 export interface ModuleFactory {
     id: string;
-    handler: ( ...args: any [] ) => any;
-    spaces: ColorSpaceID[];
-    options?: Record<string, any>;
-    exposeAsMethod?: boolean;
-    multiInput?: boolean;
-    returnType?: string;
+    methods: ModuleMethodFactory[],
     meta?: Record<string, any>
 }
 
