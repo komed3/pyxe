@@ -162,7 +162,10 @@ export class Color {
 
         } catch ( err ) {
 
-            throw err;
+            throw new Utils.error( {
+                err, method: 'Color',
+                msg: `Failed to convert into <${target}> color space`
+            } );
 
         }
 
