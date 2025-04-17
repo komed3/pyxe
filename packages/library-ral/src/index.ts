@@ -12,12 +12,15 @@
  * context of use. The initial release includes:
  * 
  *   - RAL Classic: The original and most widely used industrial standard
- *   - RAL Effect: A more recent system with metallic and nuanced shades
- *   - RAL Design: A color space-oriented catalog built for design and
- *                 architecture professionals
+ *   - RAL Effect:  A more recent system with metallic and nuanced shades
+ *   - RAL Design:  A color space-oriented catalog built for design and
+ *                  architecture professionals
  * 
  * All color entries are provided in normalized format and support multiple color
  * spaces where applicable.
+ * 
+ * “RAL” is a registered trademark of RAL gemeinnützige GmbH. This library is not
+ * affiliated with or endorsed by RAL GmbH.
  * 
  * @requires @pyxe/core
  * @requires @pyxe/types
