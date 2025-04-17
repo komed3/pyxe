@@ -56,6 +56,9 @@ export class ColorLib {
     /** The central factory for describing a color library */
     private factory: ColorLibFactory;
 
+    /** Specifies sources to load as default */
+    private loadDefault: string[] = [];
+
     /** Saves loaded resources of a color library */
     private loaded: Set<string> = new Set ();
 
@@ -63,11 +66,11 @@ export class ColorLib {
     private entries: ColorLibList = [];
 
     /**
-     * Creates a new ColorLib instance and optionally preloads given sources.
+     * Creates a new ColorLib instance and optionally sets default sources.
      * Prefer `ColorLib.getInstance()` for singleton-safe access.
      *
      * @param id - Library identifier
-     * @param sources - Optional list of sources to preload
+     * @param sources - Optional list of sources to set as default
      */
     constructor (
         id: string,
@@ -79,11 +82,11 @@ export class ColorLib {
         this.id = id;
         this.factory = factory;
 
-        if ( sources ) {
-
-            this._ensureLoaded( sources );
-
-        }
+        this.loadDefault =
+            sources ??
+            this.factory?.autoLoad ??
+            this.getSources() ??
+            [];
 
     }
 
@@ -161,7 +164,7 @@ export class ColorLib {
 
     /**
      * Ensures that all specified or available sources are loaded.
-     * By default, the sources defined with `autoLoad` or all.
+     * By default, the sources defined within the constructor.
      *
      * @param sources - Optional list of sources to load
      */
@@ -169,10 +172,7 @@ export class ColorLib {
         sources?: string[]
     ) : Promise<void> {
 
-        for ( const source of (
-            sources ?? this.factory?.autoLoad ??
-            this.getSources() ?? []
-        ) ) {
+        for ( const source of ( sources ?? this.loadDefault ) ) {
 
             await this._loadSource( source );
 
