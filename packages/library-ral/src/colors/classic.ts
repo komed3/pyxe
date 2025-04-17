@@ -21,7 +21,7 @@
 import type { ColorLibList } from '@pyxe/types';
 
 export const RAL_Classic = async () : Promise<ColorLibList> => [ {
-  id: 'RAL 1000',
+  id: '1000',
   spaces: {
     HEX: '#cdba88', RGB: { r: 205, g: 186, b: 136 },
     HSL: { h: 47.08, s: 37.57, l: 66.08 },
@@ -31,7 +31,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Green beige', de: 'Grünbeige' },
   meta: { grey: 186.29, lvr: 50, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1001',
+  id: '1001',
   spaces: {
     HEX: '#d0b084', RGB: { r: 208, g: 176, b: 132 },
     HSL: { h: 36.99, s: 41.71, l: 65.69 },
@@ -41,7 +41,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Beige', de: 'Beige' },
   meta: { grey: 178.70, lvr: 46, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1002',
+  id: '1002',
   spaces: {
     HEX: '#d2aa6d', RGB: { r: 210, g: 170, b: 109 },
     HSL: { h: 38.13, s: 48.98, l: 61.57 },
@@ -51,7 +51,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Sand yellow', de: 'Sandgelb' },
   meta: { grey: 173.04, lvr: 44, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1003',
+  id: '1003',
   spaces: {
     HEX: '#f9a800', RGB: { r: 249, g: 168, b: 0 },
     HSL: { h: 41.9, s: 100, l: 47.45 },
@@ -61,7 +61,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Signal yellow', de: 'Signalgelb' },
   meta: { grey: 172.32, lvr: 48, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1004',
+  id: '1004',
   spaces: {
     HEX: '#e49e00', RGB: { r: 228, g: 158, b: 0 },
     HSL: { h: 43.17, s: 100, l: 43.33 },
@@ -71,7 +71,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Golden yellow', de: 'Goldgelb' },
   meta: { grey: 160.7, lvr: 41, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1005',
+  id: '1005',
   spaces: {
     HEX: '#cb8e00', RGB: { r: 203, g: 142, b: 0 },
     HSL: { h: 43.55, s: 100, l: 38.63 },
@@ -81,7 +81,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Honey yellow', de: 'Honiggelb' },
   meta: { grey: 144.16, lvr: 32, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1006',
+  id: '1006',
   spaces: {
     HEX: '#e29000', RGB: { r: 226, g: 144, b: 0 },
     HSL: { h: 39.73, s: 100, l: 42.94 },
@@ -91,7 +91,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Maize yellow', de: 'Maisgelb' },
   meta: { grey: 150.26, lvr: 36, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1007',
+  id: '1007',
   spaces: {
     HEX: '#e88c00', RGB: { r: 232, g: 140, b: 0 },
     HSL: { h: 37.43, s: 100, l: 44.31 },
@@ -101,7 +101,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Daffodil yellow', de: 'Narzissengelb' },
   meta: { grey: 148.89, lvr: 36, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1011',
+  id: '1011',
   spaces: {
     HEX: '#af804f', RGB: { r: 175, g: 128, b: 79 },
     HSL: { h: 32.61, s: 36.8, l: 49.02 },
@@ -111,7 +111,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Brown beige', de: 'Braunbeige' },
   meta: { grey: 134.32, lvr: 25, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1012',
+  id: '1012',
   spaces: {
     HEX: '#ddaf27', RGB: { r: 221, g: 175, b: 39 },
     HSL: { h: 47.12, s: 70.52, l: 49.22 },
@@ -121,7 +121,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Lemon yellow', de: 'Zitronengelb' },
   meta: { grey: 174.04, lvr: 46, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1013',
+  id: '1013',
   spaces: {
     HEX: '#e3d9c6', RGB: { r: 227, g: 217, b: 198 },
     HSL: { h: 43.85, s: 30.23, l: 83.14 },
@@ -131,7 +131,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Oyster white', de: 'Perlweiß' },
   meta: { grey: 218.12, lvr: 70, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1014',
+  id: '1014',
   spaces: {
     HEX: '#ddc49a', RGB: { r: 221, g: 196, b: 154 },
     HSL: { h: 40.95, s: 45.32, l: 72.75 },
@@ -141,7 +141,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Ivory', de: 'Elfenbein' },
   meta: { grey: 198.15, lvr: 57, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1015',
+  id: '1015',
   spaces: {
     HEX: '#e6d2b5', RGB: { r: 230, g: 210, b: 181 },
     HSL: { h: 39.13, s: 45.1, l: 80 },
@@ -151,7 +151,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Light ivory', de: 'Hellelfenbein' },
   meta: { grey: 212.24, lvr: 66, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1016',
+  id: '1016',
   spaces: {
     HEX: '#f1dd38', RGB: { r: 241, g: 221, b: 56 },
     HSL: { h: 56.65, s: 79.56, l: 55.88 },
@@ -161,7 +161,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Sulfur yellow', de: 'Schwefelgelb' },
   meta: { grey: 211.92, lvr: 71, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1017',
+  id: '1017',
   spaces: {
     HEX: '#f6a950', RGB: { r: 246, g: 169, b: 80 },
     HSL: { h: 33.75, s: 84.21, l: 62.75 },
@@ -171,7 +171,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Saffron yellow', de: 'Safrangelb' },
   meta: { grey: 178.38, lvr: 49, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1018',
+  id: '1018',
   spaces: {
     HEX: '#faca30', RGB: { r: 250, g: 202, b: 48 },
     HSL: { h: 48.06, s: 88.29, l: 56.47 },
@@ -181,7 +181,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Zinc yellow', de: 'Zinkgelb' },
   meta: { grey: 199.96, lvr: 63, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1019',
+  id: '1019',
   spaces: {
     HEX: '#a48f7a', RGB: { r: 164, g: 143, b: 122 },
     HSL: { h: 31.5, s: 17.7, l: 55.69 },
@@ -191,7 +191,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Grey beige', de: 'Graubeige' },
   meta: { grey: 145.52, lvr: 29, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1020',
+  id: '1020',
   spaces: {
     HEX: '#a08f65', RGB: { r: 160, g: 143, b: 101 },
     HSL: { h: 45, s: 22.22, l: 50.59 },
@@ -201,7 +201,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Olive yellow', de: 'Olivgelb' },
   meta: { grey: 142.94, lvr: 28, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1021',
+  id: '1021',
   spaces: {
     HEX: '#f6b600', RGB: { r: 246, g: 182, b: 0 },
     HSL: { h: 46.13, s: 100, l: 46.67 },
@@ -211,7 +211,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Colza yellow', de: 'Rapsgelb' },
   meta: { grey: 181.48, lvr: 53, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1023',
+  id: '1023',
   spaces: {
     HEX: '#f7b500', RGB: { r: 247, g: 181, b: 0 },
     HSL: { h: 45.94, s: 100, l: 46.86 },
@@ -221,7 +221,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Traffic yellow', de: 'Verkehrsgelb' },
   meta: { grey: 181.69, lvr: 53, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1024',
+  id: '1024',
   spaces: {
     HEX: '#ba8f4c', RGB: { r: 186, g: 143, b: 76 },
     HSL: { h: 39.06, s: 41.73, l: 50.2 },
@@ -231,7 +231,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Ochre yellow', de: 'Ockergelb' },
   meta: { grey: 146.88, lvr: 31, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1026',
+  id: '1026',
   spaces: {
     HEX: '#ffff00', RGB: { r: 255, g: 255, b: 0 },
     HSL: { h: 0.17, s: 100, l: 50 },
@@ -241,7 +241,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Luminous yellow', de: 'Leuchtgelb' },
   meta: { grey: 236.59, lvr: 99, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1027',
+  id: '1027',
   spaces: {
     HEX: '#a77f0e', RGB: { r: 167, g: 127, b: 14 },
     HSL: { h: 46.4, s: 86.21, l: 34.12 },
@@ -251,7 +251,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Curry', de: 'Currygelb' },
   meta: { grey: 126.85, lvr: 23, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1028',
+  id: '1028',
   spaces: {
     HEX: '#ff9b00', RGB: { r: 255, g: 155, b: 0 },
     HSL: { h: 0.1, s: 100, l: 50 },
@@ -261,7 +261,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Melon yellow', de: 'Melonengelb' },
   meta: { grey: 165.78, lvr: 46, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1032',
+  id: '1032',
   spaces: {
     HEX: '#e2a300', RGB: { r: 226, g: 163, b: 0 },
     HSL: { h: 44.93, s: 100, l: 42.94 },
@@ -271,7 +271,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Broom yellow', de: 'Ginstergelb' },
   meta: { grey: 163.85, lvr: 42, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1033',
+  id: '1033',
   spaces: {
     HEX: '#f99a1c', RGB: { r: 249, g: 154, b: 28 },
     HSL: { h: 35.56, s: 90, l: 52.94 },
@@ -281,7 +281,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Dahlia yellow', de: 'Dahliengelb' },
   meta: { grey: 164.47, lvr: 43, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1034',
+  id: '1034',
   spaces: {
     HEX: '#eb9c52', RGB: { r: 235, g: 156, b: 82 },
     HSL: { h: 30.6, s: 74.87, l: 60.98 },
@@ -291,7 +291,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pastel yellow', de: 'Pastellgelb' },
   meta: { grey: 167.03, lvr: 42, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1035',
+  id: '1035',
   spaces: {
     HEX: '#908370', RGB: { r: 144, g: 131, b: 112 },
     HSL: { h: 38, s: 11.81, l: 49.8 },
@@ -301,7 +301,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pearl beige', de: 'Perlbeige' },
   meta: { grey: 131.97, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1036',
+  id: '1036',
   spaces: {
     HEX: '#80643f', RGB: { r: 128, g: 100, b: 63 },
     HSL: { h: 36.77, s: 32.98, l: 36.86 },
@@ -311,7 +311,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pearl gold', de: 'Perlgold' },
   meta: { grey: 103.36, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 1037',
+  id: '1037',
   spaces: {
     HEX: '#f09200', RGB: { r: 240, g: 146, b: 0 },
     HSL: { h: 37.69, s: 100, l: 45.88 },
@@ -321,7 +321,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Sun yellow', de: 'Sonnengelb' },
   meta: { grey: 154.88, lvr: 39, tag: [ 'yellow', 'beige' ] }
 }, {
-  id: 'RAL 2000',
+  id: '2000',
   spaces: {
     HEX: '#dd7907', RGB: { r: 213, g: 111, b: 0 },
     HSL: { h: 31.27, s: 100, l: 41.76 },
@@ -331,7 +331,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Yellow orange', de: 'Gelborange' },
   meta: { grey: 124.67, lvr: 26, tag: [ 'orange' ] }
 }, {
-  id: 'RAL 2001',
+  id: '2001',
   spaces: {
     HEX: '#be4e20', RGB: { r: 182, g: 72, b: 28 },
     HSL: { h: 17.14, s: 73.33, l: 41.18 },
@@ -341,7 +341,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Red orange', de: 'Rotorange' },
   meta: { grey: 92.21, lvr: 15, tag: [ 'orange' ] }
 }, {
-  id: 'RAL 2002',
+  id: '2002',
   spaces: {
     HEX: '#c63927', RGB: { r: 188, g: 56, b: 35 },
     HSL: { h: 8.24, s: 68.61, l: 43.73 },
@@ -351,7 +351,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Vermilion', de: 'Blutorange' },
   meta: { grey: 82.55, lvr: 14, tag: [ 'orange' ] }
 }, {
-  id: 'RAL 2003',
+  id: '2003',
   spaces: {
     HEX: '#fa842b', RGB: { r: 241, g: 120, b: 41 },
     HSL: { h: 23.7, s: 87.72, l: 55.29 },
@@ -361,7 +361,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pastel orange', de: 'Pastellorange' },
   meta: { grey: 140.02, lvr: 33, tag: [ 'orange' ] }
 }, {
-  id: 'RAL 2004',
+  id: '2004',
   spaces: {
     HEX: '#e75b12', RGB: { r: 222, g: 83, b: 6 },
     HSL: { h: 21.39, s: 94.74, l: 44.71 },
@@ -371,7 +371,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pure orange', de: 'Reinorange' },
   meta: { grey: 106.99, lvr: 22, tag: [ 'orange' ] }
 }, {
-  id: 'RAL 2005',
+  id: '2005',
   spaces: {
     HEX: '#ff2300', RGB: { r: 255, g: 75, b: 17 },
     HSL: { h: 14.62, s: 100, l: 53.33 },
@@ -381,7 +381,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Luminous orange', de: 'Leuchtorange' },
   meta: { grey: 109.08, lvr: 44, tag: [ 'orange' ] }
 }, {
-  id: 'RAL 2007',
+  id: '2007',
   spaces: {
     HEX: '#ffa421', RGB: { r: 255, g: 183, b: 0 },
     HSL: { h: 0.12, s: 100, l: 50 },
@@ -391,7 +391,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Luminous bright orange', de: 'Leuchthellorange' },
   meta: { grey: 185.09, lvr: 74, tag: [ 'orange' ] }
 }, {
-  id: 'RAL 2008',
+  id: '2008',
   spaces: {
     HEX: '#f3752c', RGB: { r: 232, g: 107, b: 34 },
     HSL: { h: 22.12, s: 81.15, l: 52.16 },
@@ -401,7 +401,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Bright red orange', de: 'Hellrotorange' },
   meta: { grey: 128.30, lvr: 28, tag: [ 'orange' ] }
 }, {
-  id: 'RAL 2009',
+  id: '2009',
   spaces: {
     HEX: '#e15501', RGB: { r: 218, g: 83, b: 10 },
     HSL: { h: 21.06, s: 91.23, l: 44.71 },
@@ -411,7 +411,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Traffic orange', de: 'Verkehrsorange' },
   meta: { grey: 106.43, lvr: 22, tag: [ 'orange' ] }
 }, {
-  id: 'RAL 2010',
+  id: '2010',
   spaces: {
     HEX: '#d4652f', RGB: { r: 204, g: 93, b: 41 },
     HSL: { h: 19.14, s: 66.53, l: 48.04 },
@@ -421,7 +421,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Signal orange', de: 'Signalorange' },
   meta: { grey: 112.84, lvr: 21, tag: [ 'orange' ] }
 }, {
-  id: 'RAL 2011',
+  id: '2011',
   spaces: {
     HEX: '#ec7c25', RGB: { r: 221, g: 110, b: 15 },
     HSL: { h: 27.67, s: 87.29, l: 46.27 },
@@ -431,7 +431,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Deep orange', de: 'Tieforange' },
   meta: { grey: 126.74, lvr: 27, tag: [ 'orange' ] }
 }, {
-  id: 'RAL 2012',
+  id: '2012',
   spaces: {
     HEX: '#db6a50', RGB: { r: 209, g: 101, b: 78 },
     HSL: { h: 10.53, s: 58.74, l: 56.27 },
@@ -441,7 +441,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Salmon orange', de: 'Lachsorange' },
   meta: { grey: 122.3, lvr: 24, tag: [ 'orange' ] }
 }, {
-  id: 'RAL 2013',
+  id: '2013',
   spaces: {
     HEX: '#954527', RGB: { r: 143, g: 62, b: 38 },
     HSL: { h: 13.71, s: 58.01, l: 35.49 },
@@ -451,16 +451,16 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pearl orange', de: 'Perlorange' },
   meta: { grey: 77.49, tag: [ 'orange' ] }
 }, {
-  id: 'RAL 2017',
+  id: '2017',
   spaces: {
     HEX: '#fa4402', RGB: { r: 250, g: 68, b: 2 },
     Lab: { L: 565.48, a: 666.21, b: 675.509 },
     CMYK: { c: 0, m: 73, y: 99, k: 2 }
   },
-  name: { en: 'RAL orange', de: 'RAL Orange' },
+  name: { en: 'orange', de: 'Orange' },
   meta: { tag: [ 'orange' ] }
 }, {
-  id: 'RAL 3000',
+  id: '3000',
   spaces: {
     HEX: '#ab2524', RGB: { r: 164, g: 40, b: 33 },
     HSL: { h: 3.21, s: 66.5, l: 38.63 },
@@ -470,7 +470,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Flame red', de: 'Feuerrot' },
   meta: { grey: 65.86, lvr: 10, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3001',
+  id: '3001',
   spaces: {
     HEX: '#a02128', RGB: { r: 152, g: 35, b: 35 },
     HSL: { h: 0, s: 62.57, l: 36.67 },
@@ -480,7 +480,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Signal red', de: 'Signalrot' },
   meta: { grey: 59.87, lvr: 8, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3002',
+  id: '3002',
   spaces: {
     HEX: '#a1232b', RGB: { r: 152, g: 34, b: 34 },
     HSL: { h: 0, s: 63.44, l: 36.47 },
@@ -490,7 +490,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Carmine red', de: 'Karminrot' },
   meta: { grey: 59.09, lvr: 8, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3003',
+  id: '3003',
   spaces: {
     HEX: '#8d1d2c', RGB: { r: 132, g: 25, b: 34 },
     HSL: { h: 354.95, s: 68.15, l: 30.78 },
@@ -500,7 +500,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Ruby red', de: 'Rubinrot' },
   meta: { grey: 48.4, lvr: 6, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3004',
+  id: '3004',
   spaces: {
     HEX: '#701f29', RGB: { r: 105, g: 27, b: 35 },
     HSL: { h: 353.85, s: 59.09, l: 25.88 },
@@ -510,7 +510,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Purple red', de: 'Purpurrot' },
   meta: { grey: 44.16, lvr: 4, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3005',
+  id: '3005',
   spaces: {
     HEX: '#5e2028', RGB: { r: 88, g: 24, b: 31 },
     HSL: { h: 353.44, s: 57.14, l: 21.96 },
@@ -520,7 +520,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Wine red', de: 'Weinrot' },
   meta: { grey: 38.11, lvr: 3, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3007',
+  id: '3007',
   spaces: {
     HEX: '#402225', RGB: { r: 61, g: 32, b: 34 },
     HSL: { h: 355.86, s: 31.18, l: 18.24 },
@@ -530,7 +530,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Black red', de: 'Schwarzrot' },
   meta: { grey: 38.31, lvr: 2, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3009',
+  id: '3009',
   spaces: {
     HEX: '#703731', RGB: { r: 102, g: 48, b: 41 },
     HSL: { h: 6.89, s: 42.66, l: 28.04 },
@@ -540,7 +540,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Oxide red', de: 'Oxidrot' },
   meta: { grey: 58.98, lvr: 5, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3011',
+  id: '3011',
   spaces: {
     HEX: '#7e292c', RGB: { r: 119, g: 36, b: 36 },
     HSL: { h: 0, s: 53.55, l: 30.39 },
@@ -550,7 +550,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Brown red', de: 'Braunrot' },
   meta: { grey: 53.65, lvr: 5, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3012',
+  id: '3012',
   spaces: {
     HEX: '#cb8d73', RGB: { r: 194, g: 133, b: 109 },
     HSL: { h: 16.94, s: 41.06, l: 59.41 },
@@ -560,7 +560,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Beige red', de: 'Beigerot' },
   meta: { grey: 144.24, lvr: 30, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3013',
+  id: '3013',
   spaces: {
     HEX: '#9c322e', RGB: { r: 149, g: 46, b: 37 },
     HSL: { h: 4.82, s: 60.22, l: 36.47 },
@@ -570,7 +570,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Tomato red', de: 'Tomatenrot' },
   meta: { grey: 67.25, lvr: 9, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3014',
+  id: '3014',
   spaces: {
     HEX: '#d47479', RGB: { r: 201, g: 115, b: 117 },
     HSL: { h: 358.6, s: 44.33, l: 61.96 },
@@ -580,7 +580,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Antique pink', de: 'Altrosa' },
   meta: { grey: 133.43, lvr: 26, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3015',
+  id: '3015',
   spaces: {
     HEX: '#e1a6ad', RGB: { r: 215, g: 160, b: 166 },
     HSL: { h: 353.45, s: 40.74, l: 73.53 },
@@ -590,7 +590,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Light pink', de: 'Hellrosa' },
   meta: { grey: 172.13, lvr: 43, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3016',
+  id: '3016',
   spaces: {
     HEX: '#ac4034', RGB: { r: 164, g: 60, b: 48 },
     HSL: { h: 6.21, s: 54.72, l: 41.57 },
@@ -600,7 +600,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Coral red', de: 'Korallenrot' },
   meta: { grey: 81.24, lvr: 12, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3017',
+  id: '3017',
   spaces: {
     HEX: '#d3545f', RGB: { r: 200, g: 84, b: 93 },
     HSL: { h: 355.34, s: 51.33, l: 55.69 },
@@ -610,7 +610,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Rose', de: 'Rosé' },
   meta: { grey: 109.31, lvr: 20, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3018',
+  id: '3018',
   spaces: {
     HEX: '#d14152', RGB: { r: 196, g: 62, b: 74 },
     HSL: { h: 354.63, s: 53.17, l: 50.59 },
@@ -620,7 +620,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Strawberry red', de: 'Erdbeerrot' },
   meta: { grey: 91.35, lvr: 16, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3020',
+  id: '3020',
   spaces: {
     HEX: '#c1121c', RGB: { r: 184, g: 29, b: 19 },
     HSL: { h: 3.64, s: 81.28, l: 39.8 },
@@ -630,7 +630,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Traffic red', de: 'Verkehrsrot' },
   meta: { grey: 61.23, lvr: 12, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3022',
+  id: '3022',
   spaces: {
     HEX: '#d56d56', RGB: { r: 204, g: 105, b: 85 },
     HSL: { h: 10.08, s: 53.85, l: 56.67 },
@@ -640,7 +640,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Salmon pink', de: 'Lachsrot' },
   meta: { grey: 124.60, lvr: 24, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3024',
+  id: '3024',
   spaces: {
     HEX: '#f70000', RGB: { r: 255, g: 42, b: 36 },
     HSL: { h: 1.64, s: 100, l: 57.06 },
@@ -650,7 +650,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Luminous red', de: 'Leuchtrot' },
   meta: { grey: 86.85, lvr: 30, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3026',
+  id: '3026',
   spaces: {
     HEX: '#ff0000', RGB: { r: 255, g: 38, b: 32 },
     HSL: { h: 1.61, s: 100, l: 56.27 },
@@ -660,7 +660,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Luminous bright red', de: 'Leuchthellrot' },
   meta: { grey: 83.7, lvr: 32, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3027',
+  id: '3027',
   spaces: {
     HEX: '#b42041', RGB: { r: 169, g: 38, b: 61 },
     HSL: { h: 349.47, s: 63.29, l: 40.59 },
@@ -670,7 +670,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Raspberry red', de: 'Himbeerrot' },
   meta: { grey: 67.51, lvr: 10, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3028',
+  id: '3028',
   spaces: {
     HEX: '#e72512', RGB: { r: 201, g: 43, b: 38 },
     HSL: { h: 1.84, s: 68.2, l: 46.86 },
@@ -680,7 +680,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pure red', de: 'Reinrot' },
   meta: { grey: 76.23, lvr: 15, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3031',
+  id: '3031',
   spaces: {
     HEX: '#ac323b', RGB: { r: 164, g: 51, b: 56 },
     HSL: { h: 357.35, s: 52.56, l: 42.16 },
@@ -690,7 +690,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Orient red', de: 'Orientrot' },
   meta: { grey: 75.38, lvr: 11, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3032',
+  id: '3032',
   spaces: {
     HEX: '#711521', RGB: { r: 110, g: 28, b: 36 },
     HSL: { h: 354.15, s: 59.42, l: 27.06 },
@@ -700,7 +700,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pearl ruby red', de: 'Perlrubinrot' },
   meta: { grey: 46.01, tag: [ 'red' ] }
 }, {
-  id: 'RAL 3033',
+  id: '3033',
   spaces: {
     HEX: '#b24c43', RGB: { r: 162, g: 57, b: 46 },
     HSL: { h: 5.69, s: 55.77, l: 40.78 },
@@ -710,7 +710,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pearl pink', de: 'Perlrosa' },
   meta: { grey: 78.53, tag: [ 'red' ] }
 }, {
-  id: 'RAL 4001',
+  id: '4001',
   spaces: {
     HEX: '#8a5a83', RGB: { r: 131, g: 96, b: 131 },
     HSL: { h: 0.83, s: 15.42, l: 44.51 },
@@ -720,7 +720,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Red lilac', de: 'Rotlila' },
   meta: { grey: 105.97, lvr: 15, tag: [ 'violet' ] }
 }, {
-  id: 'RAL 4002',
+  id: '4002',
   spaces: {
     HEX: '#933d50', RGB: { r: 140, g: 60, b: 75 },
     HSL: { h: 348.75, s: 40, l: 39.22 },
@@ -730,7 +730,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Red violet', de: 'Rotviolett' },
   meta: { grey: 78.09, lvr: 9, tag: [ 'violet' ] }
 }, {
-  id: 'RAL 4003',
+  id: '4003',
   spaces: {
     HEX: '#d15b8f', RGB: { r: 196, g: 96, b: 140 },
     HSL: { h: 333.6, s: 45.87, l: 57.25 },
@@ -740,7 +740,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Heather violet', de: 'Erikaviolett' },
   meta: { grey: 120.44, lvr: 22, tag: [ 'violet' ] }
 }, {
-  id: 'RAL 4004',
+  id: '4004',
   spaces: {
     HEX: '#691639', RGB: { r: 100, g: 29, b: 57 },
     HSL: { h: 336.34, s: 55.04, l: 25.29 },
@@ -750,7 +750,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Claret violet', de: 'Bordeauxviolett' },
   meta: { grey: 46.12, lvr: 4, tag: [ 'violet' ] }
 }, {
-  id: 'RAL 4005',
+  id: '4005',
   spaces: {
     HEX: '#83639d', RGB: { r: 123, g: 103, b: 154 },
     HSL: { h: 263.53, s: 20.16, l: 50.39 },
@@ -760,7 +760,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Blue lilac', de: 'Blaulila' },
   meta: { grey: 110.93, lvr: 16, tag: [ 'violet' ] }
 }, {
-  id: 'RAL 4006',
+  id: '4006',
   spaces: {
     HEX: '#992572', RGB: { r: 145, g: 48, b: 115 },
     HSL: { h: 318.56, s: 50.26, l: 37.84 },
@@ -770,7 +770,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Traffic purple', de: 'Verkehrspurpur' },
   meta: { grey: 73.46, lvr: 10, tag: [ 'violet' ] }
 }, {
-  id: 'RAL 4007',
+  id: '4007',
   spaces: {
     HEX: '#4a203b', RGB: { r: 71, g: 36, b: 60 },
     HSL: { h: 318.86, s: 32.71, l: 20.98 },
@@ -780,7 +780,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Purple violet', de: 'Purpurviolett' },
   meta: { grey: 45.17, lvr: 3, tag: [ 'violet' ] }
 }, {
-  id: 'RAL 4008',
+  id: '4008',
   spaces: {
     HEX: '#904684', RGB: { r: 135, g: 75, b: 131 },
     HSL: { h: 304, s: 28.57, l: 41.18 },
@@ -790,7 +790,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Signal violet', de: 'Signalviolett' },
   meta: { grey: 91.8, lvr: 12, tag: [ 'violet' ] }
 }, {
-  id: 'RAL 4009',
+  id: '4009',
   spaces: {
     HEX: '#a38995', RGB: { r: 157, g: 133, b: 146 },
     HSL: { h: 327.5, s: 10.91, l: 56.86 },
@@ -800,7 +800,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pastel violet', de: 'Pastellviolett' },
   meta: { grey: 139.04, lvr: 26, tag: [ 'violet' ] }
 }, {
-  id: 'RAL 4010',
+  id: '4010',
   spaces: {
     HEX: '#c63678', RGB: { r: 187, g: 62, b: 119 },
     HSL: { h: 332.64, s: 50.2, l: 48.82 },
@@ -810,7 +810,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Telemagenta', de: 'Telemagenta' },
   meta: { grey: 92.69, lvr: 16, tag: [ 'violet' ] }
 }, {
-  id: 'RAL 4011',
+  id: '4011',
   spaces: {
     HEX: '#8773a1', RGB: { r: 113, g: 98, b: 135 },
     HSL: { h: 264.32, s: 15.88, l: 45.69 },
@@ -820,7 +820,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pearl violet', de: 'Perlviolett' },
   meta: { grey: 103.86, tag: [ 'violet' ] }
 }, {
-  id: 'RAL 4012',
+  id: '4012',
   spaces: {
     HEX: '#6b6880', RGB: { r: 109, g: 107, b: 127 },
     HSL: { h: 246, s: 8.55, l: 45.88 },
@@ -830,7 +830,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pearl blackberry', de: 'Perlbrombeer' },
   meta: { grey: 108.87, tag: [ 'violet' ] }
 }, {
-  id: 'RAL 5000',
+  id: '5000',
   spaces: {
     HEX: '#384c70', RGB: { r: 56, g: 78, b: 111 },
     HSL: { h: 216, s: 32.93, l: 32.75 },
@@ -840,7 +840,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Violet blue', de: 'Violettblau' },
   meta: { grey: 75.71, lvr: 7, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5001',
+  id: '5001',
   spaces: {
     HEX: '#1f4764', RGB: { r: 29, g: 76, b: 100 },
     HSL: { h: 200.28, s: 55.04, l: 25.29 },
@@ -850,7 +850,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Green blue', de: 'Grünblau' },
   meta: { grey: 67.74, lvr: 6, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5002',
+  id: '5002',
   spaces: {
     HEX: '#2b2c7c', RGB: { r: 30, g: 54, b: 123 },
     HSL: { h: 224.52, s: 60.78, l: 30 },
@@ -860,7 +860,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Ultramarine blue', de: 'Ultramarinblau' },
   meta: { grey: 53.88, lvr: 4, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5003',
+  id: '5003',
   spaces: {
     HEX: '#2a3756', RGB: { r: 38, g: 56, b: 85 },
     HSL: { h: 217.02, s: 38.21, l: 24.12 },
@@ -870,7 +870,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Sapphire blue', de: 'Saphirblau' },
   meta: { grey: 54.27, lvr: 4, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5004',
+  id: '5004',
   spaces: {
     HEX: '#1d1f2a', RGB: { r: 26, g: 30, b: 40 },
     HSL: { h: 222.86, s: 21.21, l: 12.94 },
@@ -880,7 +880,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Black blue', de: 'Schwarzblau' },
   meta: { grey: 29.87, lvr: 1, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5005',
+  id: '5005',
   spaces: {
     HEX: '#154889', RGB: { r: 0, g: 81, b: 135 },
     HSL: { h: 204, s: 100, l: 26.47 },
@@ -890,7 +890,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Signal blue', de: 'Signalblau' },
   meta: { grey: 67.68, lvr: 7, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5007',
+  id: '5007',
   spaces: {
     HEX: '#41678d', RGB: { r: 66, g: 106, b: 140 },
     HSL: { h: 207.57, s: 35.92, l: 40.39 },
@@ -900,7 +900,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Brilliant blue', de: 'Brillantblau' },
   meta: { grey: 99.95, lvr: 13, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5008',
+  id: '5008',
   spaces: {
     HEX: '#313c48', RGB: { r: 45, g: 58, b: 68 },
     HSL: { h: 206.09, s: 20.35, l: 22.16 },
@@ -910,7 +910,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Grey blue', de: 'Graublau' },
   meta: { grey: 55.96, lvr: 4, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5009',
+  id: '5009',
   spaces: {
     HEX: '#2e5978', RGB: { r: 45, g: 94, b: 120 },
     HSL: { h: 200.8, s: 45.45, l: 32.35 },
@@ -920,7 +920,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Azure blue', de: 'Azurblau' },
   meta: { grey: 85.46, lvr: 10, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5010',
+  id: '5010',
   spaces: {
     HEX: '#13447c', RGB: { r: 0, g: 78, b: 124 },
     HSL: { h: 202.26, s: 100, l: 24.31 },
@@ -930,7 +930,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Gentian blue', de: 'Enzianblau' },
   meta: { grey: 64.74, lvr: 7, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5011',
+  id: '5011',
   spaces: {
     HEX: '#232c3f', RGB: { r: 30, g: 43, b: 61 },
     HSL: { h: 214.84, s: 34.07, l: 17.84 },
@@ -940,7 +940,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Steel blue', de: 'Stahlblau' },
   meta: { grey: 41.54, lvr: 2, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5012',
+  id: '5012',
   spaces: {
     HEX: '#3481b8', RGB: { r: 46, g: 136, b: 182 },
     HSL: { h: 200.29, s: 59.65, l: 44.71 },
@@ -950,7 +950,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Light blue', de: 'Lichtblau' },
   meta: { grey: 120.19, lvr: 21, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5013',
+  id: '5013',
   spaces: {
     HEX: '#232d53', RGB: { r: 34, g: 48, b: 83 },
     HSL: { h: 222.86, s: 41.88, l: 22.94 },
@@ -960,7 +960,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Cobalt blue', de: 'Kobaltblau' },
   meta: { grey: 47.55, lvr: 3, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5014',
+  id: '5014',
   spaces: {
     HEX: '#6c7c98', RGB: { r: 104, g: 124, b: 150 },
     HSL: { h: 213.91, s: 18.11, l: 49.8 },
@@ -970,7 +970,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pigeon blue', de: 'Taubenblau' },
   meta: { grey: 121.63, lvr: 19, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5015',
+  id: '5015',
   spaces: {
     HEX: '#2874b2', RGB: { r: 11, g: 123, b: 176 },
     HSL: { h: 199.27, s: 88.24, l: 36.67 },
@@ -980,7 +980,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Sky blue', de: 'Himmelblau' },
   meta: { grey: 103.02, lvr: 17, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5017',
+  id: '5017',
   spaces: {
     HEX: '#0e518d', RGB: { r: 0, g: 90, b: 140 },
     HSL: { h: 201.43, s: 100, l: 27.45 },
@@ -990,7 +990,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Traffic blue', de: 'Verkehrsblau' },
   meta: { grey: 74.48, lvr: 8, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5018',
+  id: '5018',
   spaces: {
     HEX: '#21888f', RGB: { r: 27, g: 139, b: 140 },
     HSL: { h: 180.53, s: 67.66, l: 32.75 },
@@ -1000,7 +1000,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Turquoise blue', de: 'Türkisblau' },
   meta: { grey: 115.26, lvr: 20, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5019',
+  id: '5019',
   spaces: {
     HEX: '#1a5784', RGB: { r: 15, g: 93, b: 132 },
     HSL: { h: 200, s: 79.59, l: 28.82 },
@@ -1010,7 +1010,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Capri blue', de: 'Capriblau' },
   meta: { grey: 79.23, lvr: 9, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5020',
+  id: '5020',
   spaces: {
     HEX: '#0b4151', RGB: { r: 0, g: 65, b: 75 },
     HSL: { h: 188, s: 100, l: 14.71 },
@@ -1020,7 +1020,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Ocean blue', de: 'Ozeanblau' },
   meta: { grey: 51.9, lvr: 4, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5021',
+  id: '5021',
   spaces: {
     HEX: '#07737a', RGB: { r: 0, g: 117, b: 119 },
     HSL: { h: 181.01, s: 100, l: 23.33 },
@@ -1030,7 +1030,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Water blue', de: 'Wasserblau' },
   meta: { grey: 92.27, lvr: 13, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5022',
+  id: '5022',
   spaces: {
     HEX: '#2f2a5a', RGB: { r: 43, g: 44, b: 90 },
     HSL: { h: 238.72, s: 35.34, l: 26.08 },
@@ -1040,7 +1040,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Night blue', de: 'Nachtblau' },
   meta: { grey: 47.11, lvr: 3, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5023',
+  id: '5023',
   spaces: {
     HEX: '#4d668e', RGB: { r: 74, g: 104, b: 141 },
     HSL: { h: 213.13, s: 31.16, l: 42.16 },
@@ -1050,7 +1050,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Distant blue', de: 'Fernblau' },
   meta: { grey: 100.29, lvr: 13, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5024',
+  id: '5024',
   spaces: {
     HEX: '#6a93b0', RGB: { r: 103, g: 146, b: 172 },
     HSL: { h: 202.61, s: 29.36, l: 53.92 },
@@ -1060,7 +1060,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pastel blue', de: 'Pastellblau' },
   meta: { grey: 138.74, lvr: 26, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5025',
+  id: '5025',
   spaces: {
     HEX: '#296478', RGB: { r: 44, g: 105, b: 124 },
     HSL: { h: 194.25, s: 47.62, l: 32.94 },
@@ -1070,7 +1070,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pearl Gentian blue', de: 'Perlenzian' },
   meta: { grey: 93.4, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 5026',
+  id: '5026',
   spaces: {
     HEX: '#102c54', RGB: { r: 27, g: 47, b: 82 },
     HSL: { h: 218.18, s: 50.46, l: 21.37 },
@@ -1080,7 +1080,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pearl night blue', de: 'Perlnachtblau' },
   meta: { grey: 45.28, tag: [ 'blue' ] }
 }, {
-  id: 'RAL 6000',
+  id: '6000',
   spaces: {
     HEX: '#327662', RGB: { r: 59, g: 116, b: 96 },
     HSL: { h: 158.95, s: 32.57, l: 34.31 },
@@ -1090,7 +1090,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Patina green', de: 'Patinagrün' },
   meta: { grey: 102.44, lvr: 14, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6001',
+  id: '6001',
   spaces: {
     HEX: '#28713e', RGB: { r: 49, g: 104, b: 52 },
     HSL: { h: 123.27, s: 35.95, l: 30 },
@@ -1100,7 +1100,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Emerald green', de: 'Smaragdgrün' },
   meta: { grey: 88.55, lvr: 11, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6002',
+  id: '6002',
   spaces: {
     HEX: '#276235', RGB: { r: 45, g: 90, b: 39 },
     HSL: { h: 112.94, s: 39.53, l: 25.29 },
@@ -1110,7 +1110,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Leaf green', de: 'Laubgrün' },
   meta: { grey: 76.75, lvr: 8, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6003',
+  id: '6003',
   spaces: {
     HEX: '#4b573e', RGB: { r: 78, g: 83, b: 59 },
     HSL: { h: 72.5, s: 16.9, l: 27.84 },
@@ -1120,7 +1120,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Olive green', de: 'Olivgrün' },
   meta: { grey: 80.2, lvr: 8, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6004',
+  id: '6004',
   spaces: {
     HEX: '#0e4243', RGB: { r: 8, g: 68, b: 66 },
     HSL: { h: 178, s: 78.95, l: 14.9 },
@@ -1130,7 +1130,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Blue green', de: 'Blaugrün' },
   meta: { grey: 55.1, lvr: 5, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6005',
+  id: '6005',
   spaces: {
     HEX: '#0f4336', RGB: { r: 17, g: 66, b: 50 },
     HSL: { h: 160.41, s: 59.04, l: 16.27 },
@@ -1140,7 +1140,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Moss green', de: 'Moosgrün' },
   meta: { grey: 54.43, lvr: 4, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6006',
+  id: '6006',
   spaces: {
     HEX: '#40433b', RGB: { r: 59, g: 57, b: 46 },
     HSL: { h: 50.77, s: 12.38, l: 20.59 },
@@ -1150,7 +1150,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Grey olive', de: 'Grauoliv' },
   meta: { grey: 56.63, lvr: 4, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6007',
+  id: '6007',
   spaces: {
     HEX: '#283424', RGB: { r: 42, g: 50, b: 34 },
     HSL: { h: 90, s: 19.05, l: 16.47 },
@@ -1160,7 +1160,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Bottle green', de: 'Flaschengrün' },
   meta: { grey: 47.14, lvr: 3, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6008',
+  id: '6008',
   spaces: {
     HEX: '#35382e', RGB: { r: 54, g: 52, b: 42 },
     HSL: { h: 50, s: 12.5, l: 18.82 },
@@ -1170,7 +1170,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Brown green', de: 'Braungrün' },
   meta: { grey: 51.7, lvr: 3, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6009',
+  id: '6009',
   spaces: {
     HEX: '#26392f', RGB: { r: 39, g: 54, b: 42 },
     HSL: { h: 132, s: 16.13, l: 18.24 },
@@ -1180,7 +1180,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Fir green', de: 'Tannengrün' },
   meta: { grey: 49.94, lvr: 3, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6010',
+  id: '6010',
   spaces: {
     HEX: '#3e753b', RGB: { r: 72, g: 111, b: 56 },
     HSL: { h: 102.55, s: 32.93, l: 32.75 },
@@ -1190,7 +1190,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Grass green', de: 'Grasgrün' },
   meta: { grey: 98.74, lvr: 13, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6011',
+  id: '6011',
   spaces: {
     HEX: '#68825b', RGB: { r: 105, g: 125, b: 88 },
     HSL: { h: 92.43, s: 17.37, l: 41.76 },
@@ -1200,7 +1200,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Reseda green', de: 'Resedagrün' },
   meta: { grey: 118.08, lvr: 18, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6012',
+  id: '6012',
   spaces: {
     HEX: '#31403d', RGB: { r: 48, g: 61, b: 58 },
     HSL: { h: 166.15, s: 11.93, l: 21.37 },
@@ -1210,7 +1210,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Black green', de: 'Schwarzgrün' },
   meta: { grey: 58.02, lvr: 4, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6013',
+  id: '6013',
   spaces: {
     HEX: '#797c5a', RGB: { r: 122, g: 118, b: 90 },
     HSL: { h: 52.5, s: 15.09, l: 41.57 },
@@ -1220,7 +1220,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Reed green', de: 'Schilfgrün' },
   meta: { grey: 116.83, lvr: 18, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6014',
+  id: '6014',
   spaces: {
     HEX: '#444337', RGB: { r: 70, g: 65, b: 53 },
     HSL: { h: 42.35, s: 13.82, l: 24.12 },
@@ -1230,7 +1230,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Yellow olive', de: 'Gelboliv' },
   meta: { grey: 65.20, lvr: 5, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6015',
+  id: '6015',
   spaces: {
     HEX: '#3d403a', RGB: { r: 60, g: 61, b: 54 },
     HSL: { h: 68.57, s: 6.09, l: 22.55 },
@@ -1240,7 +1240,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Black olive', de: 'Schwarzoliv' },
   meta: { grey: 60.28, lvr: 5, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6016',
+  id: '6016',
   spaces: {
     HEX: '#026a52', RGB: { r: 0, g: 106, b: 76 },
     HSL: { h: 163.02, s: 100, l: 20.78 },
@@ -1250,7 +1250,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Turquoise green', de: 'Türkisgrün' },
   meta: { grey: 81.3, lvr: 10, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6017',
+  id: '6017',
   spaces: {
     HEX: '#468641', RGB: { r: 83, g: 128, b: 63 },
     HSL: { h: 101.54, s: 34.03, l: 37.45 },
@@ -1260,7 +1260,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'May green', de: 'Maigrün' },
   meta: { grey: 113.74, lvr: 18, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6018',
+  id: '6018',
   spaces: {
     HEX: '#48a43f', RGB: { r: 89, g: 154, b: 57 },
     HSL: { h: 100.21, s: 45.97, l: 41.37 },
@@ -1270,7 +1270,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Yellow green', de: 'Gelbgrün' },
   meta: { grey: 133.18, lvr: 26, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6019',
+  id: '6019',
   spaces: {
     HEX: '#b7d9b1', RGB: { r: 183, g: 206, b: 172 },
     HSL: { h: 100.59, s: 25.76, l: 74.12 },
@@ -1280,7 +1280,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pastel green', de: 'Weißgrün' },
   meta: { grey: 198.66, lvr: 57, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6020',
+  id: '6020',
   spaces: {
     HEX: '#354733', RGB: { r: 54, g: 66, b: 47 },
     HSL: { h: 97.89, s: 16.81, l: 22.16 },
@@ -1290,7 +1290,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Chrome green', de: 'Chromoxidgrün' },
   meta: { grey: 62.08, lvr: 5, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6021',
+  id: '6021',
   spaces: {
     HEX: '#86a47c', RGB: { r: 135, g: 154, b: 119 },
     HSL: { h: 92.57, s: 14.77, l: 53.53 },
@@ -1300,7 +1300,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pale green', de: 'Blassgrün' },
   meta: { grey: 147.43, lvr: 30, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6022',
+  id: '6022',
   spaces: {
     HEX: '#3e3c32', RGB: { r: 57, g: 51, b: 39 },
     HSL: { h: 40, s: 18.75, l: 18.82 },
@@ -1310,7 +1310,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Olive-drab/brown olive', de: 'Braunoliv' },
   meta: { grey: 51.41, lvr: 3, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6024',
+  id: '6024',
   spaces: {
     HEX: '#008754', RGB: { r: 0, g: 132, b: 80 },
     HSL: { h: 156.36, s: 100, l: 25.88 },
@@ -1320,7 +1320,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Traffic green', de: 'Verkehrsgrün' },
   meta: { grey: 100.18, lvr: 17, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6025',
+  id: '6025',
   spaces: {
     HEX: '#53753c', RGB: { r: 90, g: 110, b: 59 },
     HSL: { h: 83.53, s: 30.18, l: 33.14 },
@@ -1330,7 +1330,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Fern green', de: 'Farngrün' },
   meta: { grey: 102.07, lvr: 14, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6026',
+  id: '6026',
   spaces: {
     HEX: '#005d52', RGB: { r: 0, g: 95, b: 78 },
     HSL: { h: 169.26, s: 100, l: 18.63 },
@@ -1340,7 +1340,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Opal green', de: 'Opalgrün' },
   meta: { grey: 73.58, lvr: 8, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6027',
+  id: '6027',
   spaces: {
     HEX: '#81c0bb', RGB: { r: 128, g: 186, b: 181 },
     HSL: { h: 174.83, s: 29.59, l: 61.57 },
@@ -1350,7 +1350,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Light green', de: 'Lichtgrün' },
   meta: { grey: 173.31, lvr: 43, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6028',
+  id: '6028',
   spaces: {
     HEX: '#2d5546', RGB: { r: 48, g: 84, b: 66 },
     HSL: { h: 150, s: 27.27, l: 25.88 },
@@ -1360,7 +1360,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pine green', de: 'Kieferngrün' },
   meta: { grey: 75.05, lvr: 7, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6029',
+  id: '6029',
   spaces: {
     HEX: '#007243', RGB: { r: 0, g: 112, b: 60 },
     HSL: { h: 152.14, s: 100, l: 21.96 },
@@ -1370,7 +1370,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Mint green', de: 'Minzgrün' },
   meta: { grey: 84.43, lvr: 11, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6032',
+  id: '6032',
   spaces: {
     HEX: '#0f8558', RGB: { r: 28, g: 128, b: 81 },
     HSL: { h: 151.8, s: 64.1, l: 30.59 },
@@ -1380,7 +1380,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Signal green', de: 'Signalgrün' },
   meta: { grey: 103.35, lvr: 16, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6033',
+  id: '6033',
   spaces: {
     HEX: '#478a84', RGB: { r: 72, g: 135, b: 127 },
     HSL: { h: 172.38, s: 30.43, l: 40.59 },
@@ -1390,7 +1390,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Mint turquoise', de: 'Minttürkis' },
   meta: { grey: 121.03, lvr: 20, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6034',
+  id: '6034',
   spaces: {
     HEX: '#7fb0b2', RGB: { r: 124, g: 173, b: 172 },
     HSL: { h: 178.78, s: 23, l: 58.24 },
@@ -1400,7 +1400,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pastel turquoise', de: 'Pastelltürkis' },
   meta: { grey: 162.51, lvr: 37, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6035',
+  id: '6035',
   spaces: {
     HEX: '#1b542c', RGB: { r: 19, g: 77, b: 36 },
     HSL: { h: 137.59, s: 60.42, l: 18.82 },
@@ -1410,7 +1410,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pearl green', de: 'Perlgrün' },
   meta: { grey: 61.71, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6036',
+  id: '6036',
   spaces: {
     HEX: '#005d4c', RGB: { r: 7, g: 88, b: 75 },
     HSL: { h: 170.37, s: 85.26, l: 18.63 },
@@ -1420,7 +1420,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pearl opal green', de: 'Perlopalgrün' },
   meta: { grey: 69.84, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6037',
+  id: '6037',
   spaces: {
     HEX: '#25e712', RGB: { r: 0, g: 140, b: 39 },
     HSL: { h: 136.71, s: 100, l: 27.45 },
@@ -1430,7 +1430,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pure green', de: 'Reingrün' },
   meta: { grey: 102.94, lvr: 19, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6038',
+  id: '6038',
   spaces: {
     HEX: '#00f700', RGB: { r: 0, g: 182, b: 18 },
     HSL: { h: 125.93, s: 100, l: 35.69 },
@@ -1440,14 +1440,14 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Luminous green', de: 'Leuchtgrün' },
   meta: { grey: 131.47, lvr: 31, tag: [ 'green' ] }
 }, {
-  id: 'RAL 6039',
+  id: '6039',
   spaces: {
     HEX: '#b3c43e', RGB: { r: 179, g: 196, b: 62 }
   },
   name: { en: 'Fibrous green', de: 'Fasergrün' },
   meta: { tag: [ 'green' ] }
 }, {
-  id: 'RAL 7000',
+  id: '7000',
   spaces: {
     HEX: '#7e8b92', RGB: { r: 123, g: 136, b: 142 },
     HSL: { h: 198.95, s: 7.76, l: 51.96 },
@@ -1457,7 +1457,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Squirrel grey', de: 'Fehgrau' },
   meta: { grey: 133.67, lvr: 24, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7001',
+  id: '7001',
   spaces: {
     HEX: '#8f999f', RGB: { r: 142, g: 150, b: 157 },
     HSL: { h: 208, s: 7.11, l: 58.63 },
@@ -1467,7 +1467,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Silver grey', de: 'Silbergrau' },
   meta: { grey: 148.8, lvr: 30, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7002',
+  id: '7002',
   spaces: {
     HEX: '#817f68', RGB: { r: 127, g: 120, b: 99 },
     HSL: { h: 45, s: 12.39, l: 44.31 },
@@ -1477,7 +1477,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Olive grey', de: 'Olivgrau' },
   meta: { grey: 119.97, lvr: 19, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7003',
+  id: '7003',
   spaces: {
     HEX: '#7a7b6d', RGB: { r: 120, g: 119, b: 105 },
     HSL: { h: 56, s: 6.67, l: 44.12 },
@@ -1487,7 +1487,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Moss grey', de: 'Moosgrau' },
   meta: { grey: 118.2, lvr: 18, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7004',
+  id: '7004',
   spaces: {
     HEX: '#9ea0a1', RGB: { r: 155, g: 155, b: 155 },
     HSL: { h: 0.61, s: 0, l: 60.78 },
@@ -1497,7 +1497,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Signal grey', de: 'Signalgrau' },
   meta: { grey: 155, lvr: 33, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7005',
+  id: '7005',
   spaces: {
     HEX: '#6b716f', RGB: { r: 107, g: 110, b: 107 },
     HSL: { h: 120, s: 1.38, l: 42.55 },
@@ -1507,7 +1507,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Mouse grey', de: 'Mausgrau' },
   meta: { grey: 109.15, lvr: 15, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7006',
+  id: '7006',
   spaces: {
     HEX: '#756f61', RGB: { r: 117, g: 106, b: 94 },
     HSL: { h: 31.3, s: 10.9, l: 41.37 },
@@ -1517,7 +1517,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Beige grey', de: 'Beigegrau' },
   meta: { grey: 107.47, lvr: 15, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7008',
+  id: '7008',
   spaces: {
     HEX: '#746643', RGB: { r: 114, g: 95, b: 60 },
     HSL: { h: 38.89, s: 31.03, l: 34.12 },
@@ -1527,7 +1527,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Khaki grey', de: 'Khakigrau' },
   meta: { grey: 96.51, lvr: 12, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7009',
+  id: '7009',
   spaces: {
     HEX: '#5b6259', RGB: { r: 92, g: 96, b: 88 },
     HSL: { h: 90, s: 4.35, l: 36.08 },
@@ -1537,7 +1537,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Green grey', de: 'Grüngrau' },
   meta: { grey: 94.57, lvr: 11, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7010',
+  id: '7010',
   spaces: {
     HEX: '#575d57', RGB: { r: 88, g: 92, b: 86 },
     HSL: { h: 100, s: 3.37, l: 34.9 },
@@ -1547,7 +1547,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Tarpaulin grey', de: 'Zeltgrau' },
   meta: { grey: 90.72, lvr: 10, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7011',
+  id: '7011',
   spaces: {
     HEX: '#555d61', RGB: { r: 83, g: 89, b: 93 },
     HSL: { h: 204, s: 5.68, l: 34.51 },
@@ -1557,7 +1557,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Iron grey', de: 'Eisengrau' },
   meta: { grey: 88.01, lvr: 10, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7012',
+  id: '7012',
   spaces: {
     HEX: '#596163', RGB: { r: 88, g: 93, b: 94 },
     HSL: { h: 190, s: 3.3, l: 35.69 },
@@ -1567,7 +1567,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Basalt grey', de: 'Basaltgrau' },
   meta: { grey: 92.01, lvr: 11, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7013',
+  id: '7013',
   spaces: {
     HEX: '#555548', RGB: { r: 86, g: 80, b: 68 },
     HSL: { h: 40, s: 11.69, l: 30.2 },
@@ -1577,7 +1577,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Brown grey', de: 'Braungrau' },
   meta: { grey: 80.41, lvr: 8, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7015',
+  id: '7015',
   spaces: {
     HEX: '#51565c', RGB: { r: 80, g: 83, b: 89 },
     HSL: { h: 220, s: 5.33, l: 33.14 },
@@ -1587,7 +1587,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Slate grey', de: 'Schiefergrau' },
   meta: { grey: 82.8, lvr: 9, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7016',
+  id: '7016',
   spaces: {
     HEX: '#373f43', RGB: { r: 56, g: 62, b: 66 },
     HSL: { h: 204, s: 8.2, l: 23.92 },
@@ -1597,7 +1597,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Anthracite grey', de: 'Anthrazitgrau' },
   meta: { grey: 61.01, lvr: 5, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7021',
+  id: '7021',
   spaces: {
     HEX: '#2e3234', RGB: { r: 48, g: 50, b: 52 },
     HSL: { h: 210, s: 4, l: 19.61 },
@@ -1607,7 +1607,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Black grey', de: 'Schwarzgrau' },
   meta: { grey: 49.72, lvr: 3, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7022',
+  id: '7022',
   spaces: {
     HEX: '#4b4d46', RGB: { r: 76, g: 74, b: 68 },
     HSL: { h: 45, s: 5.56, l: 28.24 },
@@ -1617,7 +1617,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Umbra grey', de: 'Umbragrau' },
   meta: { grey: 73.99, lvr: 7, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7023',
+  id: '7023',
   spaces: {
     HEX: '#818479', RGB: { r: 127, g: 128, b: 118 },
     HSL: { h: 66, s: 4.07, l: 48.24 },
@@ -1627,7 +1627,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Concrete grey', de: 'Betongrau' },
   meta: { grey: 127.07, lvr: 21, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7024',
+  id: '7024',
   spaces: {
     HEX: '#474a50', RGB: { r: 70, g: 73, b: 79 },
     HSL: { h: 220, s: 6.04, l: 29.22 },
@@ -1637,7 +1637,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Graphite grey', de: 'Graphitgrau' },
   meta: { grey: 72.8, lvr: 7, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7026',
+  id: '7026',
   spaces: {
     HEX: '#374447', RGB: { r: 56, g: 67, b: 69 },
     HSL: { h: 189.23, s: 10.4, l: 24.51 },
@@ -1647,7 +1647,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Granite grey', de: 'Granitgrau' },
   meta: { grey: 64.81, lvr: 5, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7030',
+  id: '7030',
   spaces: {
     HEX: '#939388', RGB: { r: 145, g: 142, b: 133 },
     HSL: { h: 45, s: 5.17, l: 54.51 },
@@ -1657,7 +1657,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Stone grey', de: 'Steingrau' },
   meta: { grey: 141.99, lvr: 27, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7031',
+  id: '7031',
   spaces: {
     HEX: '#5d6970', RGB: { r: 93, g: 104, b: 109 },
     HSL: { h: 198.75, s: 7.92, l: 39.61 },
@@ -1667,7 +1667,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Blue grey', de: 'Blaugrau' },
   meta: { grey: 102.02, lvr: 13, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7032',
+  id: '7032',
   spaces: {
     HEX: '#b9b9a8', RGB: { r: 180, g: 176, b: 161 },
     HSL: { h: 47.37, s: 11.24, l: 66.86 },
@@ -1677,7 +1677,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pebble grey', de: 'Kieselgrau' },
   meta: { grey: 175.77, lvr: 44, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7033',
+  id: '7033',
   spaces: {
     HEX: '#818979', RGB: { r: 126, g: 130, b: 116 },
     HSL: { h: 77.14, s: 5.69, l: 48.24 },
@@ -1687,7 +1687,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Cement grey', de: 'Zementgrau' },
   meta: { grey: 128.14, lvr: 22, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7034',
+  id: '7034',
   spaces: {
     HEX: '#939176', RGB: { r: 144, g: 136, b: 111 },
     HSL: { h: 0.13, s: 12.94, l: 50 },
@@ -1697,7 +1697,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Yellow grey', de: 'Gelbgrau' },
   meta: { grey: 135.9, lvr: 25, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7035',
+  id: '7035',
   spaces: {
     HEX: '#cbd0cc', RGB: { r: 197, g: 199, b: 196 },
     HSL: { h: 100, s: 2.61, l: 77.45 },
@@ -1707,7 +1707,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Light grey', de: 'Lichtgrau' },
   meta: { grey: 198.36, lvr: 57, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7036',
+  id: '7036',
   spaces: {
     HEX: '#9a9697', RGB: { r: 151, g: 147, b: 146 },
     HSL: { h: 12, s: 2.35, l: 58.24 },
@@ -1717,7 +1717,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Platinum grey', de: 'Platingrau' },
   meta: { grey: 147.78, lvr: 30, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7037',
+  id: '7037',
   spaces: {
     HEX: '#7c7f7e', RGB: { r: 122, g: 123, b: 122 },
     HSL: { h: 120, s: 0.41, l: 48.04 },
@@ -1727,7 +1727,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Dusty grey', de: 'Staubgrau' },
   meta: { grey: 122.72, lvr: 20, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7038',
+  id: '7038',
   spaces: {
     HEX: '#b4b8b0', RGB: { r: 175, g: 177, b: 169 },
     HSL: { h: 75, s: 4.88, l: 67.84 },
@@ -1737,7 +1737,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Agate grey', de: 'Achatgrau' },
   meta: { grey: 176, lvr: 43, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7039',
+  id: '7039',
   spaces: {
     HEX: '#6b695f', RGB: { r: 106, g: 102, b: 94 },
     HSL: { h: 40, s: 6, l: 39.22 },
@@ -1747,7 +1747,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Quartz grey', de: 'Quarzgrau' },
   meta: { grey: 102.27, lvr: 13, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7040',
+  id: '7040',
   spaces: {
     HEX: '#9da3a6', RGB: { r: 152, g: 158, b: 161 },
     HSL: { h: 200, s: 4.57, l: 61.37 },
@@ -1757,7 +1757,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Window grey', de: 'Fenstergrau' },
   meta: { grey: 156.94, lvr: 34, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7042',
+  id: '7042',
   spaces: {
     HEX: '#8f9695', RGB: { r: 142, g: 146, b: 145 },
     HSL: { h: 165, s: 1.8, l: 56.47 },
@@ -1767,7 +1767,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Traffic grey A', de: 'Verkehrsgrau A' },
   meta: { grey: 145.08, lvr: 28, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7043',
+  id: '7043',
   spaces: {
     HEX: '#4e5451', RGB: { r: 79, g: 82, b: 80 },
     HSL: { h: 140, s: 1.86, l: 31.57 },
@@ -1777,7 +1777,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Traffic grey B', de: 'Verkehrsgrau B' },
   meta: { grey: 81.22, lvr: 8, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7044',
+  id: '7044',
   spaces: {
     HEX: '#bdbdb2', RGB: { r: 182, g: 179, b: 168 },
     HSL: { h: 47.14, s: 8.75, l: 68.63 },
@@ -1787,7 +1787,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Silk grey', de: 'Seidengrau' },
   meta: { grey: 178.84, lvr: 45, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7045',
+  id: '7045',
   spaces: {
     HEX: '#91969a', RGB: { r: 142, g: 146, b: 149 },
     HSL: { h: 205.71, s: 3.2, l: 57.06 },
@@ -1797,7 +1797,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Telegrey 1', de: 'Telegrau 1' },
   meta: { grey: 145.37, lvr: 29, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7046',
+  id: '7046',
   spaces: {
     HEX: '#82898e', RGB: { r: 127, g: 134, b: 138 },
     HSL: { h: 201.82, s: 4.49, l: 51.96 },
@@ -1807,7 +1807,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Telegrey 2', de: 'Telegrau 2' },
   meta: { grey: 132.8, lvr: 23, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7047',
+  id: '7047',
   spaces: {
     HEX: '#cfd0cf', RGB: { r: 200, g: 200, b: 199 },
     HSL: { h: 0.17, s: 0.9, l: 78.24 },
@@ -1817,7 +1817,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Telegrey 4', de: 'Telegrau 4' },
   meta: { grey: 199.93, lvr: 58, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 7048',
+  id: '7048',
   spaces: {
     HEX: '#888175', RGB: { r: 128, g: 123, b: 115 },
     HSL: { h: 36.92, s: 5.35, l: 47.65 },
@@ -1827,7 +1827,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pearl mouse grey', de: 'Perlmausgrau' },
   meta: { grey: 123.49, tag: [ 'grey' ] }
 }, {
-  id: 'RAL 8000',
+  id: '8000',
   spaces: {
     HEX: '#887142', RGB: { r: 134, g: 106, b: 62 },
     HSL: { h: 36.67, s: 36.73, l: 38.43 },
@@ -1837,7 +1837,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Green brown', de: 'Grünbraun' },
   meta: { grey: 108.78, lvr: 16, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8001',
+  id: '8001',
   spaces: {
     HEX: '#9c6b30', RGB: { r: 153, g: 99, b: 43 },
     HSL: { h: 30.55, s: 56.12, l: 38.43 },
@@ -1847,7 +1847,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Ochre brown', de: 'Ockerbraun' },
   meta: { grey: 106.44, lvr: 16, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8002',
+  id: '8002',
   spaces: {
     HEX: '#7b5141', RGB: { r: 119, g: 77, b: 62 },
     HSL: { h: 15.79, s: 31.49, l: 35.49 },
@@ -1857,7 +1857,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Signal brown', de: 'Signalbraun' },
   meta: { grey: 84.85, lvr: 10, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8003',
+  id: '8003',
   spaces: {
     HEX: '#80542f', RGB: { r: 124, g: 75, b: 39 },
     HSL: { h: 25.41, s: 52.15, l: 31.96 },
@@ -1867,7 +1867,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Clay brown', de: 'Lehmbraun' },
   meta: { grey: 82.82, lvr: 10, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8004',
+  id: '8004',
   spaces: {
     HEX: '#8f4e35', RGB: { r: 138, g: 73, b: 49 },
     HSL: { h: 16.18, s: 47.59, l: 36.67 },
@@ -1877,7 +1877,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Copper brown', de: 'Kupferbraun' },
   meta: { grey: 85.09, lvr: 11, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8007',
+  id: '8007',
   spaces: {
     HEX: '#6f4a2f', RGB: { r: 109, g: 70, b: 43 },
     HSL: { h: 24.55, s: 43.42, l: 29.8 },
@@ -1887,7 +1887,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Fawn brown', de: 'Rehbraun' },
   meta: { grey: 76.34, lvr: 8, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8008',
+  id: '8008',
   spaces: {
     HEX: '#6f4f28', RGB: { r: 111, g: 74, b: 37 },
     HSL: { h: 30, s: 50, l: 29.02 },
@@ -1897,7 +1897,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Olive brown', de: 'Olivbraun' },
   meta: { grey: 79.19, lvr: 9, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8011',
+  id: '8011',
   spaces: {
     HEX: '#5a3a29', RGB: { r: 88, g: 56, b: 39 },
     HSL: { h: 20.82, s: 38.58, l: 24.9 },
@@ -1907,7 +1907,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Nut brown', de: 'Nussbraun' },
   meta: { grey: 61.58, lvr: 5, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8012',
+  id: '8012',
   spaces: {
     HEX: '#673831', RGB: { r: 100, g: 51, b: 43 },
     HSL: { h: 8.42, s: 39.86, l: 28.04 },
@@ -1917,7 +1917,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Red brown', de: 'Rotbraun' },
   meta: { grey: 60.84, lvr: 5, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8014',
+  id: '8014',
   spaces: {
     HEX: '#49392d', RGB: { r: 72, g: 53, b: 38 },
     HSL: { h: 26.47, s: 30.91, l: 21.57 },
@@ -1927,7 +1927,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Sepia brown', de: 'Sepiabraun' },
   meta: { grey: 55.96, lvr: 4, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8015',
+  id: '8015',
   spaces: {
     HEX: '#633a34', RGB: { r: 93, g: 47, b: 39 },
     HSL: { h: 8.89, s: 40.91, l: 25.88 },
@@ -1937,7 +1937,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Chestnut brown', de: 'Kastanienbraun' },
   meta: { grey: 56.2, lvr: 5, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8016',
+  id: '8016',
   spaces: {
     HEX: '#4c2f26', RGB: { r: 75, g: 43, b: 32 },
     HSL: { h: 15.35, s: 40.19, l: 20.98 },
@@ -1947,7 +1947,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Mahogany brown', de: 'Mahagonibraun' },
   meta: { grey: 49.01, lvr: 3, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8017',
+  id: '8017',
   spaces: {
     HEX: '#44322d', RGB: { r: 67, g: 47, b: 41 },
     HSL: { h: 13.85, s: 24.07, l: 21.18 },
@@ -1957,7 +1957,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Chocolate brown', de: 'Schokoladenbraun' },
   meta: { grey: 50.82, lvr: 3, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8019',
+  id: '8019',
   spaces: {
     HEX: '#3f3a3a', RGB: { r: 61, g: 54, b: 53 },
     HSL: { h: 7.5, s: 7.02, l: 22.35 },
@@ -1967,7 +1967,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Grey brown', de: 'Graubraun' },
   meta: { grey: 55.42, lvr: 4, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8022',
+  id: '8022',
   spaces: {
     HEX: '#211f20', RGB: { r: 26, g: 23, b: 25 },
     HSL: { h: 320, s: 6.12, l: 9.61 },
@@ -1977,7 +1977,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Black brown', de: 'Schwarzbraun' },
   meta: { grey: 23.78, lvr: 1, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8023',
+  id: '8023',
   spaces: {
     HEX: '#a65e2f', RGB: { r: 160, g: 87, b: 41 },
     HSL: { h: 23.19, s: 59.2, l: 39.41 },
@@ -1987,7 +1987,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Orange brown', de: 'Orangebraun' },
   meta: { grey: 99.2, lvr: 15, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8024',
+  id: '8024',
   spaces: {
     HEX: '#79553c', RGB: { r: 118, g: 80, b: 56 },
     HSL: { h: 23.23, s: 35.63, l: 34.12 },
@@ -1997,7 +1997,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Beige brown', de: 'Beigebraun' },
   meta: { grey: 86.35, lvr: 10, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8025',
+  id: '8025',
   spaces: {
     HEX: '#755c49', RGB: { r: 115, g: 88, b: 71 },
     HSL: { h: 23.18, s: 23.66, l: 36.47 },
@@ -2007,7 +2007,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pale brown', de: 'Blassbraun' },
   meta: { grey: 92.51, lvr: 11, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8028',
+  id: '8028',
   spaces: {
     HEX: '#4e3b2b', RGB: { r: 79, g: 58, b: 42 },
     HSL: { h: 25.95, s: 30.58, l: 23.73 },
@@ -2017,7 +2017,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Terra brown', de: 'Terrabraun' },
   meta: { grey: 61.31, lvr: 5, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 8029',
+  id: '8029',
   spaces: {
     HEX: '#773c27', RGB: { r: 125, g: 64, b: 49 },
     HSL: { h: 11.84, s: 43.68, l: 34.12 },
@@ -2027,7 +2027,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pearl copper', de: 'Perlkupfer' },
   meta: { grey: 75.89, tag: [ 'brown' ] }
 }, {
-  id: 'RAL 9001',
+  id: '9001',
   spaces: {
     HEX: '#efebdc', RGB: { r: 233, g: 224, b: 210 },
     HSL: { h: 42.86, s: 30.43, l: 86.47 },
@@ -2037,7 +2037,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Cream', de: 'Cremeweiß' },
   meta: { grey: 225.19, lvr: 75, tag: [ 'white', 'black' ] }
 }, {
-  id: 'RAL 9002',
+  id: '9002',
   spaces: {
     HEX: '#ddded4', RGB: { r: 215, g: 213, b: 203 },
     HSL: { h: 54.55, s: 11.83, l: 81.76 },
@@ -2047,7 +2047,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Grey white', de: 'Grauweiß' },
   meta: { grey: 212.49, lvr: 66, tag: [ 'white', 'black' ] }
 }, {
-  id: 'RAL 9003',
+  id: '9003',
   spaces: {
     HEX: '#f4f8f4', RGB: { r: 236, g: 236, b: 231 },
     HSL: { h: 0.17, s: 11.63, l: 91.57 },
@@ -2057,7 +2057,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Signal white', de: 'Signalweiß' },
   meta: { grey: 235.64, lvr: 83, tag: [ 'white', 'black' ] }
 }, {
-  id: 'RAL 9004',
+  id: '9004',
   spaces: {
     HEX: '#2e3032', RGB: { r: 43, g: 43, b: 44 },
     HSL: { h: 240, s: 1.15, l: 17.06 },
@@ -2067,7 +2067,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Signal black', de: 'Signalschwarz' },
   meta: { grey: 43.07, lvr: 2, tag: [ 'white', 'black' ] }
 }, {
-  id: 'RAL 9005',
+  id: '9005',
   spaces: {
     HEX: '#0a0a0d', RGB: { r: 14, g: 14, b: 16 },
     HSL: { h: 240, s: 6.67, l: 5.88 },
@@ -2077,7 +2077,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Jet black', de: 'Tiefschwarz' },
   meta: { grey: 14.14, lvr: 0, tag: [ 'white', 'black' ] }
 }, {
-  id: 'RAL 9006',
+  id: '9006',
   spaces: {
     HEX: '#a5a8a6', RGB: { r: 161, g: 161, b: 160 },
     HSL: { h: 0.17, s: 0.53, l: 62.94 },
@@ -2087,7 +2087,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'White aluminium', de: 'Weißaluminium' },
   meta: { grey: 160.93, tag: [ 'white', 'black' ] }
 }, {
-  id: 'RAL 9007',
+  id: '9007',
   spaces: {
     HEX: '#8f8f8c', RGB: { r: 135, g: 133, b: 129 },
     HSL: { h: 48, s: 2.02, l: 51.57 },
@@ -2097,7 +2097,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Grey aluminium', de: 'Graualuminium' },
   meta: { grey: 132.92, tag: [ 'white', 'black' ] }
 }, {
-  id: 'RAL 9010',
+  id: '9010',
   spaces: {
     HEX: '#f7f9ef', RGB: { r: 241, g: 236, b: 225 },
     HSL: { h: 48, s: 33.33, l: 91.18 },
@@ -2107,7 +2107,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pure white', de: 'Reinweiß' },
   meta: { grey: 236.77, lvr: 84, tag: [ 'white', 'black' ] }
 }, {
-  id: 'RAL 9011',
+  id: '9011',
   spaces: {
     HEX: '#292c2f', RGB: { r: 39, g: 41, b: 43 },
     HSL: { h: 210, s: 4.88, l: 16.08 },
@@ -2117,7 +2117,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Graphite black', de: 'Graphitschwarz' },
   meta: { grey: 40.72, lvr: 2, tag: [ 'white', 'black' ] }
 }, {
-  id: 'RAL 9012',
+  id: '9012',
   spaces: {
     HEX: '#fffde6', RGB: { r: 255, g: 253, b: 230 },
     Lab: { L: 989.164, a: -31.649, b: 11.2367 },
@@ -2126,7 +2126,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Clean room white', de: 'Reinraumweiß' },
   meta: { tag: [ 'white', 'black' ] }
 }, {
-  id: 'RAL 9016',
+  id: '9016',
   spaces: {
     HEX: '#f7fbf5', RGB: { r: 241, g: 240, b: 234 },
     HSL: { h: 68.57, s: 20, l: 93.14 },
@@ -2136,7 +2136,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Traffic white', de: 'Verkehrsweiß' },
   meta: { grey: 240.28, lvr: 87, tag: [ 'white', 'black' ] }
 }, {
-  id: 'RAL 9017',
+  id: '9017',
   spaces: {
     HEX: '#2a2d2f', RGB: { r: 42, g: 41, b: 42 },
     HSL: { h: 0.83, s: 1.2, l: 16.27 },
@@ -2146,7 +2146,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Traffic black', de: 'Verkehrsschwarz' },
   meta: { grey: 41.28, lvr: 2, tag: [ 'white', 'black' ] }
 }, {
-  id: 'RAL 9018',
+  id: '9018',
   spaces: {
     HEX: '#cfd3cd', RGB: { r: 200, g: 203, b: 196 },
     HSL: { h: 94.29, s: 6.31, l: 78.24 },
@@ -2156,7 +2156,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Papyrus white', de: 'Papyrusweiß' },
   meta: { grey: 201.64, lvr: 59, tag: [ 'white', 'black' ] }
 }, {
-  id: 'RAL 9022',
+  id: '9022',
   spaces: {
     HEX: '#9c9c9c', RGB: { r: 133, g: 133, b: 131 },
     HSL: { h: 0.17, s: 0.81, l: 51.76 },
@@ -2166,7 +2166,7 @@ export const RAL_Classic = async () : Promise<ColorLibList> => [ {
   name: { en: 'Pearl light grey', de: 'Perlhellgrau' },
   meta: { grey: 132.86, tag: [ 'white', 'black' ] }
 }, {
-  id: 'RAL 9023',
+  id: '9023',
   spaces: {
     HEX: '#7e8182', RGB: { r: 121, g: 123, b: 122 },
     HSL: { h: 0.5, s: 0.82, l: 47.84 },

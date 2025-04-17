@@ -18,12 +18,36 @@ By abstracting color libraries into a central API, the system remains modular an
 
 Although typically used via `Color.fromLib()`, the `ColorLib` class can be used manually for advanced lookups or conversions.
 
+Access libraries using the `Color` class:
+
+```ts
+import { Color } from 'pyxe';
+
+// This loads only the classic set (from autoLoad)
+const color = await Color.fromLib( 'RAL', '3020' );
+
+// This explicitly loads all three sources
+const designColor = await Color.fromLib( 'RAL', 'H270L30C25', {
+    sources: [ 'classic', 'effect', 'design' ]
+} );
+```
+
+or manually:
+
 ```ts
 import { ColorLib } from '@pyxe/core';
 
-const lib = ColorLib.getInstance( 'RAL', [ 'classic' ] );
-const color = await lib.getColor( 'RAL 3020', [ 'RGB', 'HEX' ] );
+const lib = ColorLib.getInstance( 'RAL', [ 'effect' ] );
+const color = await lib.getColor( '120-5', [ 'RGB', 'HEX' ] );
 ```
+
+## Auto-loading Sources
+
+Color libraries can optionally define an `autoLoad` array in their registration metadata. This specifies which `sources` should be loaded automatically when the user does not provide a specific list.
+
+This mechanism helps improve performance by avoiding unnecessary loading of large datasets—particularly useful in large collections such as RAL Design.
+
+**If no sources are provided by the user and no `autoLoad` is defined, all sources will be loaded by default.**
 
 ## Internals
 

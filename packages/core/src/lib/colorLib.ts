@@ -3,7 +3,7 @@
  * src/lib/colorLib.ts
  * 
  * The `ColorLib` module provides a dynamic interface for accessing and managing
- * named color libraries such as RAL, HTML, or Pantone. Libraries can be registered
+ * named color libraries such as RAL, HTML or Pantone. Libraries can be registered
  * via `ColorLibRegistry` and are loaded lazily through factory functions,
  * allowing efficient memory usage and modular loading behavior.
  * 

@@ -20,7 +20,7 @@ Each color entry is defined by a unique numeric code and is associated with a st
 
 | System      | Format                                       | Color Count | Example                    |
 | ----------- | -------------------------------------------- | ----------- | -------------------------- |
-| RAL Classic | 4-digit (1xxx–9xxx)                          |         216 | `RAL 3020` – Traffic Red   |
+| RAL Classic | 4-digit (1xxx–9xxx)                          |         218 | `RAL 3020` – Traffic Red   |
 | RAL Effect  | 4-digit codes, split into solid and metallic |         490 | `RAL 140-M` – Metallic Red |
 | RAL Design  | Hue-Lightness-Chroma                         |       1,825 | `H270L30C25`               |
 
@@ -33,7 +33,7 @@ This library integrates the RAL system into the modular `pyxe` framework by expo
 ```ts
 import { Color } from 'pyxe';
 
-const color = await Color.fromLib( 'RAL', 'RAL 3020', [ 'HEX' ] );
+const color = await Color.fromLib( 'RAL', '3020', [ 'HEX' ] );
 
 console.log( color.toString() );
 // Output: "#c1121c"
