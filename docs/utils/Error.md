@@ -28,7 +28,7 @@ Error handling is used through the main `Utils` interface or by explicitly impor
 In the following example, a custom error is thrown:
 
 ```ts
-import { Utils } from '@pyxe/utils';
+import { Utils } from 'pyxe';
 
 try { … } catch ( err ) {
 
