@@ -1,6 +1,6 @@
 'use strict';
 
-export type ColorSpaceID = 'HEX' | 'RGB' | 'HSL' | 'HSV' | 'CMYK' | 'XYZ' | 'Lab';
+export type ColorSpaceID = 'HEX' | 'RGB' | 'HSL' | 'HSV' | 'CMYK' | 'XYZ' | 'Lab' | 'HLC';
 
 export type HEX = `#${string}`;
 
@@ -42,7 +42,13 @@ export interface Lab {
     b: number;
 }
 
-export type ColorInstance = HEX | RGB | HSL | HSV | CMYK | XYZ | Lab;
+export interface HLC {
+    h: number;
+    l: number;
+    c: number;
+}
+
+export type ColorInstance = HEX | RGB | HSL | HSV | CMYK | XYZ | Lab | HLC;
 
 export type ColorInput = ColorInstance | string;
 

@@ -1,5 +1,6 @@
 package-lock.json
 tsconfig.tsbuildinfo
+.vscode/
 dist/
 node_modules/
 test/
