@@ -1,3 +1,21 @@
+/**
+ * RAL Classic
+ * 
+ * The RAL Classic palette is the historical cornerstone of the RAL system.
+ * Originally introduced in 1927, it has since become the de facto industrial
+ * color standard across Europe and beyond. The palette includes iconic colors
+ * such as RAL 3020 Traffic Red and RAL 9010 Pure White.
+ * 
+ * Each color in this category is identified by a 4-digit code and grouped by
+ * functional families such as yellows (1xxx), reds (3xxx), blues (5xxx), and
+ * greys (7xxx). These colors are commonly used in public works, manufacturing,
+ * safety signage, and product design.
+ * 
+ * This module provides machine-readable access to all official RAL Classic
+ * entries, complete with human-readable names, standardized codes, and color
+ * values across multiple color spaces.
+ */
+
 'use strict';
 
 import type { ColorLibList } from '@pyxe/types';

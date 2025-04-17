@@ -1,3 +1,20 @@
+/**
+ * RAL Effect
+ * 
+ * The RAL Effect palette is a modern extension of the RAL system, introduced
+ * to address the growing demand for metallic and nuanced colors in contemporary
+ * industrial design. Unlike the Classic palette, RAL Effect includes both solid
+ * and metallic shades and supports more advanced surface effects.
+ * 
+ * Each RAL Effect color is defined by a 5-digit code and may include metallic
+ * pigments to better reflect real-world materials. The palette is especially
+ * relevant in automotive, consumer product design, and architecture where
+ * appearance under light and texture plays a major role.
+ * 
+ * This module includes both solid and metallic entries and expands the creative
+ * potential of RAL-based projects by embracing modern material aesthetics.
+ */
+
 'use strict';
 
 import type { ColorLibList } from '@pyxe/types';
