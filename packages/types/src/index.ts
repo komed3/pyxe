@@ -151,3 +151,13 @@ export interface ColorLibFactory {
     autoLoad?: string[];
     sources: Record<string, ColorLibLoader>;
 }
+
+export type HookHandler = (
+    ...args: any[]
+) => any;
+
+export interface HookFactory {
+    handler: HookHandler;
+    priority: number;
+    once?: boolean;
+}

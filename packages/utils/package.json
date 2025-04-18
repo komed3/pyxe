@@ -14,6 +14,7 @@
   "exports": {
     ".": "./dist/index.js",
     "./error": "./dist/lib/error.js",
+    "./hook": "./dist/lib/hook.js",
     "./tracer": "./dist/lib/tracer.js"
   },
   "files": [
