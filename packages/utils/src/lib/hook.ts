@@ -1,7 +1,7 @@
 'use strict';
 
 import type { HookFactory, HookHandler } from '@pyxe/types';
-import { PyxeError as error } from './error.js';
+import { PyxeError } from './error.js';
 
 export class Hook {
 
@@ -157,7 +157,7 @@ export class Hook {
 
         } catch ( err ) {
 
-            throw new error ( {
+            throw new PyxeError ( {
                 err, method: 'Hook',
                 msg: `Failed to run hook for <${name}>`
             } );
@@ -191,7 +191,7 @@ export class Hook {
 
         } catch ( err ) {
 
-            throw new error ( {
+            throw new PyxeError ( {
                 err, method: 'Hook',
                 msg: `Failed to run async hook for <${name}>`
             } );
@@ -213,7 +213,7 @@ export class Hook {
 
             } catch ( err ) {
 
-                throw new error ( {
+                throw new PyxeError ( {
                     err, method: 'Hook',
                     msg: `Failed to run deferred hook for <${name}>`
                 } );
@@ -252,7 +252,7 @@ export class Hook {
 
         } catch ( err ) {
 
-            throw new error ( {
+            throw new PyxeError ( {
                 err, method: 'Hook',
                 msg: `Failed to apply filter for <${name}>`
             } );
@@ -291,7 +291,7 @@ export class Hook {
 
         } catch ( err ) {
 
-            throw new error ( {
+            throw new PyxeError ( {
                 err, method: 'Hook',
                 msg: `Failed to apply async filter for <${name}>`
             } );
