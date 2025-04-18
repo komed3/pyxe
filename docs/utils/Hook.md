@@ -1,4 +1,4 @@
-# Hook
+# Hook Utility
 
 The `Hook` utility in the pyxe framework provides a modular and extensible system for registering and executing named hooks. These hooks allow other modules, plugins, or internal components to respond to specific events (`actions`) or to process and modify data (`filters`) in a loosely coupled manner.
 
