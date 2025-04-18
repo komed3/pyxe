@@ -57,7 +57,7 @@ export class Hook {
         priority: number = 10,
         once: boolean = false,
         preSort: boolean = true
-    ) {
+    ) : void {
 
         if ( ! this.registry.has( name ) ) {
 
@@ -115,7 +115,7 @@ export class Hook {
      */
     _sort (
         name: string
-    ) {
+    ) : void {
 
         this.registry.get( name )!.sort(
             ( a, b ) => a.priority - b.priority
@@ -126,7 +126,7 @@ export class Hook {
     /**
      * Sorts all hook groups currently in the registry.
      */
-    _sortAll () {
+    _sortAll () : void {
 
         for ( const name of this.registry.keys() ) {
 
