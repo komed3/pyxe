@@ -40,30 +40,33 @@ export class Validator {
      * 
      * @param space - The ID of the color space to validate against (e.g., 'RGB', 'Lab')
      * @param input - The color instance to be validated
-     * @returns A validated `ColorObject` representing the input
-     * @throws If validation fails or the color space is unknown
+     * @returns `true` if the input matches, `false` otherwise
      */
     static instanceOf (
         space: ColorSpaceID,
         input: ColorInstance
-    ) : ColorObject | undefined {
+    ) : boolean {
 
-        try {
+        if ( colorSpace.check( space ) ) {
 
-            const { validator: handler } = colorSpace.get( space ) as ColorSpaceFactory;
+            try {
 
-            return handler( { space, value: input } );
+                const { validator: handler } = colorSpace.get( space ) as ColorSpaceFactory;
 
-        } catch ( err ) {
+                return handler( { space, value: input } );
 
-            throw new Utils.error( {
-                err, method: 'Validator',
-                msg: `Validation failed for color space <${space}> with input <${
-                    JSON.stringify( input )
-                }>`
-            } );
+            } catch ( err ) {
+
+                throw new Utils.error( {
+                    err, method: 'Validator',
+                    msg: `No validator defined for color space <${space}>`
+                } );
+
+            }
 
         }
+
+        return false;
 
     }
 
@@ -71,45 +74,34 @@ export class Validator {
      * Validates a given color object.
      * 
      * Delegates to the color space’s registered `validator()` function. If validation fails
-     * or the validator is missing, an error is thrown. Otherwise, a standardized `ColorObject`
-     * is returned.
+     * and safe mode ist on, an error is thrown. Otherwise, the function returns `true` on
+     * success and `false` otherwise.
      * 
      * @param input - The color object to be validated
-     * @returns A validated `ColorObject` representing the input
-     * @throws If validation fails or the color space is unknown
+     * @returns `true` if the input matches, `false` otherwise
+     * @throws If validation fails (safe mode) or the color space is unknown
      */
     static validate (
-        input: ColorObject
-    ) : ColorObject | undefined {
-
-        return this.instanceOf( input.space, input.value );
-
-    }
-
-    /**
-     * Lightweight validation check for a specific color object.
-     * 
-     * This method returns a boolean indicating whether the input passes validation,
-     * without throwing an error or returning the parsed result. Useful for pre-checks.
-     * 
-     * @param input - The color object to be validated
-     * @returns `true` if the input is valid, otherwise `false`
-     */
-    static try (
-        input: ColorObject
+        input: ColorObject,
+        safe: boolean = false
     ) : boolean {
 
-        try {
+        if ( this.instanceOf( input.space, input.value ) ) {
 
-            this.validate( input );
+            return true;
 
-        } catch {
+        } else if ( safe ) {
 
-            return false;
+            throw new Utils.error( {
+                method: 'Validator',
+                msg: `Validation failed for color space <${input.space}> with input <${
+                    JSON.stringify( input )
+                }>`
+            } );
 
         }
 
-        return true;
+        return false;
 
     }
 

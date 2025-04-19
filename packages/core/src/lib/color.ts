@@ -69,7 +69,7 @@ export class Color {
 
         colorSpace.check( color.space );
 
-        Validator.validate( color );
+        Validator.validate( color, true );
 
         this.color = color;
 
@@ -86,7 +86,7 @@ export class Color {
         input: ColorObject
     ) : boolean {
 
-        return Validator.try( input );
+        return Validator.validate( input );
 
     }
 
@@ -184,7 +184,7 @@ export class Color {
      */
     validate () : boolean {
 
-        return Validator.try( this.color );
+        return Validator.validate( this.color );
 
     }
 

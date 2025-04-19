@@ -5,7 +5,7 @@ The `Validator` class is a utility that enables standardized validation of color
 Features are:
 
 - delegates validation to space-specific handler functions registered in `ColorSpace`
-- throws structured errors for invalid input
+- throws structured errors for invalid input in `safe mode`
 - supports boolean validation checks without throwing
 - ensures all `ColorObject` instances are well-formed and normalized
 
@@ -20,11 +20,12 @@ Although the class is used at many internal spots to match the input with color 
 ```ts
 import { Validator } from 'pyxe';
 
-const color = { space: 'HEX', value: '#ff00ff' };
+console.log( Validator.instanceOf( 'HEX', '#ff00ff' ) );
+// Output: true
 
-console.log( Validator.try( color ) );
+const color = { space: 'Lab', value: '#ff00ff' };
 
-Validator.instanceOf( 'RGB', color.value );
+Validator.validate( color, true );
 // will throw an error
 ```
 
@@ -36,39 +37,26 @@ Validator.instanceOf( 'RGB', color.value );
 static instanceOf (
   space: ColorSpaceID,
   input: ColorInstance
-) : ColorObject
+) : boolean
 ```
 
 Validates the given color instance against the specified color space using its registered validator.
 
-@param `space` - The ID of the color space to validate against (e.g., `'RGB'`, `'Lab'`)  
-@param `input` - The raw color instance to be validated  
-@returns A validated `ColorObject` representing the input  
-@throws If validation fails or the color space is unknown
+@param `space` - The ID of the color space to validate against (e.g., `RGB`, `Lab`)  
+@param `input` - The color instance to be validated  
+@returns `true` if the input matches, `false` otherwise
 
 ### `validate( input )`
 
 ```ts
 static validate (
-  input: ColorObject
-) : ColorObject
+  input: ColorObject,
+  safe: boolean = false
+) : boolean
 ```
 
 Validates the input color object.
 
 @param `input` - The color object to be validated  
-@returns A validated `ColorObject` representing the input  
-@throws If validation fails or the color space is unknown
-
-### `try( input )`
-
-```ts
-static try (
-  input: ColorObject
-) : boolean
-```
-
-Performs a non-throwing validation test. Returns a boolean indicating whether the input would pass validation.
-
-@param `input` - The color object to be validated  
-@return `true` if validation is successful, `false` if not
+@returns `true` if the input matches, `false` otherwise  
+@throws If validation fails (`safe mode`) or the color space is unknown

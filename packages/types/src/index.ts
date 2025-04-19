@@ -70,7 +70,7 @@ export type ParserHandler = (
 
 export type ValidatorHandler = (
     input: ColorObject
-) => ColorObject | undefined;
+) => boolean;
 
 export type ConversionHandler = (
     input: ColorObject | undefined
