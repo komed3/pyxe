@@ -33,4 +33,4 @@ export const output: Record<OutputTypes, OutputHandler> = {
     css: ( ...args ) => output.string( ...args ),
     html: ( ...args ) => output.string( ...args )
 
-}
+};

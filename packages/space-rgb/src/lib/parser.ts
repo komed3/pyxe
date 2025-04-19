@@ -14,7 +14,7 @@ export const parser: ParserHandler = (
 
         const _channel = (
             v: string, max: number = 255
-        ) => (
+        ) : number => (
             v.endsWith( '%' )
                 ? ( parseFloat( v ) / 100 ) * max
                 : parseFloat( v )

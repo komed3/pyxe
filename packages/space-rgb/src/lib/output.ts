@@ -16,7 +16,7 @@ export const output: Record<OutputTypes, OutputHandler> = {
 
         const _toString = (
             v: number
-        ) => (
+        ) : string => (
             options.format === 'percent'
                 ? `${ ( v / 255 * 100 ).toFixed( 0 ) }%`
                 : `${ Math.round( v ) }`
@@ -35,4 +35,4 @@ export const output: Record<OutputTypes, OutputHandler> = {
     css: ( ...args ) => output.string( ...args ),
     html: ( ...args ) => output.string( ...args )
 
-}
+};
