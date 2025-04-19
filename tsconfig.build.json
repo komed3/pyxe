@@ -4,6 +4,7 @@
     { "path": "packages/core" },
     { "path": "packages/library-ral" },
     { "path": "packages/space-hex" },
+    { "path": "packages/space-rgb" },
     { "path": "packages/types" },
     { "path": "packages/utils" }
   ]
