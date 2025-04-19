@@ -61,7 +61,8 @@ export interface ColorObject {
 export type OutputTypes = 'string' | 'json' | string;
 
 export type OutputHandler = (
-    input: ColorObject
+    input: ColorObject,
+    ...args: any[]
 ) => string | unknown;
 
 export type ParserHandler = (

@@ -79,12 +79,14 @@ export class Output {
      * 
      * @param format - The output format type to apply (e.g. "string", "json", or custom)
      * @param input - The color object to be formatted
+     * @param args - Optional arguments to pass to the handler
      * @returns The formatted output, of any type defined by the handler
      * @throws Error, if no handler exists for the requested format
      */
     static format (
         format: OutputTypes,
-        input: ColorObject
+        input: ColorObject,
+        ...args: any[]
     ) : unknown {
 
         const handler = this._getHandler(
@@ -93,7 +95,7 @@ export class Output {
 
         if ( handler ) {
 
-            return handler( input );
+            return handler( input, ...args );
 
         }
 
@@ -111,15 +113,17 @@ export class Output {
      * minimal fallback string is returned in the format `[space] {value}`.
      *  
      * @param input - The color object to stringify
+     * @param args - Optional arguments to pass to the handler
      * @returns A string representation of the color
      */
     static toString (
-        input: ColorObject
+        input: ColorObject,
+        ...args: any[]
     ) : string {
 
         try {
 
-            return this.format( 'string', input ) as string;
+            return this.format( 'string', input, args ) as string;
 
         } catch {
 
@@ -138,15 +142,17 @@ export class Output {
      * a fallback object is returned containing the space ID and raw value.
      * 
      * @param input - The color object to convert
+     * @param args - Optional arguments to pass to the handler
      * @returns An object suitable for JSON serialization
      */
     static toJSON (
-        input: ColorObject
+        input: ColorObject,
+        ...args: any[]
     ) : unknown {
 
         try {
 
-            return this.format( 'json', input );
+            return this.format( 'json', input, args );
 
         } catch {
 

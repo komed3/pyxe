@@ -227,11 +227,14 @@ export class Color {
      * Returns a string representation of the color, using the
      * preferred output format of the color space.
      * 
+     * @param args - Optional arguments to pass to the handler
      * @returns A stringified representation of the color
      */
-    toString () : string {
+    toString (
+        ...args: any[]
+    ) : string {
 
-        return Output.toString( this.toObject() );
+        return Output.toString( this.toObject(), args );
 
     }
 
@@ -239,11 +242,14 @@ export class Color {
      * Returns a JSON-compatible representation of the color.
      * Format may vary by color space and configuration.
      * 
+     * @param args - Optional arguments to pass to the handler
      * @returns JSON-encoded color object
      */
-    toJSON () : unknown {
+    toJSON (
+        ...args: any[]
+    ) : unknown {
 
-        return Output.toJSON( this.toObject() );
+        return Output.toJSON( this.toObject(), args );
 
     }
 
@@ -252,13 +258,15 @@ export class Color {
      * (e.g., "string", "object", "array").
      * 
      * @param format - The desired output type
+     * @param args - Optional arguments to pass to the handler
      * @returns The formatted color output
      */
     format (
-        format: OutputTypes
+        format: OutputTypes,
+        ...args: any[]
     ) : unknown {
 
-        return Output.format( format, this.toObject() );
+        return Output.format( format, this.toObject(), args );
 
     }
 
@@ -326,6 +334,17 @@ export class Color {
     getInstance () : ColorInstance {
 
         return this.toObject().value;
+
+    }
+
+    /**
+     * Retrieves the metadata from the color instance.
+     * 
+     * @return The color object meta or undefined
+     */
+    getMeta () : Record<string, any> | undefined {
+
+        return this.toObject()?.meta;
 
     }
 

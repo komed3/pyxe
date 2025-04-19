@@ -119,34 +119,42 @@ Returns the internal `ColorObject` of this instance, useful for low-level operat
 ### `toString()`
 
 ```ts
-toString () : string
+toString (
+  ...args: any[]
+) : string
 ```
 
 Returns a formatted string representation of the color using the default output format for its color space.
 
+@param `args` - Optional arguments to pass to the handler  
 @returns A stringified representation of the color
 
 ### `toJSON()`
 
 ```ts
-toJSON () : unknown
+toJSON (
+  ...args: any[]
+) : unknown
 ```
 
 Returns a JSON-compatible version of the color, suitable for serialization.
 
+@param `args` - Optional arguments to pass to the handler  
 @returns A format-agnostic, JSON-friendly representation of the color
 
 ### `format( format )`
 
 ```ts
 format (
-  format: OutputTypes
+  format: OutputTypes,
+  ...args: any[]
 ) : unknown
 ```
 
 Formats the color as an object, array, or string based on the requested output format.
 
 @param `format` - Output type: `object`, `array`, `string`, etc.  
+@param `args` - Optional arguments to pass to the handler  
 @returns The formatted color  
 @throws If the format is not supported
 
@@ -196,6 +204,16 @@ getInstance () : ColorInstance
 Returns the raw color instance data without metadata.
 
 @returns A plain color value object corresponding to the color space
+
+### `getMeta()`
+
+```ts
+getMeta () : Record<string, any> | undefined
+```
+
+Retrieves the metadata from the color instance.
+
+@return The color object meta or undefined
 
 ### `apply( key [, ...args ] )`
 
