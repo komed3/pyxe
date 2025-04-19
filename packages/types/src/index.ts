@@ -65,6 +65,8 @@ export type OutputHandler = (
     options?: Record<string, any>
 ) => string | unknown;
 
+export type OutputFactory = Partial<Record<OutputTypes, OutputHandler>>;
+
 export type ParserHandler = (
     input: ColorInput
 ) => ColorObject | undefined;
@@ -77,10 +79,7 @@ export type ConversionHandler = (
     input: ColorObject | undefined
 ) => ColorObject | undefined;
 
-export interface ConversionPath {
-    target: ColorSpaceID;
-    handler: ConversionHandler;
-}
+export type ConversionFactory = Partial<Record<ColorSpaceID, ConversionHandler>>;
 
 export interface ColorChannelMeta {
     name: string;
@@ -104,9 +103,9 @@ export interface ColorSpaceFactory {
     id: ColorSpaceID;
     validator: ValidatorHandler;
     parser: ParserHandler;
-    conversions?: ConversionPath[];
-    output?: Record<OutputTypes, OutputHandler>;
-    meta?: ColorSpaceMeta
+    conversions?: ConversionFactory;
+    output?: OutputFactory;
+    meta?: ColorSpaceMeta;
 }
 
 export type ModuleMethodHandler = (
@@ -119,13 +118,13 @@ export interface ModuleMethodFactory {
     handler: ModuleMethodHandler;
     spaces: ColorSpaceID[];
     bindAs?: string;
-    meta?: Record<string, any>
+    meta?: Record<string, any>;
 }
 
 export interface ModuleFactory {
     id: string;
-    methods: ModuleMethodFactory[],
-    meta?: Record<string, any>
+    methods: ModuleMethodFactory[];
+    meta?: Record<string, any>;
 }
 
 export interface ErrorFactory {

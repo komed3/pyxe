@@ -1,8 +1,8 @@
 'use strict';
 
-import { RGB, ColorObject, OutputHandler, OutputTypes } from '@pyxe/types';
+import { RGB, ColorObject, OutputFactory, OutputHandler } from '@pyxe/types';
 
-export const output: Record<OutputTypes, OutputHandler> = {
+export const output: OutputFactory = {
 
     string: (
         input: ColorObject,
@@ -32,7 +32,11 @@ export const output: Record<OutputTypes, OutputHandler> = {
 
     },
 
-    css: ( ...args ) => output.string( ...args ),
-    html: ( ...args ) => output.string( ...args )
+    css: ( ...args ) => (
+        output.string as OutputHandler
+    )( ...args ),
+    html: ( ...args ) => (
+        output.string as OutputHandler
+    )( ...args )
 
 };

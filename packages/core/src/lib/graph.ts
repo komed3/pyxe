@@ -30,8 +30,8 @@
 'use strict';
 
 import type {
-    ColorSpaceID, ColorObject,
-    ConversionHandler, ConversionPath
+    ColorSpaceID, ColorObject, ConversionHandler,
+    ConversionFactory
 } from '@pyxe/types';
 
 import { Utils } from '@pyxe/utils';
@@ -46,7 +46,7 @@ export class ConversionGraph {
      * Stores all registered conversion paths.
      * Each source color space ID maps to a list of possible target paths with handlers.
      */
-    private registry: Map<ColorSpaceID, ConversionPath[]> = new Map ();
+    private registry: Map<ColorSpaceID, ConversionFactory> = new Map ();
 
     /**
      * Internal cache to store previously resolved conversion paths
@@ -69,13 +69,11 @@ export class ConversionGraph {
 
         if ( ! this.registry.has( source ) ) {
 
-            this.registry.set( source, [] );
+            this.registry.set( source, {} );
 
         }
 
-        this.registry.get( source )!.push(
-            { target, handler }
-        );
+        this.registry.get( source )![ target ] = handler;
 
     }
 
@@ -83,16 +81,16 @@ export class ConversionGraph {
      * Registers multiple conversion paths from a single source space.
      * 
      * @param source - The source color space ID
-     * @param paths - A list of target/handler pairs to register
+     * @param factory - A list of target/handler pairs to register
      */
     _registerMany (
         source: ColorSpaceID,
-        paths: ConversionPath[]
+        factory: ConversionFactory
     ) : void {
 
-        for ( const { target, handler } of paths ) {
+        for ( const [ target, handler ] of Object.entries( factory ) ) {
 
-            this._register( source, target, handler );
+            this._register( source, target as ColorSpaceID, handler );
 
         }
 
@@ -129,9 +127,25 @@ export class ConversionGraph {
      */
     getFrom (
         source: ColorSpaceID
-    ) : ConversionPath[] {
+    ) : ConversionFactory {
 
-        return this.registry.get( source ) || [];
+        return this.registry.get( source ) || {};
+
+    }
+
+    /**
+     * Returns target color spaces from a given source color space.
+     * 
+     * @param source - The source color space ID
+     * @returns A list of all target color spaces
+     */
+    getTargets (
+        source: ColorSpaceID
+    ) : ColorSpaceID[] {
+
+        return Object.keys(
+            this.registry.get( source ) || {}
+        ) as ColorSpaceID[];
 
     }
 
@@ -172,7 +186,7 @@ export class ConversionGraph {
 
             visited.add( current );
 
-            for ( const { target: next } of this.getFrom( current ) ) {
+            for ( const next of this.getTargets( current ) ) {
 
                 if ( visited.has( next ) ) continue;
 
@@ -233,11 +247,9 @@ export class ConversionGraph {
             const current = path[ i ];
             const next = path[ i + 1 ];
 
-            const edge = this.getFrom( current ).find(
-                ( e ) => e.target === next
-            );
+            const cb = this.getFrom( current )[ next ];
 
-            if ( ! edge ) {
+            if ( ! cb ) {
 
                 throw new Utils.error( {
                     method: 'ConversionGraph',
@@ -246,7 +258,7 @@ export class ConversionGraph {
 
             }
 
-            handler.push( edge.handler );
+            handler.push( cb );
 
         }
 
@@ -298,28 +310,28 @@ export class ConversionGraph {
             prefix: string = ''
         ) : void => {
 
-            const paths = this.registry.get( current );
+            const targets = this.getTargets( current );
 
-            if ( depth > 0 && paths && paths.length > 0 ) {
+            if ( depth > 0 && targets && targets.length > 0 ) {
 
-                const filtered = paths.filter( p => !seenNodes.has( p.target ) );
+                const filtered = targets.filter( t => !seenNodes.has( t ) );
 
-                filtered.forEach( ( path, idx ) => {
+                filtered.forEach( ( target, idx ) => {
 
-                    const pathKey = `${current}::${path.target}`;
+                    const pathKey = `${current}::${target}`;
                     const isLast = idx === filtered.length - 1;
 
                     if ( ! visited.has( pathKey ) ) {
 
-                        seenNodes.add( path.target );
+                        seenNodes.add( target );
                         visited.add( pathKey );
 
                         result.push( `${prefix}${ (
                             isLast ? '└───' : '├───'
-                        ) }${path.target}` );
+                        ) }${target}` );
 
                         _subtree(
-                            path.target, depth - 1,
+                            target, depth - 1,
                             prefix + ( isLast ? '    ' : '│   ' )
                         );
 
