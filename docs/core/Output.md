@@ -45,13 +45,13 @@ Retrieves the output handler for a given color space and format type.
 
 ## Methods
 
-### `format( format, input )`
+### `format( format, input [, options ] )`
 
 ```ts
 static format (
   format: OutputTypes,
   input: ColorObject,
-  ...args: any[]
+  options?: Record<string, any>
 ) : unknown
 ```
 
@@ -59,36 +59,36 @@ Returns the output of the given color object using the specified format type. If
 
 @param `format` - The requested output format (e.g., `string`, `json`, or a custom type)  
 @param `input` - The color object to be formatted  
-@param `args` - Optional arguments to pass to the handler  
+@param `options` - Optional arguments to pass to the handler  
 @returns The formatted result from the output handler  
 @throws If no valid output handler is found for the color space
 
-### `toString( input )`
+### `toString( input [, options ] )`
 
 ```ts
 static toString (
   input: ColorObject,
-  ...args: any[]
+  options?: Record<string, any>
 ) : string
 ```
 
 Returns a string representation of the given color object. Uses a space-specific output handler if defined. If no handler is available, falls back to a generic string format.
 
 @param `input` – The color object to stringify  
-@param `args` - Optional arguments to pass to the handler  
+@param `options` - Optional arguments to pass to the handler  
 @returns A string representation of the color
 
-### `toJSON( input )`
+### `toJSON( input [, options ] )`
 
 ```ts
 static toJSON (
   input: ColorObject,
-  ...args: any[]
+  options?: Record<string, any>
 ) : unknown
 ```
 
 Returns a JSON-compatible representation of the given `ColorObject`. Uses a color space-defined handler if available; otherwise, a minimal fallback object is returned.
 
 @param `input` – The color object to convert  
-@param `args` - Optional arguments to pass to the handler  
+@param `options` - Optional arguments to pass to the handler  
 @returns A plain object suitable for JSON serialization

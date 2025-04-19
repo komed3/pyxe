@@ -12,19 +12,12 @@ export const parser: ParserHandler = (
 
     if ( match ) {
 
-        const _expandHex = ( h: string ) => h.length === 3
-            ? h.split( '' ).map(
-                ( c ) => c + c
-            ).join( '' )
-            : h.length === 4
-                ? h.split( '' ).map(
-                    ( c, i ) => i < 3 ? c + c : c
-                ).join( '' )
-                : h;
-
         return {
             space: 'HEX',
-            value: `#${ _expandHex( match[ 1 ] ) }`,
+            value: ( ( h: string ) =>
+                h.length === 3 ? `#${h[0]}${h[0]}${h[1]}${h[1]}${h[2]}${h[2]}` :
+                h.length === 4 ? `#${h[0]}${h[0]}${h[1]}${h[1]}${h[2]}${h[2]}${h[3]}${h[3]}` :
+                `#${h}` )( match[1] ),
             meta: { source: input }
         } as ColorObject;
 

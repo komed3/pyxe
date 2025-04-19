@@ -227,14 +227,14 @@ export class Color {
      * Returns a string representation of the color, using the
      * preferred output format of the color space.
      * 
-     * @param args - Optional arguments to pass to the handler
+     * @param options - Optional arguments to pass to the handler
      * @returns A stringified representation of the color
      */
     toString (
-        ...args: any[]
+        options?: Record<string, any>
     ) : string {
 
-        return Output.toString( this.toObject(), args );
+        return Output.toString( this.toObject(), options );
 
     }
 
@@ -242,14 +242,14 @@ export class Color {
      * Returns a JSON-compatible representation of the color.
      * Format may vary by color space and configuration.
      * 
-     * @param args - Optional arguments to pass to the handler
+     * @param options - Optional arguments to pass to the handler
      * @returns JSON-encoded color object
      */
     toJSON (
-        ...args: any[]
+        options?: Record<string, any>
     ) : unknown {
 
-        return Output.toJSON( this.toObject(), args );
+        return Output.toJSON( this.toObject(), options );
 
     }
 
@@ -258,15 +258,15 @@ export class Color {
      * (e.g., "string", "object", "array").
      * 
      * @param format - The desired output type
-     * @param args - Optional arguments to pass to the handler
+     * @param options - Optional arguments to pass to the handler
      * @returns The formatted color output
      */
     format (
         format: OutputTypes,
-        ...args: any[]
+        options?: Record<string, any>
     ) : unknown {
 
-        return Output.format( format, this.toObject(), args );
+        return Output.format( format, this.toObject(), options );
 
     }
 

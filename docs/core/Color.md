@@ -116,45 +116,45 @@ Returns the internal `ColorObject` of this instance, useful for low-level operat
 
 @returns A validated color data object
 
-### `toString()`
+### `toString( [ options ] )`
 
 ```ts
 toString (
-  ...args: any[]
+  options: Record<string, any>
 ) : string
 ```
 
 Returns a formatted string representation of the color using the default output format for its color space.
 
-@param `args` - Optional arguments to pass to the handler  
+@param `options` - Optional arguments to pass to the handler  
 @returns A stringified representation of the color
 
-### `toJSON()`
+### `toJSON( [ options ] )`
 
 ```ts
 toJSON (
-  ...args: any[]
+  options?: Record<string, any>
 ) : unknown
 ```
 
 Returns a JSON-compatible version of the color, suitable for serialization.
 
-@param `args` - Optional arguments to pass to the handler  
+@param `options` - Optional arguments to pass to the handler  
 @returns A format-agnostic, JSON-friendly representation of the color
 
-### `format( format )`
+### `format( format [, options ] )`
 
 ```ts
 format (
   format: OutputTypes,
-  ...args: any[]
+  options?: Record<string, any>
 ) : unknown
 ```
 
 Formats the color as an object, array, or string based on the requested output format.
 
 @param `format` - Output type: `object`, `array`, `string`, etc.  
-@param `args` - Optional arguments to pass to the handler  
+@param `options` - Optional arguments to pass to the handler  
 @returns The formatted color  
 @throws If the format is not supported
 

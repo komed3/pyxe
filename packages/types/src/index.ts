@@ -62,7 +62,7 @@ export type OutputTypes = 'string' | 'json' | string;
 
 export type OutputHandler = (
     input: ColorObject,
-    ...args: any[]
+    options?: Record<string, any>
 ) => string | unknown;
 
 export type ParserHandler = (
