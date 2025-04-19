@@ -82,13 +82,31 @@ export interface ConversionPath {
     handler: ConversionHandler;
 }
 
+export interface ColorChannelMeta {
+    name: string;
+    range: [ number, number ];
+    unit?: string;
+    description?: string;
+}
+
+export interface ColorSpaceMeta {
+    name: string;
+    description?: string;
+    type: 'numeric' | 'encoded' | 'perceptual' | string;
+    channels: Record<string, ColorChannelMeta>;
+    alpha?: boolean;
+    spaces?: string[];
+    output?: string[];
+    cssSupport?: boolean;
+}
+
 export interface ColorSpaceFactory {
     id: ColorSpaceID;
     validator: ValidatorHandler;
     parser: ParserHandler;
     conversions?: ConversionPath[];
     output?: Record<OutputTypes, OutputHandler>;
-    meta?: Record<string, any>
+    meta?: ColorSpaceMeta
 }
 
 export type ModuleMethodHandler = (
