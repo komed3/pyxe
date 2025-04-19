@@ -1,6 +1,6 @@
 {
   "name": "@pyxe/space-hex",
-  "description": "HEX color space for the pyxe framework",
+  "description": "Hexadecimal coded RGB color space, widely used in the web and CSS",
   "version": "0.1.0",
   "license": "MIT",
   "author": {

@@ -12,15 +12,15 @@ _ColorSpace.colorSpace._register( 'HEX', {
     output: output,
     meta: {
         name: 'Hexadecimal RGB',
-        description: 'Hexadecimal coded RGB color space, widely used in the web and CSS.',
+        description: 'Hexadecimal coded RGB color space, widely used in the web and CSS',
         type: 'encoded',
+        alpha: true,
         channels: {
             r: { name: 'Red', range: [ 0, 255 ] },
             g: { name: 'Green', range: [ 0, 255 ] },
             b: { name: 'Blue', range: [ 0, 255 ] },
             a: { name: 'Alpha', range: [ 0, 255 ] }
         },
-        alpha: true,
         spaces: [ 'RGB' ],
         output: [ 'string', 'css', 'html' ],
         cssSupport: true

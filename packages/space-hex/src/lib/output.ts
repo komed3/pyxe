@@ -1,6 +1,6 @@
 'use strict';
 
-import { ColorObject, OutputHandler, OutputTypes } from "@pyxe/types";
+import { ColorObject, OutputHandler, OutputTypes } from '@pyxe/types';
 
 export const output: Record<OutputTypes, OutputHandler> = {
 
