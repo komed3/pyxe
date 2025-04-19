@@ -1,14 +1,17 @@
 'use strict';
 
 import { _ColorSpace } from '@pyxe/core/dev';
+
 import { validator } from './lib/validator.js';
 import { parser } from './lib/parser.js';
+import { conversions } from './lib/conversions.js';
 import { output } from './lib/output.js';
 
 _ColorSpace.colorSpace._register( 'HEX', {
     id: 'HEX',
     validator: validator,
     parser: parser,
+    conversions: conversions,
     output: output,
     meta: {
         name: 'Hexadecimal RGB',
