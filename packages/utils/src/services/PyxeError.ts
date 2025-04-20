@@ -1,0 +1,83 @@
+'use strict';
+
+import type { ErrorFactory } from '@pyxe/types';
+
+export class PyxeError extends Error {
+
+    readonly header: string;
+    readonly timestamp: string;
+    readonly method: string;
+    readonly msg?: string;
+    readonly extra?: string;
+
+    constructor (
+        factory: ErrorFactory
+    ) {
+
+        const { method, msg, err } = factory;
+
+        const time = ( new Date() ).toLocaleTimeString(
+            'en-US', { hour12: false, timeStyle: 'medium' }
+        );
+
+        const extra = err
+            ? ( err instanceof Error ? err.message : String ( err ) )
+            : undefined;
+
+        const header = `${time} [${ method.toUpperCase() }] ${ msg ?? '' }${ (
+            extra ? `: ${extra}` : ''
+        ) }`;
+
+        super( header );
+
+        this.name = 'PyxeError';
+
+        this.header = header;
+        this.timestamp = time;
+        this.method = method;
+        this.msg = msg;
+        this.extra = extra;
+
+    }
+
+    toString (
+        trace: boolean = true
+    ) : string {
+
+        if ( trace ) {
+
+            return `${this.header}\n${
+                this.stack?.split( '\n' ).slice( 1 ).join( '\n' ) ?? ''
+            }`;
+
+        }
+
+        return this.header;
+
+    }
+
+    log (
+        trace: boolean = true
+    ) : void {
+
+        console.error( this.toString( trace ) );
+
+    }
+
+    warn (
+        trace: boolean = false
+    ) : void {
+
+        console.warn( this.toString( trace ) );
+
+    }
+
+    info (
+        trace: boolean = false
+    ) : void {
+
+        console.info( this.toString( trace ) );
+
+    }
+
+}
