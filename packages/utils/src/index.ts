@@ -3,6 +3,8 @@
 import { PyxeError as error } from './services/PyxeError.js';
 import { hook } from './services/Hook.js';
 
-export const Utils = {
+const Utils = {
     error, hook
 };
+
+export default Utils;

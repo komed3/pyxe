@@ -1,8 +1,12 @@
 export type ColorSpaceID = 'HEX' | 'RGB';
 
-export interface ColorSpaceFactory {};
-
 export type ColorInstance = any;
+
+export type ColorInput = ColorInstance | string;
+
+export interface ColorSpaceFactory {
+    id: ColorSpaceID
+};
 
 export interface ColorObjectFactory {
     space: ColorSpaceID;

@@ -1,6 +1,7 @@
 'use strict';
 
 import type { ColorSpaceID, ColorSpaceFactory } from '@pyxe/types';
+import Utils from '@pyxe/utils';
 
 export class ColorSpace {
 
@@ -24,7 +25,10 @@ export class ColorSpace {
 
         if ( ! colorSpaceRegistry.has( id ) ) {
 
-            // ERROR
+            throw new Utils.error ( {
+                method: 'ColorSpace',
+                msg: `Cannot find color space <${id}>`
+            } );
 
         }
 
@@ -45,7 +49,10 @@ export class ColorSpaceRegistry {
 
         if ( this.has( id ) ) {
 
-            // ERROR
+            throw new Utils.error ( {
+                method: 'ColorSpace',
+                msg: `Color space named <${id}> is already declared`
+            } );
 
         }
 
@@ -59,7 +66,10 @@ export class ColorSpaceRegistry {
 
         if ( ! this.has( id ) ) {
 
-            // ERROR
+            throw new Utils.error ( {
+                method: 'ColorSpace',
+                msg: `The color space <${id}> is not declared`
+            } );
 
         }
 
