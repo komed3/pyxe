@@ -24,7 +24,9 @@ export class Parser {
 
                 if ( result ) {
 
-                    return new ColorObject ( result.space, result.value );
+                    // Tracer
+
+                    return ColorObject.from( result );
 
                 }
 

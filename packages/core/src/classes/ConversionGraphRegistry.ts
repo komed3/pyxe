@@ -90,9 +90,7 @@ export class ConversionGraphRegistry {
         source: ColorSpaceID
     ) : ColorSpaceID[] {
 
-        return Object.keys(
-            this.getFrom( source )
-        ) as ColorSpaceID[];
+        return Object.keys( this.getFrom( source ) ) as ColorSpaceID[];
 
     }
 
