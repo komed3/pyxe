@@ -40,7 +40,11 @@ export class Output {
 
         if ( handler ) {
 
-            return handler( input, options );
+            return Utils.Services.hook.filter(
+                'Output.output',
+                handler( input, options ),
+                format, input, options
+            );
 
         }
 

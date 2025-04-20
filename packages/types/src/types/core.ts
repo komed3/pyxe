@@ -1,6 +1,6 @@
 'use strict';
 
-import type { ColorSpaceID, ColorInstance } from './basic.js';
+import type { ColorSpaceID, ColorInstance, ColorInput } from './basic.js';
 
 export interface ColorObjectFactory {
     space: ColorSpaceID;
@@ -14,6 +14,14 @@ export interface ColorChannelMeta {
     unit?: string;
     description?: string;
 }
+
+export type ValidatorHandler = (
+    input: ColorObjectFactory
+) => boolean;
+
+export type ParserHandler = (
+    input: ColorInput
+) => ColorObjectFactory | undefined;
 
 export type ConversionHandler = (
     input: ColorObjectFactory | undefined
@@ -43,8 +51,8 @@ export interface ColorSpaceMeta {
 
 export interface ColorSpaceFactory {
     id: ColorSpaceID;
-    validator: unknown;
-    parser: unknown;
+    validator: ValidatorHandler;
+    parser: ParserHandler;
     conversions?: unknown;
     output?: OutputFactory;
     meta?: ColorSpaceMeta;
