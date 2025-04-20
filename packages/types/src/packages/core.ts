@@ -1,4 +1,12 @@
-export type ColorSpaceID = 'HEX' | 'RGB';
+'use strict';
+
+import type { ColorSpaceID, ColorInstance } from './../basic.js';
+
+export interface ColorObjectFactory {
+    space: ColorSpaceID;
+    value: ColorInstance;
+    meta?: Record<string, any>;
+}
 
 export interface ColorChannelMeta {
     name: string;
@@ -6,6 +14,15 @@ export interface ColorChannelMeta {
     unit?: string;
     description?: string;
 }
+
+export type OutputTypes = 'string' | 'json' | string;
+
+export type OutputHandler = (
+    input: ColorObjectFactory,
+    options?: Record<string, any>
+) => string | unknown;
+
+export type OutputFactory = Partial<Record<OutputTypes, OutputHandler>>;
 
 export interface ColorSpaceMeta {
     name: string;
@@ -23,6 +40,6 @@ export interface ColorSpaceFactory {
     validator: unknown;
     parser: unknown;
     conversions?: unknown;
-    output?: unknown;
+    output?: OutputFactory;
     meta?: ColorSpaceMeta;
 }
