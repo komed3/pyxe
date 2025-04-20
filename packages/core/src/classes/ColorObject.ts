@@ -20,7 +20,7 @@ export class ColorObject {
 
     }
 
-    public static fromObject (
+    public static from (
         input: ColorObjectFactory
     ) : ColorObject {
 
@@ -39,6 +39,15 @@ export class ColorObject {
     public validate () : boolean {
 
         return true;
+
+    }
+
+    public get () : ColorObjectFactory {
+
+        return {
+            space: this.space, value: this.value,
+            meta: this.meta ?? {}
+        };
 
     }
 
@@ -79,15 +88,6 @@ export class ColorObject {
             return this.meta;
 
         }
-
-    }
-
-    public toObject () : ColorObjectFactory {
-
-        return {
-            space: this.space, value: this.value,
-            meta: this.meta ?? {}
-        };
 
     }
 

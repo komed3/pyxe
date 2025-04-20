@@ -29,3 +29,13 @@ export interface HookFactory {
     priority: number;
     once?: boolean;
 }
+
+export interface TracerFactory {
+    action: string;
+    timestamp: Date | number;
+    meta?: {
+        input?: ColorObjectFactory | unknown;
+        result?: ColorObjectFactory | unknown;
+        [ key: string ] : any;
+    };
+}
