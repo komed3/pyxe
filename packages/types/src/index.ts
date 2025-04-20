@@ -1,6 +1,5 @@
 'use strict';
 
-export * from './basic.js';
-
-export * from './packages/core.js';
-export * from './packages/utils.js';
+export * from './types/basic.js';
+export * from './types/core.js';
+export * from './types/utils.js';

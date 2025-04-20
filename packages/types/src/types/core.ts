@@ -1,6 +1,6 @@
 'use strict';
 
-import type { ColorSpaceID, ColorInstance } from './../basic.js';
+import type { ColorSpaceID, ColorInstance } from './basic.js';
 
 export interface ColorObjectFactory {
     space: ColorSpaceID;
@@ -14,6 +14,12 @@ export interface ColorChannelMeta {
     unit?: string;
     description?: string;
 }
+
+export type ConversionHandler = (
+    input: ColorObjectFactory | undefined
+) => ColorObjectFactory | undefined;
+
+export type ConversionFactory = Partial<Record<ColorSpaceID, ConversionHandler>>;
 
 export type OutputTypes = 'string' | 'json' | string;
 
