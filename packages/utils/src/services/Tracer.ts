@@ -1,7 +1,7 @@
 'use strict';
 
 import type { ColorInput, TracerFactory } from '@pyxe/types';
-import { ColorObject } from '@pyxe/core';
+import { ColorObject } from '@pyxe/core/root';
 
 export class Tracer {
 
