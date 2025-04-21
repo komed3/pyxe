@@ -6,7 +6,7 @@ import { colorLibRegisty } from './ColorLibRegistry.js';
 import { ColorObject } from './ColorObject.js';
 import { Convert } from './Convert.js';
 
-const instances: Map<string, ColorLib> = new Map();
+const instances: Map<string, ColorLib> = new Map ();
 
 export class ColorLib {
 
@@ -74,7 +74,7 @@ export class ColorLib {
 
         if ( ! instances.has( id ) ) {
 
-            instances.set( id, new ColorLib( id, sources ) );
+            instances.set( id, new ColorLib ( id, sources ) );
 
         }
 

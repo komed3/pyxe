@@ -90,4 +90,4 @@ export class ConversionGraphRegistry {
 
 }
 
-export const conversionGraphRegistry = new ConversionGraphRegistry();
+export const conversionGraphRegistry = new ConversionGraphRegistry ();

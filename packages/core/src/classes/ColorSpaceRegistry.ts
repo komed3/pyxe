@@ -6,7 +6,7 @@ import { conversionGraphRegistry } from './ConversionGraphRegistry';
 
 export class ColorSpaceRegistry {
 
-    private registry: Map<ColorSpaceID, ColorSpaceFactory> = new Map();
+    private registry: Map<ColorSpaceID, ColorSpaceFactory> = new Map ();
 
     public add (
         id: ColorSpaceID,
@@ -75,4 +75,4 @@ export class ColorSpaceRegistry {
 
 }
 
-export const colorSpaceRegistry = new ColorSpaceRegistry();
+export const colorSpaceRegistry = new ColorSpaceRegistry ();

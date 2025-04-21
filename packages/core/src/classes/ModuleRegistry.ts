@@ -6,7 +6,7 @@ import { moduleMethodRegistry } from './ModuleMethodRegistry.js';
 
 export class ModuleRegistry {
 
-    private registry: Map<string, ModuleFactory> = new Map();
+    private registry: Map<string, ModuleFactory> = new Map ();
 
     public add (
         id: string,
@@ -75,4 +75,4 @@ export class ModuleRegistry {
 
 }
 
-export const moduleRegistry = new ModuleRegistry();
+export const moduleRegistry = new ModuleRegistry ();

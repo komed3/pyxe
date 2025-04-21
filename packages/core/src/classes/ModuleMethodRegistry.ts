@@ -6,7 +6,7 @@ import { ColorMethodRegistry } from './ColorMethodRegistry.js';
 
 export class ModuleMethodRegistry {
 
-    private registry: Map<string, ModuleMethodFactory> = new Map();
+    private registry: Map<string, ModuleMethodFactory> = new Map ();
 
     public add (
         module: string,
@@ -128,4 +128,4 @@ export class ModuleMethodRegistry {
 
 }
 
-export const moduleMethodRegistry = new ModuleMethodRegistry();
+export const moduleMethodRegistry = new ModuleMethodRegistry ();

@@ -5,7 +5,7 @@ import { Utils } from '@pyxe/utils';
 
 export class ColorLibRegisty {
 
-    private registry: Map<string, ColorLibFactory> = new Map();
+    private registry: Map<string, ColorLibFactory> = new Map ();
 
     public add (
         id: string,
@@ -66,4 +66,4 @@ export class ColorLibRegisty {
 
 }
 
-export const colorLibRegisty = new ColorLibRegisty();
+export const colorLibRegisty = new ColorLibRegisty ();

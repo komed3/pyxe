@@ -5,7 +5,7 @@ import { Utils } from '@pyxe/utils';
 import { conversionGraphRegistry } from './ConversionGraphRegistry.js';
 import { ColorSpace } from './ColorSpace.js';
 
-const cache: Map<string, ColorSpaceID[] | null> = new Map();
+const cache: Map<string, ColorSpaceID[] | null> = new Map ();
 
 export class ConversionGraph {
 

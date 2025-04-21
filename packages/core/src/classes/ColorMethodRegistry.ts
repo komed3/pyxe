@@ -26,7 +26,7 @@ export const ColorMethodRegistry = {
 
         } catch ( err ) {
 
-            throw new Utils.Services.error ( {
+            throw new Utils.Services.error( {
                 err, method: 'ColorMethodRegistry',
                 msg: `Cannot bind method <${method}> as <${name}> to the Color class.`
             } );
@@ -45,7 +45,7 @@ export const ColorMethodRegistry = {
 
         } else {
 
-            throw new Utils.Services.error ( {
+            throw new Utils.Services.error( {
                 method: 'ColorMethodRegistry',
                 msg: `Method <${key}> is not bound to the Color class`
             } );
