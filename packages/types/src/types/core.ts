@@ -76,3 +76,30 @@ export interface ModuleFactory {
     methods: ModuleMethodFactory[];
     meta?: Record<string, any>;
 }
+
+export interface ColorLibMeta {
+    id: string;
+    name?: string;
+    description?: string;
+    version?: string;
+    author?: string;
+    license?: string;
+    tags?: string[];
+}
+
+export interface ColorLibEntry {
+    id: string;
+    name?: string | Record<string, string>;
+    spaces: Partial<Record<ColorSpaceID, ColorInstance>>;
+    meta?: Record<string, any>;
+}
+
+export type ColorLibList = ColorLibEntry[];
+
+export type ColorLibLoader = () => Promise<ColorLibList>;
+
+export interface ColorLibFactory {
+    meta: ColorLibMeta;
+    autoLoad?: string[];
+    sources: Record<string, ColorLibLoader>;
+}

@@ -1,6 +1,6 @@
 'use strict';
 
-import { ColorSpaceID } from '@pyxe/types';
+import type { ColorSpaceID } from '@pyxe/types';
 import { Utils } from '@pyxe/utils';
 import { ConversionGraph } from './ConversionGraph.js';
 import { ColorObject } from './ColorObject.js';

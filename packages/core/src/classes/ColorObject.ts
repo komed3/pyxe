@@ -7,11 +7,14 @@ import { Output } from './Output.js';
 
 export class ColorObject {
 
+    readonly space;
+    readonly value;
+
     private meta: Record<string, any> = {};
 
     constructor (
-        readonly space: ColorSpaceID,
-        readonly value: ColorInstance,
+        space: ColorSpaceID,
+        value: ColorInstance,
         safe: boolean = true
     ) {
 
@@ -23,6 +26,9 @@ export class ColorObject {
             } );
 
         }
+
+        this.space = space;
+        this.value = value;
 
     }
 

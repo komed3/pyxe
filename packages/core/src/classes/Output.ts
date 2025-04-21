@@ -1,6 +1,6 @@
 'use strict';
 
-import { ColorSpaceID, ColorSpaceFactory, ColorObjectFactory, OutputTypes, OutputHandler } from '@pyxe/types';
+import type { ColorSpaceID, ColorObjectFactory, OutputTypes, OutputHandler } from '@pyxe/types';
 import { Utils } from '@pyxe/utils';
 import { colorSpaceRegistry } from './ColorSpaceRegistry.js';
 
@@ -13,7 +13,7 @@ export class Output {
 
         if ( colorSpaceRegistry.has( id ) ) {
 
-            const { output } = colorSpaceRegistry.get( id ) as ColorSpaceFactory;
+            const { output } = colorSpaceRegistry.get( id )!;
 
             if (
                 output && format in output &&

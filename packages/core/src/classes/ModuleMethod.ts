@@ -1,6 +1,5 @@
 'use strict';
 
-import type { ModuleMethodFactory } from '@pyxe/types';
 import { Utils } from '@pyxe/utils';
 import { moduleMethodRegistry } from './ModuleMethodRegistry.js';
 import { ColorObject } from './ColorObject.js';
@@ -71,7 +70,7 @@ export class ModuleMethod {
 
             try {
 
-                const { spaces, handler } = moduleMethodRegistry.get( key ) as ModuleMethodFactory;
+                const { spaces, handler } = moduleMethodRegistry.get( key )!;
 
                 if ( options?.strict && ! spaces.includes( color.space ) ) {
 

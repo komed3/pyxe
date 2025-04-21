@@ -1,6 +1,6 @@
 'use strict';
 
-import { ColorSpaceID, ColorInput, ColorSpaceFactory } from '@pyxe/types';
+import type { ColorSpaceID, ColorInput } from '@pyxe/types';
 import { Utils } from '@pyxe/utils';
 import { colorSpaceRegistry } from './ColorSpaceRegistry.js';
 import { ColorObject } from './ColorObject.js';
@@ -14,7 +14,7 @@ export class Parser {
 
         try {
 
-            const { parser: handler } = colorSpaceRegistry.get( space ) as ColorSpaceFactory;
+            const { parser: handler } = colorSpaceRegistry.get( space )!;
 
             if ( handler && typeof handler === 'function' ) {
 

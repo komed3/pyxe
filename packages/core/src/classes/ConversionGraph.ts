@@ -1,6 +1,6 @@
 'use strict';
 
-import { ColorSpaceID, ColorObjectFactory, ConversionHandler } from '@pyxe/types';
+import type { ColorSpaceID, ColorObjectFactory, ConversionHandler } from '@pyxe/types';
 import { Utils } from '@pyxe/utils';
 import { conversionGraphRegistry } from './ConversionGraphRegistry.js';
 import { ColorSpace } from './ColorSpace.js';
@@ -34,7 +34,7 @@ export class ConversionGraph {
 
         if ( cache.has( cacheKey ) ) {
 
-            return cache.get( cacheKey ) as ColorSpaceID[] | null;
+            return cache.get( cacheKey )!;
 
         }
 
