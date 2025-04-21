@@ -7,6 +7,7 @@ import { ColorObject } from './ColorObject.js';
 import { Parser } from './Parser.js';
 import { ColorLib } from './ColorLib.js';
 import { Convert } from './Convert.js';
+import { ModuleMethod } from './ModuleMethod.js';
 
 export class Color {
 
@@ -189,6 +190,35 @@ export class Color {
         return new Color (
             Convert.tryConvert( this.color, target ) as ColorObject
         );
+
+    }
+
+    apply (
+        key: string,
+        options: Record<string, any>
+    ) : any {
+
+        const result = ModuleMethod.apply( key, this.color, options );
+
+        if ( result ) {
+
+            if ( result instanceof ColorObject ) {
+
+                return new Color ( result );
+
+            } else if ( Array.isArray( result ) ) {
+
+                return result.map(
+                    ( res ) => res instanceof ColorObject
+                        ? new Color ( res )
+                        : res
+                );
+
+            }
+
+        }
+
+        return result;
 
     }
 
