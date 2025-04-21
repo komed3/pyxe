@@ -38,20 +38,16 @@ export class Output {
             input.space, format
         );
 
-        if ( handler ) {
+        if ( ! handler ) {
 
-            return Utils.Services.hook.filter(
-                'Output.output',
-                handler( input, options ),
-                format, input, options
-            );
+            throw new Utils.Services.error( {
+                method: 'Output',
+                msg: `No output format <${format}> defined for color space <${input.space}>`
+            } );
 
         }
 
-        throw new Utils.Services.error ( {
-            method: 'Output',
-            msg: `No output format <${format}> defined for color space <${input.space}>`
-        } );
+        return handler( input, options );
 
     }
 
@@ -66,9 +62,7 @@ export class Output {
 
         } catch {
 
-            return `[${ input.space }] ${
-                JSON.stringify( input.value )
-            }`;
+            return `[${ input.space }] ${ JSON.stringify( input.value ) }`;
 
         }
 

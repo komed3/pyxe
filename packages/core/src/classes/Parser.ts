@@ -12,8 +12,6 @@ export class Parser {
         space: ColorSpaceID
     ) : ColorObject | undefined {
 
-        Utils.Services.hook.run( 'Parser.beforeParse', input, space );
-
         try {
 
             const { parser: handler } = colorSpaceRegistry.get( space ) as ColorSpaceFactory;
@@ -35,8 +33,6 @@ export class Parser {
         } catch ( err ) {
 
             /** Ignore individual parser errors and continue */
-
-            Utils.Services.hook.runDeferred( 'Parser.failed', input, space, err );
 
         }
 
@@ -65,9 +61,7 @@ export class Parser {
 
             if ( safe ) {
 
-                Utils.Services.hook.run( 'Parser.failSafe', input, err );
-
-                throw new Utils.Services.error ( {
+                throw new Utils.Services.error( {
                     err, method: 'Parser',
                     msg: `No suitable parser found for input <${
                         JSON.stringify( input )

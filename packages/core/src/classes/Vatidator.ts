@@ -12,23 +12,17 @@ export class Validator {
         value: ColorInstance
     ) : boolean {
 
-        Utils.Services.hook.run( 'Validator.beforeValidate', space, value );
-
         if ( ColorSpace.check( space ) ) {
 
             try {
 
                 const { validator: handler } = colorSpaceRegistry.get( space ) as ColorSpaceFactory;
 
-                return Utils.Services.hook.filter(
-                    'Validator.validate',
-                    handler( { space, value } ),
-                    space, value
-                );
+                return handler( { space, value } );
 
             } catch ( err ) {
 
-                throw new Utils.Services.error ( {
+                throw new Utils.Services.error( {
                     err, method: 'Validator',
                     msg: `No validator defined for color space <${space}>`
                 } );
@@ -52,9 +46,7 @@ export class Validator {
 
         } else if ( safe ) {
 
-            Utils.Services.hook.run( 'Validator.failSafe', input );
-
-            throw new Utils.Services.error ( {
+            throw new Utils.Services.error( {
                 method: 'Validator',
                 msg: `Validation failed for color space <${input.space}> with input <${
                     JSON.stringify( input )

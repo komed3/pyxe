@@ -1,6 +1,8 @@
 'use strict';
 
 import type { ColorSpaceID, ColorInstance, ColorObjectFactory, OutputTypes } from '@pyxe/types';
+import { Utils } from '@pyxe/utils';
+import { Validator } from './Vatidator.js';
 import { Output } from './Output.js';
 
 export class ColorObject {
@@ -9,8 +11,20 @@ export class ColorObject {
 
     constructor (
         readonly space: ColorSpaceID,
-        readonly value: ColorInstance
-    ) {}
+        readonly value: ColorInstance,
+        safe: boolean = true
+    ) {
+
+        if ( safe && ! this.validate() ) {
+
+            throw new Utils.Services.error( {
+                method: 'ColorObject',
+                msg: `Color <${ ( JSON.stringify( value ) ) }> is not a valid instance for <${space}> color space`
+            } );
+
+        }
+
+    }
 
     public static from (
         input: ColorObjectFactory
@@ -77,8 +91,11 @@ export class ColorObject {
 
     }
 
-    /*public validate () : boolean {
-    }*/
+    public validate () : boolean {
+
+        return Validator.validate( this.toObject() );
+
+    }
 
     public format (
         format: OutputTypes,
