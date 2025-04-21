@@ -15,10 +15,10 @@ export const ColorMethodRegistry = {
             if ( ! ( name in Color.prototype ) ) {
 
                 ( Color.prototype as any )[ name ] = function (
-                    ...args: any[]
+                    options: Record<string, any>
                 ) : Color | Color[] | any {
 
-                    return this.apply( method, ...args );
+                    return this.apply( method, options );
 
                 };
 
