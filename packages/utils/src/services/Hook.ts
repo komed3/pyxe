@@ -47,7 +47,7 @@ export class Hook {
 
         const pattern = new RegExp( '^' + name.replace( /\*/g, '.*' ) + '$' );
 
-        return Array.from( this.registry.entries() ).filter(
+        return [ ...this.registry.entries() ].filter(
             ( [ key ] ) => pattern.test( key )
         );
 

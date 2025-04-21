@@ -15,7 +15,7 @@ export class ColorSpaceRegistry {
         if ( this.has( id ) ) {
 
             throw new Utils.Services.error ( {
-                method: 'ColorSpace',
+                method: 'ColorSpaceRegistry',
                 msg: `Color space named <${id}> is already declared`
             } );
 
@@ -32,7 +32,7 @@ export class ColorSpaceRegistry {
         if ( ! this.has( id ) ) {
 
             throw new Utils.Services.error ( {
-                method: 'ColorSpace',
+                method: 'ColorSpaceRegistry',
                 msg: `The color space <${id}> is not declared`
             } );
 
@@ -61,6 +61,14 @@ export class ColorSpaceRegistry {
     ) : ColorSpaceFactory | undefined {
 
         return this.registry.get( id );
+
+    }
+
+    public getMeta (
+        id: ColorSpaceID
+    ) : any {
+
+        return this.registry.get( id )?.meta;
 
     }
 

@@ -37,4 +37,12 @@ export class ColorSpace {
 
     }
 
+    public static meta (
+        id: ColorSpaceID
+    ) : any {
+
+        return colorSpaceRegistry.getMeta( id );
+
+    }
+
 }

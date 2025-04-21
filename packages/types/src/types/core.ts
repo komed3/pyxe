@@ -57,3 +57,22 @@ export interface ColorSpaceFactory {
     output?: OutputFactory;
     meta?: ColorSpaceMeta;
 }
+
+export type ModuleMethodHandler = (
+    input: ColorObjectFactory,
+    options?: Record<string, any>
+) => any;
+
+export interface ModuleMethodFactory {
+    id: string;
+    handler: ModuleMethodHandler;
+    spaces: ColorSpaceID[];
+    bindAs?: string;
+    meta?: Record<string, any>;
+}
+
+export interface ModuleFactory {
+    id: string;
+    methods: ModuleMethodFactory[];
+    meta?: Record<string, any>;
+}
