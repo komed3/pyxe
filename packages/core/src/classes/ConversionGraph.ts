@@ -5,13 +5,21 @@ import { Utils } from '@pyxe/utils';
 import { conversionGraphRegistry } from './ConversionGraphRegistry.js';
 import { ColorSpace } from './ColorSpace.js';
 
-const cache: Map<string, ColorSpaceID[] | null> = new Map ();
+const cache: Map<string, ColorSpaceID[] | null> = new Map();
 
 export class ConversionGraph {
 
     public static flush () : void {
 
         cache.clear();
+
+    }
+
+    public static targets (
+        source: ColorSpaceID
+    ) : ColorSpaceID[] {
+
+        return conversionGraphRegistry.targets( source );
 
     }
 
@@ -43,7 +51,7 @@ export class ConversionGraph {
 
             visited.add( current );
 
-            for ( const next of conversionGraphRegistry.getTargets( current ) ) {
+            for ( const next of conversionGraphRegistry.targets( current ) ) {
 
                 if ( visited.has( next ) ) continue;
 
@@ -90,7 +98,7 @@ export class ConversionGraph {
 
         if ( ! path || path.length < 2 ) {
 
-            throw new Utils.Services.error ( {
+            throw new Utils.Services.error( {
                 method: 'ConversionGraph',
                 msg: `No conversion path from <${source}> to <${target}>`
             } );
@@ -104,11 +112,11 @@ export class ConversionGraph {
             const current = path[ i ];
             const next = path[ i + 1 ];
 
-            const cb = conversionGraphRegistry.getFrom( current )[ next ];
+            const cb = conversionGraphRegistry.get( current )[ next ];
 
             if ( ! cb ) {
 
-                throw new Utils.Services.error ( {
+                throw new Utils.Services.error( {
                     method: 'ConversionGraph',
                     msg: `Missing conversion step from <${current}> to <${next}>`
                 } );
@@ -151,7 +159,7 @@ export class ConversionGraph {
             prefix: string = ''
         ) : void => {
 
-            const targets = conversionGraphRegistry.getTargets( current );
+            const targets = conversionGraphRegistry.targets( current );
 
             if ( depth > 0 && targets && targets.length > 0 ) {
 

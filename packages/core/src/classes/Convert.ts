@@ -1,6 +1,6 @@
 'use strict';
 
-import { ColorSpaceID, ColorObjectFactory } from '@pyxe/types';
+import { ColorSpaceID } from '@pyxe/types';
 import { Utils } from '@pyxe/utils';
 import { ConversionGraph } from './ConversionGraph.js';
 import { ColorObject } from './ColorObject.js';
@@ -8,12 +8,10 @@ import { ColorObject } from './ColorObject.js';
 export class Convert {
 
     public static convert (
-        input: ColorObjectFactory,
+        input: ColorObject,
         target: ColorSpaceID | ColorSpaceID[],
         safe: boolean = false
     ) : ColorObject | undefined {
-
-        Utils.Services.hook.run( 'Convert.beforeConvert', input, target, safe );
 
         const targets = Array.isArray( target ) ? target : [ target ];
 
@@ -24,7 +22,7 @@ export class Convert {
                 try {
 
                     const handler = ConversionGraph.resolve( input.space, t );
-                    const result = handler( input );
+                    const result = handler( input.toObject() );
 
                     if ( result ) {
 
@@ -38,8 +36,6 @@ export class Convert {
 
                     /** Skip failed target and continue */
 
-                    Utils.Services.hook.runDeferred( 'Convert.failed', input, target, err );
-
                 }
 
             }
@@ -48,7 +44,7 @@ export class Convert {
 
             if ( safe ) {
 
-                throw new Utils.Services.error ( {
+                throw new Utils.Services.error( {
                     err, method: 'Convert',
                     msg: `Conversion from color space <${input.space}> to any of <${
                         targets.join( ', ' )
@@ -62,21 +58,13 @@ export class Convert {
     }
 
     public static convertMany (
-        input: ColorObjectFactory[],
+        input: ColorObject[],
         target: ColorSpaceID | ColorSpaceID[]
     ) : ColorObject[] {
 
-        try {
-
-            return input.map(
-                ( obj ) => this.convert( obj, target, true )
-            ) as ColorObject[];
-
-        } catch ( err ) {
-
-            throw err;
-
-        }
+        return input.map(
+            ( obj ) => this.convert( obj, target, true )
+        ) as ColorObject[];
 
     }
 
@@ -94,7 +82,7 @@ export class Convert {
 
             if ( strict ) {
 
-                throw new Utils.Services.error ( {
+                throw new Utils.Services.error( {
                     err, method: 'Convert',
                     msg: `Strict mode: The color space conversion has failed`
                 } );
@@ -115,20 +103,9 @@ export class Convert {
         strict: boolean = false
     ) : ColorObject[] | ColorObject | unknown {
 
-        try {
-
-            return Array.isArray( input )
-                ? input.map( ( obj ) => this.tryConvert( obj, target, strict ) )
-                : this.tryConvert( input, target, strict );
-
-        } catch ( err ) {
-
-            throw new Utils.Services.error ( {
-                err, method: 'Convert',
-                msg: `Strict mode: A color space conversion has failed`
-            } );
-
-        }
+        return Array.isArray( input )
+            ? input.map( ( obj ) => this.tryConvert( obj, target, strict ) )
+            : this.tryConvert( input, target, strict );
 
     }
 

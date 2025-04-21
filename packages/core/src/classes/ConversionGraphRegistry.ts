@@ -40,7 +40,7 @@ export class ConversionGraphRegistry {
         target: ColorSpaceID
     ) : void {
 
-        const targets = this.getFrom( source );
+        const targets = this.get( source );
 
         delete targets[ target ];
 
@@ -64,12 +64,6 @@ export class ConversionGraphRegistry {
 
     }
 
-    public list () : ColorSpaceID[] {
-
-        return [ ...this.registry.keys() ];
-
-    }
-
     public has (
         source: ColorSpaceID
     ) : boolean {
@@ -78,7 +72,7 @@ export class ConversionGraphRegistry {
 
     }
 
-    public getFrom (
+    public get (
         source: ColorSpaceID
     ) : ConversionFactory {
 
@@ -86,14 +80,14 @@ export class ConversionGraphRegistry {
 
     }
 
-    public getTargets (
+    public targets (
         source: ColorSpaceID
     ) : ColorSpaceID[] {
 
-        return Object.keys( this.getFrom( source ) ) as ColorSpaceID[];
+        return Object.keys( this.get( source ) ) as ColorSpaceID[];
 
     }
 
 }
 
-export const conversionGraphRegistry = new ConversionGraphRegistry ();
+export const conversionGraphRegistry = new ConversionGraphRegistry();

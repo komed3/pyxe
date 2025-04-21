@@ -2,6 +2,7 @@
 
 import type { ColorSpaceID, ColorSpaceFactory } from '@pyxe/types';
 import { Utils } from '@pyxe/utils';
+import { conversionGraphRegistry } from './ConversionGraphRegistry';
 
 export class ColorSpaceRegistry {
 
@@ -23,6 +24,12 @@ export class ColorSpaceRegistry {
 
         this.registry.set( id, factory );
 
+        if ( factory?.conversions ) {
+
+            conversionGraphRegistry.addMany( id, factory.conversions );
+
+        }
+
     }
 
     public remove (
@@ -37,6 +44,8 @@ export class ColorSpaceRegistry {
             } );
 
         }
+
+        conversionGraphRegistry.removeAll( id );
 
         this.registry.delete( id );
 
