@@ -24,9 +24,9 @@ export class ColorSpace {
         id: ColorSpaceID
     ) : true | undefined {
 
-        if ( ! colorSpaceRegistry.has( id ) ) {
+        if ( ! this.has( id ) ) {
 
-            throw new Utils.Services.error ( {
+            throw new Utils.Services.error( {
                 method: 'ColorSpace',
                 msg: `Cannot find color space <${id}>`
             } );
@@ -41,7 +41,7 @@ export class ColorSpace {
         id: ColorSpaceID
     ) : any {
 
-        return colorSpaceRegistry.getMeta( id );
+        return colorSpaceRegistry.get( id )?.meta;
 
     }
 
