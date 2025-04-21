@@ -26,9 +26,19 @@ export class Convert {
 
                     if ( result ) {
 
-                        // Tracer
+                        const color = ColorObject.from( result );
 
-                        return ColorObject.from( result );
+                        if ( Utils.Services.tracer.isReady() ) {
+
+                            Utils.Services.tracer.add(
+                                color, Utils.tracerTemplates.convert(
+                                    input, color, ConversionGraph.findPath( input.space, t )
+                                )
+                            );
+
+                        }
+
+                        return color;
 
                     }
 
