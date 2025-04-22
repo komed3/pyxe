@@ -1,0 +1,33 @@
+{
+  "name": "pyxe",
+  "description": "Modular and lightweight color computation framework built in TypeScript",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": {
+    "name": "Paul Köhler (komed3)",
+    "email": "webmaster@komed3.de",
+    "url": "https://komed3.de"
+  },
+  "homepage": "https://pyxe.de",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "README.md",
+    "package.json",
+    "dist"
+  ],
+  "dependencies": {
+    "@pyxe/types": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/komed3/pyxe.git",
+    "directory": "packages/pyxe"
+  },
+  "bugs": {
+    "url": "https://github.com/komed3/pyxe/issues"
+  }
+}
