@@ -1,5 +1,8 @@
 'use strict';
 
-export * from './types/basic.js';
-export * from './types/core.js';
-export * from './types/utils.js';
+export type ColorSpaceName = 'HEX' | 'RGB';
+
+export interface ColorSpaceFactory {
+    name: ColorSpaceName,
+    meta?: Record<string, any>
+}
