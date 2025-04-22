@@ -36,18 +36,18 @@ export const ColorMethodRegistry = {
     },
 
     unbind (
-        key: string
+        name: string
     ) : void {
 
-        if ( key in Color.prototype ) {
+        if ( name in Color.prototype ) {
 
-            delete ( Color.prototype as any )[ key ];
+            delete ( Color.prototype as any )[ name ];
 
         } else {
 
             throw new PyxeError ( {
                 method: 'ColorMethodRegistry',
-                msg: `Method <${key}> is not bound to the Color class`
+                msg: `Method <${name}> is not bound to the Color class`
             } );
 
         }

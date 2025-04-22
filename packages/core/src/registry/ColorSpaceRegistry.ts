@@ -6,19 +6,19 @@ import { Registry } from './Registry.js';
 export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFactory> {
 
     public add (
-        key: ColorSpaceName,
+        name: ColorSpaceName,
         space: ColorSpaceFactory
     ) : void {
 
-        super._add( key, space );
+        super._add( name, space );
 
     }
 
     public remove (
-        key: ColorSpaceName
+        name: ColorSpaceName
     ) : void {
 
-        super._remove( key );
+        super._remove( name );
 
     }
 

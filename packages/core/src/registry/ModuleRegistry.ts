@@ -7,27 +7,27 @@ import { moduleMethodRegistry } from './ModuleMethodRegistry.js';
 export class ModuleRegistry extends Registry<string, ModuleFactory> {
 
     public add (
-        key: string,
+        name: string,
         module: ModuleFactory
     ) : void {
 
-        super._add( key, module );
+        super._add( name, module );
 
         if ( module?.methods ) {
 
-            moduleMethodRegistry.addMany( key, module.methods );
+            moduleMethodRegistry.addMany( name, module.methods );
 
         }
 
     }
 
     public remove (
-        key: string
+        name: string
     ) : void {
 
-        moduleMethodRegistry.removeAll( key );
+        moduleMethodRegistry.removeAll( name );
 
-        super._remove( key );
+        super._remove( name );
 
     }
 
