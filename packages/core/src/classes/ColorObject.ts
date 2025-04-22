@@ -18,6 +18,9 @@ export class ColorObject {
         safe: boolean = true
     ) {
 
+        this.space = space;
+        this.value = value;
+
         if ( safe && ! this.validate() ) {
 
             throw new Utils.Services.error( {
@@ -26,9 +29,6 @@ export class ColorObject {
             } );
 
         }
-
-        this.space = space;
-        this.value = value;
 
     }
 

@@ -2,7 +2,7 @@
 
 import type { ColorSpaceID, ColorSpaceFactory } from '@pyxe/types';
 import { Utils } from '@pyxe/utils';
-import { conversionGraphRegistry } from './ConversionGraphRegistry';
+import { conversionGraphRegistry } from './ConversionGraphRegistry.js';
 
 export class ColorSpaceRegistry {
 

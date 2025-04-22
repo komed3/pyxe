@@ -22,19 +22,7 @@ export class Parser {
 
                 if ( result ) {
 
-                    const color = ColorObject.from( result );
-
-                    if ( Utils.Services.tracer.isReady() ) {
-
-                        Utils.Services.tracer.add(
-                            color, Utils.tracerTemplates.parse(
-                                input, color
-                            )
-                        );
-
-                    }
-
-                    return color;
+                    return ColorObject.from( result );
 
                 }
 
