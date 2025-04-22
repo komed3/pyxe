@@ -30,4 +30,4 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
 }
 
-export const colorSpaceRegistry = new ColorSpaceRegistry();
+export const colorSpaceRegistry = new ColorSpaceRegistry ();

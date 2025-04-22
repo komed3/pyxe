@@ -1,8 +1,10 @@
 'use strict';
 
+import { PyxeError } from '../utils/PyxeError.js';
+
 export abstract class Registry<Key, Factory> {
 
-    protected items: Map<Key, Factory> = new Map();
+    protected items: Map<Key, Factory> = new Map ();
 
     protected _add (
         key: Key,
@@ -10,11 +12,16 @@ export abstract class Registry<Key, Factory> {
         safe: boolean = true
     ) : void {
 
-        if ( ! safe || ! this.has( key, true ) ) {
+        if ( safe && this.has( key ) ) {
 
-            this.items.set( key, factory );
+            throw new PyxeError ( {
+                method: 'Registry',
+                msg: `Registry item <${key}> already declared`
+            } );
 
         }
+
+        this.items.set( key, factory );
 
     }
 
@@ -23,11 +30,16 @@ export abstract class Registry<Key, Factory> {
         safe: boolean = true
     ) : void {
 
-        if ( ! safe || this.has( key, true ) ) {
+        if ( safe && ! this.has( key, true ) ) {
 
-            this.items.delete( key );
+            throw new PyxeError ( {
+                method: 'Registry',
+                msg: `Registry item <${key}> is not declared`
+            } );
 
         }
+
+        this.items.delete( key );
 
     }
 
@@ -60,7 +72,10 @@ export abstract class Registry<Key, Factory> {
 
         } else if ( safe ) {
 
-            // ERROR
+            throw new PyxeError ( {
+                method: 'Registry',
+                msg: `Registry item <${key}> not found`
+            } );
 
         }
 
