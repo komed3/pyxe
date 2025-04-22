@@ -3,7 +3,7 @@
 import type { ModuleMethodFactory } from '@pyxe/types';
 import { Registry } from './Registry.js';
 import { ColorMethodRegistry } from './ColorMethodRegistry.js';
-import { PyxeError } from '../utils/PyxeError.js';
+import { PyxeError } from '../services/PyxeError.js';
 
 export class ModuleMethodRegistry extends Registry<string, ModuleMethodFactory> {
 

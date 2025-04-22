@@ -3,7 +3,7 @@
 import type { ColorInput } from '@pyxe/types';
 import { ColorObject } from './ColorObject.js';
 import { Parser } from './Parser.js';
-import { PyxeError } from './utils/PyxeError';
+import { PyxeError } from './services/PyxeError.js';
 
 export class Color extends ColorObject {
 

@@ -2,9 +2,9 @@
 
 import type { ColorSpaceName, ColorInput } from '@pyxe/types';
 import { colorSpaceRegistry } from './registry/ColorSpaceRegistry.js';
-import { tracer, tracerTemplates as tpl } from './utils/Tracer.js';
+import { tracer, tracerTemplates as tpl } from './services/Tracer.js';
 import { ColorObject } from './ColorObject.js';
-import { PyxeError } from './utils/PyxeError.js';
+import { PyxeError } from './services/PyxeError.js';
 
 export class Parser {
 
@@ -37,7 +37,7 @@ export class Parser {
 
             }
 
-        } catch ( err ) {
+        } catch {
 
             /** Ignore individual parser errors and continue */
 

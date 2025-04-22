@@ -2,7 +2,7 @@
 
 import type { ColorSpaceName, ColorObjectFactory, OutputTypes, OutputHandler } from '@pyxe/types';
 import { colorSpaceRegistry } from './registry/ColorSpaceRegistry.js';
-import { PyxeError } from './utils/PyxeError.js';
+import { PyxeError } from './services/PyxeError.js';
 
 export class Output {
 

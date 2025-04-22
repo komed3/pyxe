@@ -1,6 +1,6 @@
 'use strict';
 
-import { PyxeError } from '../utils/PyxeError.js';
+import { PyxeError } from '../services/PyxeError.js';
 
 export abstract class Registry<Key, Factory> {
 

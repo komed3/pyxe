@@ -3,7 +3,7 @@
 import type { ColorInstance, ColorSpaceName, ColorObjectFactory, OutputTypes } from '@pyxe/types';
 import { Validator } from './Validator.js';
 import { Output } from './Output.js';
-import { PyxeError } from './utils/PyxeError.js';
+import { PyxeError } from './services/PyxeError.js';
 
 export class ColorObject {
 
