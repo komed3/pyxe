@@ -55,6 +55,18 @@ export abstract class Registry<Key, Factory> {
 
     }
 
+    public filter (
+        filter?: string
+    ) : Key[] {
+
+        return this.list().filter(
+            ( key ) => ! filter || ( key as string ).match(
+                new RegExp( filter, 'i' )
+            )
+        );
+
+    }
+
     public all () : IterableIterator<Factory> {
 
         return this.items.values();
