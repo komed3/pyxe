@@ -49,7 +49,7 @@ export class ColorObject {
 
     }
 
-    protected updateMeta (
+    public updateMeta (
         meta: Record<string, any>
     ) : void {
 
@@ -57,7 +57,7 @@ export class ColorObject {
 
     }
 
-    protected deleteMeta (
+    public deleteMeta (
         key?: string
     ) : void {
 
@@ -73,7 +73,7 @@ export class ColorObject {
 
     }
 
-    protected getMeta (
+    public getMeta (
         key?: string
     ) : any {
 
