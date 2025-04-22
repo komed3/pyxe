@@ -3,6 +3,7 @@
   "references": [
     { "path": "packages/core" },
     { "path": "packages/pyxe" },
+    { "path": "packages/spaces/rgb" },
     { "path": "packages/types" }
   ]
 }

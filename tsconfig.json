@@ -7,6 +7,8 @@
     "paths": {
       "pyxe": [ "packages/pyxe/src" ],
       "@pyxe/core": [ "packages/core/src" ],
+      "@pyxe/core/*": [ "packages/core/src/*" ],
+      "@pyxe/space-rgb": [ "packages/spaces/rgb/src" ],
       "@pyxe/types": [ "packages/types/src" ]
     },
     "declaration": true,
