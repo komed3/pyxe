@@ -5,6 +5,7 @@
     "moduleResolution": "Node",
     "baseUrl": ".",
     "paths": {
+      "pyxe": [ "packages/pyxe/src" ],
       "@pyxe/core": [ "packages/core/src" ],
       "@pyxe/types": [ "packages/types/src" ]
     },
