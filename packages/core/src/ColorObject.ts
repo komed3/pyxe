@@ -1,6 +1,7 @@
 'use strict';
 
 import type { ColorSpaceName, ColorInstance, ColorObjectFactory, OutputTypes } from '@pyxe/types';
+import { Validator } from './Validator.js';
 import { Output } from './Output.js';
 import { PyxeError } from './utils/PyxeError.js';
 
@@ -98,7 +99,7 @@ export class ColorObject {
 
     public validate () : boolean {
 
-        //return Validator.validate( this.toObject() );
+        return Validator.validate( this.toObject() );
 
     }
 

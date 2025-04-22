@@ -14,6 +14,10 @@ export interface HSV {
     h: number; s: number; v: number; a?: number;
 }
 
-export type ColorInstance = HEX | RGB | HSL | HSV;
+export interface CMYK {
+    c: number; m: number; y: number; k: number;
+}
+
+export type ColorInstance = HEX | RGB | HSL | HSV | CMYK;
 
 export type ColorInput = ColorInstance | string;

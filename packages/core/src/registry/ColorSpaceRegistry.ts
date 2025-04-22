@@ -7,10 +7,10 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
     public add (
         name: ColorSpaceName,
-        space: ColorSpaceFactory
+        factory: ColorSpaceFactory
     ) : void {
 
-        super._add( name, space );
+        super._add( name, factory );
 
     }
 

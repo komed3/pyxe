@@ -2,7 +2,7 @@
 
 import type { ColorInstance, ColorInput } from './Color.js';
 
-export type ColorSpaceName = 'HEX' | 'RGB' | 'HSL' | 'HSV';
+export type ColorSpaceName = 'HEX' | 'RGB' | 'HSL' | 'HSV' | 'CMYK';
 
 export interface ColorObjectFactory {
     space: ColorSpaceName;
