@@ -15,8 +15,15 @@ export type ColorInstance = HEX | RGB;
 
 export type ColorInput = ColorInstance | string;
 
+export type ConversionHandler = (
+    input: any
+) => any;
+
+export type ConversionFactory = Partial<Record<ColorSpaceName, ConversionHandler>>;
+
 export interface ColorSpaceFactory {
     name: ColorSpaceName,
+    conversions: ConversionFactory;
     meta?: Record<string, any>
 }
 
