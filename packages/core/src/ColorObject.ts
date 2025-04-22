@@ -1,6 +1,6 @@
 'use strict';
 
-import type { ColorSpaceName, ColorInstance, ColorObjectFactory, OutputTypes } from '@pyxe/types';
+import type { ColorInstance, ColorSpaceName, ColorObjectFactory, OutputTypes } from '@pyxe/types';
 import { Validator } from './Validator.js';
 import { Output } from './Output.js';
 import { PyxeError } from './utils/PyxeError.js';
@@ -49,7 +49,7 @@ export class ColorObject {
 
     }
 
-    public updateMeta (
+    protected updateMeta (
         meta: Record<string, any>
     ) : void {
 
@@ -57,7 +57,7 @@ export class ColorObject {
 
     }
 
-    public deleteMeta (
+    protected deleteMeta (
         key?: string
     ) : void {
 
@@ -73,7 +73,7 @@ export class ColorObject {
 
     }
 
-    public getMeta (
+    protected getMeta (
         key?: string
     ) : any {
 
