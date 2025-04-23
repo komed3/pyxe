@@ -2,6 +2,7 @@
 
 export const registry: Record<string, string[]> = {
     space: [ 'hex', 'rgb', 'hsl', 'hsv', 'cmyk' ],
+    library: [ 'ral' ],
     module: [ 'basic' ]
 };
 
@@ -17,7 +18,7 @@ const loadPackages = async () : Promise<void> => {
 
                 await import( `@pyxe/${type}-${name}` );
 
-                console.info( `[PYXE AUTO LOADER] package <${name}> of type <${type}> loaded` );
+                console.debug( `[PYXE AUTO LOADER] package <${name}> of type <${type}> loaded` );
 
                 return name;
 
