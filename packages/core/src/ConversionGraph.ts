@@ -1,6 +1,6 @@
 'use strict';
 
-import type { ColorSpaceName, ColorObjectFactory, ConversionHandler } from '@pyxe/types';
+import type { ColorSpaceName, ConversionHandler } from '@pyxe/types';
 import { conversionGraphRegistry } from './registry/ConversionGraphRegistry.js';
 import { ColorSpace } from './ColorSpace.js';
 import { PyxeError } from './services/PyxeError.js';
@@ -127,7 +127,7 @@ export class ConversionGraph {
 
         }
 
-        return ( input: ColorObjectFactory | undefined ) => handler.reduce(
+        return ( input: any ) => handler.reduce(
             ( acc, cb ) => cb( acc ), input
         );
 

@@ -19,8 +19,8 @@ export type ParserHandler = (
 ) => ColorObjectFactory | undefined;
 
 export type ConversionHandler = (
-    input: any
-) => any;
+    input: ColorObjectFactory
+) => ColorObjectFactory | undefined;
 
 export type ConversionFactory = Partial<Record<ColorSpaceName, ConversionHandler>>;
 
