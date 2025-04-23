@@ -81,4 +81,17 @@ export class Channel {
 
     }
 
+    public static formatAlpha (
+        value: any,
+        options: {
+            decimals?: number;
+        } = {}
+    ) : string {
+
+        return this.format( parseFloat( value ?? 1 ), {
+            unit: null, max: 1, decimals: options.decimals ?? 2
+        } );
+
+    }
+
 }

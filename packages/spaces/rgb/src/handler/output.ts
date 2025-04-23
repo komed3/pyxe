@@ -24,9 +24,7 @@ export const output: OutputFactory = {
         );
 
         return alpha !== undefined || showAlpha === true
-            ? `rgba( ${ parts.join( ', ' ) }, ${ ( Channel.format( alpha ?? 1, {
-                unit: null, max: 1, decimals: 2
-            } ) ) } )`
+            ? `rgba( ${ parts.join( ', ' ) }, ${ Channel.formatAlpha( alpha ) } )`
             : `rgb( ${ parts.join( ', ' ) } )`;
 
     },

@@ -24,9 +24,7 @@ export const output: OutputFactory = {
         ];
 
         return alpha !== undefined || showAlpha === true
-            ? `hsla( ${ parts.join( ', ' ) }, ${ ( Channel.format( alpha ?? 1, {
-                unit: null, max: 1, decimals: 2
-            } ) ) } )`
+            ? `hsla( ${ parts.join( ', ' ) }, ${ Channel.formatAlpha( alpha ) } )`
             : `hsl( ${ parts.join( ', ' ) } )`;
 
     },
