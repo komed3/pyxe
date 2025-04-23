@@ -2,12 +2,17 @@
 
 import { colorSpaceRegistry } from '@pyxe/core/root';
 
+import { validator } from './handler/validator.js';
+import { parser } from './handler/parser.js';
+import { conversions } from './handler/conversions.js';
+import { output } from './handler/output.js';
+
 colorSpaceRegistry.add( 'RGB', {
     name: 'RGB',
-    validator: ( i ) => true,
-    parser: ( i ) => ( { space: 'RGB', value: { r: 0, g: 0, b: 0 } } ),
-    conversions: {},
-    output: {},
+    validator: validator,
+    parser: parser,
+    conversions: conversions,
+    output: output,
     meta: {
         name: 'RGB',
         description: 'Additive red-green-blue color model using 8-bit channels',
