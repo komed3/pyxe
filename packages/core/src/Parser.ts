@@ -56,7 +56,7 @@ export class Parser {
 
                 const result = this.parseFor( input, space );
 
-                if ( result ) {
+                if ( result instanceof ColorObject ) {
 
                     return result;
 

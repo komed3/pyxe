@@ -10,13 +10,18 @@ export class ColorObject {
     readonly space: ColorSpaceName;
     readonly value: ColorInstance;
 
-    private meta: Record<string, any> = {};
+    private meta: Record<string, any>;
 
     constructor (
         space: ColorSpaceName,
         value: ColorInstance,
+        meta: Record<string, any> = {},
         safe: boolean = true
     ) {
+
+        this.space = space;
+        this.value = value;
+        this.meta = meta;
 
         if ( safe && ! this.validate() ) {
 
@@ -27,16 +32,16 @@ export class ColorObject {
 
         }
 
-        this.space = space;
-        this.value = value;
-
     }
 
     public static from (
         input: ColorObjectFactory
     ) : ColorObject {
 
-        return new ColorObject ( input.space, input.value );
+        return new ColorObject (
+            input.space, input.value,
+            input.meta ?? {}
+        );
 
     }
 
