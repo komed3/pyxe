@@ -1,6 +1,7 @@
 'use strict';
 
 import type { HookFactory, HookHandler } from '@pyxe/types';
+import { debug } from './Debug.js';
 import { PyxeError } from './PyxeError.js';
 
 export class Hook {
@@ -135,6 +136,8 @@ export class Hook {
         ...args: any[]
     ) : void {
 
+        debug.log( 'Hook', `run hook <${name}>` );
+
         try {
 
             for ( const [ key, entries ] of this._match( name ) ) {
@@ -168,6 +171,8 @@ export class Hook {
         name: string,
         ...args: any[]
     ) : Promise<void> {
+
+        debug.log( 'Hook', `run async hook <${name}>` );
 
         try {
 
@@ -228,6 +233,8 @@ export class Hook {
         ...args: any[]
     ) : any {
 
+        debug.log( 'Hook', `apply filter <${name}>` );
+
         let result = input;
 
         try {
@@ -266,6 +273,8 @@ export class Hook {
         input: any,
         ...args: any[]
     ) : Promise<any> {
+
+        debug.log( 'Hook', `apply async filter <${name}>` );
 
         let result = input;
 

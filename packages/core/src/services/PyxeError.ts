@@ -1,6 +1,7 @@
 'use strict';
 
 import type { ErrorFactory } from '@pyxe/types';
+import { debug } from './Debug.js';
 
 export class PyxeError extends Error {
 
@@ -62,6 +63,8 @@ export class PyxeError extends Error {
         trace: boolean = true
     ) : void {
 
+        debug.log( this.method, this.msg! );
+
         console.error( this.toString( trace ) );
 
     }
@@ -70,6 +73,8 @@ export class PyxeError extends Error {
         trace: boolean = false
     ) : void {
 
+        debug.warn( this.method, this.msg! );
+
         console.warn( this.toString( trace ) );
 
     }
@@ -77,6 +82,8 @@ export class PyxeError extends Error {
     public info (
         trace: boolean = false
     ) : void {
+
+        debug.info( this.method, this.msg! );
 
         console.info( this.toString( trace ) );
 
