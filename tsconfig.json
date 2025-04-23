@@ -12,7 +12,8 @@
       "@pyxe/space-hex": [ "packages/spaces/hex/src" ],
       "@pyxe/space-hsl": [ "packages/spaces/hsl/src" ],
       "@pyxe/space-rgb": [ "packages/spaces/rgb/src" ],
-      "@pyxe/types": [ "packages/types/src" ]
+      "@pyxe/types": [ "packages/types/src" ],
+      "@pyxe/utils": [ "packages/utils/src" ]
     },
     "declaration": true,
     "declarationMap": false,

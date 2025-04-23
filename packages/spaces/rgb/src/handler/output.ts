@@ -1,6 +1,6 @@
 'use strict';
 
-import { RGB, ColorObjectFactory, OutputFactory, OutputHandler } from '@pyxe/types';
+import type { RGB, ColorObjectFactory, OutputFactory, OutputHandler } from '@pyxe/types';
 
 export const output: OutputFactory = {
 

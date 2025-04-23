@@ -6,7 +6,8 @@
     "packages/modules/*",
     "packages/pyxe",
     "packages/spaces/*",
-    "packages/types"
+    "packages/types",
+    "packages/utils"
   ],
   "type": "module",
   "scripts": {

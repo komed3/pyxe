@@ -1,5 +1,5 @@
 'use strict';
 
-import { HSL, ColorObjectFactory, ConversionFactory } from '@pyxe/types';
+import type { HSL, ColorObjectFactory, ConversionFactory } from '@pyxe/types';
 
 export const conversions: ConversionFactory = {};

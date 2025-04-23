@@ -1,6 +1,6 @@
 'use strict';
 
-import { HSL, ColorObjectFactory, ValidatorHandler } from '@pyxe/types';
+import type { HSL, ColorObjectFactory, ValidatorHandler } from '@pyxe/types';
 
 export const validator: ValidatorHandler = (
     input: ColorObjectFactory

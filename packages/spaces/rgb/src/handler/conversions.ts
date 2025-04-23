@@ -1,6 +1,6 @@
 'use strict';
 
-import { RGB, ColorObjectFactory, ConversionFactory } from '@pyxe/types';
+import type { RGB, ColorObjectFactory, ConversionFactory } from '@pyxe/types';
 
 export const conversions: ConversionFactory = {
 

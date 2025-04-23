@@ -1,6 +1,7 @@
 'use strict';
 
 import type { ColorInput, ColorObjectFactory, ParserHandler } from '@pyxe/types';
+import { parseLinearChannel, parseCyclicChannel } from '@pyxe/utils';
 
 export const parser: ParserHandler = (
     input: ColorInput
@@ -14,26 +15,12 @@ export const parser: ParserHandler = (
 
     if ( match ) {
 
-        const _parseHue = (
-            v: string
-        ) : number => (
-            ( ( parseFloat( v ) % 360 ) + 360 ) % 360
-        );
-    
-        const _parseRatio = (
-            v: string
-        ) : number => (
-            v.endsWith( '%' )
-                ? parseFloat( v ) / 100
-                : parseFloat( v )
-        );
-
-        const hue = _parseHue( match[ 1 ] );
-        const saturation = _parseRatio( match[ 3 ] );
-        const lightness = _parseRatio( match[ 4 ] );
+        const hue = parseCyclicChannel( match[ 1 ] );
+        const saturation = parseLinearChannel( match[ 3 ] );
+        const lightness = parseLinearChannel( match[ 4 ] );
 
         const alpha = match[ 5 ]
-            ? _parseRatio( match[ 5 ] )
+            ? parseLinearChannel( match[ 5 ] )
             : undefined;
 
         if (
