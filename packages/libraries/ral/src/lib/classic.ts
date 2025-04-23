@@ -1,3 +1,18 @@
+/**
+ * RAL Classic Catalog
+ * 
+ * The RAL Classic collection comprises 216 standardized colors, each identified by a
+ * four-digit code and provided with a descriptive name (e.g. RAL 9010: Pure white).
+ * Established as the foundational RAL palette, Classic colors are widely used in
+ * coatings, plastics, and industry. Their balanced selection covers primary, secondary,
+ * and earth tones, allowing for harmonious and practical design choices.
+ * 
+ * RAL Classic ensures interoperability between suppliers and manufacturers, supporting
+ * applications from architectural paints to industrial machinery. Each color in this
+ * category is identified by a 4-digit code and grouped by functional families such as
+ * yellows (1xxx), reds (3xxx), blues (5xxx), and greys (7xxx).
+ */
+
 'use strict';
 
 export const RAL_Classic = async () => [ {

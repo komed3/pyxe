@@ -1,3 +1,18 @@
+/**
+ * RAL Design Plus Catalog
+ * 
+ * Launched in 2010, RAL Design Plus extends the RAL Design system to professional
+ * colorists and architects with over 1,800 scientifically defined colors. Each
+ * color is specified by a 10-digit CIELab-based code (e.g., H101L02C30) that indicates
+ * hue (H), saturation (S), and lightness (L).
+ * 
+ * Unlike Classic and Effect, Design Plus emphasizes subtle variations and advanced
+ * color theory, enabling precise selection in high-end product design, branding, and
+ * large-scale architectural projects. The systematic organization of RAL Design Plus
+ * supports digital workflows, ensuring consistent reproduction across materials and
+ * printing technologies.
+ */
+
 'use strict';
 
 export const RAL_Design = async () => [ {

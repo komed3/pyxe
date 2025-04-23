@@ -1,3 +1,18 @@
+/**
+ * RAL Effect Catalog
+ * 
+ * Introduced in 1993, the RAL Effect palette is a modern extension of the RAL system,
+ * introduced to address the growing demand for metallic and nuanced colors in contemporary
+ * industrial design. Unlike the Classic palette, RAL Effect includes both solid and
+ * metallic shades and supports more advanced surface effects.
+ * 
+ * RAL Effect comprises 420 solid colours and seventy metallic colours. It is the first
+ * collection from RAL to be based on waterborne paint systems. Each RAL Effect color is
+ * defined by a 5-digit code. The palette is especially relevant in automotive, consumer
+ * product design, and architecture where appearance under light and texture plays a
+ * major role.
+ */
+
 'use strict';
 
 export const RAL_Effect = async () => [
