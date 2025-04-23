@@ -17,7 +17,7 @@ const loadPackages = async () : Promise<void> => {
 
                 await import( `@pyxe/${type}-${name}` );
 
-                console.log( `[PYXE AUTO LOADER] package <${name}> of type <${type}> loaded` );
+                console.info( `[PYXE AUTO LOADER] package <${name}> of type <${type}> loaded` );
 
                 return name;
 
