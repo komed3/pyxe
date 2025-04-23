@@ -11,7 +11,7 @@
   "type": "module",
   "scripts": {
     "build": "npx tsc -b tsconfig.build.json",
-    "test": "node ./test/index.js"
+    "test": "set DEBUG=1 && node ./test/index.js"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",

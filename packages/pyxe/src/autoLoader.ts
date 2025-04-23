@@ -1,5 +1,7 @@
 'use strict';
 
+import { debug } from '@pyxe/core/root';
+
 export const registry: Record<string, string[]> = {
     space: [ 'hex', 'rgb', 'hsl', 'hsv', 'cmyk' ],
     library: [ 'ral' ],
@@ -18,7 +20,7 @@ const loadPackages = async () : Promise<void> => {
 
                 await import( `@pyxe/${type}-${name}` );
 
-                console.debug( `[PYXE AUTO LOADER] package <${name}> of type <${type}> loaded` );
+                debug.log( 'AUTO LOADER', `package <${name}> of type <${type}> loaded` );
 
                 return name;
 

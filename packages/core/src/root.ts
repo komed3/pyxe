@@ -21,4 +21,5 @@ export * from './registry/ConversionGraphRegistry.js';
 
 export * from './services/Hook.js';
 export * from './services/PyxeError.js';
+export * from './services/Debug.js';
 export * from './services/Tracer.js';
