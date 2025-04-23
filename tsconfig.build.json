@@ -5,6 +5,7 @@
     { "path": "packages/libraries/ral" },
     { "path": "packages/pyxe" },
     { "path": "packages/spaces/hex" },
+    { "path": "packages/spaces/hsl" },
     { "path": "packages/spaces/rgb" },
     { "path": "packages/types" }
   ]
