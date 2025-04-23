@@ -5,7 +5,7 @@ import { RGB, ColorObjectFactory, ConversionFactory } from '@pyxe/types';
 export const conversions: ConversionFactory = {
 
     HEX: (
-        input: ColorObjectFactory
+        input: ColorObjectFactory | undefined
     ) : ColorObjectFactory | undefined => {
 
         if ( input && input.space === 'RGB' ) {
@@ -27,8 +27,6 @@ export const conversions: ConversionFactory = {
             } as ColorObjectFactory;
 
         }
-
-        return undefined;
 
     }
 

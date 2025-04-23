@@ -4,7 +4,7 @@ import { RGB, ColorObjectFactory, ValidatorHandler } from '@pyxe/types';
 
 export const validator: ValidatorHandler = (
     input: ColorObjectFactory
-) => {
+) : boolean => {
 
     const { r, g, b, a } = ( input.value ?? {} ) as RGB;
 

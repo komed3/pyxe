@@ -4,7 +4,7 @@ import { ColorInput, ColorObjectFactory, ParserHandler } from '@pyxe/types';
 
 export const parser: ParserHandler = (
     input: ColorInput
-) => {
+) : ColorObjectFactory | undefined => {
 
     const match = input.toString().trim().toLowerCase().match(
         /^rgba?\(\s*([\d.]+%?)\s*[, ]\s*([\d.]+%?)\s*[, ]\s*([\d.]+%?)(?:\s*[,/]\s*([\d.]+%?))?\s*\)$/
@@ -47,7 +47,5 @@ export const parser: ParserHandler = (
         }
 
     }
-
-    return undefined;
 
 }
