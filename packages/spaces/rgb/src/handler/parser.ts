@@ -1,7 +1,7 @@
 'use strict';
 
 import type { ColorInput, ColorObjectFactory, ParserHandler } from '@pyxe/types';
-import { parseLinearChannel } from '@pyxe/utils';
+import { Channel } from '@pyxe/utils';
 
 export const parser: ParserHandler = (
     input: ColorInput
@@ -21,12 +21,12 @@ export const parser: ParserHandler = (
                 : parseFloat( v )
         );
 
-        const red = parseLinearChannel( match[ 1 ], 255 );
-        const green = parseLinearChannel( match[ 2 ], 255 );
-        const blue = parseLinearChannel( match[ 3 ], 255 );
+        const red = Channel.parseLinear( match[ 1 ], 255 );
+        const green = Channel.parseLinear( match[ 2 ], 255 );
+        const blue = Channel.parseLinear( match[ 3 ], 255 );
 
         const alpha = match[ 4 ]
-            ? parseLinearChannel( match[ 4 ] )
+            ? Channel.parseLinear( match[ 4 ] )
             : undefined;
 
         if (

@@ -1,6 +1,7 @@
 'use strict';
 
 import type { RGB, ColorObjectFactory, ValidatorHandler } from '@pyxe/types';
+import { Channel } from '@pyxe/utils';
 
 export const validator: ValidatorHandler = (
     input: ColorObjectFactory
@@ -9,14 +10,11 @@ export const validator: ValidatorHandler = (
     const { r, g, b, a } = ( input.value ?? {} ) as RGB;
 
     return !! (
-        input.space === 'RGB' && (
-            Number.isFinite( r ) && r >= 0 && r <= 255 &&
-            Number.isFinite( g ) && g >= 0 && g <= 255 &&
-            Number.isFinite( b ) && b >= 0 && b <= 255 &&
-            ( a === undefined || (
-                typeof a === 'number' && a >= 0 && a <= 1
-            ) )
-        )
+        input.space === 'RGB' &&
+        Channel.validateNumeric( r, 0, 255 ) &&
+        Channel.validateNumeric( g, 0, 255 ) &&
+        Channel.validateNumeric( b, 0, 255 ) &&
+        Channel.validateAlpha( a )
     );
 
 }
