@@ -1,6 +1,7 @@
 'use strict';
 
 import type { RGB, ColorObjectFactory, OutputFactory, OutputHandler } from '@pyxe/types';
+import { Channel } from '@pyxe/utils';
 
 export const output: OutputFactory = {
 
@@ -8,26 +9,24 @@ export const output: OutputFactory = {
         input: ColorObjectFactory,
         options: {
             format?: 'hex' | 'percent';
+            decimals?: number,
             alpha?: boolean;
         } = {}
     ) : string => {
 
         const { r: red, g: green, b: blue, a: alpha } = ( input.value ?? {} ) as RGB;
+        const { format = null, decimals = 0, alpha: showAlpha = false } = options;
 
-        const _toString = (
-            v: number
-        ) : string => (
-            options.format === 'percent'
-                ? `${ ( v / 255 * 100 ).toFixed( 0 ) }%`
-                : `${ Math.round( v ) }`
+        const parts = [ red, green, blue ].map(
+            ( c ) => Channel.format( c, {
+                unit: format, max: 255, decimals: decimals
+            } )
         );
 
-        const parts = [ red, green, blue ].map( _toString );
-
-        return alpha !== undefined || options.alpha === true
-            ? `rgba( ${ parts.join( ', ' ) }, ${ ( alpha !== undefined
-                  ? ( alpha <= 1 ? alpha : alpha / 255 ).toFixed( 2 ).replace( /\.?0+$/, '' )
-                  : '1' ) } )`
+        return alpha !== undefined || showAlpha === true
+            ? `rgba( ${ parts.join( ', ' ) }, ${ ( Channel.format( alpha ?? 1, {
+                unit: null, max: 1, decimals: 2
+            } ) ) } )`
             : `rgb( ${ parts.join( ', ' ) } )`;
 
     },

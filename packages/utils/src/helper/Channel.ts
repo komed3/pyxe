@@ -55,4 +55,30 @@ export class Channel {
 
     }
 
+    public static format (
+        value: number,
+        options: {
+            unit?: 'percent' | 'deg' | unknown;
+            max?: number;
+            decimals?: number;
+        } = {}
+    ) : string {
+
+        const { unit = null, max = 1, decimals = 0 } = options;
+
+        switch ( unit ) {
+
+            default:
+                value.toFixed( decimals ).replace( /\.?0+$/, '' );
+
+            case 'percent':
+                return `${ ( value / max * 100 ).toFixed( decimals ).replace( /\.?0+$/, '' ) }%`;
+
+            case 'deg':
+                return `${ ( value % 360 ).toFixed( decimals ).replace( /\.?0+$/, '' ) }deg`;
+
+        }
+
+    }
+
 }
