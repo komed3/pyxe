@@ -1,5 +1,10 @@
 'use strict';
 
-export { Color } from './lib/color.js';
-export { Services, Parser, Validator, Output, ColorLib } from './services.js';
-export { Utils } from '@pyxe/utils';
+export { Color } from './Color.js';
+export { ColorSpace } from './ColorSpace.js';
+export { ColorLib } from './ColorLib.js';
+export { Module } from './Module.js';
+export { ModuleMethod } from './ModuleMethod.js';
+export { ConversionGraph } from './ConversionGraph.js';
+export { Validator } from './Validator.js';
+export { Parser } from './Parser.js';
