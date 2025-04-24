@@ -1,6 +1,7 @@
 'use strict';
 
 import type { RGB, ColorObjectFactory, ConversionFactory } from '@pyxe/types';
+import { Numeral } from '@pyxe/utils';
 
 export const conversions: ConversionFactory = {
 
@@ -12,17 +13,13 @@ export const conversions: ConversionFactory = {
 
             const { r, g, b, a } = input.value as RGB;
 
-            const _toHex = (
-                v: number
-            ) : string => (
-                Math.round( v ).toString( 16 ).padStart( 2, '0' )
+            const parts = [ r, g, b ].map(
+                ( c ) => Numeral.dechex( c )
             );
 
             return {
                 space: 'HEX',
-                value: `#${ _toHex( r ) }${ _toHex( g ) }${ _toHex( b ) }` + (
-                    a !== undefined ? _toHex( Math.round( a * 255 ) ) : ''
-                ),
+                value: `#${ parts.join( '' ) }${ Numeral.dechexAlpha( a ) }`,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
 
