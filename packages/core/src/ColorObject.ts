@@ -125,6 +125,29 @@ export class ColorObject {
 
     }
 
+    public getFormattedChannel (
+        key: keyof ColorInstance,
+        options: {
+            unit?: 'percent' | 'deg' | 'normalized' | unknown;
+            decimals?: number;
+        } = {}
+    ) : string | undefined {
+
+        const channel = this.getChannel( key );
+
+        if ( channel ) {
+
+            const { unit, range } = channel.channel;
+
+            return Channel.format( channel.raw, {
+                ...{ unit, min: range[ 0 ], max: range[ 1 ] },
+                ...options
+            } );
+
+        }
+
+    }
+
     public instanceOf (
         id: ColorSpaceName
     ) : boolean {

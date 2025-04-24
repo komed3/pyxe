@@ -104,8 +104,7 @@ export class Channel {
         value: number,
         options: {
             unit?: 'percent' | 'deg' | 'normalized' | unknown;
-            max?: number;
-            min?: number;
+            min?: number; max?: number;
             decimals?: number;
             prefix?: string;
             suffix?: string;
@@ -113,7 +112,7 @@ export class Channel {
     ) : string {
 
         const {
-            unit = null, max = 1, min = 0, decimals = 0,
+            unit = null, min = 0, max = 1, decimals = 0,
             prefix = undefined, suffix = undefined
         } = options;
 

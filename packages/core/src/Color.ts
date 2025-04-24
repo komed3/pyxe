@@ -133,6 +133,18 @@ export class Color {
 
     }
 
+    public getFormattedChannel (
+        key: keyof ColorInstance,
+        options: {
+            unit?: 'percent' | 'deg' | 'normalized' | unknown;
+            decimals?: number;
+        } = {}
+    ) : string | undefined {
+
+        return this.color.getFormattedChannel( key, options );
+
+    }
+
     public instanceOf (
         space: ColorSpaceName
     ) : boolean {
