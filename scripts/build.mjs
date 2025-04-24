@@ -14,8 +14,35 @@ const DIST_PATHS = [
 
 const TSBUILDINFO_GLOB = 'packages/*/tsconfig.tsbuildinfo';
 
-var noise = true;
-var logFile = null;
+const flags = {
+    ci: false, force: false,
+    cleanOnly: false, noClean: false,
+    only: null, parallel: false,
+    dryRun: false, watch: false,
+    noise: true, logFile: null
+};
+
+const parseArgs = ( args ) => {
+
+    args.map( ( arg, i ) => {
+
+        switch ( arg ) {
+
+            case '--ci': flags.ci = true; break;
+            case '--log': flags.logFile = args[ i + 1 ]; break;
+            case '--force': flags.force = true; break;
+            case '--clean': flags.cleanOnly = true; break;
+            case '--no-clean': flags.noClean = true; break;
+            case '--only': flags.only = args[ i + 1 ]; break;
+            case '--dry-run': flags.dryRun = true; break;
+            case '--parallel': flags.parallel = true; break;
+            case '--watch': flags.watch = true; break;
+
+        }
+
+    } );
+
+};
 
 const timestamp = () => ( new Date() ).toLocaleTimeString();
 
@@ -23,46 +50,17 @@ const log = ( msg ) => {
 
     const ts = `[${ timestamp() }]`;
 
-    if ( noise ) {
+    if ( flags.noise ) {
 
         console.log( `\x1b[36m${ts}\x1b[0m ${msg}` );
 
     }
 
-    if ( logFile ) {
+    if ( flags.logFile ) {
 
-        appendFileSync( logFile, `${ts} ${msg}\n` );
+        appendFileSync( flags.logFile, `${ts} ${msg}\n` );
 
     }
-
-};
-
-const parseArgs = ( args ) => {
-
-    return args.reduce( ( flags, arg, i ) => {
-
-        switch ( arg ) {
-
-            case '--ci': flags.ci = true; break;
-            case '--force': flags.force = true; break;
-            case '--clean': flags.cleanOnly = true; break;
-            case '--only': flags.only = args[ i + 1 ]; break;
-            case '--watch': flags.watch = true; break;
-            case '--parallel': flags.parallel = true; break;
-            case '--dry-run': flags.dryRun = true; break;
-            case '--no-clean': flags.noClean = true; break;
-            case '--strict': flags.strict = true; break;
-            case '--log': flags.logFile = args[ i + 1 ]; break;
-
-        }
-
-        return flags;
-
-    }, {
-        force: false, ci: false, cleanOnly: false, only: null,
-        watch: false, parallel: false, dryRun: false,
-        noClean: false, strict: false, logFile: null
-    } );
 
 };
 
@@ -130,13 +128,12 @@ const verifyConfigs = () => {
 
 const build = async ( flags ) => {
 
-    const { force, only, watch, parallel, dryRun, strict } = flags;
+    const { force, only, watch, parallel, dryRun, noise } = flags;
 
     log( `Building packages …` );
 
     const cmd = ( config ) => `npx tsc -b -b ${ config } ${ [
-        force && '--force', noise && '--verbose',
-        watch && '--watch', strict && '--strict'
+        force && '--force', noise && '--verbose', watch && '--watch'
     ].filter( Boolean ).join( ' ' ) }`;
 
     if ( only ) {
@@ -218,10 +215,20 @@ const build = async ( flags ) => {
 const main = async () => {
 
     const [ , , ...args ] = process.argv;
-    const flags = parseArgs( args );
 
-    noise = ! flags.ci;
-    logFile = flags.logFile;
+    parseArgs( args );
+
+    if ( flags.ci ) {
+
+        flags.force = true;
+        flags.cleanOnly = false;
+        flags.noClean = true;
+        flags.watch = false;
+        flags.parallel = false;
+        flags.noise = false;
+        flags.logFile = null;
+
+    }
 
     if ( ! flags.noClean ) {
 

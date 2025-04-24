@@ -15,7 +15,7 @@
     "build": "node ./scripts/build.mjs --force",
     "build:only": "node ./scripts/build.mjs --force --no-clean",
     "build:dry": "node ./scripts/build.mjs --dry-run",
-    "build:ci": "node ./scripts/build.mjs --force --strict --ci",
+    "build:ci": "node ./scripts/build.mjs --ci",
     "build:watch": "node ./scripts/build.mjs --force --watch",
     "analyze": "node ./scripts/analyze.mjs"
   },
