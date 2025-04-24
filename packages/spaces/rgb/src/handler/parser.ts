@@ -33,9 +33,7 @@ export const parser: ParserHandler = (
 
             return {
                 space: 'RGB',
-                value: { r, g, b, ...(
-                    a !== undefined ? { a } : {}
-                ) },
+                value: { r, g, b, ...Channel.safeAlpha( a ) },
                 meta: { source: input }
             } as ColorObjectFactory;
 

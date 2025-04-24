@@ -43,13 +43,10 @@ export const conversions: ConversionFactory = {
                   min = Math.min( rN, gN, bN ),
                   delta = max - min;
 
-            let h, s, l = ( max + min ) / 2;
+            const l = ( max + min ) / 2;
+            let h = 0, s = 0;
 
-            if ( delta === 0 ) {
-
-                h = s = 0;
-
-            } else {
+            if ( delta !== 0 ) {
 
                 h = ( max === rN
                     ? ( gN - bN ) / delta + ( gN < bN ? 6 : 0 )
@@ -60,15 +57,13 @@ export const conversions: ConversionFactory = {
 
                 s = l < 0.5
                     ? delta / ( max + min )
-                    : delta / ( 510 - max - min );
+                    : delta / ( 2 - max - min );
 
             }
 
             return {
                 space: 'HSL',
-                value: { h, s, l, ...(
-                    a !== undefined ? { a } : {}
-                ) },
+                value: { h, s, l, ...Channel.safeAlpha( a ) },
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
 

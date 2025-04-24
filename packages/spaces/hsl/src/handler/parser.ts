@@ -27,9 +27,7 @@ export const parser: ParserHandler = (
 
             return {
                 space: 'HSL',
-                value: { h, s, l, ...(
-                    a !== undefined ? { a } : {}
-                ) },
+                value: { h, s, l, ...Channel.safeAlpha( a ) },
                 meta: { source: input }
             } as ColorObjectFactory;
 

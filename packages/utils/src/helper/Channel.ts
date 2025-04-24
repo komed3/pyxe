@@ -92,11 +92,20 @@ export class Channel {
 
     }
 
+    public static safeAlpha (
+        input: any
+    ) : any {
+
+        return ! isNaN( input ) ? { a: this.clamp( input, 0, 1 ) } : {};
+
+    }
+
     public static format (
         value: number,
         options: {
-            unit?: 'percent' | 'deg' | unknown;
+            unit?: 'percent' | 'deg' | 'normalized' | unknown;
             max?: number;
+            min?: number;
             decimals?: number;
             prefix?: string;
             suffix?: string;
@@ -104,7 +113,7 @@ export class Channel {
     ) : string {
 
         const {
-            unit = null, max = 1, decimals = 0,
+            unit = null, max = 1, min = 0, decimals = 0,
             prefix = undefined, suffix = undefined
         } = options;
 
@@ -113,21 +122,27 @@ export class Channel {
         switch ( unit ) {
 
             default:
-                result = value;
+                result = this.clamp( value, min, max );
                 start = prefix;
                 end = suffix;
                 break;
 
             case 'percent':
-                result = value / max * 100;
+                result = this.normalize( value, min, max ) * 100;
                 start = prefix;
                 end = suffix ?? '%';
                 break;
 
             case 'deg':
-                result = value % 360;
+                result = this.clamp( value, min, max ) % 360;
                 start = prefix;
                 end = suffix ?? 'deg';
+                break;
+
+            case 'normalized':
+                result = this.normalize( value, min, max );
+                start = prefix;
+                end = suffix;
                 break;
 
         }
