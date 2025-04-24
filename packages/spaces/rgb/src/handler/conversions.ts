@@ -1,7 +1,7 @@
 'use strict';
 
 import type { RGB, ColorObjectFactory, ConversionFactory } from '@pyxe/types';
-import { Transform } from '@pyxe/utils';
+import { Channel, Transform } from '@pyxe/utils';
 
 export const conversions: ConversionFactory = {
 
@@ -14,7 +14,7 @@ export const conversions: ConversionFactory = {
             const { r, g, b, a } = input.value as RGB;
 
             const parts = [ r, g, b ].map(
-                ( c ) => Transform.dechex( c )
+                ( c ) => Transform.dechex( Channel.clamp( c, 0, 255 ) )
             );
 
             return {
@@ -35,11 +35,15 @@ export const conversions: ConversionFactory = {
 
             const { r, g, b, a } = input.value as RGB;
 
-            const max = Math.max( r, g, b ),
-                  min = Math.min( r, g, b ),
+            const [ rN, gN, bN ] = [ r, g, b ].map(
+                ( c ) => Channel.normalize( c, 0, 255 )
+            );
+
+            const max = Math.max( rN, gN, bN ),
+                  min = Math.min( rN, gN, bN ),
                   delta = max - min;
 
-            let h, s, l = ( max + min ) / 2 / 255;
+            let h, s, l = ( max + min ) / 2;
 
             if ( delta === 0 ) {
 
@@ -47,11 +51,11 @@ export const conversions: ConversionFactory = {
 
             } else {
 
-                h = ( max === r
-                    ? ( g - b ) / delta + ( g < b ? 6 : 0 )
-                    : max === g
-                        ? ( b - r ) / delta + 2
-                        : ( r - g ) / delta + 4
+                h = ( max === rN
+                    ? ( gN - bN ) / delta + ( gN < bN ? 6 : 0 )
+                    : max === gN
+                        ? ( bN - rN ) / delta + 2
+                        : ( rN - gN ) / delta + 4
                 ) * 60;
 
                 s = l < 0.5

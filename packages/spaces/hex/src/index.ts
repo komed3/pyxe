@@ -19,10 +19,10 @@ colorSpaceRegistry.add( 'HEX', {
         type: 'encoded',
         alpha: true,
         channels: {
-            r: { name: 'Red', range: [ 0, 255 ] },
-            g: { name: 'Green', range: [ 0, 255 ] },
-            b: { name: 'Blue', range: [ 0, 255 ] },
-            a: { name: 'Alpha', range: [ 0, 255 ] }
+            r: { name: 'Red', range: [ 0, 255 ], R: true },
+            g: { name: 'Green', range: [ 0, 255 ], R: true },
+            b: { name: 'Blue', range: [ 0, 255 ], R: true },
+            a: { name: 'Alpha', range: [ 0, 255 ], unit: 'ratio', R: true }
         },
         spaces: [ 'RGB' ],
         output: [ 'string', 'css', 'html' ],

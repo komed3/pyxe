@@ -124,6 +124,15 @@ export class Color {
 
     }
 
+    public getChannel (
+        key: keyof ColorInstance,
+        normalize: boolean = false
+    ) : any {
+
+        return this.color.getChannel( key, normalize );
+
+    }
+
     public instanceOf (
         space: ColorSpaceName
     ) : boolean {

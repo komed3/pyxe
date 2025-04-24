@@ -22,9 +22,9 @@ colorSpaceRegistry.add( 'RGB', {
             r: { name: 'Red', range: [ 0, 255 ] },
             g: { name: 'Green', range: [ 0, 255 ] },
             b: { name: 'Blue', range: [ 0, 255 ] },
-            a: { name: 'Alpha', range: [ 0, 1 ] }
+            a: { name: 'Alpha', range: [ 0, 1 ], unit: 'ratio' }
         },
-        spaces: [ 'HEX' ],
+        spaces: [ 'HEX', 'HSL' ],
         output: [ 'string', 'css', 'html' ],
         cssSupport: true
     }

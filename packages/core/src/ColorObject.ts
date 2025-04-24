@@ -1,7 +1,9 @@
 'use strict';
 
-import type { ColorInstance, ColorSpaceName, ColorObjectFactory, OutputTypes } from '@pyxe/types';
+import type { ColorSpaceName, ColorInstance, ColorObjectFactory, OutputTypes } from '@pyxe/types';
+import { Channel } from '@pyxe/utils';
 import { Validator } from './Validator.js';
+import { ColorSpace } from './ColorSpace.js';
 import { Output } from './Output.js';
 import { PyxeError } from './services/PyxeError.js';
 
@@ -89,6 +91,28 @@ export class ColorObject {
         } else {
 
             return this.meta;
+
+        }
+
+    }
+
+    public getChannel (
+        key: keyof ColorInstance,
+        normalize: boolean = false
+    ) : any {
+
+        const channel = ColorSpace.channel( this.space, key );
+
+        if ( channel && ! channel?.R && channel.range ) {
+
+            const [ min, max ] = channel.range;
+
+            return {
+                key, channel, normalized: normalize,
+                value: normalize
+                    ? Channel.normalize( this.value[ key ], min, max )
+                    : Channel.clamp( this.value[ key ], min, max ),
+            };
 
         }
 

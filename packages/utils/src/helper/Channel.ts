@@ -2,6 +2,26 @@
 
 export class Channel {
 
+    public static clamp (
+        value: number,
+        min: number,
+        max: number
+    ) : number {
+
+        return Math.max( Math.min( value, max ), min );
+
+    }
+
+    public static normalize (
+        value: number,
+        min: number,
+        max: number
+    ) : number {
+
+        return this.clamp( value, min, max ) / max;
+
+    }
+
     public static validateNumeric (
         input: any,
         min: number = 0,
@@ -28,6 +48,7 @@ export class Channel {
     public static parseLinear (
         input: string | number,
         max: number = 1,
+        min: number = 0,
         fallback: number = 0
     ) : number {
 
@@ -37,13 +58,16 @@ export class Channel {
             ? ( parseFloat( normalized ) / 100 ) * max
             : parseFloat( normalized );
 
-        return Number.isFinite( result ) ? result : fallback;
+        return Number.isFinite( result )
+        ? this.clamp( result, min, max )
+        : fallback;
 
     }
 
     public static parseCyclic (
         input: string | number,
         max: number = 360,
+        min: number = 0,
         fallback: number = 0
     ) : number {
 
@@ -51,7 +75,9 @@ export class Channel {
 
         const result = ( ( parseFloat( normalized ) % max ) + max ) % max;
 
-        return Number.isFinite( result ) ? result : fallback;
+        return Number.isFinite( result )
+            ? this.clamp( result, min, max )
+            : fallback;
 
     }
 

@@ -20,7 +20,9 @@
     "dist"
   ],
   "dependencies": {
-    "@pyxe/types": "^0.1.0"
+    "@pyxe/core": "^0.1.0",
+    "@pyxe/types": "^0.1.0",
+    "@pyxe/utils": "^0.1.0"
   },
   "repository": {
     "type": "git",

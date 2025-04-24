@@ -33,18 +33,19 @@ export type OutputHandler = (
 
 export type OutputFactory = Partial<Record<OutputTypes, OutputHandler>>;
 
-export interface ColorChannelMeta {
+export interface ColorChannel {
     name: string;
     range: [ number, number ];
     unit?: string;
     description?: string;
+    R?: boolean;
 }
 
 export interface ColorSpaceMeta {
     name: string;
     description?: string;
     type: 'numeric' | 'encoded' | 'perceptual' | string;
-    channels: Record<string, ColorChannelMeta>;
+    channels: Record<string, ColorChannel>;
     alpha?: boolean;
     spaces?: string[];
     output?: string[];

@@ -18,7 +18,7 @@ export const output: OutputFactory = {
         const { r, g, b, a } = ( input.value ?? {} ) as RGB;
 
         const parts = [ r, g, b ].map(
-            ( c ) => Channel.format( c, {
+            ( c ) => Channel.format( Channel.clamp( c, 0, 255 ), {
                 unit: format, max: 255, decimals: decimals
             } )
         );
