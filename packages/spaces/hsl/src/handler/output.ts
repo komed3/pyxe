@@ -15,7 +15,7 @@ export const output: OutputFactory = {
     ) : string => {
 
         const { format = 'percent', decimals = 0, alpha = false } = options;
-        const { h, s, l, a = 1 } = ( input.value ?? {} ) as HSL;
+        const { h, s, l, a } = ( input.value ?? {} ) as HSL;
 
         const parts = [
             Channel.format( h, { unit: 'deg', max: 360, decimals: decimals } ), 
