@@ -16,7 +16,8 @@
     "build:only": "node ./scripts/build.mjs --force --no-clean",
     "build:dry": "node ./scripts/build.mjs --dry-run",
     "build:ci": "node ./scripts/build.mjs --force --ci --strict",
-    "build:watch": "node ./scripts/build.mjs --force --watch"
+    "build:watch": "node ./scripts/build.mjs --force --watch",
+    "analyze": "node ./scripts/analyze.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
