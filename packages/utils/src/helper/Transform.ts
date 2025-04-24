@@ -1,6 +1,6 @@
 'use strict';
 
-export class Numeral {
+export class Transform {
 
     public static hexdec (
         hex: string

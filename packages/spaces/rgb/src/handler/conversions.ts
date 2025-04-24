@@ -1,7 +1,7 @@
 'use strict';
 
 import type { RGB, ColorObjectFactory, ConversionFactory } from '@pyxe/types';
-import { Numeral } from '@pyxe/utils';
+import { Transform } from '@pyxe/utils';
 
 export const conversions: ConversionFactory = {
 
@@ -14,12 +14,12 @@ export const conversions: ConversionFactory = {
             const { r, g, b, a } = input.value as RGB;
 
             const parts = [ r, g, b ].map(
-                ( c ) => Numeral.dechex( c )
+                ( c ) => Transform.dechex( c )
             );
 
             return {
                 space: 'HEX',
-                value: `#${ parts.join( '' ) }${ Numeral.dechexAlpha( a ) }`,
+                value: `#${ parts.join( '' ) }${ Transform.dechexAlpha( a ) }`,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
 
