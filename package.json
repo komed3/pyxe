@@ -11,11 +11,14 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "npx tsc -b tsconfig.build.json",
+    "clean": "echo Cleaning build artifacts... && rimraf --glob packages/*/dist packages/*/*/dist packages/*/tsconfig.tsbuildinfo && echo ✅ Clean complete.",
+    "build:only": "echo Building packages... && npx tsc -b tsconfig.build.json --verbose && echo ✅ Build complete.",
+    "build": "npm run clean && npm run build:only",
     "test": "set DEBUG=1 && node ./test/index.js"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
+    "rimraf": "^6.0.1",
     "typescript": "^5.8.3"
   }
 }
