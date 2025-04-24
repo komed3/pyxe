@@ -55,29 +55,59 @@ export class Channel {
 
     }
 
+    public static parseAlpha (
+        input: any
+    ) : number | undefined {
+
+        return input !== undefined
+            ? Channel.parseLinear( input )
+            : undefined;
+
+    }
+
     public static format (
         value: number,
         options: {
             unit?: 'percent' | 'deg' | unknown;
             max?: number;
             decimals?: number;
+            prefix?: string;
+            suffix?: string;
         } = {}
     ) : string {
 
-        const { unit = null, max = 1, decimals = 0 } = options;
+        const {
+            unit = null, max = 1, decimals = 0,
+            prefix = undefined, suffix = undefined
+        } = options;
+
+        let result, start, end;
 
         switch ( unit ) {
 
             default:
-                value.toFixed( decimals ).replace( /\.?0+$/, '' );
+                result = value;
+                start = prefix;
+                end = suffix;
+                break;
 
             case 'percent':
-                return `${ ( value / max * 100 ).toFixed( decimals ).replace( /\.?0+$/, '' ) }%`;
+                result = value / max * 100;
+                start = prefix;
+                end = suffix ?? '%';
+                break;
 
             case 'deg':
-                return `${ ( value % 360 ).toFixed( decimals ).replace( /\.?0+$/, '' ) }deg`;
+                result = value % 360;
+                start = prefix;
+                end = suffix ?? 'deg';
+                break;
 
         }
+
+        return `${ ( start ?? '' ) }${ (
+            Number( result.toFixed( decimals ) ).toString()
+        ) }${ ( end ?? '' ) }`;
 
     }
 

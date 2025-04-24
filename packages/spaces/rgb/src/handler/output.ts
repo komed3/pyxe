@@ -14,17 +14,17 @@ export const output: OutputFactory = {
         } = {}
     ) : string => {
 
-        const { r: red, g: green, b: blue, a: alpha } = ( input.value ?? {} ) as RGB;
-        const { format = null, decimals = 0, alpha: showAlpha = false } = options;
+        const { format = null, decimals = 0, alpha = false } = options;
+        const { r, g, b, a } = ( input.value ?? {} ) as RGB;
 
-        const parts = [ red, green, blue ].map(
+        const parts = [ r, g, b ].map(
             ( c ) => Channel.format( c, {
                 unit: format, max: 255, decimals: decimals
             } )
         );
 
-        return alpha !== undefined || showAlpha === true
-            ? `rgba( ${ parts.join( ', ' ) }, ${ Channel.formatAlpha( alpha ) } )`
+        return alpha !== undefined || alpha === true
+            ? `rgba( ${ parts.join( ', ' ) }, ${ Channel.formatAlpha( a ) } )`
             : `rgb( ${ parts.join( ', ' ) } )`;
 
     },

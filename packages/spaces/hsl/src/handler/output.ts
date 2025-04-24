@@ -14,17 +14,17 @@ export const output: OutputFactory = {
         } = {}
     ) : string => {
 
-        const { h: hue, s: saturation, l: lightness, a: alpha = 1 } = ( input.value ?? {} ) as HSL;
-        const { format = 'percent', decimals = 0, alpha: showAlpha = false } = options;
+        const { format = 'percent', decimals = 0, alpha = false } = options;
+        const { h, s, l, a = 1 } = ( input.value ?? {} ) as HSL;
 
         const parts = [
-            Channel.format( hue, { unit: 'deg', max: 360, decimals: decimals } ), 
-            Channel.format( saturation, { unit: format, max: 1, decimals: decimals } ), 
-            Channel.format( lightness, { unit: format, max: 1, decimals: decimals } )
+            Channel.format( h, { unit: 'deg', max: 360, decimals: decimals } ), 
+            Channel.format( s, { unit: format, max: 1, decimals: decimals } ), 
+            Channel.format( l, { unit: format, max: 1, decimals: decimals } )
         ];
 
-        return alpha !== undefined || showAlpha === true
-            ? `hsla( ${ parts.join( ', ' ) }, ${ Channel.formatAlpha( alpha ) } )`
+        return a !== undefined || alpha === true
+            ? `hsla( ${ parts.join( ', ' ) }, ${ Channel.formatAlpha( a ) } )`
             : `hsl( ${ parts.join( ', ' ) } )`;
 
     },

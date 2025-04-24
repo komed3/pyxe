@@ -10,7 +10,7 @@ export const conversions: ConversionFactory = {
 
         if ( input && input.space === 'RGB' ) {
 
-            const { r: red, g: green, b: blue, a: alpha } = input.value as RGB;
+            const { r, g, b, a } = input.value as RGB;
 
             const _toHex = (
                 v: number
@@ -20,8 +20,8 @@ export const conversions: ConversionFactory = {
 
             return {
                 space: 'HEX',
-                value: `#${ _toHex( red ) }${ _toHex( green ) }${ _toHex( blue ) }` + (
-                    alpha !== undefined ? _toHex( Math.round( alpha * 255 ) ) : ''
+                value: `#${ _toHex( r ) }${ _toHex( g ) }${ _toHex( b ) }` + (
+                    a !== undefined ? _toHex( Math.round( a * 255 ) ) : ''
                 ),
                 meta: input.meta ?? {}
             } as ColorObjectFactory;

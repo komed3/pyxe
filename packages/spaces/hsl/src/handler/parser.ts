@@ -15,27 +15,21 @@ export const parser: ParserHandler = (
 
     if ( match ) {
 
-        const hue = Channel.parseCyclic( match[ 1 ] );
-        const saturation = Channel.parseLinear( match[ 3 ] );
-        const lightness = Channel.parseLinear( match[ 4 ] );
-
-        const alpha = match[ 5 ]
-            ? Channel.parseLinear( match[ 5 ] )
-            : undefined;
+        const h = Channel.parseCyclic( match[ 1 ] );
+        const s = Channel.parseLinear( match[ 3 ] );
+        const l = Channel.parseLinear( match[ 4 ] );
+        const a = Channel.parseAlpha( match[ 5 ] );
 
         if (
-            [ hue, saturation, lightness ].every( c => ! isNaN( c ) ) &&
-            ( alpha === undefined || ! isNaN( alpha ) )
+            [ h, s, l ].every( c => ! isNaN( c ) ) &&
+            ( a === undefined || ! isNaN( a ) )
         ) {
 
             return {
                 space: 'HSL',
-                value: {
-                    h: hue, s: saturation, l: lightness,
-                    ...( alpha !== undefined ? {
-                        a: alpha
-                    } : {} )
-                },
+                value: { h, s, l, ...(
+                    a !== undefined ? { a } : {}
+                ) },
                 meta: { source: input }
             } as ColorObjectFactory;
 

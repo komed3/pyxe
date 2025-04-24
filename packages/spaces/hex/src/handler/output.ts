@@ -12,21 +12,22 @@ export const output: OutputFactory = {
         } = {}
     ) : string => {
 
+        const { format = 'long', alpha = false } = options;
         const raw = input.value.toString().replace( /^#/, '' ).toLowerCase();
 
-        const [ red, green, blue, alpha ] = [
+        const [ r, g, b, a ] = [
             raw.slice( 0, 2 ), raw.slice( 2, 4 ), raw.slice( 4, 6 ),
-            raw.length === 8 ? raw.slice( 6, 8 ) : options.alpha ? 'ff' : undefined
+            raw.length === 8 ? raw.slice( 6, 8 ) : alpha ? 'ff' : undefined
         ];
 
         return (
-            options.format === 'short' && (
-                red[0] === red[1] && green[0] === green[1] && blue[0] === blue[1] &&
-                ( ! alpha || alpha[0] === alpha[1] )
+            format === 'short' && (
+                r[0] === r[1] && g[0] === g[1] && b[0] === b[1] &&
+                ( ! a || a[0] === a[1] )
             )
         )
-            ? `#${red[0]}${green[0]}${blue[0]}${ ( alpha ? alpha[0] : '' ) }`
-            : `#${red}${green}${blue}${ ( alpha ?? '' ) }`;
+            ? `#${r[0]}${g[0]}${b[0]}${ ( a ? a[0] : '' ) }`
+            : `#${r}${g}${b}${ ( a ?? '' ) }`;
 
     },
 

@@ -21,27 +21,21 @@ export const parser: ParserHandler = (
                 : parseFloat( v )
         );
 
-        const red = Channel.parseLinear( match[ 1 ], 255 );
-        const green = Channel.parseLinear( match[ 2 ], 255 );
-        const blue = Channel.parseLinear( match[ 3 ], 255 );
-
-        const alpha = match[ 4 ]
-            ? Channel.parseLinear( match[ 4 ] )
-            : undefined;
+        const r = Channel.parseLinear( match[ 1 ], 255 );
+        const g = Channel.parseLinear( match[ 2 ], 255 );
+        const b = Channel.parseLinear( match[ 3 ], 255 );
+        const a = Channel.parseAlpha( match[ 4 ] );
 
         if (
-            [ red, green, blue ].every( c => ! isNaN( c ) ) &&
-            ( alpha === undefined || ! isNaN( alpha ) )
+            [ r, g, b ].every( c => ! isNaN( c ) ) &&
+            ( a === undefined || ! isNaN( a ) )
         ) {
 
             return {
                 space: 'RGB',
-                value: {
-                    r: red, g: green, b: blue,
-                    ...( alpha !== undefined ? {
-                        a: alpha
-                    } : {} )
-                },
+                value: { r, g, b, ...(
+                    a !== undefined ? { a } : {}
+                ) },
                 meta: { source: input }
             } as ColorObjectFactory;
 
