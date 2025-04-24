@@ -11,13 +11,13 @@
   ],
   "type": "module",
   "scripts": {
-    "clean": "echo Cleaning build artifacts... && rimraf --glob packages/*/dist packages/*/*/dist packages/*/tsconfig.tsbuildinfo && echo ✅ Clean complete.",
-    "build:only": "echo Building packages... && npx tsc -b tsconfig.build.json --verbose && echo ✅ Build complete.",
-    "build": "npm run clean && npm run build:only",
-    "test": "set DEBUG=1 && node ./test/index.js"
+    "clean": "node ./scripts/build.mjs --clean",
+    "build": "node ./scripts/build.mjs --force",
+    "build:ci": "node ./scripts/build.mjs --force --ci"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
+    "cross-env": "^7.0.3",
     "rimraf": "^6.0.1",
     "typescript": "^5.8.3"
   }
