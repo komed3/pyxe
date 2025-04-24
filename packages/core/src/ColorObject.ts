@@ -108,13 +108,20 @@ export class ColorObject {
             const [ min, max ] = channel.range;
 
             return {
-                key, channel, normalized: normalize,
+                key, channel,
+                normalized: normalize,
+                raw: this.value[ key ],
                 value: normalize
                     ? Channel.normalize( this.value[ key ], min, max )
                     : Channel.clamp( this.value[ key ], min, max ),
             };
 
         }
+
+        throw new PyxeError ( {
+            method: 'ColorObject',
+            msg: `Channel <${key}> for color space ${this.space} not declared`
+        } );
 
     }
 

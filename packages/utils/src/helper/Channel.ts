@@ -18,7 +18,7 @@ export class Channel {
         max: number
     ) : number {
 
-        return this.clamp( value, min, max ) / max;
+        return ( this.clamp( value, min, max ) - min ) / ( max - min );
 
     }
 
@@ -52,15 +52,15 @@ export class Channel {
         fallback: number = 0
     ) : number {
 
-        const normalized = input.toString().trim();
+        const normalized = '0' + input.toString().trim();
 
         const result = normalized.endsWith( '%' )
             ? ( parseFloat( normalized ) / 100 ) * max
             : parseFloat( normalized );
 
         return Number.isFinite( result )
-        ? this.clamp( result, min, max )
-        : fallback;
+            ? this.clamp( result, min, max )
+            : fallback;
 
     }
 
@@ -71,7 +71,7 @@ export class Channel {
         fallback: number = 0
     ) : number {
 
-        const normalized = input.toString().replace(/[°\s]/g, '').trim();
+        const normalized = '0' + input.toString().replace(/[°\s]/g, '').trim();
 
         const result = ( ( parseFloat( normalized ) % max ) + max ) % max;
 
@@ -94,7 +94,7 @@ export class Channel {
 
     public static safeAlpha (
         input: any
-    ) : any {
+    ) : Partial<{ a: number }> {
 
         return ! isNaN( input ) ? { a: this.clamp( input, 0, 1 ) } : {};
 
@@ -160,7 +160,7 @@ export class Channel {
         } = {}
     ) : string {
 
-        return this.format( parseFloat( value ?? 1 ), {
+        return this.format( parseFloat( value ?? '1' ), {
             unit: null, max: 1, decimals: options.decimals ?? 2
         } );
 
