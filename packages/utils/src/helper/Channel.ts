@@ -56,12 +56,13 @@ export class Channel {
     }
 
     public static parseAlpha (
-        input: any
+        input: any,
+        fallback?: number
     ) : number | undefined {
 
         return input !== undefined
             ? Channel.parseLinear( input )
-            : undefined;
+            : fallback;
 
     }
 
