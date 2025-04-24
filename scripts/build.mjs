@@ -1,28 +1,37 @@
 // scripts/build.mjs
 
+'use strict';
+
 import { execSync } from 'node:child_process';
-import { existsSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, statSync, appendFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 
-const TIMEOUT = process.platform === 'win32' ? 'timeout 1' : 'sleep 1';
-const RIMRAF = 'rimraf --glob';
-const TSC = 'npx tsc -b';
-
 const DIST_PATHS = [
-  'packages/*/dist',
-  'packages/*/*/dist',
-  'packages/*/*/*/dist'
+    'packages/*/dist',
+    'packages/*/*/dist',
+    'packages/*/*/*/dist'
 ];
 
 const TSBUILDINFO_GLOB = 'packages/*/tsconfig.tsbuildinfo';
 
-let noise = true;
+var noise = true;
+var logFile = null;
+
+const timestamp = () => ( new Date() ).toLocaleTimeString();
 
 const log = ( msg ) => {
 
+    const ts = `[${ timestamp() }]`;
+
     if ( noise ) {
 
-        console.log( `\x1b[90m[build]\x1b[0m ${ msg }` );
+        console.log( `\x1b[36m${ts}\x1b[0m ${msg}` );
+
+    }
+
+    if ( logFile ) {
+
+        appendFileSync( logFile, `${ts} ${msg}\n` );
 
     }
 
@@ -30,41 +39,30 @@ const log = ( msg ) => {
 
 const parseArgs = ( args ) => {
 
-    const flags = {
-        force: false,
-        ci: false,
-        cleanOnly: false,
-        only: null
-    };
-
-    for ( let i = 0; i < args.length; i++ ) {
-
-        const arg = args[ i ];
+    return args.reduce( ( flags, arg, i ) => {
 
         switch ( arg ) {
 
-            case '--ci':
-                flags.ci = true;
-                break;
-
-            case '--force':
-                flags.force = true;
-                break;
-
-            case '--clean':
-                flags.cleanOnly = true;
-                break;
-
-            case '--only':
-                flags.only = args[ i + 1 ];
-                i++;
-                break;
+            case '--ci': flags.ci = true; break;
+            case '--force': flags.force = true; break;
+            case '--clean': flags.cleanOnly = true; break;
+            case '--only': flags.only = args[ i + 1 ]; break;
+            case '--watch': flags.watch = true; break;
+            case '--parallel': flags.parallel = true; break;
+            case '--dry-run': flags.dryRun = true; break;
+            case '--no-clean': flags.noClean = true; break;
+            case '--strict': flags.strict = true; break;
+            case '--log': flags.logFile = args[ i + 1 ]; break;
 
         }
 
-    }
+        return flags;
 
-    return flags;
+    }, {
+        force: false, ci: false, cleanOnly: false, only: null,
+        watch: false, parallel: false, dryRun: false,
+        noClean: false, strict: false, logFile: null
+    } );
 
 };
 
@@ -102,7 +100,7 @@ const clean = () => {
 
     log( `Cleaning artifacts …` );
 
-    execSync( `${ RIMRAF } ${ DIST_PATHS.join( ' ' ) } ${ TSBUILDINFO_GLOB }`, {
+    execSync( `rimraf --glob ${ DIST_PATHS.join( ' ' ) } ${ TSBUILDINFO_GLOB }`, {
         stdio: 'inherit'
     } );
 
@@ -130,11 +128,16 @@ const verifyConfigs = () => {
 
 };
 
-const build = ( force = false, only = null ) => {
+const build = async ( flags ) => {
+
+    const { force, only, watch, parallel, dryRun, strict } = flags;
 
     log( `Building packages …` );
 
-    const options = `${ ( force ? '--force' : '' ) } ${ ( noise ? '--verbose' : '' ) }`;
+    const cmd = ( config ) => `npx tsc -b -b ${ config } ${ [
+        force && '--force', noise && '--verbose',
+        watch && '--watch', strict && '--strict'
+    ].filter( Boolean ).join( ' ' ) }`;
 
     if ( only ) {
 
@@ -148,17 +151,63 @@ const build = ( force = false, only = null ) => {
 
         log( `Building only package: ${only} …` );
 
-        execSync( `${ TSC } -b ${ configPath } ${ options }`, {
-            stdio: 'inherit'
-        } );
+        if ( ! dryRun ) {
+
+            execSync( cmd( configPath ), { stdio: 'inherit' } );
+
+        }
 
     } else {
 
         log( `Building all packages …` );
 
-        execSync( `${ TSC } -b tsconfig.build.json ${ options }`, {
-            stdio: 'inherit'
-        } );
+        if ( parallel ) {
+
+            const configs = findAllTsconfigs();
+
+            for ( const cfg of configs ) {
+
+                log( `→ ${cfg}` );
+
+            }
+
+            if ( ! dryRun ) {
+
+                await Promise.all(
+
+                    configs.map( ( cfg ) => (
+
+                        new Promise ( ( resolve, reject ) => {
+
+                            try {
+
+                                execSync( cmd( cfg ), { stdio: 'inherit' } );
+
+                                resolve();
+
+                            } catch ( err ) {
+
+                                reject( err );
+
+                            }
+
+                        } )
+
+                    ) )
+
+                );
+
+            }
+
+        } else {
+
+            if ( ! dryRun ) {
+
+                execSync( cmd( 'tsconfig.build.json' ), { stdio: 'inherit' } );
+
+            }
+
+        }
 
     }
 
@@ -171,19 +220,30 @@ const main = async () => {
     const [ , , ...args ] = process.argv;
     const flags = parseArgs( args );
 
-    noise = !flags.ci;
+    noise = ! flags.ci;
+    logFile = flags.logFile;
 
-    clean();
+    if ( ! flags.noClean ) {
+
+        clean();
+
+    }
 
     if ( ! flags.cleanOnly ) {
 
         log( `Waiting briefly before build …` );
 
-        execSync( TIMEOUT, { stdio: 'inherit' } );
+        execSync( process.platform === 'win32' ? 'timeout 1' : 'sleep 1', { stdio: 'inherit' } );
 
         verifyConfigs();
 
-        build( flags.force, flags.only );
+        await build( flags );
+
+        if ( flags.watch ) {
+
+            log( `Watching for changes (manual restart required on config changes) …` );
+
+        }
 
     }
 

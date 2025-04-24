@@ -13,7 +13,10 @@
   "scripts": {
     "clean": "node ./scripts/build.mjs --clean",
     "build": "node ./scripts/build.mjs --force",
-    "build:ci": "node ./scripts/build.mjs --force --ci"
+    "build:only": "node ./scripts/build.mjs --force --no-clean",
+    "build:dry": "node ./scripts/build.mjs --dry-run",
+    "build:ci": "node ./scripts/build.mjs --force --ci --strict",
+    "build:watch": "node ./scripts/build.mjs --force --watch"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
