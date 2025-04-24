@@ -26,4 +26,4 @@ jobs:
         run: npm ci
 
       - name: Run build script
-        run: node scripts/build.mjs --force --strict --ci
+        run: node scripts/build.mjs --no-clean --force --strict --ci
