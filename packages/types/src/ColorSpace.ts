@@ -2,7 +2,7 @@
 
 import type { ColorInstance, ColorInput } from './Color.js';
 
-export type ColorSpaceName = 'HEX' | 'RGB' | 'HSL' | 'HSV' | 'Lab' | 'CMYK';
+export type ColorSpaceName = 'HEX' | 'RGB' | 'HSL' | 'HSV' | 'Lab' | 'LCh' | 'CMYK' | string;
 
 export interface ColorObjectFactory {
     space: ColorSpaceName;
@@ -22,9 +22,7 @@ export type ConversionHandler = (
     input: ColorObjectFactory
 ) => ColorObjectFactory | undefined;
 
-export type ConversionFactory = Partial<Record<ColorSpaceName, ConversionHandler>> & {
-    aliases?: ColorSpaceName[];
-};
+export type ConversionFactory = Partial<Record<ColorSpaceName, ConversionHandler>>;
 
 export type OutputTypes = 'string' | 'json' | string;
 

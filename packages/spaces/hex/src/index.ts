@@ -9,6 +9,7 @@ import { validator } from './handler/validator.js';
 
 colorSpaceRegistry.add( 'HEX', {
     name: 'HEX',
+    aliases: [ 'hex' ],
     validator: validator,
     parser: parser,
     conversions: conversions,

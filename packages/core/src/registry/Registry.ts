@@ -2,87 +2,44 @@
 
 import { PyxeError } from '../services/PyxeError.js';
 
-export abstract class Registry<Key, Factory extends { aliases?: Key[] }> {
+export abstract class Registry<Name, Factory> {
 
-    protected items: Map<Key, Factory> = new Map ();
-
-    protected aliases: Map<Key, Key> = new Map ();
-
-    protected _resolveKey (
-        key: Key
-    ) : Key {
-
-        return this.aliases.get( key ) ?? key;
-
-    }
+    protected items: Map<Name, Factory> = new Map ();
 
     protected _add (
-        key: Key,
+        name: Name,
         factory: Factory,
         safe: boolean = true
     ) : void {
 
-        if ( safe && this.has( key ) ) {
+        if ( safe && this.has( name ) ) {
 
             throw new PyxeError ( {
                 method: 'Registry',
-                msg: `Registry item <${key}> already declared`
+                msg: `Registry item <${name}> already declared`
             } );
 
         }
 
-        this.items.set( key, factory );
-
-        if ( factory?.aliases && Array.isArray( factory.aliases ) ) {
-
-            for ( const alias of factory.aliases ) {
-
-                if ( this.items.has( alias ) || this.aliases.has( alias ) ) {
-
-                    throw new PyxeError ( {
-                        method: 'Registry',
-                        msg: `Alias <${alias}> for <${key}> already declared`
-                    } );
-
-                }
-
-                this.aliases.set( alias, key );
-
-            }
-
-        }
+        this.items.set( name, factory );
 
     }
 
-    protected  _remove (
-        key: Key,
+    protected _remove (
+        name: Name,
         safe: boolean = true
     ) : void {
 
-        const resolved = this._resolveKey( key );
-
-        if ( safe && ! this.has( resolved, true ) ) {
+        if ( safe && ! this.has( name, true ) ) {
 
             throw new PyxeError ( {
                 method: 'Registry',
-                msg: `Registry item <${resolved}> is not declared`
+                msg: `Registry item <${name}> is not declared`
             } );
 
         }
 
-        const factory = this.items.get( resolved );
-
-        if ( factory?.aliases && Array.isArray( factory.aliases ) ) {
-
-            for ( const alias of factory.aliases ) {
-
-                this.aliases.delete( alias );
-
-            }
-
-        }
-
-        this.items.delete( resolved );
+        this.items.delete( name );
 
     }
 
@@ -90,11 +47,9 @@ export abstract class Registry<Key, Factory extends { aliases?: Key[] }> {
 
         this.items.clear();
 
-        this.aliases.clear();
-
     }
 
-    public list () : Key[] {
+    public list () : Name[] {
 
         return [ ...this.items.keys() ];
 
@@ -102,10 +57,10 @@ export abstract class Registry<Key, Factory extends { aliases?: Key[] }> {
 
     public filter (
         filter?: string
-    ) : Key[] {
+    ) : Name[] {
 
         return this.list().filter(
-            ( key ) => ! filter || ( key as string ).match(
+            ( name ) => ! filter || ( name as string ).match(
                 new RegExp( filter, 'i' )
             )
         );
@@ -119,13 +74,11 @@ export abstract class Registry<Key, Factory extends { aliases?: Key[] }> {
     }
 
     public has (
-        key: Key,
+        name: Name,
         safe: boolean = false
     ) : boolean {
 
-        const resolved = this._resolveKey( key );
-
-        if ( this.items.has( resolved ) ) {
+        if ( this.items.has( name ) ) {
 
             return true;
 
@@ -133,7 +86,7 @@ export abstract class Registry<Key, Factory extends { aliases?: Key[] }> {
 
             throw new PyxeError ( {
                 method: 'Registry',
-                msg: `Registry item <${resolved}> not found`
+                msg: `Registry item <${name}> not found`
             } );
 
         }
@@ -143,15 +96,13 @@ export abstract class Registry<Key, Factory extends { aliases?: Key[] }> {
     }
 
     public get (
-        key: Key,
+        name: Name,
         safe: boolean = true
     ) : Factory | undefined {
 
-        const resolved = this._resolveKey( key );
+        if ( ! safe || this.has( name, true ) ) {
 
-        if ( ! safe || this.has( resolved, true ) ) {
-
-            return this.items.get( resolved );
+            return this.items.get( name );
 
         }
 

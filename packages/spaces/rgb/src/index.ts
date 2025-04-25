@@ -9,6 +9,7 @@ import { validator } from './handler/validator.js';
 
 colorSpaceRegistry.add( 'RGB', {
     name: 'RGB',
+    aliases: [ 'rgb', 'RGBA', 'rgba' ],
     validator: validator,
     parser: parser,
     conversions: conversions,

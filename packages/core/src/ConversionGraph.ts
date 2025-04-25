@@ -19,7 +19,9 @@ export class ConversionGraph {
         source: ColorSpaceName
     ) : ColorSpaceName[] {
 
-        return conversionGraphRegistry.targets( source );
+        return conversionGraphRegistry.targets(
+            ColorSpace.resolve( source )
+        );
 
     }
 
@@ -27,6 +29,9 @@ export class ConversionGraph {
         source: ColorSpaceName,
         target: ColorSpaceName
     ) : ColorSpaceName[] | null {
+
+        source = ColorSpace.resolve( source );
+        target = ColorSpace.resolve( target );
 
         if ( source === target ) return [ source ];
 
@@ -91,9 +96,6 @@ export class ConversionGraph {
         target: ColorSpaceName
     ) : ConversionHandler {
 
-        ColorSpace.check( source );
-        ColorSpace.check( target );
-
         const path = this.findPath( source, target );
 
         if ( ! path || path.length < 2 ) {
@@ -148,6 +150,8 @@ export class ConversionGraph {
         root: ColorSpaceName,
         maxDepth: number = 9
     ) : string {
+
+        root = ColorSpace.resolve( root );
 
         const visited: Set<string> = new Set ();
         const seenNodes: Set<ColorSpaceName> = new Set ();

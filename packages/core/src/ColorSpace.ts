@@ -45,6 +45,14 @@ export class ColorSpace {
 
     }
 
+    public static resolve (
+        name: ColorSpaceName
+    ) : ColorSpaceName {
+
+        return colorSpaceRegistry.resolve( name );
+
+    }
+
     public static meta (
         name: ColorSpaceName
     ) : any {

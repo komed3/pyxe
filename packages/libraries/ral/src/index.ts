@@ -41,9 +41,7 @@ import { RAL_Design } from './lib/design.js';
 import { RAL_Effect } from './lib/effect.js';
 
 colorLibRegisty.add( 'RAL', {
-    name: 'RAL',
     meta: {
-        id: 'RAL',
         name: 'RAL color library',
         description: 'Standardized color list for industrial applications, primarily in Europe.',
         version: '0.1.0',

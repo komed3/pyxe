@@ -13,12 +13,10 @@ export interface ModuleMethodFactory {
     spaces: ColorSpaceName[];
     bindAs?: string;
     meta?: Record<string, any>;
-    aliases?: string[];
 }
 
 export interface ModuleFactory {
     name: string;
     methods: ModuleMethodFactory[];
     meta?: Record<string, any>;
-    aliases?: string[];
 }

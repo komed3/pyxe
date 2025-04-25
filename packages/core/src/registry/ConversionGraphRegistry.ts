@@ -26,9 +26,9 @@ export class ConversionGraphRegistry extends Registry<ColorSpaceName, Conversion
         factory: ConversionFactory
     ) : void {
 
-        for ( const [ target, handler ] of Object.entries( factory ) as [ string, ConversionHandler ][] ) {
+        for ( const [ target, handler ] of Object.entries( factory ) ) {
 
-            this.add( source, target as ColorSpaceName, handler );
+            this.add( source, target as ColorSpaceName, handler as ConversionHandler );
 
         }
 

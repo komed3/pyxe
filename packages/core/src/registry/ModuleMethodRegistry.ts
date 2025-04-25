@@ -15,13 +15,13 @@ export class ModuleMethodRegistry extends Registry<string, ModuleMethodFactory> 
 
         try {
 
-            const key = `${module}::${method.name}`;
+            const name = `${module}::${method.name}`;
 
-            super._add( key, method );
+            super._add( name, method );
 
             if ( bind && method?.bindAs ) {
 
-                ColorMethodRegistry.bind( key, method.bindAs );
+                ColorMethodRegistry.bind( name, method.bindAs );
 
             }
 
@@ -51,12 +51,12 @@ export class ModuleMethodRegistry extends Registry<string, ModuleMethodFactory> 
     }
 
     public remove (
-        key: string
+        name: string
     ) {
 
-        ColorMethodRegistry.unbind( key );
+        ColorMethodRegistry.unbind( name );
 
-        super._remove( key );
+        super._remove( name );
 
     }
 
@@ -64,9 +64,9 @@ export class ModuleMethodRegistry extends Registry<string, ModuleMethodFactory> 
         module: string
     ) : void {
 
-        for ( const key of this.filter( `^${module}::` ) ) {
+        for ( const name of this.filter( `^${module}::` ) ) {
 
-            this.remove( key );
+            this.remove( name );
 
         }
 

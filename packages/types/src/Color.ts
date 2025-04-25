@@ -18,10 +18,14 @@ export interface Lab {
     L: number; a: number; b: number;
 }
 
+export interface LCh {
+    L: number; C: number; h: number;
+}
+
 export interface CMYK {
     c: number; m: number; y: number; k: number;
 }
 
-export type ColorInstance = HEX | RGB | HSL | HSV | Lab | CMYK;
+export type ColorInstance = HEX | RGB | HSL | HSV | Lab | LCh | CMYK;
 
 export type ColorInput = ColorInstance | string;

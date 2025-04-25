@@ -9,6 +9,7 @@ import { validator } from './handler/validator.js';
 
 colorSpaceRegistry.add( 'HSL', {
     name: 'HSL',
+    aliases: [ 'hsl', 'HSLA', 'hsla' ],
     validator: validator,
     parser: parser,
     conversions: conversions,
