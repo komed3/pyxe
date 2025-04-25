@@ -15,7 +15,7 @@ export class ModuleMethodRegistry extends Registry<string, ModuleMethodFactory> 
 
         try {
 
-            const key = `${module}::${method.id}`;
+            const key = `${module}::${method.name}`;
 
             super._add( key, method );
 
@@ -29,7 +29,7 @@ export class ModuleMethodRegistry extends Registry<string, ModuleMethodFactory> 
 
             throw new PyxeError ( {
                 err, method: 'ModuleMethodRegistry',
-                msg: `Failed to register method <${method.id}> for module <${module}>`
+                msg: `Failed to register method <${method.name}> for module <${module}>`
             } );
 
         }

@@ -17,7 +17,8 @@
     "build:dry": "node ./scripts/build.mjs --dry-run",
     "build:ci": "node ./scripts/build.mjs --ci",
     "build:watch": "node ./scripts/build.mjs --force --watch",
-    "analyze": "node ./scripts/analyze.mjs"
+    "analyze": "node ./scripts/analyze.mjs",
+    "test": "cross-env DEBUG=1 node ./test/index.js"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",

@@ -22,7 +22,9 @@ export type ConversionHandler = (
     input: ColorObjectFactory
 ) => ColorObjectFactory | undefined;
 
-export type ConversionFactory = Partial<Record<ColorSpaceName, ConversionHandler>>;
+export type ConversionFactory = Partial<Record<ColorSpaceName, ConversionHandler>> & {
+    aliases?: ColorSpaceName[];
+};
 
 export type OutputTypes = 'string' | 'json' | string;
 
@@ -58,5 +60,6 @@ export interface ColorSpaceFactory {
     parser: ParserHandler;
     conversions: ConversionFactory;
     output?: OutputFactory;
+    aliases?: ColorSpaceName[];
     meta?: ColorSpaceMeta;
 }

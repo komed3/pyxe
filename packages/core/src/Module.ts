@@ -13,22 +13,22 @@ export class Module {
     }
 
     public static has (
-        id: string
+        name: string
     ) : boolean {
 
-        return moduleRegistry.has( id );
+        return moduleRegistry.has( name );
 
     }
 
     public static check (
-        id: string
+        name: string
     ) : true | undefined {
 
-        if ( ! this.has( id ) ) {
+        if ( ! this.has( name ) ) {
 
             throw new PyxeError ( {
                 method: 'Module',
-                msg: `Module <${id}> is not declared`
+                msg: `Module <${name}> is not declared`
             } );
 
         }
@@ -38,18 +38,18 @@ export class Module {
     }
 
     public static meta (
-        id: string
+        name: string
     ) : any {
 
-        return moduleRegistry.get( id )?.meta;
+        return moduleRegistry.get( name )?.meta;
 
     }
 
     public static listMethods (
-        id: string
+        name: string
     ) : string[] {
 
-        return ModuleMethod.list( `^${id}::` );
+        return ModuleMethod.list( `^${name}::` );
 
     }
 

@@ -25,7 +25,9 @@ export type ColorLibList = ColorLibEntry[];
 export type ColorLibLoader = () => Promise<ColorLibList>;
 
 export interface ColorLibFactory {
+    name: string;
     meta: ColorLibMeta;
     sources: Record<string, ColorLibLoader>;
     autoLoad?: string[];
+    aliases?: string[];
 }

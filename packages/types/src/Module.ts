@@ -8,15 +8,17 @@ export type ModuleMethodHandler = (
 ) => any;
 
 export interface ModuleMethodFactory {
-    id: string;
+    name: string;
     handler: ModuleMethodHandler;
     spaces: ColorSpaceName[];
     bindAs?: string;
     meta?: Record<string, any>;
+    aliases?: string[];
 }
 
 export interface ModuleFactory {
-    id: string;
+    name: string;
     methods: ModuleMethodFactory[];
     meta?: Record<string, any>;
+    aliases?: string[];
 }

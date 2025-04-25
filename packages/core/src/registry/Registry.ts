@@ -2,9 +2,19 @@
 
 import { PyxeError } from '../services/PyxeError.js';
 
-export abstract class Registry<Key, Factory> {
+export abstract class Registry<Key, Factory extends { aliases?: Key[] }> {
 
     protected items: Map<Key, Factory> = new Map ();
+
+    protected aliases: Map<Key, Key> = new Map ();
+
+    protected _resolveKey (
+        test: Key
+    ) : Key {
+
+        return this.aliases.get( test ) ?? test;
+
+    }
 
     protected _add (
         key: Key,
@@ -23,12 +33,33 @@ export abstract class Registry<Key, Factory> {
 
         this.items.set( key, factory );
 
+        if ( factory?.aliases && Array.isArray( factory.aliases ) ) {
+
+            for ( const alias of factory.aliases ) {
+
+                if ( this.items.has( alias ) || this.aliases.has( alias ) ) {
+
+                    throw new PyxeError ( {
+                        method: 'Registry',
+                        msg: `Alias <${alias}> for <${key}> already declared`
+                    } );
+
+                }
+
+                this.aliases.set( alias, key );
+
+            }
+
+        }
+
     }
 
     protected  _remove (
-        key: Key,
+        test: Key,
         safe: boolean = true
     ) : void {
+
+        const key = this._resolveKey( test );
 
         if ( safe && ! this.has( key, true ) ) {
 
@@ -39,6 +70,18 @@ export abstract class Registry<Key, Factory> {
 
         }
 
+        const factory = this.items.get( key );
+
+        if ( factory?.aliases && Array.isArray( factory.aliases ) ) {
+
+            for ( const alias of factory.aliases ) {
+
+                this.aliases.delete( alias );
+
+            }
+
+        }
+
         this.items.delete( key );
 
     }
@@ -46,6 +89,8 @@ export abstract class Registry<Key, Factory> {
     protected _clear () : void {
 
         this.items.clear();
+
+        this.aliases.clear();
 
     }
 
@@ -74,9 +119,11 @@ export abstract class Registry<Key, Factory> {
     }
 
     public has (
-        key: Key,
+        test: Key,
         safe: boolean = false
     ) : boolean {
+
+        const key = this._resolveKey( test );
 
         if ( this.items.has( key ) ) {
 
@@ -96,9 +143,11 @@ export abstract class Registry<Key, Factory> {
     }
 
     public get (
-        key: Key,
+        test: Key,
         safe: boolean = true
     ) : Factory | undefined {
+
+        const key = this._resolveKey( test );
 
         if ( ! safe || this.has( key, true ) ) {
 
