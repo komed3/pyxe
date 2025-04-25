@@ -1,7 +1,7 @@
 'use strict';
 
 import type { RGB, ColorObjectFactory, ConversionFactory } from '@pyxe/types';
-import { Channel, Transform } from '@pyxe/utils';
+import { Basic, Channel } from '@pyxe/utils';
 
 export const conversions: ConversionFactory = {
 
@@ -14,12 +14,12 @@ export const conversions: ConversionFactory = {
             const { r, g, b, a } = input.value as RGB;
 
             const parts = [ r, g, b ].map(
-                ( c ) => Transform.dechex( Channel.clamp( c, 0, 255 ) )
+                ( c ) => Basic.dechex( Channel.clamp( c, 0, 255 ) )
             );
 
             return {
                 space: 'HEX',
-                value: `#${ parts.join( '' ) }${ Transform.dechexAlpha( a ) }`,
+                value: `#${ parts.join( '' ) }${ Basic.dechexAlpha( a ) }`,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
 

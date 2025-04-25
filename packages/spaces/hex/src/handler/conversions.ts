@@ -1,7 +1,7 @@
 'use strict';
 
 import { ColorObjectFactory, ConversionFactory } from '@pyxe/types';
-import { Transform } from '@pyxe/utils';
+import { Basic } from '@pyxe/utils';
 
 export const conversions: ConversionFactory = {
 
@@ -21,8 +21,8 @@ export const conversions: ConversionFactory = {
 
                 const [ r, g, b, a ] = (
                     clean.length <= 4 
-                        ? [ 0, 1, 2, 3 ].map( i => Transform.hexdec( clean[ i ].repeat( 2 ) ) ) 
-                        : [ 0, 2, 4, 6 ].map( i => Transform.hexdec( clean.slice( i, i + 2 ) ) )
+                        ? [ 0, 1, 2, 3 ].map( i => Basic.hexdec( clean[ i ].repeat( 2 ) ) ) 
+                        : [ 0, 2, 4, 6 ].map( i => Basic.hexdec( clean.slice( i, i + 2 ) ) )
                 );
 
                 return {
