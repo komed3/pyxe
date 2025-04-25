@@ -1,8 +1,8 @@
 'use strict';
 
 import type { ColorSpaceName, ColorInstance, ColorObjectFactory } from '@pyxe/types';
-import { colorSpaceRegistry } from './registry/ColorSpaceRegistry.js';
 import { ColorSpace } from './ColorSpace.js';
+import { colorSpaceRegistry } from './registry/ColorSpaceRegistry.js';
 import { PyxeError } from './services/PyxeError.js';
 
 export class Validator {

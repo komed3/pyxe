@@ -1,8 +1,8 @@
 'use strict';
 
 import type { ModuleFactory } from '@pyxe/types';
-import { Registry } from './Registry.js';
 import { moduleMethodRegistry } from './ModuleMethodRegistry.js';
+import { Registry } from './Registry.js';
 
 export class ModuleRegistry extends Registry<string, ModuleFactory> {
 

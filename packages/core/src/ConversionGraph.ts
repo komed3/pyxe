@@ -1,8 +1,8 @@
 'use strict';
 
 import type { ColorSpaceName, ConversionHandler } from '@pyxe/types';
-import { conversionGraphRegistry } from './registry/ConversionGraphRegistry.js';
 import { ColorSpace } from './ColorSpace.js';
+import { conversionGraphRegistry } from './registry/ConversionGraphRegistry.js';
 import { PyxeError } from './services/PyxeError.js';
 
 const cache: Map<string, ColorSpaceName[] | null> = new Map ();

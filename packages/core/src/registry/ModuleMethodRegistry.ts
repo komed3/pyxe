@@ -1,9 +1,9 @@
 'use strict';
 
 import type { ModuleMethodFactory } from '@pyxe/types';
-import { Registry } from './Registry.js';
-import { ColorMethodRegistry } from './ColorMethodRegistry.js';
 import { PyxeError } from '../services/PyxeError.js';
+import { ColorMethodRegistry } from './ColorMethodRegistry.js';
+import { Registry } from './Registry.js';
 
 export class ModuleMethodRegistry extends Registry<string, ModuleMethodFactory> {
 

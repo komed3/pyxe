@@ -13,14 +13,6 @@ export const parser: ParserHandler = (
 
     if ( match ) {
 
-        const _channel = (
-            v: string, max: number = 255
-        ) : number => (
-            v.endsWith( '%' )
-                ? ( parseFloat( v ) / 100 ) * max
-                : parseFloat( v )
-        );
-
         const r = Channel.parseLinear( match[ 1 ], 255 );
         const g = Channel.parseLinear( match[ 2 ], 255 );
         const b = Channel.parseLinear( match[ 3 ], 255 );

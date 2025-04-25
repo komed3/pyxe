@@ -1,10 +1,10 @@
 'use strict';
 
 import type { ColorSpaceName } from '@pyxe/types';
-import { ConversionGraph } from './ConversionGraph.js';
 import { ColorObject } from './ColorObject.js';
-import { tracer, tracerTemplates as tpl } from './services/Tracer.js';
+import { ConversionGraph } from './ConversionGraph.js';
 import { PyxeError } from './services/PyxeError.js';
+import { tracer, tracerTemplates as tpl } from './services/Tracer.js';
 
 export class Convert {
 

@@ -18,11 +18,15 @@
     "build:ci": "node ./scripts/build.mjs --ci",
     "build:watch": "node ./scripts/build.mjs --force --watch",
     "analyze": "node ./scripts/analyze.mjs",
+    "lint": "npx tsc --noEmit && npx eslint . --ext .ts,.tsx",
     "test": "cross-env DEBUG=1 node ./test/index.js"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
+    "@typescript-eslint/eslint-plugin": "^8.31.0",
+    "@typescript-eslint/parser": "^8.31.0",
     "cross-env": "^7.0.3",
+    "eslint-plugin-import": "^2.31.0",
     "rimraf": "^6.0.1",
     "typescript": "^5.8.3"
   }

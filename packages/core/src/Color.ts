@@ -1,12 +1,12 @@
 'use strict';
 
 import type { ColorInput, ColorInstance, ColorSpaceName, ColorObjectFactory, OutputTypes } from '@pyxe/types';
-import { ColorSpace } from './ColorSpace.js';
-import { ColorObject } from './ColorObject.js';
-import { Parser } from './Parser.js';
 import { ColorLib } from './ColorLib.js';
+import { ColorObject } from './ColorObject.js';
+import { ColorSpace } from './ColorSpace.js';
 import { Convert } from './Convert.js';
 import { ModuleMethod } from './ModuleMethod.js';
+import { Parser } from './Parser.js';
 import { PyxeError } from './services/PyxeError.js';
 
 export class Color {
