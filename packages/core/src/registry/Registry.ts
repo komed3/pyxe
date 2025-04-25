@@ -9,10 +9,10 @@ export abstract class Registry<Key, Factory extends { aliases?: Key[] }> {
     protected aliases: Map<Key, Key> = new Map ();
 
     protected _resolveKey (
-        test: Key
+        key: Key
     ) : Key {
 
-        return this.aliases.get( test ) ?? test;
+        return this.aliases.get( key ) ?? key;
 
     }
 
@@ -55,22 +55,22 @@ export abstract class Registry<Key, Factory extends { aliases?: Key[] }> {
     }
 
     protected  _remove (
-        test: Key,
+        key: Key,
         safe: boolean = true
     ) : void {
 
-        const key = this._resolveKey( test );
+        const resolved = this._resolveKey( key );
 
-        if ( safe && ! this.has( key, true ) ) {
+        if ( safe && ! this.has( resolved, true ) ) {
 
             throw new PyxeError ( {
                 method: 'Registry',
-                msg: `Registry item <${key}> is not declared`
+                msg: `Registry item <${resolved}> is not declared`
             } );
 
         }
 
-        const factory = this.items.get( key );
+        const factory = this.items.get( resolved );
 
         if ( factory?.aliases && Array.isArray( factory.aliases ) ) {
 
@@ -82,7 +82,7 @@ export abstract class Registry<Key, Factory extends { aliases?: Key[] }> {
 
         }
 
-        this.items.delete( key );
+        this.items.delete( resolved );
 
     }
 
@@ -119,13 +119,13 @@ export abstract class Registry<Key, Factory extends { aliases?: Key[] }> {
     }
 
     public has (
-        test: Key,
+        key: Key,
         safe: boolean = false
     ) : boolean {
 
-        const key = this._resolveKey( test );
+        const resolved = this._resolveKey( key );
 
-        if ( this.items.has( key ) ) {
+        if ( this.items.has( resolved ) ) {
 
             return true;
 
@@ -133,7 +133,7 @@ export abstract class Registry<Key, Factory extends { aliases?: Key[] }> {
 
             throw new PyxeError ( {
                 method: 'Registry',
-                msg: `Registry item <${key}> not found`
+                msg: `Registry item <${resolved}> not found`
             } );
 
         }
@@ -143,15 +143,15 @@ export abstract class Registry<Key, Factory extends { aliases?: Key[] }> {
     }
 
     public get (
-        test: Key,
+        key: Key,
         safe: boolean = true
     ) : Factory | undefined {
 
-        const key = this._resolveKey( test );
+        const resolved = this._resolveKey( key );
 
-        if ( ! safe || this.has( key, true ) ) {
+        if ( ! safe || this.has( resolved, true ) ) {
 
-            return this.items.get( key );
+            return this.items.get( resolved );
 
         }
 
