@@ -2,23 +2,14 @@
 name: Build
 
 on:
-  workflow_run:
-    workflows: [ Lint ]
-    types:
-      - completed
+  push:
+  pull_request:
 
 jobs:
   build:
     runs-on: [ self-hosted, Windows, X64 ]
 
     steps:
-      - name: Clean temp directory (Windows workaround)
-        if: runner.os == 'Windows'
-        run: |
-          Remove-Item -Path "$env:RUNNER_TEMP\*" -Recurse -Force -ErrorAction SilentlyContinue
-          Start-Sleep -Seconds 2
-        shell: pwsh
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
