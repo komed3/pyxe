@@ -240,7 +240,7 @@ const main = async () => {
 
         log( `Waiting briefly before build …` );
 
-        execSync( process.platform === 'win32' ? 'timeout 1' : 'sleep 1', { stdio: 'inherit' } );
+        await new Promise( resolve => setTimeout( resolve, 1000 ) );
 
         verifyConfigs();
 
