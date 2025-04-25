@@ -3,16 +3,17 @@
 'use strict';
 
 import { execSync } from 'node:child_process';
-import { existsSync, readdirSync, statSync, appendFileSync } from 'node:fs';
+import { existsSync, readdirSync, statSync, appendFileSync, rmSync } from 'node:fs';
 import { resolve, join } from 'node:path';
+import { globSync } from 'glob';
+
+const TSBUILDINFO_GLOB = 'packages/*/tsconfig.tsbuildinfo';
 
 const DIST_PATHS = [
     'packages/*/dist',
     'packages/*/*/dist',
     'packages/*/*/*/dist'
 ];
-
-const TSBUILDINFO_GLOB = 'packages/*/tsconfig.tsbuildinfo';
 
 const flags = {
     ci: false, force: false,
@@ -98,9 +99,18 @@ const clean = () => {
 
     log( `Cleaning artifacts …` );
 
-    execSync( `rimraf --glob ${ DIST_PATHS.join( ' ' ) } ${ TSBUILDINFO_GLOB }`, {
-        stdio: 'inherit'
-    } );
+    for ( const path of [
+        ...DIST_PATHS.flatMap( ( pattern ) => globSync( pattern, { absolute: true } ) ),
+        ...globSync( TSBUILDINFO_GLOB, { absolute: true } )
+    ] ) {
+
+        if ( existsSync( path ) ) {
+
+            rmSync( path, { recursive: true, force: true } );
+
+        }
+
+    }
 
     log( `✅ Cleanup finished successfully` );
 

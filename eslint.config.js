@@ -1,6 +1,5 @@
 // eslint.config.js
 
-import eslintPluginImport from 'eslint-plugin-import';
 import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 
@@ -11,16 +10,16 @@ export default [ {
         parserOptions: {
             ecmaVersion: 'latest',
             sourceType: 'module',
-            project: './tsconfig.json',
-        },
+            project: './tsconfig.json'
+        }
     },
     plugins: {
-        '@typescript-eslint': typescriptPlugin,
-        import: eslintPluginImport,
+        '@typescript-eslint': typescriptPlugin
     },
     rules: {
         'no-unused-vars': 'off',
+        'eqeqeq': [ 'error', 'always' ],
         '@typescript-eslint/no-unused-vars': [ 'warn', { argsIgnorePattern: '^_' } ],
-        'import/order': [ 'warn', { alphabetize: { order: 'asc' } } ],
-    },
+        '@typescript-eslint/explicit-function-return-type': 'off'
+    }
 } ];
