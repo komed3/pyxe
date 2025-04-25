@@ -10,11 +10,18 @@ jobs:
     runs-on: [ self-hosted, Windows, X64 ]
 
     steps:
+      - name: Clean temp directory (Windows workaround)
+        if: runner.os == 'Windows'
+        run: |
+          Remove-Item -Path "$env:RUNNER_TEMP\*" -Recurse -Force -ErrorAction SilentlyContinue
+          Start-Sleep -Seconds 2
+        shell: pwsh
+
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
