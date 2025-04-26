@@ -7,7 +7,7 @@ export const parser: ParserHandler = (
 ) : ColorObjectFactory | undefined => {
 
     const match = input.toString().trim().toLowerCase().match(
-        /^#([0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/i
+        /^#([0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/
     );
 
     if ( match ) {
