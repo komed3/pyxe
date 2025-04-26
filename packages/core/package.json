@@ -21,7 +21,9 @@
     "package.json",
     "dist"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@pyxe/types": "^0.1.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/komed3/pyxe.git",
