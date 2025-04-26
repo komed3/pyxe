@@ -21,12 +21,13 @@ export class PyxeError extends Error {
             'en-US', { hour12: false, timeStyle: 'medium' }
         );
 
-        const extra = err
-            ? ( err instanceof Error
+        const extra = typeof err === 'string'
+            ? err
+            : err instanceof Error
                 ? err.message
-                : String ( err )
-            )
-            : undefined;
+                : err !== undefined
+                    ? String ( err )
+                    : undefined;
 
         const header = `${time} [${ method.toUpperCase() }] ${ msg ?? '' }` +
                        `${ ( extra ? `: ${extra}` : '' ) }`;
@@ -43,19 +44,30 @@ export class PyxeError extends Error {
 
     }
 
+    public static fromError (
+        method: string,
+        err: unknown
+    ) : PyxeError {
+    
+        return new PyxeError ( {
+            err, method,
+            msg: ( err instanceof Error
+                ? err.message
+                : String ( err )
+            )
+        } );
+    
+    }
+
     public toString (
         trace: boolean = true
     ) : string {
 
-        if ( trace ) {
-
-            return `${this.header}\n${
-                this.stack?.split( '\n' ).slice( 1 ).join( '\n' ) ?? ''
-            }`;
-
-        }
-
-        return this.header;
+        return trace && this.stack
+            ? `${this.header}\n${ (
+                this.stack.split( '\n' ).slice( 1 ).join( '\n' )
+            ) }`
+            : this.header;
 
     }
 
