@@ -1,7 +1,8 @@
 {
   "private": true,
   "workspaces": [
-    "packages/core"
+    "packages/core",
+    "packages/types"
   ],
   "type": "module",
   "scripts": {
