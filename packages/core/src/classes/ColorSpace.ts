@@ -35,6 +35,12 @@ export class ColorSpace {
 
     }
 
+    public getChannels () : Record<string, ColorChannel> {
+
+        return this.factory.channels;
+
+    }
+
     public getChannel (
         key: string,
         safe: boolean = false
