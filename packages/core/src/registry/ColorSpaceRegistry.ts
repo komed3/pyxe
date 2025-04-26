@@ -2,6 +2,7 @@
 
 import type { ColorSpaceName, ColorSpaceFactory } from '@pyxe/types';
 import { Registry } from './Registry.js';
+import { conversionGraphRegistry } from './ConversionGraphRegistry.js';
 import { PyxeError } from '../services/PyxeError.js';
 import { hook } from '../services/Hook.js';
 
@@ -13,7 +14,7 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
         name: ColorSpaceName
     ) : ColorSpaceName {
 
-        return hook.filter( 'ColorSpaceRegistry::sanitize', super.sanitize(
+        return hook.filter( 'ColorSpaceRegistry::sanitize', super._sanitize(
             this.aliases.get( name ) ?? name
         ), name, this );
 
@@ -26,9 +27,12 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
         const sanitized = this.sanitize( name );
 
-        hook.run( 'ColorSpaceRegistry::beforeAdd', name, sanitized, factory, this );
+        hook.run(
+            'ColorSpaceRegistry::beforeAdd',
+            name, sanitized, factory, this
+        );
 
-        super.add( sanitized, factory );
+        super._add( sanitized, factory );
 
         if ( factory.aliases ) {
 
@@ -59,7 +63,16 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
         }
 
-        hook.run( 'ColorSpaceRegistry::afterAdd', name, sanitized, factory, this );
+        if ( factory.conversions ) {
+
+            conversionGraphRegistry.addMany( name, factory.conversions );
+
+        }
+
+        hook.run(
+            'ColorSpaceRegistry::afterAdd',
+            name, sanitized, factory, this
+        );
 
     }
 
@@ -70,9 +83,14 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
         const sanitized = this.sanitize( name ),
               factory = this.get( sanitized );
 
-        hook.run( 'ColorSpaceRegistry::beforeRemove', name, sanitized, this );
+        hook.run(
+            'ColorSpaceRegistry::beforeRemove',
+            name, sanitized, this
+        );
 
-        super.remove( sanitized );
+        super._remove( sanitized );
+
+        conversionGraphRegistry.removeAll( sanitized );
 
         if ( factory?.aliases ) {
 
@@ -94,7 +112,10 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
         }
 
-        hook.run( 'ColorSpaceRegistry::afterRemove', name, sanitized, this );
+        hook.run(
+            'ColorSpaceRegistry::afterRemove',
+            name, sanitized, this
+        );
 
     }
 

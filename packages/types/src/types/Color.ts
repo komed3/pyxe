@@ -27,10 +27,3 @@ export interface CMYK {
 export type ColorInstance = RGB | HSL | HSV | Lab | LCh | CMYK;
 
 export type ColorInput = ColorInstance | string;
-
-export interface ColorChannel {
-    name: string;
-    type: 'numeric' | 'cyclic' | 'normalized';
-    min?: number;
-    max?: number;
-}

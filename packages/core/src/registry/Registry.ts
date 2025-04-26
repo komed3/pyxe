@@ -7,7 +7,7 @@ export abstract class Registry<Name extends string, Factory> {
 
     protected items: Map<Name, Factory> = new Map ();
 
-    protected sanitize (
+    protected _sanitize (
         name: Name
     ) : Name {
 
@@ -17,15 +17,18 @@ export abstract class Registry<Name extends string, Factory> {
 
     }
 
-    protected add (
+    protected _add (
         name: Name,
         factory: Factory,
         safe: boolean = true
     ) : void {
 
-        const sanitized = this.sanitize( name );
+        const sanitized = this._sanitize( name );
 
-        hook.run( 'Registry::beforeAdd', name, sanitized, factory, this );
+        hook.run(
+            'Registry::beforeAdd',
+            name, sanitized, factory, this
+        );
 
         if ( safe && this.has( sanitized ) ) {
 
@@ -38,18 +41,24 @@ export abstract class Registry<Name extends string, Factory> {
 
         this.items.set( sanitized, factory );
 
-        hook.run( 'Registry::afterAdd', name, sanitized, factory, this );
+        hook.run(
+            'Registry::afterAdd',
+            name, sanitized, factory, this
+        );
 
     }
 
-    protected remove (
+    protected _remove (
         name: Name,
         safe: boolean = true
     ) : void {
 
-        const sanitized = this.sanitize( name );
+        const sanitized = this._sanitize( name );
 
-        hook.run( 'Registry::beforeRemove', name, sanitized, this );
+        hook.run(
+            'Registry::beforeRemove',
+            name, sanitized, this
+        );
 
         if ( safe && ! this.has( sanitized, true ) ) {
 
@@ -62,11 +71,14 @@ export abstract class Registry<Name extends string, Factory> {
 
         this.items.delete( sanitized );
 
-        hook.run( 'Registry::afterRemove', name, sanitized, this );
+        hook.run(
+            'Registry::afterRemove',
+            name, sanitized, this
+        );
 
     }
 
-    protected clear () : void {
+    protected _clear () : void {
 
         hook.run( 'Registry::clear', this );
 
@@ -103,7 +115,7 @@ export abstract class Registry<Name extends string, Factory> {
         safe: boolean = false
     ) : boolean {
 
-        const sanitized = this.sanitize( name );
+        const sanitized = this._sanitize( name );
 
         if ( this.items.has( sanitized ) ) {
 
@@ -127,7 +139,7 @@ export abstract class Registry<Name extends string, Factory> {
         safe: boolean = true
     ) : Factory | undefined {
 
-        const sanitized = this.sanitize( name );
+        const sanitized = this._sanitize( name );
 
         if ( ! safe || this.has( sanitized, true ) ) {
 
