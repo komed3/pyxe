@@ -116,7 +116,8 @@ export class Channel {
             prefix = undefined, suffix = undefined
         } = options;
 
-        let result, start, end;
+        let result, start, end,
+            minDecimals = 0;
 
         switch ( unit ) {
 
@@ -142,12 +143,15 @@ export class Channel {
                 result = this.normalize( value, min, max );
                 start = prefix;
                 end = suffix;
+                minDecimals = 2;
                 break;
 
         }
 
         return `${ ( start ?? '' ) }${ (
-            Number( result.toFixed( decimals ) ).toString()
+            Number( result.toFixed(
+                Math.max( decimals, minDecimals )
+            ) ).toString()
         ) }${ ( end ?? '' ) }`;
 
     }

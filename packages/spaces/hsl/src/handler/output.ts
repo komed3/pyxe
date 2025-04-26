@@ -8,7 +8,7 @@ export const output: OutputFactory = {
     string: (
         input: ColorObjectFactory,
         options: {
-            format?: 'percent';
+            format?: 'percent' | 'normalized';
             decimals?: number,
             alpha?: boolean;
         } = {}
