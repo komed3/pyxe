@@ -13,6 +13,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
+    "./registry": "./dist/registry.js",
     "./root": "./dist/root.js"
   },
   "files": [

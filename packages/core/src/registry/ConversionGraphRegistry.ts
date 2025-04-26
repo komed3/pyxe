@@ -12,10 +12,7 @@ export class ConversionGraphRegistry extends Registry<ColorSpaceName, Conversion
         handler: ConversionHandler
     ) : void {
 
-        hook.run(
-            'ConversionGraphRegistry::beforeAdd',
-            source, target, handler, this
-        );
+        hook.run( 'ConversionGraphRegistry::beforeAdd', source, target, handler, this );
 
         if ( ! this.has( source ) ) {
 
@@ -25,10 +22,7 @@ export class ConversionGraphRegistry extends Registry<ColorSpaceName, Conversion
 
         this.items.get( source )![ target ] = handler;
 
-        hook.run(
-            'ConversionGraphRegistry::afterAdd',
-            source, target, handler, this
-        );
+        hook.run( 'ConversionGraphRegistry::afterAdd', source, target, handler, this );
 
     }
 
@@ -37,10 +31,7 @@ export class ConversionGraphRegistry extends Registry<ColorSpaceName, Conversion
         factory: ConversionFactory
     ) : void {
 
-        hook.run(
-            'ConversionGraphRegistry::addMany',
-            source, factory, this
-        );
+        hook.run( 'ConversionGraphRegistry::addMany', source, factory, this );
 
         for ( const [ target, handler ] of Object.entries( factory ) ) {
 
@@ -55,10 +46,7 @@ export class ConversionGraphRegistry extends Registry<ColorSpaceName, Conversion
         target: ColorSpaceName
     ) : void {
 
-        hook.run(
-            'ConversionGraphRegistry::beforeRemove',
-            source, target, this
-        );
+        hook.run( 'ConversionGraphRegistry::beforeRemove', source, target, this );
 
         const targets = this.get( source );
 
@@ -74,10 +62,7 @@ export class ConversionGraphRegistry extends Registry<ColorSpaceName, Conversion
 
         }
 
-        hook.run(
-            'ConversionGraphRegistry::afterRemove',
-            source, target, this
-        );
+        hook.run( 'ConversionGraphRegistry::afterRemove', source, target, this );
 
     }
 
@@ -85,10 +70,7 @@ export class ConversionGraphRegistry extends Registry<ColorSpaceName, Conversion
         source: ColorSpaceName
     ) : void {
 
-        hook.run(
-            'ConversionGraphRegistry::removeAll',
-            source, this
-        );
+        hook.run( 'ConversionGraphRegistry::removeAll', source, this );
 
         this.items.delete( source );
 
@@ -96,10 +78,7 @@ export class ConversionGraphRegistry extends Registry<ColorSpaceName, Conversion
 
     public clear () : void {
 
-        hook.run(
-            'ConversionGraphRegistry::clear',
-            this
-        );
+        hook.run( 'ConversionGraphRegistry::clear', this );
 
         super._clear();
 

@@ -25,10 +25,7 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
         factory: ColorSpaceFactory
     ) : void {
 
-        hook.run(
-            'ColorSpaceRegistry::beforeAdd',
-            name, name, factory, this
-        );
+        hook.run( 'ColorSpaceRegistry::beforeAdd', name, name, factory, this );
 
         super._add( name, factory );
 
@@ -67,10 +64,7 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
         }
 
-        hook.run(
-            'ColorSpaceRegistry::afterAdd',
-            name, name, factory, this
-        );
+        hook.run( 'ColorSpaceRegistry::afterAdd', name, name, factory, this );
 
     }
 
@@ -80,10 +74,7 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
         const factory = this.get( name );
 
-        hook.run(
-            'ColorSpaceRegistry::beforeRemove',
-            name, name, this
-        );
+        hook.run( 'ColorSpaceRegistry::beforeRemove', name, name, this );
 
         super._remove( name );
 
@@ -109,10 +100,7 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
         }
 
-        hook.run(
-            'ColorSpaceRegistry::afterRemove',
-            name, name, this
-        );
+        hook.run( 'ColorSpaceRegistry::afterRemove', name, name, this );
 
     }
 

@@ -6,6 +6,7 @@
     "baseUrl": ".",
     "paths": {
       "@pyxe/core": [ "packages/core/src" ],
+      "@pyxe/core/*": [ "packages/core/src/*" ],
       "@pyxe/types": [ "packages/types/src" ]
     },
     "declaration": true,

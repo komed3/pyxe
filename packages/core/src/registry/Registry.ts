@@ -25,10 +25,7 @@ export abstract class Registry<Name extends string, Factory> {
 
         const sanitized = this._sanitize( name );
 
-        hook.run(
-            'Registry::beforeAdd',
-            name, sanitized, factory, this
-        );
+        hook.run( 'Registry::beforeAdd', name, sanitized, factory, this );
 
         if ( safe && this.has( sanitized ) ) {
 
@@ -41,10 +38,7 @@ export abstract class Registry<Name extends string, Factory> {
 
         this.items.set( sanitized, factory );
 
-        hook.run(
-            'Registry::afterAdd',
-            name, sanitized, factory, this
-        );
+        hook.run( 'Registry::afterAdd', name, sanitized, factory, this );
 
     }
 
@@ -55,10 +49,7 @@ export abstract class Registry<Name extends string, Factory> {
 
         const sanitized = this._sanitize( name );
 
-        hook.run(
-            'Registry::beforeRemove',
-            name, sanitized, this
-        );
+        hook.run( 'Registry::beforeRemove', name, sanitized, this );
 
         if ( safe && ! this.has( sanitized, true ) ) {
 
@@ -71,10 +62,7 @@ export abstract class Registry<Name extends string, Factory> {
 
         this.items.delete( sanitized );
 
-        hook.run(
-            'Registry::afterRemove',
-            name, sanitized, this
-        );
+        hook.run( 'Registry::afterRemove', name, sanitized, this );
 
     }
 
