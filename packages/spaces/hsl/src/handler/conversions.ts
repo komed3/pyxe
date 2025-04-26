@@ -8,7 +8,7 @@ export const conversions: ConversionFactory = {
         input: ColorObjectFactory | undefined
     ) : ColorObjectFactory | undefined => {
 
-        if (input && input.space === 'HSL') {
+        if ( input && input.space === 'HSL' ) {
 
             const { h, s, l, a } = input.value as HSL;
 

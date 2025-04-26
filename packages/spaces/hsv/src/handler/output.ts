@@ -1,6 +1,6 @@
 'use strict';
 
-import type { HSL, ColorObjectFactory, OutputFactory, OutputHandler } from '@pyxe/types';
+import type { HSV, ColorObjectFactory, OutputFactory } from '@pyxe/types';
 import { Channel } from '@pyxe/utils';
 
 export const output: OutputFactory = {
@@ -15,25 +15,18 @@ export const output: OutputFactory = {
     ) : string => {
 
         const { format = 'percent', decimals = 2, alpha = false } = options;
-        const { h, s, l, a } = ( input.value ?? {} ) as HSL;
+        const { h, s, v, a } = ( input.value ?? {} ) as HSV;
 
         const parts = [
             Channel.format( h, { unit: 'deg', max: 360, decimals: decimals } ), 
             Channel.format( s, { unit: format, max: 1, decimals: decimals } ), 
-            Channel.format( l, { unit: format, max: 1, decimals: decimals } )
+            Channel.format( v, { unit: format, max: 1, decimals: decimals } )
         ];
 
         return a !== undefined || alpha === true
-            ? `hsla( ${ parts.join( ', ' ) }, ${ Channel.formatAlpha( a ) } )`
-            : `hsl( ${ parts.join( ', ' ) } )`;
+            ? `hsva( ${ parts.join( ', ' ) }, ${ Channel.formatAlpha( a ) } )`
+            : `hsv( ${ parts.join( ', ' ) } )`;
 
-    },
-
-    css: ( ...args ) => (
-        output.string as OutputHandler
-    )( ...args ),
-    html: ( ...args ) => (
-        output.string as OutputHandler
-    )( ...args )
+    }
 
 };
