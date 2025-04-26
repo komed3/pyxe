@@ -1,9 +1,9 @@
 'use strict';
 
 import type { ColorSpaceName, ColorLibEntry, ColorLibFactory, ColorLibList } from '@pyxe/types';
+import { colorLibRegisty } from './registry/ColorLibRegistry.js';
 import { ColorObject } from './ColorObject.js';
 import { Convert } from './Convert.js';
-import { colorLibRegisty } from './registry/ColorLibRegistry.js';
 import { PyxeError } from './services/PyxeError.js';
 
 const instances: Map<string, ColorLib> = new Map ();

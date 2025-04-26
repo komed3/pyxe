@@ -33,8 +33,8 @@
 
 'use strict';
 
-import { colorLibRegisty } from '@pyxe/core/root';
 import type { ColorLibLoader } from '@pyxe/types';
+import { colorLibRegisty } from '@pyxe/core/root';
 
 import { RAL_Classic } from './lib/classic.js';
 import { RAL_Design } from './lib/design.js';

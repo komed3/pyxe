@@ -1,7 +1,7 @@
 'use strict';
 
-import { ModuleMethod } from './ModuleMethod.js';
 import { moduleRegistry } from './registry/ModuleRegistry.js';
+import { ModuleMethod } from './ModuleMethod.js';
 import { PyxeError } from './services/PyxeError.js';
 
 export class Module {

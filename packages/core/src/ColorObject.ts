@@ -3,8 +3,8 @@
 import type { ColorSpaceName, ColorInstance, ColorObjectFactory, OutputTypes } from '@pyxe/types';
 import { Channel } from '@pyxe/utils';
 import { ColorSpace } from './ColorSpace.js';
-import { Output } from './Output.js';
 import { Validator } from './Validator.js';
+import { Output } from './Output.js';
 import { PyxeError } from './services/PyxeError.js';
 
 export class ColorObject {

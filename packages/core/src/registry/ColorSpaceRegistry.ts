@@ -1,9 +1,9 @@
 'use strict';
 
 import type { ColorSpaceName, ColorSpaceFactory } from '@pyxe/types';
-import { PyxeError } from '../services/PyxeError.js';
 import { conversionGraphRegistry } from './ConversionGraphRegistry.js';
 import { Registry } from './Registry.js';
+import { PyxeError } from '../services/PyxeError.js';
 
 export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFactory> {
 

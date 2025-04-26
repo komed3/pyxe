@@ -1,10 +1,10 @@
 'use strict';
 
 import type { ColorSpaceName, ColorInput } from '@pyxe/types';
-import { ColorObject } from './ColorObject.js';
 import { colorSpaceRegistry } from './registry/ColorSpaceRegistry.js';
-import { PyxeError } from './services/PyxeError.js';
+import { ColorObject } from './ColorObject.js';
 import { tracer, tracerTemplates as tpl } from './services/Tracer.js';
+import { PyxeError } from './services/PyxeError.js';
 
 export class Parser {
 

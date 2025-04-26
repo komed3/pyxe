@@ -1,7 +1,7 @@
 'use strict';
 
-import { ColorObject } from './ColorObject.js';
 import { moduleMethodRegistry } from './registry/ModuleMethodRegistry.js';
+import { ColorObject } from './ColorObject.js';
 import { PyxeError } from './services/PyxeError.js';
 
 export class ModuleMethod {

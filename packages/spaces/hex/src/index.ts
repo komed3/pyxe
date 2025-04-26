@@ -2,10 +2,10 @@
 
 import { colorSpaceRegistry } from '@pyxe/core/root';
 
+import { validator } from './handler/validator.js';
+import { parser } from './handler/parser.js';
 import { conversions } from './handler/conversions.js';
 import { output } from './handler/output.js';
-import { parser } from './handler/parser.js';
-import { validator } from './handler/validator.js';
 
 colorSpaceRegistry.add( 'HEX', {
     name: 'HEX',
