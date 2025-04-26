@@ -1,6 +1,7 @@
 'use strict';
 
 import type { HSV, ColorObjectFactory, ConversionFactory } from '@pyxe/types';
+import { Channel } from '@pyxe/utils';
 
 export const conversions: ConversionFactory = {
 
@@ -38,10 +39,7 @@ export const conversions: ConversionFactory = {
 
             return {
                 space: 'RGB',
-                value: {
-                    r, g, b,
-                    ...( a !== undefined ? { a } : {} )
-                },
+                value: { r, g, b, ...Channel.safeAlpha( a ) },
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
 
@@ -62,10 +60,7 @@ export const conversions: ConversionFactory = {
 
             return {
                 space: 'HSL',
-                value: {
-                    h, s: sl, l,
-                    ...( a !== undefined ? { a } : {} )
-                },
+                value: { h, s: sl, l, ...Channel.safeAlpha( a ) },
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
 
