@@ -10,7 +10,7 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
     protected aliases: Map<ColorSpaceName, ColorSpaceName> = new Map ();
 
-    public sanitize (
+    public resolve (
         name: ColorSpaceName
     ) : ColorSpaceName {
 
@@ -25,14 +25,12 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
         factory: ColorSpaceFactory
     ) : void {
 
-        const sanitized = this.sanitize( name );
-
         hook.run(
             'ColorSpaceRegistry::beforeAdd',
-            name, sanitized, factory, this
+            name, name, factory, this
         );
 
-        super._add( sanitized, factory );
+        super._add( name, factory );
 
         if ( factory.aliases ) {
 
@@ -42,12 +40,12 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
                     throw new PyxeError ( {
                         method: 'ColorSpaceRegistry',
-                        msg: `Alias <${alias}> is already declared for <${ this.sanitize( alias ) }>`
+                        msg: `Alias <${alias}> is already declared for <${ this.resolve( alias ) }>`
                     } );
 
                 }
 
-                this.aliases.set( alias, sanitized );
+                this.aliases.set( alias, name );
 
             }
 
@@ -71,7 +69,7 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
         hook.run(
             'ColorSpaceRegistry::afterAdd',
-            name, sanitized, factory, this
+            name, name, factory, this
         );
 
     }
@@ -80,17 +78,16 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
         name: ColorSpaceName
     ) : void {
 
-        const sanitized = this.sanitize( name ),
-              factory = this.get( sanitized );
+        const factory = this.get( name );
 
         hook.run(
             'ColorSpaceRegistry::beforeRemove',
-            name, sanitized, this
+            name, name, this
         );
 
-        super._remove( sanitized );
+        super._remove( name );
 
-        conversionGraphRegistry.removeAll( sanitized );
+        conversionGraphRegistry.removeAll( name );
 
         if ( factory?.aliases ) {
 
@@ -114,7 +111,7 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
         hook.run(
             'ColorSpaceRegistry::afterRemove',
-            name, sanitized, this
+            name, name, this
         );
 
     }
@@ -136,7 +133,7 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
         safe: boolean = false
     ) : boolean {
 
-        return super.has( this.sanitize( name ), safe );
+        return super.has( this.resolve( name ), safe );
 
     }
 
@@ -145,7 +142,7 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
         safe: boolean = true
     ) : ColorSpaceFactory | undefined {
 
-        return super.get( this.sanitize( name ), safe );
+        return super.get( this.resolve( name ), safe );
 
     }
 

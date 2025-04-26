@@ -12,9 +12,6 @@ export class ConversionGraphRegistry extends Registry<ColorSpaceName, Conversion
         handler: ConversionHandler
     ) : void {
 
-        source = this._sanitize( source );
-        target = this._sanitize( target );
-
         hook.run(
             'ConversionGraphRegistry::beforeAdd',
             source, target, handler, this
@@ -40,8 +37,6 @@ export class ConversionGraphRegistry extends Registry<ColorSpaceName, Conversion
         factory: ConversionFactory
     ) : void {
 
-        source = this._sanitize( source );
-
         hook.run(
             'ConversionGraphRegistry::addMany',
             source, factory, this
@@ -59,9 +54,6 @@ export class ConversionGraphRegistry extends Registry<ColorSpaceName, Conversion
         source: ColorSpaceName,
         target: ColorSpaceName
     ) : void {
-
-        source = this._sanitize( source );
-        target = this._sanitize( target );
 
         hook.run(
             'ConversionGraphRegistry::beforeRemove',
@@ -92,8 +84,6 @@ export class ConversionGraphRegistry extends Registry<ColorSpaceName, Conversion
     public removeAll (
         source: ColorSpaceName
     ) : void {
-
-        source = this._sanitize( source );
 
         hook.run(
             'ConversionGraphRegistry::removeAll',
