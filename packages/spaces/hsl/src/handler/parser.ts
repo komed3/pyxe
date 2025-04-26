@@ -10,15 +10,15 @@ export const parser: ParserHandler = (
     const source = input.toString().trim().toLowerCase();
 
     const match = source.match(
-        /^hsla?\(\s*([\d.]+)(deg|°)?\s*(?:[, ]\s*|[\s])([\d.]+%?)\s*(?:[, ]\s*|[\s])([\d.]+%?)(?:\s*[,/]\s*([\d.]+%?))?\s*\)$/
+        /^hsla?\(\s*([\d.]+)(?:deg|°)?\s*(?:[, ]\s*|[\s])([\d.]+%?)\s*(?:[, ]\s*|[\s])([\d.]+%?)(?:\s*[,/]\s*([\d.]+%?))?\s*\)$/
     );
 
     if ( match ) {
 
         const h = Channel.parseCyclic( match[ 1 ] );
-        const s = Channel.parseLinear( match[ 3 ] );
-        const l = Channel.parseLinear( match[ 4 ] );
-        const a = Channel.parseAlpha( match[ 5 ] );
+        const s = Channel.parseLinear( match[ 2 ] );
+        const l = Channel.parseLinear( match[ 3 ] );
+        const a = Channel.parseAlpha( match[ 4 ] );
 
         if (
             [ h, s, l ].every( c => ! isNaN( c ) ) &&
