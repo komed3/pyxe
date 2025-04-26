@@ -23,7 +23,7 @@ export const output: OutputFactory = {
             } )
         );
 
-        return alpha !== undefined || alpha === true
+        return a !== undefined || alpha === true
             ? `rgba( ${ parts.join( ', ' ) }, ${ Channel.formatAlpha( a ) } )`
             : `rgb( ${ parts.join( ', ' ) } )`;
 

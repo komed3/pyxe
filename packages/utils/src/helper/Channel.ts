@@ -96,7 +96,9 @@ export class Channel {
         input: any
     ) : Partial<{ a: number }> {
 
-        return ! isNaN( input ) ? { a: this.clamp( input, 0, 1 ) } : {};
+        return input !== undefined && ! isNaN( input )
+            ? { a: this.clamp( input, 0, 1 ) }
+            : {};
 
     }
 
