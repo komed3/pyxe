@@ -3,6 +3,7 @@
 import { ColorObjectFactory } from '@pyxe/types';
 import { ChannelHelper } from '@pyxe/utils';
 import { ColorSpace } from './ColorSpace.js';
+import { hook } from '../services/Hook.js';
 import { PyxeError } from '../services/PyxeError.js';
 
 export class Validator {
@@ -13,14 +14,20 @@ export class Validator {
 
     private _handleError (
         message: string
-    ) : false | undefined {
+    ) : false {
+
+        const pyxeError = new PyxeError ( {
+            method: 'Validator',
+            msg: message
+        } );
 
         if ( this.safe ) {
 
-            throw new PyxeError ( {
-                method: 'Validator',
-                msg: message
-            } );
+            throw pyxeError;
+
+        } else {
+
+            pyxeError.log();
 
         }
 
@@ -34,19 +41,21 @@ export class Validator {
 
         const colorSpace = ColorSpace.getInstance( factory.space );
 
+        hook.run( 'Validator::validate', factory, colorSpace, this );
+
         for ( const [ key, channel ] of Object.entries( colorSpace.getChannels() ) ) {
 
             let value = factory.value[ key as keyof typeof factory.value ];
 
             if ( value === undefined ) {
 
-                this._handleError( `Missing channel <${key}> in color instance` );
+                return this._handleError( `Missing channel <${key}> in color instance` );
 
             }
 
             if ( ! ChannelHelper.validate( value, channel ) ) {
 
-                this._handleError( `Invalid value for channel <${key}>: ${value}` );
+                return this._handleError( `Invalid value for channel <${key}>: ${value}` );
 
             }
 
