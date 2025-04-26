@@ -1,15 +1,15 @@
 'use strict';
 
-import { colorSpaceRegistry } from './registry/ColorSpaceRegistry.js';
-import { colorLibRegisty } from './registry/ColorLibRegistry.js';
 import { ColorMethodRegistry } from './registry/ColorMethodRegistry.js';
-import { moduleRegistry } from './registry/ModuleRegistry.js';
+import { colorSpaceRegistry } from './registry/ColorSpaceRegistry.js';
 import { moduleMethodRegistry } from './registry/ModuleMethodRegistry.js';
+import { moduleRegistry } from './registry/ModuleRegistry.js';
+import { colorLibRegisty } from './registry/ColorLibRegistry.js';
 
 export const registry = {
-    ColorSpace: colorSpaceRegistry,
-    ColorLib: colorLibRegisty,
     ColorMethod: ColorMethodRegistry,
+    ColorSpace: colorSpaceRegistry,
+    ModuleMethod: moduleMethodRegistry,
     Module: moduleRegistry,
-    ModuleMethod: moduleMethodRegistry
+    ColorLib: colorLibRegisty
 }
