@@ -1,14 +1,6 @@
 {
   "files": [],
   "references": [
-    { "path": "packages/core" },
-    { "path": "packages/libraries/ral" },
-    { "path": "packages/pyxe" },
-    { "path": "packages/spaces/hex" },
-    { "path": "packages/spaces/hsl" },
-    { "path": "packages/spaces/hsv" },
-    { "path": "packages/spaces/rgb" },
-    { "path": "packages/types" },
-    { "path": "packages/utils" }
+    { "path": "packages/core" }
   ]
 }

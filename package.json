@@ -1,13 +1,7 @@
 {
   "private": true,
   "workspaces": [
-    "packages/core",
-    "packages/libraries/*",
-    "packages/modules/*",
-    "packages/pyxe",
-    "packages/spaces/*",
-    "packages/types",
-    "packages/utils"
+    "packages/core"
   ],
   "type": "module",
   "scripts": {

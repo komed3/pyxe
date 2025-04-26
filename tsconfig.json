@@ -5,16 +5,7 @@
     "moduleResolution": "Node",
     "baseUrl": ".",
     "paths": {
-      "pyxe": [ "packages/pyxe/src" ],
-      "@pyxe/core": [ "packages/core/src" ],
-      "@pyxe/core/*": [ "packages/core/src/*" ],
-      "@pyxe/library-ral": [ "packages/libraries/ral/src" ],
-      "@pyxe/space-hex": [ "packages/spaces/hex/src" ],
-      "@pyxe/space-hsl": [ "packages/spaces/hsl/src" ],
-      "@pyxe/space-hsv": [ "packages/spaces/hsv/src" ],
-      "@pyxe/space-rgb": [ "packages/spaces/rgb/src" ],
-      "@pyxe/types": [ "packages/types/src" ],
-      "@pyxe/utils": [ "packages/utils/src" ]
+      "@pyxe/core": [ "packages/core/src" ]
     },
     "declaration": true,
     "declarationMap": false,
