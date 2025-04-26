@@ -12,7 +12,7 @@ export abstract class Registry<Name extends string, Factory> {
     ) : Name {
 
         return hook.filter( 'Registry::sanitize', ( String ( name )
-            .trim().replace( /[^a-zA-Z]/g, '' ).toLowerCase()
+            .trim().replace( /[^a-zA-Z0-9\-]/g, '' ).toLowerCase()
         ) as Name, name, this );
 
     }
@@ -84,11 +84,19 @@ export abstract class Registry<Name extends string, Factory> {
         filter?: string
     ) : Name[] {
 
-        return this.list().filter(
-            ( name ) => ! filter || ( name as string ).match(
-                new RegExp( filter, 'i' )
-            )
-        );
+        let list = this.list();
+
+        if ( filter ) {
+
+            const regex = new RegExp( filter, 'i' );
+
+            return list.filter(
+                ( name ) => regex.test( name as string )
+            );
+
+        }
+
+        return list;
 
     }
 
@@ -129,7 +137,7 @@ export abstract class Registry<Name extends string, Factory> {
 
         const sanitized = this._sanitize( name );
 
-        if ( ! safe || this.has( sanitized, true ) ) {
+        if ( this.has( sanitized, safe ) ) {
 
             return this.items.get( sanitized );
 

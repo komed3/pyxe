@@ -14,8 +14,10 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
         name: ColorSpaceName
     ) : ColorSpaceName {
 
-        return hook.filter( 'ColorSpaceRegistry::sanitize', super._sanitize(
-            this.aliases.get( name ) ?? name
+        const sanitized = super._sanitize( name );
+
+        return hook.filter( 'ColorSpaceRegistry::sanitize', (
+            this.aliases.get( sanitized ) ?? sanitized
         ), name, this );
 
     }
