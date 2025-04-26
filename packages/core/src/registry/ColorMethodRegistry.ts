@@ -17,13 +17,14 @@ export const ColorMethodRegistry = {
 
             if ( ! ( name in Color.prototype ) ) {
 
-                ( Color.prototype as any )[ name ] = function (
-                    options: Record<string, any>
-                ) : Color | Color[] | any {
-
-                    return this.apply( method, options );
-
-                };
+                Object.defineProperty( Color.prototype, name, {
+                    value: function ( options: Record<string, any> ) {
+                        return this.apply( method, options );
+                    },
+                    writable: true,
+                    configurable: true,
+                    enumerable: false
+                } );
 
             }
 

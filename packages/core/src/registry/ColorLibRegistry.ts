@@ -4,7 +4,7 @@ import type { ColorLibFactory } from '@pyxe/types';
 import { Registry } from './Registry.js';
 import { hook } from '../services/Hook.js';
 
-export class ColorLibRegisty extends Registry<string, ColorLibFactory> {
+export class ColorLibRegistry extends Registry<string, ColorLibFactory> {
 
     public add (
         name: string,
@@ -41,4 +41,4 @@ export class ColorLibRegisty extends Registry<string, ColorLibFactory> {
 
 }
 
-export const colorLibRegisty = new ColorLibRegisty ();
+export const colorLibRegistry = new ColorLibRegistry();
