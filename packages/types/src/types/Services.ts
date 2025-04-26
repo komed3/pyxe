@@ -1,5 +1,9 @@
 'use strict';
 
+export type DebugLevel = 'silent' | 'error' | 'warn' | 'info' | 'debug' | 'all';
+
+export type DebugTypes = 'debug' | 'info' | 'warn' | 'log' | 'error';
+
 export type HookHandler = (
     ...args: any[]
 ) => any;

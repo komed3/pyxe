@@ -1,20 +1,45 @@
 'use strict';
 
+import type { DebugLevel, DebugTypes } from '@pyxe/types';
 import { tracer } from './Tracer.js';
 
 export class Debug {
 
-    readonly state: boolean;
+    readonly level: DebugLevel;
+
+    private levelPriority = {
+        silent: 0, error: 1, warn: 2,
+        info: 3, debug: 4, all: 5
+    };
+    
+    private modePriority = {
+        error: 1, warn: 2, info: 3,
+        debug: 4, log: 5
+    };
 
     constructor (
-        enable?: boolean
+        enable?: boolean | DebugLevel
     ) {
 
-        this.state = enable ?? !!process.env.DEBUG;
+        switch ( enable ?? !!process.env.DEBUG ) {
 
-        if ( this.state ) {
+            case true:
+                this.level = 'debug';
+                break;
 
-            this.log( 'DEBUG', `debug mode <enabled>` );
+            case false:
+                this.level = 'silent';
+                break;
+
+            default:
+                this.level = enable as DebugLevel;
+                break;
+
+        }
+
+        if ( this.level !== 'silent' ) {
+
+            this.log( 'DEBUG', `debug mode <enabled> (level: ${this.level})` );
 
             this.enableTracer();
 
@@ -22,16 +47,24 @@ export class Debug {
 
     }
 
+    private _canLog (
+        mode: DebugTypes
+    ) : boolean {
+
+        return this.levelPriority[ this.level ] >= this.modePriority[ mode ];
+
+    }
+
     public log (
         method: string,
         msg: string,
         show: boolean = false,
-        mode?: 'debug' | 'info' | 'warn' | 'log' | 'error'
+        mode: DebugTypes = 'debug'
     ) : void {
 
-        if ( this.state || show ) {
+        if ( this._canLog( mode ) || show ) {
 
-            console[ mode ?? 'debug' ]( `${ ( new Date() ).toLocaleTimeString(
+            ( console[ mode ] ?? console.debug )( `${ ( new Date() ).toLocaleTimeString(
                 'en-US', { hour12: false, timeStyle: 'medium' }
             ) } [PYXE ${ method.trim().toUpperCase() }] ${ msg.trim() }` );
 
