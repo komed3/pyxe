@@ -7,6 +7,32 @@ import { PyxeError } from './PyxeError.js';
 export class Hook {
 
     private registry: Map<string, HookFactory[]> = new Map ();
+    private cache: Map<string, [ string, HookFactory[] ][]> = new Map ();
+
+    constructor (
+        private softFail: boolean = false
+    ) {}
+
+    private _err (
+        msg: string,
+        err?: any
+    ) : void {
+
+        const pyxeError = new PyxeError ( {
+            method: 'Hook', msg, err
+        } );
+
+        if ( this.softFail ) {
+
+            pyxeError.log();
+
+        } else {
+
+            throw pyxeError;
+
+        }
+
+    }
 
     private _register (
         name: string,
@@ -32,27 +58,45 @@ export class Hook {
 
         }
 
+        this.cache.clear();
+
     }
 
     private _match (
         name: string
     ) : [ string, HookFactory[] ][] {
 
-        if ( ! name.includes( '*' ) ) {
+        if ( this.cache.has( name ) ) {
 
-            return this.registry.has( name )
-                ? [ [ name, this.registry.get( name )! ] ]
-                : [];
+            return this.cache.get( name )!;
 
         }
 
-        const pattern = new RegExp (
-            '^' + name.replace( /\*/g, '.*' ) + '$'
-        );
+        let matches: [ string, HookFactory[] ][] = [];
 
-        return [ ...this.registry.entries() ].filter(
-            ( [ key ] ) => pattern.test( key )
-        );
+        if ( ! name.includes( '*' ) ) {
+
+            const hooks = this.registry.get( name );
+
+            matches = hooks ? [ [ name, hooks ] ] : [];
+
+        } else {
+
+            const pattern = new RegExp (
+                '^' + name.split( '*' ).map(
+                    ( s ) => s.replace( /[-/\\^$+?.()|[\]{}]/g, '\\$&' )
+                ).join( '.*' ) + '$'
+            );
+
+            matches = [ ...this.registry.entries() ].filter (
+                ( [ key ] ) => pattern.test( key )
+            );
+
+        }
+
+        this.cache.set( name, matches );
+
+        return matches;
 
     }
 
@@ -103,6 +147,8 @@ export class Hook {
 
         if ( this.registry.has( name ) ) {
 
+            this.cache.clear();
+
             if ( ! handler ) {
 
                 this.registry.delete( name );
@@ -126,6 +172,20 @@ export class Hook {
                 }
 
             }
+
+        }
+
+    }
+
+    public clear (
+        pattern: string
+    ) : void {
+
+        this.cache.clear();
+
+        for ( const [ key ] of this._match( pattern ) ) {
+
+            this.registry.delete( key );
 
         }
 
@@ -158,10 +218,7 @@ export class Hook {
 
         } catch ( err ) {
 
-            throw new PyxeError ( {
-                err, method: 'Hook',
-                msg: `Failed to run hook for <${name}>`
-            } );
+            this._err( `Failed to run hook for <${name}>`, err );
 
         }
 
@@ -194,10 +251,7 @@ export class Hook {
 
         } catch ( err ) {
 
-            throw new PyxeError ( {
-                err, method: 'Hook',
-                msg: `Failed to run async hook for <${name}>`
-            } );
+            this._err( `Failed to run async hook for <${name}>`, err );
 
         }
 
@@ -216,10 +270,7 @@ export class Hook {
 
             } catch ( err ) {
 
-                throw new PyxeError ( {
-                    err, method: 'Hook',
-                    msg: `Failed to run deferred hook for <${name}>`
-                } );
+                this._err( `Failed to run deferred hook for <${name}>`, err );
 
             }
 
@@ -257,10 +308,7 @@ export class Hook {
 
         } catch ( err ) {
 
-            throw new PyxeError ( {
-                err, method: 'Hook',
-                msg: `Failed to apply filter for <${name}>`
-            } );
+            this._err( `Failed to apply filter for <${name}>`, err );
 
         }
 
@@ -298,14 +346,27 @@ export class Hook {
 
         } catch ( err ) {
 
-            throw new PyxeError ( {
-                err, method: 'Hook',
-                msg: `Failed to apply async filter for <${name}>`
-            } );
+            this._err( `Failed to apply async filter for <${name}>`, err );
 
         }
 
         return result;
+
+    }
+
+    public list (
+        pattern: string = '*'
+    ) : string[] {
+
+        return this._match( pattern ).map( ( [ key ] ) => key );
+
+    }
+
+    public has (
+        name: string
+    ) : boolean {
+
+        return this.registry.has( name );
 
     }
 
