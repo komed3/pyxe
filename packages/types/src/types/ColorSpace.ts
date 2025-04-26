@@ -27,6 +27,7 @@ export type ConversionFactory = Record<ColorSpaceName, ConversionHandler>;
 export interface ColorSpaceMeta {
     name?: string;
     description?: string;
+    [ key: string ] : any;
 }
 
 export interface ColorSpaceFactory {
