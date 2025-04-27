@@ -1,8 +1,10 @@
 'use strict';
 
-import type { ColorInput, ColorObjectFactory, ColorSpaceName } from '@pyxe/types';
+import type { ColorInput, ColorInstance, ColorObjectFactory, ColorSpaceName } from '@pyxe/types';
+import { ChannelHelper } from '@pyxe/utils';
 import { ColorSpace } from './ColorSpace.js';
 import { hook } from '../services/Hook.js';
+import { debug } from '../services/Debug.js';
 
 const instances: Map<ColorSpaceName, Parser> = new Map ();
 
@@ -12,10 +14,11 @@ export class Parser {
     private regex: RegExp;
 
     private constructor (
-        readonly space: ColorSpaceName
+        name: ColorSpaceName,
+        readonly strict: boolean = false
     ) {
 
-        this.colorSpace = ColorSpace.getInstance( this.space );
+        this.colorSpace = ColorSpace.getInstance( name );
 
         this.regex = new RegExp( this._buildRegex(), 'i' );
 
@@ -31,7 +34,7 @@ export class Parser {
         /** patterns for individual channels */
         const channels = Object.values( this.colorSpace.getChannels() ).map(
             ( channel ) => channel.type === 'cyclic'
-                ? '([\\d.]+(?:deg|°)?)'
+                ? '([\\d.]+(?:deg|°|)?+%?)'
                 : '([\\d.]+%?)'
         );
 
@@ -51,21 +54,62 @@ export class Parser {
     public parse (
         input: ColorInput
     ) : ColorObjectFactory | false {
-        
-        //
+
+        hook.run( 'Parser::beforeParse', input, this );
+
+        const match = input.toString().trim().match( this.regex );
+
+        if ( ! match || match.length < this.colorSpace.channels().length ) {
+
+            debug.warn( 'Parser', `Input <${ JSON.stringify( input ) }> does not match color space <${this.colorSpace.space}>` );
+
+            return false;
+
+        }
+
+        const channels: Record<string, number> = {};
+
+        for ( const [ key, channel ] of Object.entries( this.colorSpace.getChannels() ) ) {
+
+            const value = ChannelHelper.parse( match.shift(), channel, ! this.strict );
+
+            if ( value === undefined || isNaN( value ) ) {
+
+                debug.warn( 'Parser', `Missing or invalid value for channel <${key}>: ${value}` );
+
+                return false;
+
+            }
+
+            channels[ key ] = value;
+
+        }
+
+        hook.run( 'Parser::afterParse', input, this );
+
+        return hook.filter( 'Parser::color', {
+            space: this.colorSpace.space,
+            value: channels as Partial<ColorInstance>,
+            alpha: ChannelHelper.parseAlpha( match.shift(), ! this.strict ),
+            meta: { source: input }
+        }, input, this ) as ColorObjectFactory;
 
     }
 
     public static getInstance (
-        space: ColorSpaceName,
+        name: ColorSpaceName,
+        strict: boolean = false,
         force: boolean = false
     ) : Parser {
 
-        const resolved = ColorSpace.resolve( space );
+        const resolved = ColorSpace.resolve( name );
 
-        if ( force || ! instances.has( resolved ) ) {
+        if (
+            force || ! instances.has( resolved ) ||
+            instances.get( resolved )?.strict != strict
+        ) {
 
-            instances.set( resolved, new Parser ( resolved ) );
+            instances.set( resolved, new Parser ( resolved, strict ) );
 
         }
 
@@ -74,15 +118,16 @@ export class Parser {
     }
 
     public static destroyInstance (
-        space: ColorSpaceName
+        name: ColorSpaceName
     ) : void {
 
-        instances.delete( ColorSpace.resolve( space ) );
+        instances.delete( ColorSpace.resolve( name ) );
 
     }
 
     public static parseAuto (
-        input: ColorInput
+        input: ColorInput,
+        strict: boolean = false
     ) : ColorObjectFactory | false {
 
         //

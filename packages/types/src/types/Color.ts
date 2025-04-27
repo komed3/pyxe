@@ -13,11 +13,11 @@ export interface HSV {
 }
 
 export interface Lab {
-    L: number; a: number; b: number;
+    l: number; a: number; b: number;
 }
 
 export interface LCh {
-    L: number; C: number; h: number;
+    l: number; c: number; h: number;
 }
 
 export interface CMYK {
