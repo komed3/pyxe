@@ -8,7 +8,6 @@ export class PyxeError extends Error {
     readonly header?: string;
     readonly time?: string;
     readonly method?: string;
-    readonly fullMsg?: string;
     readonly msg?: string;
     readonly extra?: string;
 
@@ -27,14 +26,14 @@ export class PyxeError extends Error {
                 ? err.message : err != null
                     ? String ( err ) : undefined;
 
-        const fullMsg = `${ ( msg ?? '' ) }${ ( extra ? `: ${extra}` : '' ) }`;
-        const header = `${ time } [${ method.toUpperCase() }] ${ fullMsg }`;
+        const header = `${ time } [${ method.toUpperCase() }] ${ ( msg ?? '' ) }` +
+                       `${ ( extra ? `: ${extra}` : '' ) }`;
 
         super( header );
 
         this.name = 'PyxeError';
 
-        Object.assign( this, { header, time, method, fullMsg, msg, extra } );
+        Object.assign( this, { header, time, method, msg, extra } );
 
     }
 
@@ -68,7 +67,7 @@ export class PyxeError extends Error {
 
     public log () : void {
 
-        debug.error( this.method ?? this.name, `${ this.fullMsg }\n${ this._getTrace() }`.trim() );
+        debug.error( this.toString(), true );
 
     }
 

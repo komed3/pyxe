@@ -5,7 +5,7 @@ import { tracer } from './Tracer.js';
 
 export class Debug {
 
-    readonly level: DebugLevel;
+    private level: DebugLevel = 'debug';
 
     private levelPriority = {
         silent: 0, error: 1, warn: 2,
@@ -24,24 +24,16 @@ export class Debug {
         switch ( enable ?? !!process.env.DEBUG ) {
 
             case true:
-                this.level = 'debug';
+                this.enable();
                 break;
 
             case false:
-                this.level = 'silent';
+                this.disable();
                 break;
 
             default:
-                this.level = enable as DebugLevel;
+                this.setLevel( enable as DebugLevel );
                 break;
-
-        }
-
-        if ( this.level !== 'silent' ) {
-
-            this.log( 'DEBUG', `debug mode <enabled> (level: ${this.level})` );
-
-            this.enableTracer();
 
         }
 
@@ -52,6 +44,45 @@ export class Debug {
     ) : boolean {
 
         return this.levelPriority[ this.level ] >= this.modePriority[ mode ];
+
+    }
+
+    public setLevel (
+        level: DebugLevel
+    ) {
+
+        this.level = level in this.levelPriority ? level : 'debug';
+
+        this.log( 'DEBUG', `Set debug mode to <${this.level}>` );
+
+    }
+
+    public enable () {
+
+        this.setLevel( 'debug' );
+
+        tracer.enable();
+
+    }
+
+    public disable () {
+
+        this.setLevel( 'silent' );
+
+        tracer.disable();
+
+    }
+
+    public error (
+        msg: string,
+        show: boolean = false
+    ) {
+
+        if ( this._canLog( 'error' ) || show ) {
+
+            console.error( msg );
+
+        }
 
     }
 
@@ -89,30 +120,6 @@ export class Debug {
     ) : void {
 
         this.log( method, msg, show, 'warn' );
-
-    }
-
-    public enableTracer () : void {
-
-        tracer.enable();
-
-        if ( tracer.isReady() ) {
-
-            this.log( 'DEBUG', `color object tracer <enabled>` );
-
-        }
-
-    }
-
-    public disableTracer () : void {
-
-        tracer.disable();
-
-        if ( ! tracer.isReady() ) {
-
-            this.log( 'DEBUG', `color object tracer <disabled>` );
-
-        }
 
     }
 
