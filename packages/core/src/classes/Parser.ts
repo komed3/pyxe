@@ -70,7 +70,7 @@ export class Parser {
 
         if ( ! match || match.length < this.colorSpace.channels().length ) {
 
-            debug.warn( 'Parser', `Input <${ JSON.stringify( input ) }> does not match color space <${this.colorSpace.space}>` );
+            debug.info( 'Parser', `Input <${ JSON.stringify( input ) }> does not match color space <${this.colorSpace.space}>` );
 
             return false;
 
@@ -84,7 +84,7 @@ export class Parser {
 
             if ( value === undefined || isNaN( value ) ) {
 
-                debug.warn( 'Parser', `Missing or invalid value for channel <${key}>: ${value}` );
+                debug.info( 'Parser', `Missing or invalid value for channel <${key}>: ${value}` );
 
                 return false;
 
