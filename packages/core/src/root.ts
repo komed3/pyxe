@@ -1,5 +1,6 @@
 'use strict';
 
+export * from './classes/Parser.js';
 export * from './classes/Validator.js';
 
 export * from './registries/ColorLibRegistry.js';

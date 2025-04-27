@@ -14,11 +14,9 @@ export function handleError (
 
         throw pyxeError;
 
-    } else {
-
-        pyxeError.log();
-
     }
+
+    pyxeError.log();
 
     return false;
 
@@ -28,7 +26,7 @@ export function catchToError<T> (
     fn: () => T,
     factory: ErrorFactory,
     safe: boolean = true
-) : T | undefined {
+) : T | false {
 
     try {
 
@@ -36,9 +34,7 @@ export function catchToError<T> (
 
     } catch ( err ) {
 
-        handleError( { ...factory, ...{ err } }, safe );
-
-        return undefined;
+        return handleError( { ...factory, err }, safe );
 
     }
 
@@ -63,20 +59,14 @@ export function check (
     safe: boolean = true
 ) : boolean {
 
-    if ( ! condition ) {
-
-        handleError( factory, safe );
-
-        return false;
-
-    }
-
-    return true;
+    return ! condition
+        ? handleError( factory, safe )
+        : true;
 
 }
 
 export function checkAll (
-    conditions: [ unknown, ErrorFactory ][],
+    conditions: Array<[unknown, ErrorFactory]>,
     safe: boolean = true
 ) : boolean {
 
