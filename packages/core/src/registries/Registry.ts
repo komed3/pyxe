@@ -1,7 +1,7 @@
 'use strict';
 
-import { PyxeError } from '../services/PyxeError.js';
 import { hook } from '../services/Hook.js';
+import { assert, handleError } from '../services/ErrorUtils.js';
 
 export abstract class Registry<Name extends string, Factory> {
 
@@ -27,14 +27,10 @@ export abstract class Registry<Name extends string, Factory> {
 
         hook.run( 'Registry::beforeAdd', name, sanitized, factory, this );
 
-        if ( safe && this.has( sanitized ) ) {
-
-            throw new PyxeError ( {
-                method: 'Registry',
-                msg: `Registry item <${sanitized}> already declared`
-            } );
-
-        }
+        assert( ! safe || ! this.has( sanitized ), {
+            method: 'Registry',
+            msg: `Registry item <${sanitized}> already declared`
+        } );
 
         this.items.set( sanitized, factory );
 
@@ -51,14 +47,10 @@ export abstract class Registry<Name extends string, Factory> {
 
         hook.run( 'Registry::beforeRemove', name, sanitized, this );
 
-        if ( safe && ! this.has( sanitized, true ) ) {
-
-            throw new PyxeError ( {
-                method: 'Registry',
-                msg: `Registry item <${sanitized}> is not declared`
-            } );
-
-        }
+        assert( ! safe || this.has( sanitized ), {
+            method: 'Registry',
+            msg: `Registry item <${sanitized}> is not declared`
+        } );
 
         this.items.delete( sanitized );
 
@@ -113,20 +105,10 @@ export abstract class Registry<Name extends string, Factory> {
 
         const sanitized = this._sanitize( name );
 
-        if ( this.items.has( sanitized ) ) {
-
-            return true;
-
-        } else if ( safe ) {
-
-            throw new PyxeError ( {
-                method: 'Registry',
-                msg: `Registry item <${sanitized}> not found`
-            } );
-
-        }
-
-        return false;
+        return this.items.has( sanitized ) || handleError( {
+            method: 'Registry',
+            msg: `Registry item <${sanitized}> not found`
+        }, safe );
 
     }
 

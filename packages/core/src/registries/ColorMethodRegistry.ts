@@ -1,7 +1,7 @@
 'use strict';
 
 import { Color } from '../classes/Color.js';
-import { PyxeError } from '../services/PyxeError.js';
+import { assert, catchToError } from '../services/ErrorUtils.js';
 import { hook } from '../services/Hook.js';
 
 export const ColorMethodRegistry = {
@@ -13,7 +13,7 @@ export const ColorMethodRegistry = {
 
         hook.run( 'ColorMethodRegistry::bind', method, name, Color, this );
 
-        try {
+        catchToError( () => {
 
             if ( ! ( name in Color.prototype ) ) {
 
@@ -28,14 +28,10 @@ export const ColorMethodRegistry = {
 
             }
 
-        } catch ( err ) {
-
-            throw new PyxeError ( {
-                err, method: 'ColorMethodRegistry',
-                msg: `Cannot bind method <${method}> as <${name}> to the Color class.`
-            } );
-
-        }
+        }, {
+            method: 'ColorMethodRegistry',
+            msg: `Cannot bind method <${method}> as <${name}> to the Color class.`
+        } );
 
     },
 
@@ -45,18 +41,12 @@ export const ColorMethodRegistry = {
 
         hook.run( 'ColorMethodRegistry::unbind', name, Color, this );
 
-        if ( name in Color.prototype ) {
+        assert( name in Color.prototype, {
+            method: 'ColorMethodRegistry',
+            msg: `Method <${name}> is not bound to the Color class`
+        } );
 
-            delete ( Color.prototype as any )[ name ];
-
-        } else {
-
-            throw new PyxeError ( {
-                method: 'ColorMethodRegistry',
-                msg: `Method <${name}> is not bound to the Color class`
-            } );
-
-        }
+        delete ( Color.prototype as any )[ name ];
 
     }
 

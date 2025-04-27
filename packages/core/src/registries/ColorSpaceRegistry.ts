@@ -3,7 +3,7 @@
 import type { ColorSpaceName, ColorSpaceFactory } from '@pyxe/types';
 import { Registry } from './Registry.js';
 import { conversionGraphRegistry } from './ConversionGraphRegistry.js';
-import { PyxeError } from '../services/PyxeError.js';
+import { assert } from '../services/ErrorUtils.js';
 import { hook } from '../services/Hook.js';
 
 export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFactory> {
@@ -24,25 +24,21 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
     public add (
         name: ColorSpaceName,
-        factory: ColorSpaceFactory
+        colorSpace: ColorSpaceFactory
     ) : void {
 
-        hook.run( 'ColorSpaceRegistry::beforeAdd', name, name, factory, this );
+        hook.run( 'ColorSpaceRegistry::beforeAdd', name, colorSpace, this );
 
-        super._add( name, factory );
+        super._add( name, colorSpace );
 
-        if ( factory.aliases ) {
+        if ( colorSpace.aliases ) {
 
-            for ( const alias of factory.aliases ) {
+            for ( const alias of colorSpace.aliases ) {
 
-                if ( this.has( alias ) || this.aliases.has( alias ) ) {
-
-                    throw new PyxeError ( {
-                        method: 'ColorSpaceRegistry',
-                        msg: `Alias <${alias}> is already declared for <${ this.resolve( alias ) }>`
-                    } );
-
-                }
+                assert( ! this.has( alias ) && ! this.aliases.has( alias ), {
+                    method: 'ColorSpaceRegistry',
+                    msg: `Alias <${alias}> is already declared for <${ this.resolve( alias ) }>`
+                } );
 
                 this.aliases.set( alias, name );
 
@@ -50,9 +46,9 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
         }
 
-        if ( factory.hooks ) {
+        if ( colorSpace.hooks ) {
 
-            for ( const [ key, handler ] of Object.entries( factory.hooks ) ) {
+            for ( const [ key, handler ] of Object.entries( colorSpace.hooks ) ) {
 
                 hook.add( key, handler );
 
@@ -60,13 +56,13 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
         }
 
-        if ( factory.conversions ) {
+        if ( colorSpace.conversions ) {
 
-            conversionGraphRegistry.addMany( name, factory.conversions );
+            conversionGraphRegistry.addMany( name, colorSpace.conversions );
 
         }
 
-        hook.run( 'ColorSpaceRegistry::afterAdd', name, name, factory, this );
+        hook.run( 'ColorSpaceRegistry::afterAdd', name, colorSpace, this );
 
     }
 
@@ -74,17 +70,17 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
         name: ColorSpaceName
     ) : void {
 
-        const factory = this.get( name );
+        const colorSpace = this.get( name );
 
-        hook.run( 'ColorSpaceRegistry::beforeRemove', name, name, this );
+        hook.run( 'ColorSpaceRegistry::beforeRemove', name, this );
 
         super._remove( name );
 
         conversionGraphRegistry.removeAll( name );
 
-        if ( factory?.aliases ) {
+        if ( colorSpace?.aliases ) {
 
-            for ( const alias of factory.aliases ) {
+            for ( const alias of colorSpace.aliases ) {
 
                 this.aliases.delete( alias );
 
@@ -92,9 +88,9 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
         }
 
-        if ( factory?.hooks ) {
+        if ( colorSpace?.hooks ) {
 
-            for ( const [ key, handler ] of Object.entries( factory.hooks ) ) {
+            for ( const [ key, handler ] of Object.entries( colorSpace.hooks ) ) {
 
                 hook.remove( key, handler );
 
@@ -102,7 +98,7 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
         }
 
-        hook.run( 'ColorSpaceRegistry::afterRemove', name, name, this );
+        hook.run( 'ColorSpaceRegistry::afterRemove', name, this );
 
     }
 

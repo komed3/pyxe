@@ -24,6 +24,26 @@ export function handleError (
 
 }
 
+export function catchToError<T> (
+    fn: () => T,
+    factory: ErrorFactory,
+    safe: boolean = true
+) : T | undefined {
+
+    try {
+
+        return fn();
+
+    } catch ( err ) {
+
+        handleError( { ...factory, ...{ err } }, safe );
+
+        return undefined;
+
+    }
+
+}
+
 export function assert (
     condition: unknown,
     factory: ErrorFactory

@@ -3,7 +3,7 @@
 import type { ModuleMethodFactory } from '@pyxe/types';
 import { Registry } from './Registry.js';
 import { ColorMethodRegistry } from './ColorMethodRegistry.js';
-import { PyxeError } from '../services/PyxeError.js';
+import { catchToError } from '../services/ErrorUtils.js';
 import { hook } from '../services/Hook.js';
 
 export class ModuleMethodRegistry extends Registry<string, ModuleMethodFactory> {
@@ -16,7 +16,7 @@ export class ModuleMethodRegistry extends Registry<string, ModuleMethodFactory> 
 
         hook.run( 'ModuleMethodRegistry::beforeAdd', module, method, bind, this );
 
-        try {
+        catchToError( () => {
 
             const name = `${module}::${method.name}`;
 
@@ -28,14 +28,10 @@ export class ModuleMethodRegistry extends Registry<string, ModuleMethodFactory> 
 
             }
 
-        } catch ( err ) {
-
-            throw new PyxeError ( {
-                err, method: 'ModuleMethodRegistry',
-                msg: `Failed to register method <${method.name}> for module <${module}>`
-            } );
-
-        }
+        }, {
+            method: 'ModuleMethodRegistry',
+            msg: `Failed to register method <${method.name}> for module <${module}>`
+        } );
 
         hook.run( 'ModuleMethodRegistry::afterAdd', module, method, bind, this );
 
