@@ -3,6 +3,7 @@
 import type { ColorChannel, ColorSpaceFactory, ColorSpaceName } from '@pyxe/types';
 import { colorSpaceRegistry } from '../registries/ColorSpaceRegistry.js';
 import { PyxeError } from '../services/PyxeError.js';
+import { assert } from '../services/ErrorUtils.js';
 
 const instances: Map<ColorSpaceName, ColorSpace> = new Map ();
 
@@ -15,17 +16,19 @@ export class ColorSpace {
         name: ColorSpaceName
     ) {
 
-        if ( ! colorSpaceRegistry.has( name ) ) {
-
-            throw new PyxeError ( {
-                method: 'ColorSpace',
-                msg: `Color space <${name}> is not declared`
-            } );
-
-        }
+        assert( colorSpaceRegistry.has( name ), {
+            method: 'ColorSpace',
+            msg: `Color space <${name}> is not declared`
+        } );
 
         this.space = name;
         this.factory = colorSpaceRegistry.get( name )!;
+
+    }
+
+    public aliases () : ColorSpaceName[] {
+
+        return this.factory.aliases ?? [];
 
     }
 
