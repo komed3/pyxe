@@ -7,7 +7,7 @@ export type ColorSpaceName = string;
 
 export interface ColorChannel {
     name: string;
-    type: 'numeric' | 'cyclic' | 'normalized';
+    type: 'normalized' | 'numeric' | 'cyclic' | 'percent';
     min?: number;
     max?: number;
 }
@@ -15,6 +15,7 @@ export interface ColorChannel {
 export interface ColorObjectFactory {
     space: ColorSpaceName;
     value: ColorInstance;
+    alpha?: number;
     meta?: Record<string, any>;
 }
 
