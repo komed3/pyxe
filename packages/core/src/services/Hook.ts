@@ -2,7 +2,7 @@
 
 import type { HookFactory, HookHandler } from '@pyxe/types';
 import { debug } from './Debug.js';
-import { PyxeError } from './PyxeError.js';
+import { catchToError } from './ErrorUtils.js';
 
 export class Hook {
 
@@ -10,29 +10,8 @@ export class Hook {
     private cache: Map<string, [ string, HookFactory[] ][]> = new Map ();
 
     constructor (
-        private softFail: boolean = false
+        private safe: boolean = true
     ) {}
-
-    private _err (
-        msg: string,
-        err?: any
-    ) : void {
-
-        const pyxeError = new PyxeError ( {
-            method: 'Hook', msg, err
-        } );
-
-        if ( this.softFail ) {
-
-            pyxeError.log();
-
-        } else {
-
-            throw pyxeError;
-
-        }
-
-    }
 
     private _register (
         name: string,
@@ -64,7 +43,7 @@ export class Hook {
 
     private _match (
         name: string
-    ) : [ string, HookFactory[] ][] {
+    ) : Array<[ string, HookFactory[] ]> {
 
         if ( this.cache.has( name ) ) {
 
@@ -72,7 +51,7 @@ export class Hook {
 
         }
 
-        let matches: [ string, HookFactory[] ][] = [];
+        let matches: Array<[ string, HookFactory[] ]> = [];
 
         if ( ! name.includes( '*' ) ) {
 
@@ -198,17 +177,17 @@ export class Hook {
 
         debug.log( 'Hook', `run hook <${name}>` );
 
-        try {
+        catchToError( () => {
 
-            for ( const [ key, entries ] of this._match( name ) ) {
+            for ( const [ key, hooks ] of this._match( name ) ) {
 
-                for ( const entry of [ ...entries ] ) {
+                for ( const hook of hooks ) {
 
-                    entry.handler( ...args );
+                    hook.handler( ...args );
 
-                    if ( entry.once ) {
+                    if ( hook.once ) {
 
-                        this.remove( key, entry.handler );
+                        this.remove( key, hook.handler );
 
                     }
 
@@ -216,11 +195,10 @@ export class Hook {
 
             }
 
-        } catch ( err ) {
-
-            this._err( `Failed to run hook for <${name}>`, err );
-
-        }
+        }, {
+            method: 'Hook',
+            msg: `Failed to run hook for <${name}>`
+        }, this.safe );
 
     }
 
@@ -231,17 +209,17 @@ export class Hook {
 
         debug.log( 'Hook', `run async hook <${name}>` );
 
-        try {
+        catchToError( async () => {
 
-            for ( const [ key, entries ] of this._match( name ) ) {
+            for ( const [ key, hooks ] of this._match( name ) ) {
 
-                for ( const entry of [ ...entries ] ) {
+                for ( const hook of hooks ) {
 
-                    await entry.handler( ...args );
+                    await hook.handler( ...args );
 
-                    if ( entry.once ) {
+                    if ( hook.once ) {
 
-                        this.remove( key, entry.handler );
+                        this.remove( key, hook.handler );
 
                     }
 
@@ -249,11 +227,10 @@ export class Hook {
 
             }
 
-        } catch ( err ) {
-
-            this._err( `Failed to run async hook for <${name}>`, err );
-
-        }
+        }, {
+            method: 'Hook',
+            msg: `Failed to run async hook for <${name}>`
+        }, this.safe );
 
     }
 
@@ -264,15 +241,10 @@ export class Hook {
 
         setImmediate ( () => {
 
-            try {
-
-                this.run( name, ...args );
-
-            } catch ( err ) {
-
-                this._err( `Failed to run deferred hook for <${name}>`, err );
-
-            }
+            catchToError( () => this.run( name, ...args ), {
+                method: 'Hook',
+                msg: `Failed to run deferred hook for <${name}>`
+            }, this.safe );
 
         } );
 
@@ -288,17 +260,17 @@ export class Hook {
 
         let result = input;
 
-        try {
+        catchToError( () => {
 
-            for ( const [ key, entries ] of this._match( name ) ) {
+            for ( const [ key, hooks ] of this._match( name ) ) {
 
-                for ( const entry of [ ...entries ] ) {
+                for ( const hook of hooks ) {
 
-                    result = entry.handler( result, ...args );
+                    result = hook.handler( result, ...args );
 
-                    if ( entry.once ) {
+                    if ( hook.once ) {
 
-                        this.remove( key, entry.handler );
+                        this.remove( key, hook.handler );
 
                     }
 
@@ -306,11 +278,10 @@ export class Hook {
 
             }
 
-        } catch ( err ) {
-
-            this._err( `Failed to apply filter for <${name}>`, err );
-
-        }
+        }, {
+            method: 'Hook',
+            msg: `Failed to apply filter for <${name}>`
+        }, this.safe );
 
         return result;
 
@@ -326,17 +297,17 @@ export class Hook {
 
         let result = input;
 
-        try {
+        catchToError( async () => {
 
-            for ( const [ key, entries ] of this._match( name ) ) {
+            for ( const [ key, hooks ] of this._match( name ) ) {
 
-                for ( const entry of [ ...entries ] ) {
+                for ( const hook of hooks ) {
 
-                    result = await entry.handler( result, ...args );
+                    result = await hook.handler( result, ...args );
 
-                    if ( entry.once ) {
-                        
-                        this.remove( key, entry.handler );
+                    if ( hook.once ) {
+
+                        this.remove( key, hook.handler );
 
                     }
 
@@ -344,11 +315,10 @@ export class Hook {
 
             }
 
-        } catch ( err ) {
-
-            this._err( `Failed to apply async filter for <${name}>`, err );
-
-        }
+        }, {
+            method: 'Hook',
+            msg: `Failed to apply async filter for <${name}>`
+        }, this.safe );
 
         return result;
 

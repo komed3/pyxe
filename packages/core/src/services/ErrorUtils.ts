@@ -66,7 +66,7 @@ export function check (
 }
 
 export function checkAll (
-    conditions: Array<[unknown, ErrorFactory]>,
+    conditions: Array<[ unknown, ErrorFactory ]>,
     safe: boolean = true
 ) : boolean {
 
