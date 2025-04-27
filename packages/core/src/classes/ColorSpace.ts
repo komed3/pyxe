@@ -2,7 +2,6 @@
 
 import type { ColorChannel, ColorSpaceFactory, ColorSpaceName } from '@pyxe/types';
 import { colorSpaceRegistry } from '../registries/ColorSpaceRegistry.js';
-import { PyxeError } from '../services/PyxeError.js';
 import { assert } from '../services/ErrorUtils.js';
 
 const instances: Map<ColorSpaceName, ColorSpace> = new Map ();
@@ -51,14 +50,10 @@ export class ColorSpace {
 
         const channel = this.factory.channels[ key ];
 
-        if ( safe && ! channel ) {
-
-            throw new PyxeError ( {
-                method: 'ColorSpace',
-                msg: `Channel <${key}> is not defined in color space <${this.space}>`
-            } );
-
-        }
+        assert( channel || ! safe, {
+            method: 'ColorSpace',
+            msg: `Channel <${key}> is not defined in color space <${this.space}>`
+        } );
 
         return channel;
 
