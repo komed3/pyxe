@@ -18,7 +18,7 @@ export class ColorLib {
     private loaded: Set<string> = new Set();
     private entries: ColorLibList = [];
 
-    constructor (
+    private constructor (
         name: string,
         sources?: string[]
     ) {
@@ -35,10 +35,7 @@ export class ColorLib {
 
         this.loadDefault = hook.filter(
             'ColorLib::defaultSources',
-            sources ??
-            this.factory?.autoLoad ??
-            this.listSources() ??
-            [],
+            sources ?? this.factory?.autoLoad ?? this.listSources() ?? [],
             name, sources, this
         );
 
@@ -72,11 +69,11 @@ export class ColorLib {
         sources?: string[]
     ) : Promise<void> {
 
-        for ( const source of ( sources ?? this.loadDefault ) ) {
-
-            await this._loadSource( source );
-
-        }
+        await Promise.all(
+            ( sources ?? this.loadDefault ).map(
+                ( source ) => this._loadSource( source )
+            )
+        );
 
     }
 
@@ -100,7 +97,7 @@ export class ColorLib {
     ) : string[] {
 
         return loaded
-            ? Object.keys( this.loaded )
+            ? Array.from( this.loaded )
             : Object.keys( this.factory.sources );
 
     }
@@ -157,9 +154,7 @@ export class ColorLib {
         sources?: string[]
     ) : Promise<ColorLibEntry | undefined> {
 
-        const entry = await this._entry( colorID, sources );
-
-        return entry;
+        return await this._entry( colorID, sources );
 
     }
 
