@@ -96,7 +96,7 @@ export class Parser {
 
         hook.run( 'Parser::afterParse', input, this );
 
-        return hook.filter( 'Parser::color', {
+        return hook.filter( 'Parser::result', {
             space: this.colorSpace.space,
             value: channels as Partial<ColorInstance>,
             alpha: ChannelHelper.parseAlpha( match.shift(), ! this.strict ),

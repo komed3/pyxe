@@ -1,6 +1,6 @@
 'use strict';
 
-import type { ColorInput, ColorSpaceName, TracerFactory } from '@pyxe/types';
+import type { ColorInput, ColorObjectFactory, ColorSpaceName, TracerFactory } from '@pyxe/types';
 import { ColorObject } from '../classes/ColorObject.js';
 import { hook } from './Hook.js';
 import { debug } from './Debug.js';
@@ -147,7 +147,7 @@ export const tracerTemplates = {
 
     parse: (
         input: ColorInput,
-        result: ColorObject
+        result: ColorObject | ColorObjectFactory
     ) : Partial<TracerFactory> => ( {
         action: 'parse',
         meta: {
@@ -158,8 +158,8 @@ export const tracerTemplates = {
     } ),
 
     convert: (
-        input: ColorObject,
-        result: ColorObject,
+        input: ColorObject | ColorObjectFactory,
+        result: ColorObject | ColorObjectFactory,
         path?: ColorSpaceName[] | unknown
     ) : Partial<TracerFactory> => ( {
         action: 'convert',
@@ -173,8 +173,8 @@ export const tracerTemplates = {
 
     module: (
         module: string,
-        input: ColorObject,
-        result: ColorObject
+        input: ColorObject | ColorObjectFactory,
+        result: ColorObject | ColorObjectFactory
     ) : Partial<TracerFactory> => ( {
         action: `module::${ module.toLowerCase() }`,
         meta: {
