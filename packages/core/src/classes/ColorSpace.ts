@@ -129,4 +129,14 @@ export class ColorSpace {
 
     }
 
+    public static resolveMany (
+        names: ColorSpaceName[]
+    ) : ColorSpaceName[] {
+
+        return [ ...new Set( names.map(
+            ( name ) => colorSpaceRegistry.resolve( name )
+        ).filter( Boolean ) ) ];
+
+    }
+
 }

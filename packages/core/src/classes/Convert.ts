@@ -21,30 +21,6 @@ export class Convert {
 
     }
 
-    public static manyTo (
-        inputs: ( ColorObjectFactory | any )[],
-        target: ColorSpaceName[] | ColorSpaceName,
-        strict: boolean = false
-    ) : ( ColorObjectFactory | undefined )[] {
-
-        return inputs.map(
-            ( input ) => ( new Convert ( input, false ) ).to( target, strict )
-        );
-
-    }
-
-    public static manyToAll (
-        inputs: ( ColorObjectFactory | any )[],
-        target: ColorSpaceName[],
-        strict: boolean = false
-    ) : Record<string, any>[] {
-
-        return inputs.map(
-            ( input ) => ( new Convert ( input, false ) ).toAll( target, strict )
-        );
-
-    }
-
     public to (
         target: ColorSpaceName[] | ColorSpaceName,
         strict: boolean = true
@@ -102,6 +78,30 @@ export class Convert {
         return Object.fromEntries( targets.map(
             ( t ) => [ t, this.to( t, strict ) ]
         ) );
+
+    }
+
+    public static manyTo (
+        inputs: ( ColorObjectFactory | any )[],
+        target: ColorSpaceName[] | ColorSpaceName,
+        strict: boolean = false
+    ) : ( ColorObjectFactory | undefined )[] {
+
+        return inputs.map(
+            ( input ) => ( new Convert ( input, false ) ).to( target, strict )
+        );
+
+    }
+
+    public static manyToAll (
+        inputs: ( ColorObjectFactory | any )[],
+        target: ColorSpaceName[],
+        strict: boolean = false
+    ) : Record<string, any>[] {
+
+        return inputs.map(
+            ( input ) => ( new Convert ( input, false ) ).toAll( target, strict )
+        );
 
     }
 

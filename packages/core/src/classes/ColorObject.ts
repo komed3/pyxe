@@ -37,17 +37,6 @@ export class ColorObject {
 
     }
 
-    public static from (
-        input: ColorObjectFactory,
-        safe: boolean = true
-    ) : ColorObject {
-
-        const { space, value, alpha, meta } = input;
-
-        return new ColorObject ( space, value, alpha, meta, safe );
-
-    }
-
     private _factory () : ColorObjectFactory {
 
         return {
@@ -121,6 +110,17 @@ export class ColorObject {
             return this.meta;
 
         }
+
+    }
+
+    public static from (
+        input: ColorObjectFactory,
+        safe: boolean = true
+    ) : ColorObject {
+
+        const { space, value, alpha, meta } = input;
+
+        return new ColorObject ( space, value, alpha, meta, safe );
 
     }
 

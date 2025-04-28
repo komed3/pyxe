@@ -3,6 +3,18 @@
 import type { ColorInstance } from './Color.js';
 import type { ColorSpaceName } from './ColorSpace.js';
 
+export interface ColorLibEntry {
+    id: string;
+    name?: string | Record<string, string>;
+    spaces: Record<ColorSpaceName, ColorInstance>;
+    alpha?: number;
+    meta?: Record<string, any>;
+}
+
+export type ColorLibList = ColorLibEntry[];
+
+export type ColorLibLoader = () => Promise<ColorLibList>;
+
 export interface ColorLibMeta {
     name?: string;
     description?: string;
@@ -12,19 +24,8 @@ export interface ColorLibMeta {
     tags?: string[];
 }
 
-export interface ColorLibEntry {
-    id: string;
-    name?: string | Record<string, string>;
-    spaces: Record<ColorSpaceName, ColorInstance>;
-    meta?: Record<string, any>;
-}
-
-export type ColorLibList = ColorLibEntry[];
-
-export type ColorLibLoader = () => Promise<ColorLibList>;
-
 export interface ColorLibFactory {
-    meta: ColorLibMeta;
     sources: Record<string, ColorLibLoader>;
+    meta: ColorLibMeta;
     autoLoad?: string[];
 }
