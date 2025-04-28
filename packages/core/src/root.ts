@@ -1,7 +1,11 @@
 'use strict';
 
+export * from './classes/Color.js';
+export * from './classes/ColorLib.js';
 export * from './classes/ColorObject.js';
 export * from './classes/ColorSpace.js';
+export * from './classes/ConversionGraph.js';
+export * from './classes/Convert.js';
 export * from './classes/Parser.js';
 export * from './classes/Validator.js';
 
