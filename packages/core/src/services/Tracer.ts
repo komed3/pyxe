@@ -34,30 +34,42 @@ export class Tracer {
     }
 
     public flush (
-        color: ColorObject
+        input: any
     ) : void {
 
-        color.updateMeta( { trace: [] } );
+        if ( input instanceof ColorObject ) {
+
+            input.updateMeta( { trace: [] } );
+
+        } else if ( input?.trace ) {
+
+            input.trace = [];
+
+        }
 
     }
 
     public add (
         color: ColorObject,
         entry: Partial<TracerFactory>,
-        flush: boolean = false
+        options: {
+            flush?: boolean,
+            clear?: boolean
+        } = {}
     ) : void {
 
         if ( this.state ) {
 
-            debug.log( 'Tracer', `Add color object tracer <${ JSON.stringify( entry ) }>` );
+            debug.log( 'Tracer', `Add color object tracer for action: <${ entry.action }>` );
 
-            let trace = this.get( color )!;
+            if ( options.flush ) {
 
-            if ( flush ) {
-
-                trace = [];
+                this.flush( entry.meta?.input );
+                this.flush( entry.meta?.result );
 
             }
+
+            let trace = options.clear ? [] : this.get( color )!;
 
             trace.push( hook.filter( 'Tracer::entry', {
                 ...entry, timestamp: new Date()
@@ -71,9 +83,59 @@ export class Tracer {
 
     public get (
         color: ColorObject
-    ) : TracerFactory[] | undefined {
+    ) : TracerFactory[] {
 
         return color.getMeta( 'trace' ) ?? [];
+
+    }
+
+    public export (
+        color: ColorObject,
+        options: {
+            format?: 'json' | 'object';
+            pretty?: boolean;
+            limit?: number;
+        } = {}
+    ) : string | TracerFactory[] {
+
+        const trace: TracerFactory[] = hook.filter(
+            'Tracer::export',
+            this.get( color )
+                .slice( -( options.limit ?? 0 ) )
+                .map( ( entry ) => {
+
+                    entry.meta ??= {};
+
+                    [ 'input', 'result' ].forEach( ( key ) => {
+
+                        if ( entry.meta![ key ] instanceof ColorObject ) {
+
+                            entry.meta![ key ] = entry.meta![ key ].toObject();
+
+                        }
+
+                    } );
+
+                    this.flush( entry.meta?.input );
+                    this.flush( entry.meta?.result );
+
+                    return entry;
+
+                } ),
+            color,
+            options,
+            this
+        );
+
+        switch ( options?.format ) {
+
+            case 'json':
+                return JSON.stringify( trace, null, options?.pretty ? 2 : 0 );
+
+            default:
+                return trace;
+
+        }
 
     }
 
