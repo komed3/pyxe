@@ -53,3 +53,4 @@ export class Validator {
 }
 
 export const validator = new Validator ( true );
+export const test = new Validator ( false );

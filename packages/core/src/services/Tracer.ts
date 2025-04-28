@@ -1,6 +1,8 @@
 'use strict';
 
-import type { ColorInput, ColorSpaceName, ColorObjectFactory, TracerFactory } from '@pyxe/types';
+import type { ColorInput, ColorSpaceName, TracerFactory } from '@pyxe/types';
+import { ColorObject } from '../classes/ColorObject.js';
+import { hook } from './Hook.js';
 import { debug } from './Debug.js';
 
 export class Tracer {
@@ -31,7 +33,7 @@ export class Tracer {
 
     }
 
-    /*public flush (
+    public flush (
         color: ColorObject
     ) : void {
 
@@ -47,6 +49,8 @@ export class Tracer {
 
         if ( this.state ) {
 
+            debug.log( 'Tracer', `Add color object tracer <${ JSON.stringify( entry ) }>` );
+
             let trace = this.get( color )!;
 
             if ( flush ) {
@@ -55,9 +59,9 @@ export class Tracer {
 
             }
 
-            trace.push( {
+            trace.push( hook.filter( 'Tracer::entry', {
                 ...entry, timestamp: new Date()
-            } as TracerFactory );
+            }, color, this ) as TracerFactory );
 
             color.updateMeta( { trace } );
 
@@ -71,7 +75,7 @@ export class Tracer {
 
         return color.getMeta( 'trace' ) ?? [];
 
-    }*/
+    }
 
 }
 
@@ -81,7 +85,7 @@ export const tracerTemplates = {
 
     parse: (
         input: ColorInput,
-        result: ColorObjectFactory
+        result: ColorObject
     ) : Partial<TracerFactory> => ( {
         action: 'parse',
         meta: {
@@ -92,8 +96,8 @@ export const tracerTemplates = {
     } ),
 
     convert: (
-        input: ColorObjectFactory,
-        result: ColorObjectFactory,
+        input: ColorObject,
+        result: ColorObject,
         path?: ColorSpaceName[] | unknown
     ) : Partial<TracerFactory> => ( {
         action: 'convert',
@@ -107,8 +111,8 @@ export const tracerTemplates = {
 
     module: (
         module: string,
-        input: ColorObjectFactory,
-        result: ColorObjectFactory
+        input: ColorObject,
+        result: ColorObject
     ) : Partial<TracerFactory> => ( {
         action: `module::${ module.toLowerCase() }`,
         meta: {
