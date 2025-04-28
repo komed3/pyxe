@@ -33,7 +33,7 @@ export class ColorSpace {
 
     public channels () : string[] {
 
-        return [ ...Object.keys( this.factory.channels ) ];
+        return Object.keys( this.factory.channels );
 
     }
 
