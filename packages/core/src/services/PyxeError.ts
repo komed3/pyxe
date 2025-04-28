@@ -23,7 +23,7 @@ export class PyxeError extends Error {
 
         const extra = typeof err === 'string'
             ? err : err instanceof Error
-                ? err.message : err != null
+                ? err.message : err !== null
                     ? String ( err ) : undefined;
 
         const header = `${ time } [${ method.toUpperCase() }] ${ ( msg ?? '' ) }` +

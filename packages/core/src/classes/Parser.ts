@@ -115,7 +115,7 @@ export class Parser {
 
         if (
             force || ! instances.has( resolved ) ||
-            instances.get( resolved )?.strict != strict
+            instances.get( resolved )?.strict !== strict
         ) {
 
             instances.set( resolved, new Parser ( resolved, strict ) );

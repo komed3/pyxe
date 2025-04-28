@@ -1,7 +1,7 @@
 'use strict';
 
-import type { ColorInput, TracerFactory } from '@pyxe/types';
-import { ColorObject } from '../ColorObject.js';
+import type { ColorInput, ColorSpaceName, ColorObjectFactory, TracerFactory } from '@pyxe/types';
+import { debug } from './Debug.js';
 
 export class Tracer {
 
@@ -13,11 +13,15 @@ export class Tracer {
 
         this.state = true;
 
+        debug.log( 'Tracer', `Color object tracer <enabled>` );
+
     }
 
     public disable () : void {
 
         this.state = false;
+
+        debug.log( 'Tracer', `Color object tracer <disabled>` );
 
     }
 
@@ -27,7 +31,7 @@ export class Tracer {
 
     }
 
-    public flush (
+    /*public flush (
         color: ColorObject
     ) : void {
 
@@ -67,7 +71,7 @@ export class Tracer {
 
         return color.getMeta( 'trace' ) ?? [];
 
-    }
+    }*/
 
 }
 
@@ -77,7 +81,7 @@ export const tracerTemplates = {
 
     parse: (
         input: ColorInput,
-        result: ColorObject
+        result: ColorObjectFactory
     ) : Partial<TracerFactory> => ( {
         action: 'parse',
         meta: {
@@ -88,9 +92,9 @@ export const tracerTemplates = {
     } ),
 
     convert: (
-        input: ColorObject,
-        result: ColorObject,
-        path?: string[] | unknown
+        input: ColorObjectFactory,
+        result: ColorObjectFactory,
+        path?: ColorSpaceName[] | unknown
     ) : Partial<TracerFactory> => ( {
         action: 'convert',
         meta: {
@@ -103,8 +107,8 @@ export const tracerTemplates = {
 
     module: (
         module: string,
-        input: ColorObject,
-        result: ColorObject
+        input: ColorObjectFactory,
+        result: ColorObjectFactory
     ) : Partial<TracerFactory> => ( {
         action: `module::${ module.toLowerCase() }`,
         meta: {
