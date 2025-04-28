@@ -9,7 +9,7 @@ import { check } from '../services/ErrorUtils.js';
 export class Validator {
 
     constructor (
-        private safe: boolean = false
+        private safe: boolean = true
     ) {}
 
     public validate (
@@ -52,5 +52,5 @@ export class Validator {
 
 }
 
-export const validator = new Validator ( true );
+export const validator = new Validator ();
 export const test = new Validator ( false );
