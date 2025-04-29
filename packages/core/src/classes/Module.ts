@@ -1,33 +1,16 @@
 'use strict';
 
 import type { ModuleFactory } from '@pyxe/types';
+import { Entity } from './Entity.js';
 import { moduleRegistry } from '../registries/ModuleRegistry.js';
 import { ColorMethodRegistry } from '../registries/ColorMethodRegistry.js';
 import { ModuleMethod } from './ModuleMethod.js';
-import { assert } from '../services/ErrorUtils.js';
 
-const instances: Map<string, Module> = new Map ();
+export class Module extends Entity<string, ModuleFactory> {
 
-export class Module {
-
-    readonly name: string;
-    private factory: ModuleFactory;
+    public static override registry = moduleRegistry;
 
     private cache: Map<string, ModuleMethod> = new Map ();
-
-    private constructor (
-        name: string
-    ) {
-
-        assert( moduleRegistry.has( name ), {
-            method: 'Module',
-            msg: `Module <${name}> is not declared`
-        } );
-
-        this.name = name;
-        this.factory = moduleRegistry.get( name )!;
-
-    }
 
     public methods () : string[] {
 
@@ -43,65 +26,11 @@ export class Module {
 
         if ( ! this.cache.has( method ) ) {
 
-            this.cache.set( method, ModuleMethod.getInstance( method ) );
+            this.cache.set( method, ModuleMethod.getInstance( method ) as ModuleMethod );
 
         }
 
         return this.cache.get( method )!;
-
-    }
-
-    public meta (
-        key?: string
-    ) : any {
-
-        return key ? ( this.factory?.meta ?? {} )[ key ] : this.factory?.meta;
-
-    }
-
-    public static getInstance (
-        name: string,
-        force: boolean = false
-    ) : Module {
-
-        if ( force || ! instances.has( name ) ) {
-
-            instances.set( name, new Module ( name ) );
-
-        }
-
-        return instances.get( name )!;
-
-    }
-
-    public static destroyInstance (
-        name: string
-    ) : void {
-
-        instances.delete( name );
-
-    }
-
-    public static list () : string[] {
-
-        return moduleRegistry.list();
-
-    }
-
-    public static filter (
-        filter?: string
-    ) : string[] {
-
-        return moduleRegistry.filter( filter );
-
-    }
-
-    public static has (
-        name: string,
-        safe: boolean = false
-    ) : boolean {
-
-        return moduleRegistry.has( name, safe );
 
     }
 

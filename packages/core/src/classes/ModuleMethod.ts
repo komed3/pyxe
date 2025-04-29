@@ -1,31 +1,15 @@
 'use strict';
 
 import type { ColorObjectFactory, ColorSpaceName, ModuleMethodFactory } from '@pyxe/types';
+import { Entity } from './Entity.js';
 import { moduleMethodRegistry } from '../registries/ModuleMethodRegistry.js';
 import { ColorMethodRegistry } from '../registries/ColorMethodRegistry.js';
 import { hook } from '../services/Hook.js';
 import { assert, catchToError } from '../services/ErrorUtils.js';
 
-const instances: Map<string, ModuleMethod> = new Map ();
+export class ModuleMethod extends Entity<string, ModuleMethodFactory> {
 
-export class ModuleMethod {
-
-    readonly name: string;
-    private factory: ModuleMethodFactory;
-
-    private constructor (
-        name: string
-    ) {
-
-        assert( moduleMethodRegistry.has( name ), {
-            method: 'ModuleMethod',
-            msg: `Module method <${name}> is not declared`
-        } );
-
-        this.name = name;
-        this.factory = moduleMethodRegistry.get( name )!;
-
-    }
+    public static override registry = moduleMethodRegistry;
 
     public supports (
         space: ColorSpaceName
@@ -43,15 +27,7 @@ export class ModuleMethod {
 
     public spaces () : ColorSpaceName[] {
 
-        return this.factory.spaces;
-
-    }
-
-    public meta (
-        key?: string
-    ) : any {
-
-        return key ? ( this.factory?.meta ?? {} )[ key ] : this.factory?.meta;
+        return this.factory.spaces ?? [];
 
     }
 
@@ -80,52 +56,6 @@ export class ModuleMethod {
         }, safe );
 
         return undefined;
-
-    }
-
-    public static getInstance (
-        name: string,
-        force: boolean = false
-    ) : ModuleMethod {
-
-        if ( force || ! instances.has( name ) ) {
-
-            instances.set( name, new ModuleMethod ( name ) );
-
-        }
-
-        return instances.get( name )!;
-
-    }
-
-    public static destroyInstance (
-        name: string
-    ) : void {
-
-        instances.delete( name );
-
-    }
-
-    public static list () : string[] {
-
-        return moduleMethodRegistry.list();
-
-    }
-
-    public static filter (
-        filter?: string
-    ) : string[] {
-
-        return moduleMethodRegistry.filter( filter );
-
-    }
-
-    public static has (
-        name: string,
-        safe: boolean = false
-    ) : boolean {
-
-        return moduleMethodRegistry.has( name, safe );
 
     }
 
