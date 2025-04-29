@@ -1,7 +1,6 @@
 'use strict';
 
 import type { DebugLevel, DebugTypes } from '@pyxe/types';
-import { tracer } from './Tracer.js';
 
 export class Debug {
 
@@ -61,15 +60,11 @@ export class Debug {
 
         this.setLevel( 'debug' );
 
-        tracer.enable();
-
     }
 
     public disable () {
 
         this.setLevel( 'silent' );
-
-        tracer.disable();
 
     }
 
