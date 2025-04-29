@@ -1,19 +1,17 @@
 'use strict';
 
 import type { ColorSpaceName, ColorLibEntry, ColorLibFactory, ColorLibList, ColorObjectFactory } from '@pyxe/types';
+import { Entity } from './Entity.js';
 import { colorLibRegistry } from '../registries/ColorLibRegistry.js';
 import { ColorSpace } from './ColorSpace.js';
 import { Convert } from './Convert.js';
 import { hook } from '../services/Hook.js';
-import { assert, catchToError } from '../services/ErrorUtils.js';
+import { catchToError } from '../services/ErrorUtils.js';
 
-const instances: Map<string, ColorLib> = new Map ();
+export class ColorLib extends Entity<string, ColorLibFactory> {
 
-export class ColorLib {
+    public static override registry = colorLibRegistry;
 
-    readonly name: string;
-
-    private factory: ColorLibFactory;
     private loadDefault: string[] = [];
     private loaded: Set<string> = new Set();
     private entries: ColorLibList = [];
@@ -23,15 +21,7 @@ export class ColorLib {
         sources?: string[]
     ) {
 
-        assert( colorLibRegistry.has( name ), {
-            method: 'ColorLib',
-            msg: `Color library <${name}> is not declared`
-        } );
-
-        const factory = colorLibRegistry.get( name )!;
-
-        this.name = name;
-        this.factory = factory;
+        super( name );
 
         this.loadDefault = hook.filter(
             'ColorLib::defaultSources',
@@ -215,53 +205,6 @@ export class ColorLib {
         }, safe );
 
         return undefined;
-
-    }
-
-    public static getInstance (
-        name: string,
-        sources?: string[],
-        force: boolean = false
-    ) : ColorLib {
-
-        if ( force || ! instances.has( name ) ) {
-
-            instances.set( name, new ColorLib ( name, sources ) );
-
-        }
-
-        return instances.get( name )!;
-
-    }
-
-    public static destroyInstance (
-        name: string
-    ) : void {
-
-        instances.delete( name );
-
-    }
-
-    public static list () : string[] {
-
-        return colorLibRegistry.list();
-
-    }
-
-    public static filter (
-        filter?: string
-    ) : string[] {
-
-        return colorLibRegistry.filter( filter );
-
-    }
-
-    public static has (
-        name: string,
-        safe: boolean = false
-    ) : boolean {
-
-        return colorLibRegistry.has( name, safe );
 
     }
 
