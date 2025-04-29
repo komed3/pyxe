@@ -31,7 +31,7 @@ export class ModuleMethod {
         space: ColorSpaceName
     ) : boolean {
 
-        return this.factory.spaces.includes( space );
+        return ! this.factory.spaces.length || this.factory.spaces.includes( space );
 
     }
 
