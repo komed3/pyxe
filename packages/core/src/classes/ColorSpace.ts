@@ -1,29 +1,13 @@
 'use strict';
 
 import type { ColorChannel, ColorSpaceFactory, ColorSpaceName } from '@pyxe/types';
+import { Entity } from './Entity.js';
 import { colorSpaceRegistry } from '../registries/ColorSpaceRegistry.js';
 import { assert } from '../services/ErrorUtils.js';
 
-const instances: Map<ColorSpaceName, ColorSpace> = new Map ();
+export class ColorSpace extends Entity<ColorSpaceName, ColorSpaceFactory> {
 
-export class ColorSpace {
-
-    readonly space: ColorSpaceName;
-    private factory: ColorSpaceFactory;
-
-    private constructor (
-        name: ColorSpaceName
-    ) {
-
-        assert( colorSpaceRegistry.has( name ), {
-            method: 'ColorSpace',
-            msg: `Color space <${name}> is not declared`
-        } );
-
-        this.space = name;
-        this.factory = colorSpaceRegistry.get( name )!;
-
-    }
+    public static override registry = colorSpaceRegistry;
 
     public aliases () : ColorSpaceName[] {
 
@@ -50,9 +34,9 @@ export class ColorSpace {
 
         const channel = this.factory.channels[ key ];
 
-        assert( channel || ! safe, {
+        assert( ! safe || channel, {
             method: 'ColorSpace',
-            msg: `Channel <${key}> is not defined in color space <${this.space}>`
+            msg: `Channel <${key}> is not defined in color space <${this.name}>`
         } );
 
         return channel;
@@ -65,59 +49,12 @@ export class ColorSpace {
 
     }
 
-    public meta (
-        key?: string
-    ) : any {
-
-        return key ? ( this.factory?.meta ?? {} )[ key ] : this.factory?.meta;
-
-    }
-
-    public static getInstance (
+    public static getInstance<ColorSpace> (
         name: ColorSpaceName,
         force: boolean = false
     ) : ColorSpace {
 
-        const resolved = ColorSpace.resolve( name );
-
-        if ( force || ! instances.has( resolved ) ) {
-
-            instances.set( resolved, new ColorSpace ( resolved ) );
-
-        }
-
-        return instances.get( resolved )!;
-
-    }
-
-    public static destroyInstance (
-        name: ColorSpaceName
-    ) : void {
-
-        instances.delete( ColorSpace.resolve( name ) );
-
-    }
-
-    public static list () : ColorSpaceName[] {
-
-        return colorSpaceRegistry.list();
-
-    }
-
-    public static filter (
-        filter?: string
-    ) : ColorSpaceName[] {
-
-        return colorSpaceRegistry.filter( filter );
-
-    }
-
-    public static has (
-        name: ColorSpaceName,
-        safe: boolean = false
-    ) : boolean {
-
-        return colorSpaceRegistry.has( name, safe );
+        return super.getInstance( ColorSpace.resolve( name ), force );
 
     }
 

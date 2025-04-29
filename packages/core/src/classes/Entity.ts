@@ -2,7 +2,7 @@
 
 import { assert } from '../services/ErrorUtils.js';
 
-export abstract class Entity<Name extends string, Factory, Registry> {
+export abstract class Entity<Name extends string, Factory> {
 
     public static registry: any;
     public static instances: Map<string, any> = new Map ();
@@ -14,7 +14,7 @@ export abstract class Entity<Name extends string, Factory, Registry> {
         name: Name
     ) {
 
-        const cls = this.constructor as typeof Entity & { registry: Registry };
+        const cls = this.constructor as typeof Entity & { registry: any };
 
         assert( cls.registry.has( name ), {
             method: 'Entity',
@@ -37,19 +37,20 @@ export abstract class Entity<Name extends string, Factory, Registry> {
     }
 
     public static getInstance<
-        T extends Entity<Name, Factory, Registry>,
+        T extends Entity<Name, Factory>,
         Name extends string,
-        Factory, Registry
+        Factory
     > (
         this: {
             new ( name: Name ) : T;
             instances: Map<Name, T>;
-            registry: Registry
+            registry: any
         },
-        name: Name
+        name: Name,
+        force: boolean = false
     ) : T {
 
-        if ( ! this.instances.has( name ) ) {
+        if ( force || ! this.instances.has( name ) ) {
 
             this.instances.set( name, new this ( name ) );
 
@@ -68,16 +69,16 @@ export abstract class Entity<Name extends string, Factory, Registry> {
 
     }
 
-    public static list<Name extends string, Registry> (
-        this: { registry: Registry & { list() : Name[] } }
+    public static list<Name extends string> (
+        this: { registry: any }
     ) : Name[] {
 
         return this.registry.list();
 
     }
 
-    public static filter<Name extends string, Registry> (
-        this: { registry: Registry & { filter( filter?: string ) : Name[] } },
+    public static filter<Name extends string> (
+        this: { registry: any },
         filter?: string
     ) : Name[] {
 
@@ -85,8 +86,8 @@ export abstract class Entity<Name extends string, Factory, Registry> {
 
     }
 
-    public static has<Name extends string, Registry> (
-        this: { registry: Registry & { has( name: Name, safe?: boolean ) : boolean } },
+    public static has<Name extends string> (
+        this: { registry: any },
         name: Name,
         safe: boolean = false
     ) : boolean {
