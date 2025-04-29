@@ -6,6 +6,7 @@ import { test, validator, type Validator } from './classes/Validator.js';
 export { Color } from './classes/Color.js';
 export { ColorSpace } from './classes/ColorSpace.js';
 export { ColorLib } from './classes/ColorLib.js';
+export { Module } from './classes/Module.js';
 
 export const Services: {
     Graph: ConversionGraph;
