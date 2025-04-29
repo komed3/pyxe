@@ -6,6 +6,7 @@ export * from './classes/ColorObject.js';
 export * from './classes/ColorSpace.js';
 export * from './classes/ConversionGraph.js';
 export * from './classes/Convert.js';
+export * from './classes/Entity.js';
 export * from './classes/Module.js';
 export * from './classes/ModuleMethod.js';
 export * from './classes/Parser.js';
