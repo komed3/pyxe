@@ -58,7 +58,7 @@ export class ColorLib {
 
             }, {
                 method: 'ColorLib',
-                msg: `Source <${source}> not found in library <${ this.name }>`
+                msg: `Source <${source}> not found in library <${this.name}>`
             } );
 
         }
@@ -211,7 +211,7 @@ export class ColorLib {
 
         }, {
             method: 'ColorLib',
-            msg: `Unable to retrieve color <${key}> from library <${ this.name }>`
+            msg: `Unable to retrieve color <${key}> from library <${this.name}>`
         }, safe );
 
         return undefined;

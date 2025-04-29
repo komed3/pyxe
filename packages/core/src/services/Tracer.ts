@@ -60,7 +60,7 @@ export class Tracer {
 
         if ( this.state ) {
 
-            debug.log( 'Tracer', `Add color object tracer for action: <${ entry.action }>` );
+            debug.log( 'Tracer', `Add color object tracer for action: <${entry.action}>` );
 
             if ( options.flush ) {
 

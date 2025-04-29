@@ -41,7 +41,7 @@ export class ModuleMethod extends Entity<string, ModuleMethodFactory> {
 
             assert( ! options?.strict || this.supports( input.space ), {
                 method: 'ModuleMethod',
-                msg: `Method <${ this.name }> does not support color space <${ input.space }>`
+                msg: `Method <${this.name}> does not support color space <${input.space}>`
             } );
 
             return hook.filter(
@@ -52,7 +52,7 @@ export class ModuleMethod extends Entity<string, ModuleMethodFactory> {
 
         }, {
             method: 'ModuleMethod',
-            msg: `Error occurred in method <${ this.name }>`
+            msg: `Error occurred in method <${this.name}>`
         }, safe );
 
         return undefined;
