@@ -86,7 +86,7 @@ export class ColorSpace {
 
         }
 
-        return instances.get( name )!;
+        return instances.get( resolved )!;
 
     }
 
