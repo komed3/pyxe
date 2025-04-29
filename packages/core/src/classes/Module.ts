@@ -13,6 +13,8 @@ export class Module {
     readonly name: string;
     private factory: ModuleFactory;
 
+    private cache: Map<string, ModuleMethod> = new Map ();
+
     private constructor (
         name: string
     ) {
@@ -39,7 +41,13 @@ export class Module {
         method: string
     ) : ModuleMethod {
 
-        return ModuleMethod.getInstance( method );
+        if ( ! this.cache.has( method ) ) {
+
+            this.cache.set( method, ModuleMethod.getInstance( method ) );
+
+        }
+
+        return this.cache.get( method )!;
 
     }
 

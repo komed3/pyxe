@@ -59,7 +59,7 @@ export class ModuleMethod {
         input: ColorObjectFactory,
         options?: Record<string, any>,
         safe: boolean = true
-    ) : any {
+    ) : ReturnType<ModuleMethodFactory['handler']> | undefined {
 
         catchToError( () => {
 
@@ -78,6 +78,8 @@ export class ModuleMethod {
             method: 'ModuleMethod',
             msg: `Error occurred in method <${ this.name }>`
         }, safe );
+
+        return undefined;
 
     }
 
