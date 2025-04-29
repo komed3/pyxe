@@ -13,7 +13,7 @@ export class Module {
     readonly name: string;
     private factory: ModuleFactory;
 
-    constructor (
+    private constructor (
         name: string
     ) {
 
@@ -39,7 +39,7 @@ export class Module {
         method: string
     ) : ModuleMethod {
 
-        return new ModuleMethod ( method );
+        return ModuleMethod.getInstance( method );
 
     }
 
