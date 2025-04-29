@@ -6,6 +6,14 @@ import { hook } from '../services/Hook.js';
 
 export const ColorMethodRegistry = {
 
+    isBound (
+        name: string
+    ) : boolean {
+
+        return name in Color.prototype;
+
+    },
+
     bind (
         method: string,
         name: string
@@ -15,7 +23,7 @@ export const ColorMethodRegistry = {
 
         catchToError( () => {
 
-            if ( ! ( name in Color.prototype ) ) {
+            if ( ! this.isBound( name ) ) {
 
                 Object.defineProperty( Color.prototype, name, {
                     value: function ( options: Record<string, any> ) {
@@ -41,7 +49,7 @@ export const ColorMethodRegistry = {
 
         hook.run( 'ColorMethodRegistry::unbind', name, Color, this );
 
-        assert( name in Color.prototype, {
+        assert( this.isBound( name ), {
             method: 'ColorMethodRegistry',
             msg: `Method <${name}> is not bound to the Color class`
         } );

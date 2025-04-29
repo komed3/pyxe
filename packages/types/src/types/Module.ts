@@ -16,7 +16,6 @@ export interface ModuleMethodFactory {
 }
 
 export interface ModuleFactory {
-    name: string;
     methods: ModuleMethodFactory[];
     meta?: Record<string, any>;
 }
