@@ -35,7 +35,7 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
             for ( const alias of colorSpace.aliases ) {
 
-                assert( ! this.has( alias ) && ! this.aliases.has( alias ), {
+                assert( ! this.items.has( alias ) && ! this.aliases.has( alias ), {
                     method: 'ColorSpaceRegistry',
                     msg: `Alias <${alias}> is already declared for <${ this.resolve( alias ) }>`
                 } );

@@ -16,7 +16,7 @@ export class Validator {
         factory: ColorObjectFactory
     ) : boolean {
 
-        const colorSpace = ColorSpace.getInstance( factory.space );
+        const colorSpace = ColorSpace.getInstance( factory.space ) as ColorSpace;
 
         hook.run( 'Validator::validate', factory, colorSpace, this );
 

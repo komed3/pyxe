@@ -25,7 +25,7 @@ export class ColorObject {
 
         this.colorSpace = ColorSpace.getInstance( space );
 
-        this.space = this.colorSpace.space;
+        this.space = this.colorSpace.name;
         this.value = value;
         this.alpha = alpha;
         this.meta = meta;
@@ -40,7 +40,7 @@ export class ColorObject {
     private _factory () : ColorObjectFactory {
 
         return {
-            space: this.colorSpace.space,
+            space: this.colorSpace.name,
             value: this.value,
             alpha: this.alpha
         };

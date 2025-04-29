@@ -27,7 +27,7 @@ export abstract class Registry<Name extends string, Factory> {
 
         hook.run( 'Registry::beforeAdd', name, sanitized, factory, this );
 
-        assert( ! safe || ! this.has( sanitized ), {
+        assert( ! safe || ! this.items.has( sanitized ), {
             method: 'Registry',
             msg: `Registry item <${sanitized}> already declared`
         } );
@@ -47,7 +47,7 @@ export abstract class Registry<Name extends string, Factory> {
 
         hook.run( 'Registry::beforeRemove', name, sanitized, this );
 
-        assert( ! safe || this.has( sanitized ), {
+        assert( ! safe || this.items.has( sanitized ), {
             method: 'Registry',
             msg: `Registry item <${sanitized}> is not declared`
         } );

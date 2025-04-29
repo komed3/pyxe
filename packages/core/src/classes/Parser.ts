@@ -28,7 +28,7 @@ export class Parser {
     private _buildRegex () : string {
 
         /** color space name + aliases */
-        const names = [ this.colorSpace.space, ...this.colorSpace.aliases() ]
+        const names = [ this.colorSpace.name, ...this.colorSpace.aliases() ]
             .map( name => name.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' ).replace( /[-_]/g, '[-_]?' ) )
             .join( '|' );
 
@@ -46,9 +46,9 @@ export class Parser {
         const separator = '\\s*(?:[,/]|\\s)\\s*';
 
         /** create final search pattern */
-        return hook.filter( 'Parser::regex', `^(?:${names})\\s*\\(?${ ( channels.map(
+        return hook.filter( 'Parser::regex', `^(?:${names})\\s*\\(?\\s*${ ( channels.map(
             ( c, i ) => i === channels.length - 1 ? `(?:${separator}${c})?` : i === 0 ? c : `${separator}${c}`
-        ).join( '' ) ) }\\)?$`, this );
+        ).join( '' ) ) }\\s*\\)?$`, this );
 
     }
 
@@ -70,7 +70,7 @@ export class Parser {
 
         if ( ! match || match.length < this.colorSpace.channels().length ) {
 
-            debug.info( 'Parser', `Input <${ JSON.stringify( input ) }> does not match color space <${this.colorSpace.space}>` );
+            debug.info( 'Parser', `Input <${ JSON.stringify( input ) }> does not match color space <${this.colorSpace.name}>` );
 
             return false;
 
@@ -97,7 +97,7 @@ export class Parser {
         hook.run( 'Parser::afterParse', input, this );
 
         return hook.filter( 'Parser::result', {
-            space: this.colorSpace.space,
+            space: this.colorSpace.name,
             value: channels as Partial<ColorInstance>,
             alpha: ChannelHelper.parseAlpha( match.shift(), ! this.strict ),
             meta: { source: input }
