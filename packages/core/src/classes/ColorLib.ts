@@ -159,7 +159,7 @@ export class ColorLib extends Entity<string, ColorLibFactory> {
         safe: boolean = true
     ) : Promise<ColorObjectFactory | undefined> {
 
-        await catchToError( async () => {
+        return await catchToError( async () => {
 
             const { sources, strict = false, tryConvert = false } = options;
 
@@ -203,8 +203,6 @@ export class ColorLib extends Entity<string, ColorLibFactory> {
             method: 'ColorLib',
             msg: `Unable to retrieve color <${key}> from library <${this.name}>`
         }, safe );
-
-        return undefined;
 
     }
 

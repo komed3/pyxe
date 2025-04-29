@@ -32,7 +32,7 @@ export class Convert {
 
             const targets = Array.isArray( target ) ? target : [ target ];
 
-            catchToError( () => {
+            return catchToError( () => {
 
                 for ( const t of targets ) {
 
@@ -45,7 +45,7 @@ export class Convert {
 
                             hook.run( 'Convert::afterConvert', result, target, strict, this );
 
-                            return hook.filter( 'Convert::result', result, target, strict, this ) as ColorObjectFactory;
+                            return hook.filter( 'Convert::result', result, target, strict, this );
 
                         }
 
@@ -62,7 +62,7 @@ export class Convert {
             }, {
                 method: 'Convert',
                 msg: `Conversion of <${ JSON.stringify( this.input ) }> to any of <${ targets.join( ', ' ) }> has failed`
-            }, this.safe );
+            }, this.safe ) as ColorObjectFactory | undefined;
 
         }
 

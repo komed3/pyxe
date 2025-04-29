@@ -37,7 +37,7 @@ export class ModuleMethod extends Entity<string, ModuleMethodFactory> {
         safe: boolean = true
     ) : ReturnType<ModuleMethodFactory['handler']> | undefined {
 
-        catchToError( () => {
+        return catchToError( () => {
 
             assert( ! options?.strict || this.supports( input.space ), {
                 method: 'ModuleMethod',
@@ -54,8 +54,6 @@ export class ModuleMethod extends Entity<string, ModuleMethodFactory> {
             method: 'ModuleMethod',
             msg: `Error occurred in method <${this.name}>`
         }, safe );
-
-        return undefined;
 
     }
 
