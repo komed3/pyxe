@@ -66,7 +66,7 @@ export class Parser {
 
         hook.run( 'Parser::beforeParse', input, this );
 
-        const match = input.toString().trim().match( this.regex );
+        const match = input.toString().trim().match( this.regex )?.slice( 1 );
 
         if ( ! match || match.length < this.colorSpace.channels().length ) {
 
