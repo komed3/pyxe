@@ -7,7 +7,8 @@ import { assert } from '../services/ErrorUtils.js';
 
 export class ColorSpace extends Entity<ColorSpaceName, ColorSpaceFactory> {
 
-    public static override registry = colorSpaceRegistry;
+    protected static override instances: Map<ColorSpaceName, ColorSpaceFactory> = new Map ();
+    protected static override registry = colorSpaceRegistry;
 
     public aliases () : ColorSpaceName[] {
 
@@ -54,7 +55,7 @@ export class ColorSpace extends Entity<ColorSpaceName, ColorSpaceFactory> {
         force: boolean = false
     ) : ColorSpace {
 
-        return super.getInstance( ColorSpace.resolve( name ), force );
+        return super.getInstance( ColorSpace.resolve( name ), force ) as ColorSpace;
 
     }
 

@@ -1,20 +1,44 @@
 'use strict';
 
+import { hook } from '../services/Hook.js';
 import { assert } from '../services/ErrorUtils.js';
 
-export abstract class Entity<Name extends string, Factory> {
+type EntityClass<T, Name> = {
+    new ( name: Name ) : T;
+    registry: {
+        list () : Name[];
+        filter ( filter?: string ) : Name[];
+        all () : any;
+        has ( name: Name, safe?: boolean ) : boolean;
+        get ( name: Name, safe?: boolean ) : any;
+    };
+    instances: Map<string, T>;
+};
 
-    public static registry: any;
-    public static instances: Map<string, any> = new Map ();
+export abstract class Entity<
+    Name extends string,
+    Factory = unknown
+> {
+
+    protected static instances: Map<string, any> = new Map ();
+    protected static registry: any;
 
     public readonly name: Name;
     protected factory: Factory;
 
-    public constructor (
+    private static get _entityClass () : EntityClass<any, any> {
+
+        return this as unknown as EntityClass<any, any>;
+
+    }
+
+    protected constructor (
         name: Name
     ) {
 
-        const cls = this.constructor as typeof Entity & { registry: any };
+        const cls = this.constructor as EntityClass<this, Name>;
+
+        hook.run( 'Entity::constructor', cls, name, this );
 
         assert( cls.registry.has( name ), {
             method: 'Entity',
@@ -36,27 +60,20 @@ export abstract class Entity<Name extends string, Factory> {
 
     }
 
-    public static getInstance<
-        T extends Entity<Name, Factory>,
-        Name extends string,
-        Factory
-    > (
-        this: {
-            new ( name: Name ) : T;
-            instances: Map<Name, T>;
-            registry: any
-        },
+    public static getInstance<T extends Entity<Name, any>, Name extends string> (
         name: Name,
-        force: boolean = false
+        force = false
     ) : T {
 
-        if ( force || ! this.instances.has( name ) ) {
+        const cls = this as any;
 
-            this.instances.set( name, new this ( name ) );
+        if ( force || ! cls.instances.has( name ) ) {
+
+            cls.instances.set( name, new cls ( name ) );
 
         }
 
-        return this.instances.get( name )!;
+        return cls.instances.get( name )!;
 
     }
 
@@ -69,30 +86,26 @@ export abstract class Entity<Name extends string, Factory> {
 
     }
 
-    public static list<Name extends string> (
-        this: { registry: any }
-    ) : Name[] {
+    public static list<Name extends string> () : Name[] {
 
-        return this.registry.list();
+        return this._entityClass.registry.list() as Name[];
 
     }
 
     public static filter<Name extends string> (
-        this: { registry: any },
         filter?: string
     ) : Name[] {
 
-        return this.registry.filter( filter );
+        return this._entityClass.registry.filter( filter );
 
     }
 
     public static has<Name extends string> (
-        this: { registry: any },
         name: Name,
         safe: boolean = false
     ) : boolean {
 
-        return this.registry.has( name, safe );
+        return this._entityClass.registry.has( name, safe );
 
     }
 

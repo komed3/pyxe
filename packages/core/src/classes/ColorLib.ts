@@ -10,7 +10,8 @@ import { catchToError } from '../services/ErrorUtils.js';
 
 export class ColorLib extends Entity<string, ColorLibFactory> {
 
-    public static override registry = colorLibRegistry;
+    protected static override instances: Map<string, ColorLibFactory> = new Map ();
+    protected static override registry = colorLibRegistry;
 
     private loadDefault: string[] = [];
     private loaded: Set<string> = new Set();

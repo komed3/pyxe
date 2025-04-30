@@ -8,7 +8,8 @@ import { ModuleMethod } from './ModuleMethod.js';
 
 export class Module extends Entity<string, ModuleFactory> {
 
-    public static override registry = moduleRegistry;
+    protected static override instances: Map<string, ModuleFactory> = new Map ();
+    protected static override registry = moduleRegistry;
 
     private cache: Map<string, ModuleMethod> = new Map ();
 
@@ -26,7 +27,7 @@ export class Module extends Entity<string, ModuleFactory> {
 
         if ( ! this.cache.has( method ) ) {
 
-            this.cache.set( method, ModuleMethod.getInstance( method ) as ModuleMethod );
+            this.cache.set( method, ModuleMethod.getInstance( method ) );
 
         }
 

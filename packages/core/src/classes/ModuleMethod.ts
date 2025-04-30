@@ -9,7 +9,8 @@ import { assert, catchToError } from '../services/ErrorUtils.js';
 
 export class ModuleMethod extends Entity<string, ModuleMethodFactory> {
 
-    public static override registry = moduleMethodRegistry;
+    protected static override instances: Map<string, ModuleMethodFactory> = new Map ();
+    protected static override registry = moduleMethodRegistry;
 
     public supports (
         space: ColorSpaceName

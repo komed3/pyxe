@@ -3,11 +3,25 @@
 import type { ColorObjectFactory, ColorSpaceName, OutputFactory, OutputHandler, OutputOptions } from '@pyxe/types';
 import { Entity } from './Entity.js';
 import { outputRegistry } from '../registries/OutputRegistry.js';
+import { ColorSpace } from './ColorSpace.js';
 import { assert, catchToError } from '../services/ErrorUtils.js';
 
 export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
-    public static override registry = outputRegistry;
+    protected static override instances: Map<ColorSpaceName, OutputFactory> = new Map ();
+    protected static override registry = outputRegistry;
+
+    private colorSpace: ColorSpace;
+
+    protected constructor (
+        name: ColorSpaceName
+    ) {
+
+        super( name );
+
+        this.colorSpace = ColorSpace.getInstance( name );
+
+    }
 
     private _resolve(
         type: string
@@ -37,7 +51,7 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
             if ( typeof handler === 'function' ) {
 
-                return handler as OutputHandler;
+                return ( handler as OutputHandler ).bind( this );
 
             }
 
