@@ -24,7 +24,10 @@ export class ModuleMethodRegistry extends Registry<string, ModuleMethodFactory> 
 
             if ( bind && method?.bindAs ) {
 
-                ColorMethodRegistry.bind( name, method.bindAs );
+                ColorMethodRegistry.bind(
+                    name, method.bindAs,
+                    ( self, method, options ) => self.apply( method, options )
+                );
 
             }
 
