@@ -27,7 +27,7 @@ export class OutputRegistry extends Registry<ColorSpaceName, OutputFactory> {
 
         hook.run( 'OutputRegistry::beforeAdd', space, type, handler, update, this );
 
-        if ( ! this.has( space ) ) {
+        if ( ! this.items.has( space ) ) {
 
             this.items.set( space, {} );
 

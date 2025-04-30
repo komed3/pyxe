@@ -15,7 +15,7 @@ export class ConversionGraphRegistry extends Registry<ColorSpaceName, Conversion
 
         hook.run( 'ConversionGraphRegistry::beforeAdd', source, target, handler, this );
 
-        if ( ! this.has( source ) ) {
+        if ( ! this.items.has( source ) ) {
 
             this.items.set( source, {} );
 

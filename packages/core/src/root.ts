@@ -9,6 +9,7 @@ export * from './classes/Convert.js';
 export * from './classes/Entity.js';
 export * from './classes/Module.js';
 export * from './classes/ModuleMethod.js';
+export * from './classes/Output.js';
 export * from './classes/Parser.js';
 export * from './classes/Validator.js';
 
@@ -18,6 +19,7 @@ export * from './registries/ColorSpaceRegistry.js';
 export * from './registries/ConversionGraphRegistry.js';
 export * from './registries/ModuleMethodRegistry.js';
 export * from './registries/ModuleRegistry.js';
+export * from './registries/OutputRegistry.js';
 export * from './registries/Registry.js';
 
 export * from './services/Debug.js';
