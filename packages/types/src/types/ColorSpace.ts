@@ -29,6 +29,7 @@ export interface OutputOptions {
     format?: 'auto' | 'percent' | 'normalized';
     forceAlpha?: boolean;
     decimals?: number;
+    unit?: string;
 }
 
 export type OutputHandler = (

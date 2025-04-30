@@ -10,14 +10,15 @@ export class ChannelHelper {
         min: number;
         max: number;
         decimals: number;
+        unit?: string;
     } {
 
         return {
             ...{
                 normalized: { min: 0, max: 1, decimals: 2 },
                 numeric: { min: -Infinity, max: Infinity, decimals: 1 },
-                cyclic: { min: 0, max: 360, decimals: 1 },
-                percent: { min: 0, max: 100, decimals: 1 }
+                cyclic: { min: 0, max: 360, decimals: 1, unit: 'deg' },
+                percent: { min: 0, max: 100, decimals: 1, unit: '%' }
             }[ channel.type ],
             ...channel
         };
@@ -102,7 +103,7 @@ export class ChannelHelper {
         clamp: boolean = true
     ) : number | undefined {
 
-        if ( value !== null ) {
+        if ( value != null && value !== '' ) {
 
             const { type, min, max } = this._channel( channel );
             const str = String ( value ).trim();
@@ -166,7 +167,7 @@ export class ChannelHelper {
 
         if ( Number.isFinite( value ) ) {
 
-            const { format = 'auto', type, decimals } = {
+            const { format = 'auto', type, decimals, unit = '' } = {
                 ...this._channel( channel ),
                 ...options
             };
@@ -187,13 +188,11 @@ export class ChannelHelper {
                     return `${ ( this.normalize( value, channel ) * 100 ).toFixed( decimals ) }%`;
 
                 case 'normalized':
-                    return this.normalize( value, channel ).toFixed( decimals );
+                   return this.normalize( value, channel ).toFixed( decimals );
 
                 case 'auto':
                 default:
-                    return type === 'percent'
-                        ? `${ value.toFixed( decimals ) }%`
-                        : value.toFixed( decimals );
+                    return `${ value.toFixed( decimals ) }${unit}`;
 
             }
 
