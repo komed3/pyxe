@@ -1,7 +1,7 @@
 'use strict';
 
 import { Color } from '../classes/Color.js';
-import { assert, catchToError, handleError } from '../services/ErrorUtils.js';
+import { catchToError, check, handleError } from '../services/ErrorUtils.js';
 import { hook } from '../services/Hook.js';
 
 export const ColorMethodRegistry = {
@@ -53,15 +53,16 @@ export const ColorMethodRegistry = {
     },
 
     unbind (
-        name: string
+        name: string,
+        safe: boolean = false
     ) : void {
 
         hook.run( 'ColorMethodRegistry::unbind', name, Color, this );
 
-        assert( this.isBound( name ), {
+        check( this.isBound( name ), {
             method: 'ColorMethodRegistry',
             msg: `Method <${name}> is not bound to the Color class`
-        } );
+        }, safe );
 
         delete ( Color.prototype as any )[ name ];
 

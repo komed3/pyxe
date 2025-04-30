@@ -104,7 +104,7 @@ export class ChannelHelper {
         if ( value !== null ) {
 
             const { type, min, max } = this._channel( channel );
-            const str = String ( '' + value ).trim();
+            const str = String ( value ).trim();
             const isPercent = str.includes( '%' );
 
             let parsed = parseFloat( str.replace( /[^\d.\-+eE]/g, '' ) );
