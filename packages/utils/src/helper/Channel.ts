@@ -103,7 +103,7 @@ export class ChannelHelper {
         clamp: boolean = true
     ) : number | undefined {
 
-        if ( value != null && value !== '' ) {
+        if ( value !== null && value !== '' ) {
 
             const { type, min, max } = this._channel( channel );
             const str = String ( value ).trim();
