@@ -3,6 +3,7 @@
 import type { ColorSpaceName, ColorSpaceFactory } from '@pyxe/types';
 import { Registry } from './Registry.js';
 import { conversionGraphRegistry } from './ConversionGraphRegistry.js';
+import { outputRegistry } from './OutputRegistry.js';
 import { assert } from '../services/ErrorUtils.js';
 import { hook } from '../services/Hook.js';
 
@@ -62,6 +63,12 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
         }
 
+        if ( colorSpace.output ) {
+
+            outputRegistry.addMany( name, colorSpace.output );
+
+        }
+
         hook.run( 'ColorSpaceRegistry::afterAdd', name, colorSpace, this );
 
     }
@@ -77,6 +84,8 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
         super._remove( name );
 
         conversionGraphRegistry.removeAll( name );
+
+        outputRegistry.removeAll( name );
 
         if ( colorSpace?.aliases ) {
 
