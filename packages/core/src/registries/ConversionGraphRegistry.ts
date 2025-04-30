@@ -3,6 +3,7 @@
 import type { ColorSpaceName, ConversionHandler, ConversionFactory } from '@pyxe/types';
 import { Registry } from './Registry.js';
 import { hook } from '../services/Hook.js';
+import { check } from '../services/ErrorUtils.js';
 
 export class ConversionGraphRegistry extends Registry<ColorSpaceName, ConversionFactory> {
 
@@ -50,15 +51,22 @@ export class ConversionGraphRegistry extends Registry<ColorSpaceName, Conversion
 
         const targets = this.get( source );
 
-        delete targets![ target ];
+        if ( check( targets && target in targets, {
+            method: 'ConversionGraphRegistry',
+            msg: `Conversion from <${source}> to <${target}> is not declared`
+        }, false ) ) {
 
-        if ( Object.keys( targets! ).length ) {
+            delete targets![ target ];
 
-            this.items.set( source, targets! );
+            if ( Object.keys( targets! ).length ) {
 
-        } else {
+                this.items.set( source, targets! );
 
-            this.removeAll( source );
+            } else {
+
+                this.removeAll( source );
+
+            }
 
         }
 

@@ -4,10 +4,19 @@ import type { ColorSpaceName, OutputFactory, OutputHandler } from '@pyxe/types';
 import { Registry } from './Registry.js';
 import { ColorMethodRegistry } from './ColorMethodRegistry.js';
 import { hook } from '../services/Hook.js';
+import { check } from '../services/ErrorUtils.js';
 
 export class OutputRegistry extends Registry<ColorSpaceName, OutputFactory> {
 
     private boundMethods: Set<string> = new Set ();
+
+    private _methodName (
+        name: string
+    ) : string {
+
+        return hook.filter( 'OutputFactory::methodName', `to${ name.toUpperCase() }`, name, this );
+
+    }
 
     public add (
         space: ColorSpaceName,
@@ -60,7 +69,10 @@ export class OutputRegistry extends Registry<ColorSpaceName, OutputFactory> {
 
         const factory = this.items.get( space );
 
-        if ( factory && type in factory ) {
+        if ( check( factory && type in factory, {
+            method: 'OutputRegistry',
+            msg: `Output handler <${type}> for color space <${space}> is not declared`
+        }, false ) ) {
 
             delete factory![ type ];
 
@@ -117,12 +129,12 @@ export class OutputRegistry extends Registry<ColorSpaceName, OutputFactory> {
             const curr = new Set ( [ ...this.all() ].flatMap( Object.keys ) );
 
             prev.forEach( ( method ) => ! curr.has( method ) && 
-                ColorMethodRegistry.unbind( `to${ method.toUpperCase() }` )
+                ColorMethodRegistry.unbind( this._methodName( method ) )
             );
 
             curr.forEach( ( method ) => ! prev.has( method ) && 
                 ColorMethodRegistry.bind(
-                    method, `to${ method.toUpperCase() }`,
+                    method, this._methodName( method ),
                     ( self, method, string ) => self.to( method, string )
                 )
             );
