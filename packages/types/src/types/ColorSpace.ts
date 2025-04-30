@@ -25,9 +25,15 @@ export type ConversionHandler = (
 
 export type ConversionFactory = Record<ColorSpaceName, ConversionHandler>;
 
+export interface OutputOptions {
+    format?: 'auto' | 'percent' | 'normalized';
+    forceAlpha?: boolean;
+    decimals?: number;
+}
+
 export type OutputHandler = (
     input: ColorObjectFactory,
-    options?: Record<string, any>
+    options?: OutputOptions
 ) => any;
 
 export type OutputFactory = Record<string, OutputHandler | string>;

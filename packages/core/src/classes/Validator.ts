@@ -1,6 +1,6 @@
 'use strict';
 
-import { ColorInstance, ColorObjectFactory } from '@pyxe/types';
+import type { ColorInstance, ColorObjectFactory } from '@pyxe/types';
 import { ChannelHelper } from '@pyxe/utils';
 import { ColorSpace } from './ColorSpace.js';
 import { hook } from '../services/Hook.js';

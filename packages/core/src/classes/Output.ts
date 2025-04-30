@@ -1,6 +1,6 @@
 'use strict';
 
-import { ColorObjectFactory, ColorSpaceName, OutputFactory, OutputHandler } from '@pyxe/types';
+import type { ColorObjectFactory, ColorSpaceName, OutputFactory, OutputHandler, OutputOptions } from '@pyxe/types';
 import { Entity } from './Entity.js';
 import { outputRegistry } from '../registries/OutputRegistry.js';
 import { assert, catchToError } from '../services/ErrorUtils.js';
@@ -50,7 +50,7 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
     public format (
         type: string,
         input: ColorObjectFactory,
-        options?: Record<string, any>,
+        options?: OutputOptions,
         safe: boolean = true
     ) : any {
 
@@ -67,7 +67,7 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
     public string (
         input: ColorObjectFactory,
-        options?: Record<string, any>
+        options?: OutputOptions
     ) : string {
 
         return '';
@@ -76,7 +76,7 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
     public cli (
         input: ColorObjectFactory,
-        options?: Record<string, any>
+        options?: OutputOptions
     ) : string {
 
         return '';
@@ -85,7 +85,7 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
     public json (
         input: ColorObjectFactory,
-        options?: Record<string, any>
+        options?: OutputOptions
     ) : any {
 
         return {};

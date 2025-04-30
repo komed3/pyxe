@@ -1,6 +1,6 @@
 'use strict';
 
-import type { ColorChannel } from '@pyxe/types';
+import type { ColorChannel, OutputOptions } from '@pyxe/types';
 
 export class ChannelHelper {
 
@@ -9,14 +9,15 @@ export class ChannelHelper {
     ) : ColorChannel & {
         min: number;
         max: number;
+        decimals: number;
     } {
 
         return {
             ...{
-                normalized: { min: 0, max: 1 },
-                numeric: { min: -Infinity, max: Infinity },
-                cyclic: { min: 0, max: 360 },
-                percent: { min: 0, max: 100 }
+                normalized: { min: 0, max: 1, decimals: 2 },
+                numeric: { min: -Infinity, max: Infinity, decimals: 1 },
+                cyclic: { min: 0, max: 360, decimals: 1 },
+                percent: { min: 0, max: 100, decimals: 1 }
             }[ channel.type ],
             ...channel
         };
@@ -130,11 +131,11 @@ export class ChannelHelper {
 
                 if ( type === 'cyclic' ) {
 
-                    parsed = ChannelHelper.wrap( parsed, channel );
+                    parsed = this.wrap( parsed, channel );
 
                 } else if ( clamp ) {
 
-                    parsed = ChannelHelper.clamp( parsed, channel );
+                    parsed = this.clamp( parsed, channel );
 
                 }
 
@@ -154,6 +155,62 @@ export class ChannelHelper {
     ) : number | undefined {
 
         return this.parse( value, { name: 'Alpha', type: 'normalized' }, clamp );
+
+    }
+
+    public static format (
+        value: number,
+        channel: ColorChannel,
+        options: OutputOptions = {}
+    ) : string {
+
+        if ( Number.isFinite( value ) ) {
+
+            const { format = 'auto', type, decimals } = {
+                ...this._channel( channel ),
+                ...options
+            };
+
+            if ( type === 'cyclic' ) {
+
+                value = this.wrap( value, channel );
+
+            } else {
+
+                value = this.clamp( value, channel );
+
+            }
+
+            switch ( format ) {
+
+                case 'percent':
+                    return `${ ( this.normalize( value, channel ) * 100 ).toFixed( decimals ) }%`;
+
+                case 'normalized':
+                    return this.normalize( value, channel ).toFixed( decimals );
+
+                case 'auto':
+                default:
+                    return type === 'percent'
+                        ? `${ value.toFixed( decimals ) }%`
+                        : value.toFixed( decimals );
+
+            }
+
+        }
+
+        return '';
+
+    }
+
+    public static formatAlpha (
+        value: any,
+        options: OutputOptions = {}
+    ) : string {
+
+        return value !== undefined || options.forceAlpha
+            ? this.format( value, { name: 'Alpha', type: 'normalized' }, options )
+            : '';
 
     }
 
