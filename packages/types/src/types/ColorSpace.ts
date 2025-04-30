@@ -25,6 +25,13 @@ export type ConversionHandler = (
 
 export type ConversionFactory = Record<ColorSpaceName, ConversionHandler>;
 
+export type OutputHandler = (
+    input: ColorObjectFactory,
+    options?: Record<string, any>
+) => any;
+
+export type OutputFactory = Record<string, OutputHandler | string>;
+
 export interface ColorSpaceMeta {
     name?: string;
     description?: string;
@@ -37,6 +44,6 @@ export interface ColorSpaceFactory {
     aliases?: ColorSpaceName[];
     hooks?: Record<string, HookHandler>;
     conversions?: ConversionFactory;
-    output?: [];
+    output?: OutputFactory;
     meta?: ColorSpaceMeta;
 }
