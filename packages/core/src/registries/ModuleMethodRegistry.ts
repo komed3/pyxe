@@ -58,7 +58,7 @@ export class ModuleMethodRegistry extends Registry<string, ModuleMethodFactory> 
 
     public remove (
         name: string
-    ) {
+    ) : void {
 
         hook.run( 'ModuleMethodRegistry::beforeRemove', name, this );
 
