@@ -9,7 +9,7 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
     public static override registry = outputRegistry;
 
-    private _handler(
+    private _resolve(
         type: string
     ) : OutputHandler | undefined {
 
@@ -26,7 +26,9 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
             visited.add( type );
 
-            const handler = this.factory[ type ] || this[ type as keyof this ];
+            const handler = this.supports().includes( type )
+                ? this.factory[ type ] || this[ type as keyof this ]
+                : undefined;
 
             assert( handler, {
                 method: 'Output',
@@ -54,7 +56,7 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
         return catchToError( () => {
 
-            return this._handler( type )!( input, options );
+            return this._resolve( type )!( input, options );
 
         }, {
             method: 'Output',
