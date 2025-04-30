@@ -185,14 +185,20 @@ export class ChannelHelper {
             switch ( format ) {
 
                 case 'percent':
-                    return `${ ( this.normalize( value, channel ) * 100 ).toFixed( decimals ) }%`;
+                    return `${ Number (
+                        ( this.normalize( value, channel ) * 100 ).toFixed( decimals )
+                    ) }%`;
 
                 case 'normalized':
-                   return this.normalize( value, channel ).toFixed( decimals );
+                    return Number (
+                        this.normalize( value, channel ).toFixed( decimals )
+                    ).toString();
 
                 case 'auto':
                 default:
-                    return `${ value.toFixed( decimals ) }${unit}`;
+                    return `${ Number (
+                        value.toFixed( decimals )
+                    ) }${unit}`;
 
             }
 
