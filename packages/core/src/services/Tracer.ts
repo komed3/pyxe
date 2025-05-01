@@ -151,9 +151,21 @@ export const tracerTemplates = {
     ) : Partial<TracerFactory> => ( {
         action: 'parse',
         meta: {
-            input, result,
+            result, input,
             source: 'string',
             target: result.space
+        }
+    } ),
+
+    library: (
+        library: string,
+        key: string,
+        result: ColorObject | ColorObjectFactory
+    ) : Partial<TracerFactory> => ( {
+        action: 'library',
+        meta: {
+            result,
+            source: { library, key }
         }
     } ),
 
@@ -164,7 +176,7 @@ export const tracerTemplates = {
     ) : Partial<TracerFactory> => ( {
         action: 'convert',
         meta: {
-            input, result,
+            result, input,
             source: input.space,
             target: result.space,
             path: path ?? null
@@ -178,7 +190,7 @@ export const tracerTemplates = {
     ) : Partial<TracerFactory> => ( {
         action: `module::${ module.toLowerCase() }`,
         meta: {
-            input, result
+            result, input
         }
     } )
 

@@ -3,10 +3,11 @@
 import type { ColorInput, ColorInstance, ColorObjectFactory, ColorSpaceName, ModuleMethodReturnValue, OutputOptions } from '@pyxe/types';
 import { ChannelHelper, TypeCheck } from '@pyxe/utils';
 import { ColorSpace } from './ColorSpace.js';
+import { test } from './Validator.js';
 import { Convert } from './Convert.js';
 import { ModuleMethod } from './ModuleMethod.js';
 import { Output } from './Output.js';
-import { test } from './Validator.js';
+import { ColorLib } from './ColorLib.js';
 import { Parser } from './Parser.js';
 import { hook } from '../services/Hook.js';
 import { tracer, tracerTemplates as tpl } from '../services/Tracer.js';
@@ -55,7 +56,7 @@ export class ColorObject {
     private static _wrap (
         input: ModuleMethodReturnValue,
         safe: boolean = true,
-        invoker?: ( input: any, result: any ) => void
+        invoker?: ( result: any, input?: any ) => void
     ) : ColorObject | ColorObject[] | any {
 
         return Array.isArray( input )
@@ -154,7 +155,7 @@ export class ColorObject {
             return ColorObject._wrap(
                 ( this.convert ||= new Convert ( this._factory(), this.safe ) ).to( target, strict )!,
                 this.safe,
-                ( input, result ) => {
+                ( result, input ) => {
                     tracer.add( result, tpl.convert( input, result ) );
                 }
             );
@@ -194,7 +195,7 @@ export class ColorObject {
             return ColorObject._wrap(
                 ( ModuleMethod.getInstance( method ) as ModuleMethod ).apply( this._factory(), options ),
                 this.safe,
-                ( input, result ) => {
+                ( result, input ) => {
                     tracer.add( result, tpl.module( method, input, result ) );
                 }
             );
@@ -242,7 +243,36 @@ export class ColorObject {
 
     }
 
-    public static fromLib () {}
+    public static async fromLib (
+        library: string,
+        key: string,
+        preferredSpaces?: ColorSpaceName[],
+        options: {
+            sources?: string[];
+            strict?: boolean;
+            tryConvert?: boolean;
+        } = {},
+        safe: boolean = true
+    ) : Promise<ColorObject | false> {
+
+        return await catchToError( async () => {
+
+            return ColorObject._wrap(
+                await ( ColorLib.getInstance( library ) as ColorLib ).getColor(
+                    key, preferredSpaces, options, safe
+                ),
+                safe,
+                ( result ) => {
+                    tracer.add( result, tpl.library( library, key, result ) )
+                }
+            );
+
+        }, {
+            method: 'ColorObject',
+            msg: `Cannot get color <${key}> from library <${library}>`
+        }, safe );
+
+    }
 
     public static parse (
         input: ColorInput,
@@ -255,7 +285,7 @@ export class ColorObject {
             return ColorObject._wrap(
                 Parser.parseAuto( input, strict, safe ),
                 safe,
-                ( input, result ) => {
+                ( result, input ) => {
                     tracer.add( result, tpl.parse( input, result ) );
                 }
             );
