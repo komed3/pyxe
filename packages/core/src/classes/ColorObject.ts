@@ -1,10 +1,11 @@
 'use strict';
 
-import type { ColorInstance, ColorObjectFactory, ColorSpaceName, ModuleMethodReturnValue } from '@pyxe/types';
+import type { ColorInstance, ColorObjectFactory, ColorSpaceName, ModuleMethodReturnValue, OutputOptions } from '@pyxe/types';
 import { ChannelHelper, TypeCheck } from '@pyxe/utils';
 import { ColorSpace } from './ColorSpace.js';
 import { Convert } from './Convert.js';
 import { ModuleMethod } from './ModuleMethod.js';
+import { Output } from './Output.js';
 import { test } from './Validator.js';
 import { tracer, tracerTemplates as tpl } from '../services/Tracer.js';
 import { assert, catchToError } from '../services/ErrorUtils.js';
@@ -17,6 +18,7 @@ export class ColorObject {
 
     private colorSpace: ColorSpace;
     private convert: Convert | undefined;
+    private output: Output | undefined;
 
     private meta: Record<string, any> = {};
     private isValid: boolean | undefined;
@@ -210,6 +212,24 @@ export class ColorObject {
         }, {
             method: 'ColorObject',
             msg: `Cannot apply method <${method}>`
+        }, this.safe );
+
+    }
+
+    public format (
+        type: string,
+        options: OutputOptions = {}
+    ) : any {
+
+        return catchToError( () => {
+
+            return ( this.output ||= ( Output.getInstance( this.space ) as Output ) ).format(
+                type, this._factory(), options, this.safe
+            );
+
+        }, {
+            method: 'ColorObject',
+            msg: `Cannot output as <${type}>`
         }, this.safe );
 
     }
