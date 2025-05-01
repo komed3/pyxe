@@ -169,9 +169,51 @@ export class ChannelHelper {
             Object.entries( input ).map(
                 ( [ key, value ] ) => [
                     key, key in channels
-                        ? this.parse( value, channels[ key ], true )
+                        ? this.parse( value, channels[ key ] )
                         : fallback
                 ]
+            )
+        );
+
+    }
+
+    public static compare (
+        a: any,
+        b: any,
+        channel: ColorChannel,
+        tolerance: number = 0.0005
+    ) : boolean {
+
+        return a === b || (
+            ( a = this.parse( a, channel ) ) !== undefined &&
+            ( b = this.parse( b, channel ) ) !== undefined &&
+            Math.abs( a - b ) <= Math.abs( a * tolerance )
+        );
+
+    }
+
+    public static compareAlpha (
+        a: any,
+        b: any,
+        tolerance: number = 0.0005
+    ) : boolean {
+
+        return this.compare( a, b, { name: 'Alpha', type: 'normalized' }, tolerance );
+
+    }
+
+    public static compareInstance (
+        a: Partial<ColorInstance>,
+        b: Partial<ColorInstance>,
+        channels: Record<string, ColorChannel>,
+        tolerance: number = 0.0005
+    ) : boolean {
+
+        return Object.entries( channels ).every(
+            ( [ key, channel ] ) => this.compare(
+                a[ key as keyof ColorInstance ],
+                b[ key as keyof ColorInstance ],
+                channel, tolerance
             )
         );
 

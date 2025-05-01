@@ -13,6 +13,8 @@ import { hook } from '../services/Hook.js';
 import { tracer, tracerTemplates as tpl } from '../services/Tracer.js';
 import { assert, catchToError } from '../services/ErrorUtils.js';
 
+export type ColorLike = ReturnType<typeof ColorObject.from> | ReturnType<typeof ColorObject.from>[] | any;
+
 export class ColorObject {
 
     readonly space: ColorSpaceName;
@@ -59,7 +61,7 @@ export class ColorObject {
         input: ModuleMethodReturnValue,
         safe: boolean = true,
         invoker?: ( result: any, input?: any ) => void
-    ) : ColorObject | ColorObject[] | any {
+    ) : ColorLike {
 
         return Array.isArray( input )
             ? input.map( ( item ) => ColorObject._wrap( item, safe, invoker ) )
@@ -104,6 +106,26 @@ export class ColorObject {
     ) : boolean {
 
         return this.space === name;
+
+    }
+
+    public equals (
+        other: ColorObject,
+        tolerance: number = 0.0005
+    ) : boolean {
+
+        return (
+            this.space === other.space &&
+            ChannelHelper.compareInstance(
+                this.value, other.value,
+                this.colorSpace.getChannels(),
+                tolerance
+            ) &&
+            ChannelHelper.compareAlpha(
+                this.alpha, other.alpha,
+                tolerance
+            )
+        );
 
     }
 
@@ -176,7 +198,7 @@ export class ColorObject {
     public to (
         target: ColorSpaceName[] | ColorSpaceName,
         strict: boolean = true
-    ) : ColorObject | false {
+    ) : ColorLike | false {
 
         return catchToError( () => {
 
@@ -216,7 +238,7 @@ export class ColorObject {
     public apply (
         method: string,
         options?: Record<string, any>
-    ) : ColorObject | ColorObject[] | any | false {
+    ) : ColorLike | false {
 
         return catchToError( () => {
 
@@ -281,7 +303,7 @@ export class ColorObject {
             tryConvert?: boolean;
         } = {},
         safe: boolean = true
-    ) : Promise<ColorObject | false> {
+    ) : Promise<ColorLike | false> {
 
         return await catchToError( async () => {
 
@@ -306,7 +328,7 @@ export class ColorObject {
         input: ColorInput,
         strict: boolean = false,
         safe: boolean = true
-    ) : ColorObject | false {
+    ) : ColorLike | false {
 
         return catchToError( () => {
 
@@ -322,6 +344,27 @@ export class ColorObject {
             method: 'ColorObject',
             msg: `Error occured while parsing <${ JSON.stringify( input ) }>`
         }, safe );
+
+    }
+
+    public static isEqual (
+        a: ColorObject,
+        b: ColorObject,
+        tolerance: number = 0.0005
+    ) : boolean {
+
+        return (
+            a.space === b.space &&
+            ChannelHelper.compareInstance(
+                a.value, b.value,
+                ( ColorSpace.getInstance( a.space ) as ColorSpace ).getChannels(),
+                tolerance
+            ) &&
+            ChannelHelper.compareAlpha(
+                a.alpha, b.alpha,
+                tolerance
+            )
+        );
 
     }
 
