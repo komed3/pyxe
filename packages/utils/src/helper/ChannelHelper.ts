@@ -1,6 +1,6 @@
 'use strict';
 
-import type { ColorChannel, OutputOptions } from '@pyxe/types';
+import type { ColorChannel, ColorInstance, OutputOptions } from '@pyxe/types';
 
 export class ChannelHelper {
 
@@ -156,6 +156,24 @@ export class ChannelHelper {
     ) : number | undefined {
 
         return this.parse( value, { name: 'Alpha', type: 'normalized' }, clamp );
+
+    }
+
+    public static parseInstance (
+        input: Partial<ColorInstance>,
+        channels: Record<string, ColorChannel>,
+        fallback: any = 0
+    ) : Partial<ColorInstance> {
+
+        return Object.fromEntries(
+            Object.entries( input ).map(
+                ( [ key, value ] ) => [
+                    key, key in channels
+                        ? this.parse( value, channels[ key ], true )
+                        : fallback
+                ]
+            )
+        );
 
     }
 

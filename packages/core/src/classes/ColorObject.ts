@@ -40,15 +40,15 @@ export class ColorObject {
         this.channels = [ 'alpha', ...this.colorSpace.channels() ];
 
         this.space = this.colorSpace.name;
-        this.value = value;
-        this.alpha = alpha;
+        this.value = ChannelHelper.parseInstance( value, this.colorSpace.getChannels(), false ) as ColorInstance;
+        this.alpha = ChannelHelper.parseAlpha( alpha, true );
 
         this.meta = meta;
         this.safe = safe;
 
         assert( ! this.safe || this.validate(), {
             method: 'ColorObject',
-            msg: `Color <${ String ( value ) }> is not a valid instance for <${space}> color space`
+            msg: `Color <${ JSON.stringify( value ) }> is not a valid instance for <${space}> color space`
         } );
 
         hook.run( 'ColorObject::constructor', this );
@@ -266,7 +266,7 @@ export class ColorObject {
 
         }, {
             method: 'ColorObject',
-            msg: `Cannot get color object from <${ String ( input ) }>`
+            msg: `Cannot get color object from <${ JSON.stringify( input ) }>`
         }, safe );
 
     }
@@ -320,7 +320,7 @@ export class ColorObject {
 
         }, {
             method: 'ColorObject',
-            msg: `Error occured while parsing <${ String ( input ) }>`
+            msg: `Error occured while parsing <${ JSON.stringify( input ) }>`
         }, safe );
 
     }
