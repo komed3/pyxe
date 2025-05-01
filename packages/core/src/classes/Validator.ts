@@ -16,33 +16,35 @@ export class Validator {
         factory: ColorObjectFactory
     ) : boolean {
 
+        const value: ColorInstance = factory.value ?? {};
         const colorSpace = ColorSpace.getInstance( factory.space ) as ColorSpace;
+        const channels = colorSpace.channels();
 
-        hook.run( 'Validator::validate', factory, colorSpace, this );
+        hook.run( 'Validator::validate', factory, value, colorSpace, channels, this );
+
+        const extraKeys = Object.keys( value ).filter(
+            ( k ) => ! channels.includes( k )
+        );
+
+        /** check for unexpected channel(s) */
+        if ( ! check( extraKeys.length === 0, {
+            method: 'Validator',
+            msg: `Unexpected channel(s) <${ extraKeys.join( ', ' ) }>`
+        }, this.safe ) ) return false;
 
         for ( const [ key, channel ] of Object.entries( colorSpace.getChannels() ) ) {
 
-            const value = factory.value?.[ key as keyof ColorInstance ];
+            /** check for missing channel in color instance */
+            if( ! check( key in value, {
+                method: 'Validator',
+                msg: `Missing channel <${key}> in color instance`
+            }, this.safe ) ) return false;
 
-            if ( ! (
-
-                check( value !== undefined, {
-                    method: 'Validator',
-                    msg: `Missing channel <${key}> in color instance`
-                }, this.safe )
-
-                ||
-
-                check( ChannelHelper.validate( value, channel ), {
-                    method: 'Validator',
-                    msg: `Invalid value for channel <${key}>: ${value}`
-                }, this.safe )
-
-            ) ) {
-
-                return false;
-
-            }
+            /** check for invalid channel value */
+            if( ! check( ChannelHelper.validate( value[ key as keyof ColorInstance ], channel ), {
+                method: 'Validator',
+                msg: `Invalid value for channel <${key}>: ${ value[ key as keyof ColorInstance ] }`
+            }, this.safe ) ) return false;
 
         }
 
