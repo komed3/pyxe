@@ -75,7 +75,7 @@ export class Convert {
         strict: boolean = true
     ) : Record<ColorSpaceName, ColorObjectFactory | any | undefined> {
 
-        return Object.fromEntries( targets.map(
+        return Object.fromEntries( [ ...new Set( targets ) ].map(
             ( t ) => [ t, this.to( t, strict ) ]
         ) );
 
