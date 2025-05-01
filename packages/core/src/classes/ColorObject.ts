@@ -1,9 +1,12 @@
 'use strict';
 
-import type { ColorInstance, ColorObjectFactory, ColorSpaceName } from '@pyxe/types';
+import type { ColorInstance, ColorObjectFactory, ColorSpaceName, ModuleMethodFactory } from '@pyxe/types';
 import { ColorSpace } from './ColorSpace.js';
+import { Convert } from './Convert.js';
+import { ModuleMethod } from './ModuleMethod.js';
 import { test } from './Validator.js';
-import { assert } from '../services/ErrorUtils.js';
+import { tracer, tracerTemplates as tpl } from '../services/Tracer.js';
+import { assert, catchToError } from '../services/ErrorUtils.js';
 
 export class ColorObject {
 
@@ -12,8 +15,11 @@ export class ColorObject {
     readonly alpha: number | undefined;
 
     private colorSpace: ColorSpace;
+    private convert: Convert | undefined;
+
     private meta: Record<string, any> = {};
     private isValid: boolean | undefined;
+    private safe: boolean;
 
     constructor (
         space: ColorSpaceName,
@@ -28,9 +34,11 @@ export class ColorObject {
         this.space = this.colorSpace.name;
         this.value = value;
         this.alpha = alpha;
-        this.meta = meta;
 
-        assert( ! safe || this.validate(), {
+        this.meta = meta;
+        this.safe = safe;
+
+        assert( ! this.safe || this.validate(), {
             method: 'ColorObject',
             msg: `Color <${ ( JSON.stringify( value ) ) }> is not a valid instance for <${space}> color space`
         } );
@@ -40,7 +48,7 @@ export class ColorObject {
     private _factory () : ColorObjectFactory {
 
         return {
-            space: this.colorSpace.name,
+            space: this.space,
             value: this.value,
             alpha: this.alpha
         };
@@ -129,6 +137,50 @@ export class ColorObject {
 
     }
 
+    public to (
+        target: ColorSpaceName[] | ColorSpaceName,
+        strict: boolean = true
+    ) : ColorObject | false {
+
+        return catchToError( () => {
+
+            const color = ColorObject.from( (
+                this.convert ||= new Convert ( this._factory(), this.safe )
+            ).to( target, strict )!, this.safe );
+
+            if ( tracer.isReady() ) {
+
+                tracer.add( color, tpl.convert( this, color ) );
+
+            }
+
+            return color;
+
+        }, {
+            method: 'ColorObject',
+            msg: `Cannot convert <${this.space}> to any of <${ target }>`
+        }, this.safe );
+
+    }
+
+    public toAll (
+        targets: ColorSpaceName[],
+        strict: boolean = true
+    ) : Record<ColorSpaceName, ColorObject | false> | false {
+
+        return catchToError( () => {
+
+            return Object.fromEntries( [ ...new Set( targets ) ].map(
+                ( t ) => [ t, this.to( t, strict ) ]
+            ) );
+
+        }, {
+            method: 'ColorObject',
+            msg: `Cannot convert <${this.space}> to any of <${ targets.join( ', ' ) }>`
+        }, this.safe );
+
+    }
+
     public static from (
         input: ColorObjectFactory,
         safe: boolean = true
@@ -139,5 +191,7 @@ export class ColorObject {
         return new ColorObject ( space, value, alpha, meta, safe );
 
     }
+
+    public static fromLib () {}
 
 }
