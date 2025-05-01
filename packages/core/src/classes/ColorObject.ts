@@ -77,7 +77,7 @@ export class ColorObject {
         meta: Record<string, any>
     ) : void {
 
-        this.meta = { ...this.meta, meta };
+        this.meta = { ...this.meta, ...meta };
 
     }
 
@@ -110,6 +110,22 @@ export class ColorObject {
             return this.meta;
 
         }
+
+    }
+
+    public clone (
+        overrides: Partial<ColorObjectFactory> = {}
+    ) : ColorObject {
+
+        return new ColorObject (
+            overrides.space ?? this.space,
+            overrides.value ?? this.value,
+            overrides.alpha ?? this.alpha,
+            { ...this.meta, ...(
+                overrides.meta ?? {}
+            ) },
+            true
+        );
 
     }
 
