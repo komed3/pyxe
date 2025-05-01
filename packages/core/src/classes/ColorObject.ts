@@ -20,6 +20,7 @@ export class ColorObject {
     readonly alpha: number | undefined;
 
     private colorSpace: ColorSpace;
+    private channels: string[];
     private convert: Convert | undefined;
     private output: Output | undefined;
 
@@ -36,6 +37,7 @@ export class ColorObject {
     ) {
 
         this.colorSpace = ColorSpace.getInstance( space );
+        this.channels = [ 'alpha', ...this.colorSpace.channels() ];
 
         this.space = this.colorSpace.name;
         this.value = value;
@@ -129,9 +131,35 @@ export class ColorObject {
 
     }
 
-    public channel () {}
+    public channel (
+        key: string
+    ) : number | undefined {
 
-    public formattedChannel () {}
+        assert( ! this.safe || this.channels.includes( key ), {
+            method: 'ColorObject',
+            msg: `Channel <${key}> is not declared in color space <${this.space}>`
+        } );
+
+        return key === 'alpha' ? this.alpha : ( this.value as any )[ key ];
+
+    }
+
+    public formattedChannel (
+        key: string,
+        options?: OutputOptions
+    ) : string {
+
+        const value = this.channel( key );
+
+        return key === 'alpha'
+            ? ChannelHelper.formatAlpha( value, options )
+            : ChannelHelper.format(
+                value!,
+                this.colorSpace.getChannel( key, this.safe )!,
+                options
+            );
+
+    }
 
     public clone (
         overrides: Partial<ColorObjectFactory> = {},
