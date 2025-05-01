@@ -335,7 +335,7 @@ export class ColorObject {
             return ColorObject._wrap(
                 Parser.parseAuto( input, strict, safe ),
                 safe,
-                ( result, input ) => {
+                ( result ) => {
                     tracer.add( result, tpl.parse( input, result ) );
                 }
             );

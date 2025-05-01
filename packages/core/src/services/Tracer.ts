@@ -8,7 +8,7 @@ import { debug } from './Debug.js';
 export class Tracer {
 
     constructor (
-        private state: boolean = false
+        private state: boolean = !!process.env.TRACE
     ) {}
 
     public enable () : void {
@@ -39,11 +39,11 @@ export class Tracer {
 
         if ( input instanceof ColorObject ) {
 
-            input.updateMeta( { trace: [] } );
+            input.deleteMeta( 'trace' );
 
-        } else if ( input?.trace ) {
+        } else if ( input.meta?.trace ) {
 
-            input.trace = [];
+            delete input.meta.trace;
 
         }
 
@@ -96,46 +96,32 @@ export class Tracer {
             pretty?: boolean;
             limit?: number;
         } = {}
-    ) : string | TracerFactory[] {
+    ) : TracerFactory[] | string {
 
-        const trace: TracerFactory[] = hook.filter(
+        const { format = 'object', pretty = false, limit = 0 } = options;
+
+        const _walker: TracerFactory[] = hook.filter(
             'Tracer::export',
-            this.get( color )
-                .slice( -( options.limit ?? 0 ) )
-                .map( ( entry ) => {
-
-                    entry.meta ??= {};
-
-                    [ 'input', 'result' ].forEach( ( key ) => {
-
-                        if ( entry.meta![ key ] instanceof ColorObject ) {
-
-                            entry.meta![ key ] = entry.meta![ key ].toObject();
-
-                        }
-
-                    } );
-
-                    this.flush( entry.meta?.input );
-                    this.flush( entry.meta?.result );
-
-                    return entry;
-
-                } ),
-            color,
-            options,
-            this
+            this.get( color ).slice( -limit ).map(
+                ( entry ) => ( { 
+                    ...entry, 
+                    meta: Object.fromEntries(
+                        Object.entries( entry.meta ?? {} ).map(
+                            ( [ key, value ] ) => [
+                                key, value instanceof ColorObject
+                                    ? ( this.flush( value ), value.toObject() )
+                                    : value
+                            ]
+                        )
+                    )
+                } )
+            ),
+            color, options, this
         );
 
-        switch ( options?.format ) {
-
-            case 'json':
-                return JSON.stringify( trace, null, options?.pretty ? 2 : 0 );
-
-            default:
-                return trace;
-
-        }
+        return format === 'json' 
+            ? JSON.stringify( _walker, null, pretty ? 2 : 0 ) 
+            : _walker;
 
     }
 
