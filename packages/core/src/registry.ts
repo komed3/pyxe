@@ -6,7 +6,7 @@ import { outputRegistry, type OutputRegistry } from './registries/OutputRegistry
 import { colorLibRegistry, type ColorLibRegistry } from './registries/ColorLibRegistry.js';
 import { ColorMethodRegistry } from './registries/ColorMethodRegistry.js';
 
-export const registry: {
+export const Registry: {
     ColorSpace: ColorSpaceRegistry,
     Module: ModuleRegistry,
     Output: OutputRegistry,

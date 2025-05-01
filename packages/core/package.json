@@ -12,9 +12,22 @@
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js",
-    "./registry": "./dist/registry.js",
-    "./root": "./dist/root.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./registry": {
+      "types": "./dist/registry.d.ts",
+      "default": "./dist/registry.js"
+    },
+    "./root": {
+      "types": "./dist/root.d.ts",
+      "default": "./dist/root.js"
+    },
+    "./services": {
+      "types": "./dist/services.d.ts",
+      "default": "./dist/services.js"
+    }
   },
   "files": [
     "README.md",

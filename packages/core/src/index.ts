@@ -7,8 +7,9 @@ export { Color } from './classes/Color.js';
 export { ColorSpace } from './classes/ColorSpace.js';
 export { ColorLib } from './classes/ColorLib.js';
 export { Module } from './classes/Module.js';
+export { Output } from './classes/Output.js';
 
-export const Services: {
+export const Tools: {
     Graph: ConversionGraph;
     Validate: Validator;
     Test: Validator;
