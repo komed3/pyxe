@@ -1,10 +1,12 @@
 'use strict';
 
 import type { ColorObjectFactory, ColorSpaceName, OutputFactory, OutputHandler, OutputOptions } from '@pyxe/types';
+import { ChannelHelper } from '@pyxe/utils';
 import { Entity } from './Entity.js';
 import { outputRegistry } from '../registries/OutputRegistry.js';
 import { ColorSpace } from './ColorSpace.js';
 import { assert, catchToError } from '../services/ErrorUtils.js';
+import { hook } from '../services/Hook.js';
 
 export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
@@ -79,6 +81,41 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
     }
 
+    public json (
+        input: ColorObjectFactory,
+        options?: OutputOptions
+    ) : any {
+
+        const { space, value, alpha } = input;
+
+        return hook.filter( 'Output::json', {
+            space,
+            channels: Object.entries(
+                this.colorSpace.getChannels()
+            ).reduce(
+                ( acc, [ key, channel ] ) => ( {
+                    ...acc, [ key ]: {
+                        raw: ( value as any )[ key ],
+                        formatted: ChannelHelper.format(
+                            ( value as any )[ key ], channel, options
+                        )
+                    }
+                } ),
+                {}
+            ),
+            ...( alpha !== undefined && alpha !== 1 || options?.forceAlpha
+                ? { alpha: {
+                    raw: alpha ?? 1,
+                    formatted: ChannelHelper.formatAlpha(
+                        alpha ?? 1, options
+                    )
+                } }
+                : {}
+            )
+        }, input, options, this );
+
+    }
+
     public string (
         input: ColorObjectFactory,
         options?: OutputOptions
@@ -97,19 +134,10 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
     }
 
-    public json (
-        input: ColorObjectFactory,
-        options?: OutputOptions
-    ) : any {
-
-        return {};
-
-    }
-
     public supports () : string[] {
 
         return [
-            ...[ 'string', 'cli', 'json' ],
+            ...[ 'json', 'string', 'cli' ],
             ...Object.keys( this.factory )
         ];
 

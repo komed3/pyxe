@@ -1,7 +1,7 @@
 'use strict';
 
-import { hook } from '../services/Hook.js';
 import { assert } from '../services/ErrorUtils.js';
+import { hook } from '../services/Hook.js';
 
 type EntityClass<T, Name> = {
     new ( name: Name ) : T;

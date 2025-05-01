@@ -30,6 +30,7 @@ export interface OutputOptions {
     forceAlpha?: boolean;
     decimals?: number;
     unit?: string;
+    schema?: string;
 }
 
 export type OutputHandler = (
