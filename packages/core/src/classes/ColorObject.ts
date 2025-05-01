@@ -8,6 +8,7 @@ import { ModuleMethod } from './ModuleMethod.js';
 import { Output } from './Output.js';
 import { test } from './Validator.js';
 import { Parser } from './Parser.js';
+import { hook } from '../services/Hook.js';
 import { tracer, tracerTemplates as tpl } from '../services/Tracer.js';
 import { assert, catchToError } from '../services/ErrorUtils.js';
 
@@ -47,6 +48,30 @@ export class ColorObject {
             msg: `Color <${ String ( value ) }> is not a valid instance for <${space}> color space`
         } );
 
+        hook.run( 'ColorObject::constructor', this );
+
+    }
+
+    private static _wrap (
+        input: ModuleMethodReturnValue,
+        safe: boolean = true,
+        invoker?: ( input: any, result: any ) => void
+    ) : ColorObject | ColorObject[] | any {
+
+        return Array.isArray( input )
+            ? input.map( ( item ) => ColorObject._wrap( item, safe, invoker ) )
+            : TypeCheck.ColorObjectFactory( input )
+                ? ( () => {
+
+                    const result = ColorObject.from( input, safe );
+
+                    invoker?.( result, input );
+
+                    return result;
+
+                } )()
+                : input;
+
     }
 
     private _factory () : ColorObjectFactory {
@@ -56,18 +81,6 @@ export class ColorObject {
             value: this.value,
             alpha: this.alpha
         };
-
-    }
-
-    private _mapInstance (
-        input: ModuleMethodReturnValue
-    ) : ColorObject | ColorObject[] | any {
-
-        return Array.isArray( input )
-            ? input.map( ( item ) => this._mapInstance( item ) )
-            : TypeCheck.ColorObjectFactory( input )
-                ? ColorObject.from( input, this.safe )
-                : input;
 
     }
 
@@ -120,18 +133,14 @@ export class ColorObject {
     public formattedChannel () {}
 
     public clone (
-        overrides: Partial<ColorObjectFactory> = {}
+        overrides: Partial<ColorObjectFactory> = {},
+        safe?: boolean
     ) : ColorObject {
 
-        return new ColorObject (
-            overrides.space ?? this.space,
-            overrides.value ?? this.value,
-            overrides.alpha ?? this.alpha,
-            { ...this.meta, ...(
-                overrides.meta ?? {}
-            ) },
-            true
-        );
+        return ColorObject.from( {
+            ...this.toObject(),
+            ...overrides
+        }, safe ?? this.safe ) as ColorObject;
 
     }
 
@@ -142,17 +151,13 @@ export class ColorObject {
 
         return catchToError( () => {
 
-            const color = ColorObject.from( (
-                this.convert ||= new Convert ( this._factory(), this.safe )
-            ).to( target, strict )!, this.safe );
-
-            if ( tracer.isReady() ) {
-
-                tracer.add( color, tpl.convert( this, color ) );
-
-            }
-
-            return color;
+            return ColorObject._wrap(
+                ( this.convert ||= new Convert ( this._factory(), this.safe ) ).to( target, strict )!,
+                this.safe,
+                ( input, result ) => {
+                    tracer.add( result, tpl.convert( input, result ) );
+                }
+            );
 
         }, {
             method: 'ColorObject',
@@ -186,10 +191,12 @@ export class ColorObject {
 
         return catchToError( () => {
 
-            return this._mapInstance(
-                ( ModuleMethod.getInstance( method ) as ModuleMethod ).apply(
-                    this._factory(), options
-                )
+            return ColorObject._wrap(
+                ( ModuleMethod.getInstance( method ) as ModuleMethod ).apply( this._factory(), options ),
+                this.safe,
+                ( input, result ) => {
+                    tracer.add( result, tpl.module( method, input, result ) );
+                }
             );
 
         }, {
@@ -220,11 +227,18 @@ export class ColorObject {
     public static from (
         input: ColorObjectFactory,
         safe: boolean = true
-    ) : ColorObject {
+    ) : ColorObject | false {
 
-        const { space, value, alpha, meta } = input;
+        return catchToError( () => {
 
-        return new ColorObject ( space, value, alpha, meta, safe );
+            const { space, value, alpha, meta } = input;
+
+            return new ColorObject ( space, value, alpha, meta, safe );
+
+        }, {
+            method: 'ColorObject',
+            msg: `Cannot get color object from <${ String ( input ) }>`
+        }, safe );
 
     }
 
@@ -238,18 +252,13 @@ export class ColorObject {
 
         return catchToError( () => {
 
-            const color = ColorObject.from(
-                Parser.parseAuto( input, strict, safe ) as ColorObjectFactory,
-                safe
+            return ColorObject._wrap(
+                Parser.parseAuto( input, strict, safe ),
+                safe,
+                ( input, result ) => {
+                    tracer.add( result, tpl.parse( input, result ) );
+                }
             );
-
-            if ( tracer.isReady() ) {
-
-                tracer.add( color, tpl.parse( input, color ) );
-
-            }
-
-            return color;
 
         }, {
             method: 'ColorObject',
