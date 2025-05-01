@@ -78,13 +78,7 @@ export class ColorObject {
 
     public validate () : boolean {
 
-        if ( this.isValid === undefined ) {
-
-            this.isValid = test.validate( this._factory() );
-
-        }
-
-        return this.isValid;
+        return ( this.isValid ||= test.validate( this._factory() ) );
 
     }
 
@@ -108,15 +102,7 @@ export class ColorObject {
         key?: string
     ) : void {
 
-        if ( key ) {
-
-            delete this.meta[ key ];
-
-        } else {
-
-            this.meta = {};
-
-        }
+        key ? delete this.meta[ key ] : this.meta = {};
 
     }
 
@@ -124,17 +110,13 @@ export class ColorObject {
         key?: string
     ) : any {
 
-        if ( key ) {
-
-            return this.meta[ key ];
-
-        } else {
-
-            return this.meta;
-
-        }
+        return key ? this.meta[ key ] : this.meta;
 
     }
+
+    public channel () {}
+
+    public formattedChannel () {}
 
     public clone (
         overrides: Partial<ColorObjectFactory> = {}
@@ -246,5 +228,7 @@ export class ColorObject {
     }
 
     public static fromLib () {}
+
+    public static parse () {}
 
 }
