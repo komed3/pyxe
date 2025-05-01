@@ -70,7 +70,7 @@ export class Parser {
 
         if ( ! match || match.length < this.colorSpace.channels().length ) {
 
-            debug.info( 'Parser', `Input <${ JSON.stringify( input ) }> does not match color space <${this.colorSpace.name}>` );
+            debug.info( 'Parser', `Input <${ String ( input ) }> does not match color space <${this.colorSpace.name}>` );
 
             return false;
 
@@ -196,7 +196,7 @@ export class Parser {
 
         return handleError( {
             method: 'Parser',
-            msg: `No suitable parser found for input <${ JSON.stringify( input ) }>`
+            msg: `No suitable parser found for input <${ String ( input ) }>`
         }, safe );
 
     }

@@ -16,7 +16,7 @@ export class Convert {
 
         assert( ! this.safe || TypeCheck.ColorObjectFactory( this.input ), {
             method: 'Convert',
-            msg: `Conversion from <${ JSON.stringify( this.input ) }> not possible`
+            msg: `Conversion from <${ String ( this.input ) }> not possible`
         } );
 
     }
@@ -53,7 +53,7 @@ export class Convert {
 
                         /** Skip failed target and continue */
 
-                        debug.info( 'Convert', `Unable to convert <${ JSON.stringify( this.input ) }> to <${t}>` );
+                        debug.info( 'Convert', `Unable to convert <${ String ( this.input ) }> to <${t}>` );
 
                     }
 
@@ -61,7 +61,7 @@ export class Convert {
 
             }, {
                 method: 'Convert',
-                msg: `Conversion of <${ JSON.stringify( this.input ) }> to any of <${ targets.join( ', ' ) }> has failed`
+                msg: `Conversion of <${ String ( this.input ) }> to any of <${ targets.join( ', ' ) }> has failed`
             }, this.safe ) as ColorObjectFactory | undefined;
 
         }

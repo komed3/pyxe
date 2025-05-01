@@ -1,12 +1,13 @@
 'use strict';
 
-import type { ColorInstance, ColorObjectFactory, ColorSpaceName, ModuleMethodReturnValue, OutputOptions } from '@pyxe/types';
+import type { ColorInput, ColorInstance, ColorObjectFactory, ColorSpaceName, ModuleMethodReturnValue, OutputOptions } from '@pyxe/types';
 import { ChannelHelper, TypeCheck } from '@pyxe/utils';
 import { ColorSpace } from './ColorSpace.js';
 import { Convert } from './Convert.js';
 import { ModuleMethod } from './ModuleMethod.js';
 import { Output } from './Output.js';
 import { test } from './Validator.js';
+import { Parser } from './Parser.js';
 import { tracer, tracerTemplates as tpl } from '../services/Tracer.js';
 import { assert, catchToError } from '../services/ErrorUtils.js';
 
@@ -43,7 +44,7 @@ export class ColorObject {
 
         assert( ! this.safe || this.validate(), {
             method: 'ColorObject',
-            msg: `Color <${ ( JSON.stringify( value ) ) }> is not a valid instance for <${space}> color space`
+            msg: `Color <${ String ( value ) }> is not a valid instance for <${space}> color space`
         } );
 
     }
@@ -181,7 +182,7 @@ export class ColorObject {
     public apply (
         method: string,
         options?: Record<string, any>
-    ) : ColorObject | ColorObject[] | any {
+    ) : ColorObject | ColorObject[] | any | false {
 
         return catchToError( () => {
 
@@ -229,6 +230,32 @@ export class ColorObject {
 
     public static fromLib () {}
 
-    public static parse () {}
+    public static parse (
+        input: ColorInput,
+        strict: boolean = false,
+        safe: boolean = true
+    ) : ColorObject | false {
+
+        return catchToError( () => {
+
+            const color = ColorObject.from(
+                Parser.parseAuto( input, strict, safe ) as ColorObjectFactory,
+                safe
+            );
+
+            if ( tracer.isReady() ) {
+
+                tracer.add( color, tpl.parse( input, color ) );
+
+            }
+
+            return color;
+
+        }, {
+            method: 'ColorObject',
+            msg: `Error occured while parsing <${ String ( input ) }>`
+        }, safe );
+
+    }
 
 }
