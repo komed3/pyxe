@@ -1,11 +1,13 @@
 'use strict';
 
-import type { ColorSpaceName } from './ColorSpace.ts';
+import type { ColorSpaceName, ColorObjectFactory } from './ColorSpace.ts';
+
+export type ModuleMethodReturnValue = ColorObjectFactory | ColorObjectFactory[] | any;
 
 export type ModuleMethodHandler = (
     input: any,
     options?: Record<string, any>
-) => any;
+) => ModuleMethodReturnValue;
 
 export interface ModuleMethodFactory {
     name: string;

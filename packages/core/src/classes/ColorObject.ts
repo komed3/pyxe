@@ -1,6 +1,7 @@
 'use strict';
 
-import type { ColorInstance, ColorObjectFactory, ColorSpaceName, ModuleMethodFactory } from '@pyxe/types';
+import type { ColorInstance, ColorObjectFactory, ColorSpaceName, ModuleMethodReturnValue } from '@pyxe/types';
+import { ChannelHelper, TypeCheck } from '@pyxe/utils';
 import { ColorSpace } from './ColorSpace.js';
 import { Convert } from './Convert.js';
 import { ModuleMethod } from './ModuleMethod.js';
@@ -52,6 +53,18 @@ export class ColorObject {
             value: this.value,
             alpha: this.alpha
         };
+
+    }
+
+    private _mapInstance (
+        input: ModuleMethodReturnValue
+    ) : ColorObject | ColorObject[] | any {
+
+        return Array.isArray( input )
+            ? input.map( ( item ) => this._mapInstance( item ) )
+            : TypeCheck.ColorObjectFactory( input )
+                ? ColorObject.from( input, this.safe )
+                : input;
 
     }
 
@@ -177,6 +190,26 @@ export class ColorObject {
         }, {
             method: 'ColorObject',
             msg: `Cannot convert <${this.space}> to any of <${ targets.join( ', ' ) }>`
+        }, this.safe );
+
+    }
+
+    public apply (
+        method: string,
+        options?: Record<string, any>
+    ) : ColorObject | ColorObject[] | any {
+
+        return catchToError( () => {
+
+            return this._mapInstance(
+                ( ModuleMethod.getInstance( method ) as ModuleMethod ).apply(
+                    this._factory(), options
+                )
+            );
+
+        }, {
+            method: 'ColorObject',
+            msg: `Cannot apply method <${method}>`
         }, this.safe );
 
     }
