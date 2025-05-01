@@ -21,7 +21,7 @@ export class Convert {
 
     }
 
-    public to (
+    public as (
         target: ColorSpaceName[] | ColorSpaceName,
         strict: boolean = true
     ) : ColorObjectFactory | undefined {
@@ -70,13 +70,13 @@ export class Convert {
 
     }
 
-    public toAll (
+    public asAll (
         targets: ColorSpaceName[],
         strict: boolean = true
     ) : Record<ColorSpaceName, ColorObjectFactory | any | undefined> {
 
         return Object.fromEntries( [ ...new Set( targets ) ].map(
-            ( t ) => [ t, this.to( t, strict ) ]
+            ( t ) => [ t, this.as( t, strict ) ]
         ) );
 
     }
@@ -88,7 +88,7 @@ export class Convert {
     ) : ( ColorObjectFactory | undefined )[] {
 
         return inputs.map(
-            ( input ) => ( new Convert ( input, false ) ).to( target, strict )
+            ( input ) => ( new Convert ( input, false ) ).as( target, strict )
         );
 
     }
@@ -100,7 +100,7 @@ export class Convert {
     ) : Record<string, any>[] {
 
         return inputs.map(
-            ( input ) => ( new Convert ( input, false ) ).toAll( target, strict )
+            ( input ) => ( new Convert ( input, false ) ).asAll( target, strict )
         );
 
     }

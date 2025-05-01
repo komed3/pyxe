@@ -195,7 +195,7 @@ export class ColorObject {
 
     }
 
-    public to (
+    public as (
         target: ColorSpaceName[] | ColorSpaceName,
         strict: boolean = true
     ) : ColorLike | false {
@@ -203,7 +203,7 @@ export class ColorObject {
         return catchToError( () => {
 
             return ColorObject._wrap(
-                ( this.convert ||= new Convert ( this._factory(), this.safe ) ).to( target, strict )!,
+                ( this.convert ||= new Convert ( this._factory(), this.safe ) ).as( target, strict )!,
                 this.safe,
                 ( result, input ) => {
                     tracer.add( result, tpl.convert( input, result ) );
@@ -217,7 +217,7 @@ export class ColorObject {
 
     }
 
-    public toAll (
+    public asAll (
         targets: ColorSpaceName[],
         strict: boolean = true
     ) : Record<ColorSpaceName, ColorObject | false> | false {
@@ -225,7 +225,7 @@ export class ColorObject {
         return catchToError( () => {
 
             return Object.fromEntries( [ ...new Set( targets ) ].map(
-                ( t ) => [ t, this.to( t, strict ) ]
+                ( t ) => [ t, this.as( t, strict ) ]
             ) );
 
         }, {

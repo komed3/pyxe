@@ -188,7 +188,7 @@ export class ColorLib extends Entity<string, ColorLibFactory> {
 
                             const convert = new Convert ( color, false );
 
-                            color = convert.to( preferredSpaces, false )!;
+                            color = convert.as( preferredSpaces, false )!;
 
                         }
 
