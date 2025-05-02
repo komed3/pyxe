@@ -135,7 +135,7 @@ export class OutputRegistry extends Registry<ColorSpaceName, OutputFactory> {
             curr.forEach( ( method ) => ! prev.has( method ) && 
                 ColorMethodRegistry.bind(
                     method, this._methodName( method ),
-                    ( self, method, string ) => self.to( method, string )
+                    ( self, method, string ) => self.format( method, string )
                 )
             );
 

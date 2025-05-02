@@ -1,6 +1,6 @@
 'use strict';
 
-import type { ColorInput, ColorInstance, ColorObjectFactory, ColorSpaceName, ModuleMethodReturnValue, OutputOptions } from '@pyxe/types';
+import type { ColorInput, ColorInstance, ColorSpaceName, ColorObjectFactory, ColorObjectLike, OutputOptions } from '@pyxe/types';
 import { ChannelHelper, TypeCheck } from '@pyxe/utils';
 import { ColorSpace } from './ColorSpace.js';
 import { test } from './Validator.js';
@@ -58,7 +58,7 @@ export class ColorObject {
     }
 
     private static _wrap (
-        input: ModuleMethodReturnValue,
+        input: ColorObjectLike,
         safe: boolean = true,
         invoker?: ( result: any, input?: any ) => void
     ) : ColorLike {
@@ -102,10 +102,10 @@ export class ColorObject {
     }
 
     public instanceOf (
-        name: ColorSpaceName
+        space: ColorSpaceName
     ) : boolean {
 
-        return this.space === name;
+        return this.space === space;
 
     }
 

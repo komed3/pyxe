@@ -1,6 +1,6 @@
 'use strict';
 
-import type { ColorObjectFactory, ColorSpaceName, ModuleMethodFactory, ModuleMethodReturnValue } from '@pyxe/types';
+import type { ColorObjectFactory, ColorSpaceName, ModuleMethodFactory, ColorObjectLike } from '@pyxe/types';
 import { Entity } from './Entity.js';
 import { moduleMethodRegistry } from '../registries/ModuleMethodRegistry.js';
 import { ColorMethodRegistry } from '../registries/ColorMethodRegistry.js';
@@ -36,7 +36,7 @@ export class ModuleMethod extends Entity<string, ModuleMethodFactory> {
         input: ColorObjectFactory,
         options?: Record<string, any>,
         safe: boolean = true
-    ) : ModuleMethodReturnValue {
+    ) : ColorObjectLike {
 
         return catchToError( () => {
 
