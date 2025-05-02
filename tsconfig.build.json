@@ -4,6 +4,7 @@
     { "path": "packages/core" },
     { "path": "packages/pyxe" },
     { "path": "packages/types" },
+    { "path": "packages/spaces/rgb" },
     { "path": "packages/utils" }
   ]
 }
