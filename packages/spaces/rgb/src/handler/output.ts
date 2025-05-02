@@ -25,7 +25,9 @@ export const output: OutputFactory = {
             ( val ) => ( val & 0xf0 ) >> 4 === ( val & 0x0f )
         );
 
-        const hex = `#${ [ r, g, b ].map( ( val ) => dec2hex( val, canShorten ) ).join( '' ) }`;
+        const hex = `#${ [ r, g, b ].map(
+            ( val ) => dec2hex( Math.round( val ), canShorten )
+        ).join( '' ) }`;
 
         return options?.forceAlpha || ( input.alpha !== undefined && input.alpha !== 1 )
             ? hex + dec2hex( Math.round( ( input.alpha ?? 1 ) * 255 ), options?.short )
