@@ -1,6 +1,6 @@
 'use strict';
 
-import { ColorObjectFactory, HookHandler } from '@pyxe/types';
+import type { ColorObjectFactory, HookHandler } from '@pyxe/types';
 import { Basic, ChannelHelper } from '@pyxe/utils';
 
 export const hooksHandler: Record<string, HookHandler> = {

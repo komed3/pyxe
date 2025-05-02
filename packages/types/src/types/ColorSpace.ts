@@ -34,6 +34,7 @@ export interface OutputOptions {
     decimals?: number;
     unit?: string;
     schema?: string;
+    [ key: string ]: any;
 }
 
 export type OutputHandler = (
@@ -46,7 +47,7 @@ export type OutputFactory = Record<string, OutputHandler | string>;
 export interface ColorSpaceMeta {
     name?: string;
     description?: string;
-    [ key: string ] : any;
+    [ key: string ]: any;
 }
 
 export interface ColorSpaceFactory {

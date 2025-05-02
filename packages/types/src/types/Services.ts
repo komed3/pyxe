@@ -20,7 +20,7 @@ export interface TracerFactory {
     meta?: {
         input?: any;
         result?: any;
-        [ key: string ] : any;
+        [ key: string ]: any;
     };
 }
 

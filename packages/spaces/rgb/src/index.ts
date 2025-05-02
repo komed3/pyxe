@@ -2,6 +2,7 @@
 
 import { Registry } from '@pyxe/core/registry';
 import { hooksHandler } from './handler/hooks.js';
+import { outputHandler } from './handler/output.js';
 
 Registry.ColorSpace.add( 'rgb', {
     aliases: [ 'rgba', 'hex', '#' ],
@@ -15,5 +16,6 @@ Registry.ColorSpace.add( 'rgb', {
         b: { type: 'numeric', min: 0, max: 255, decimals: 0, name: 'Blue' }
     },
     alpha: true,
-    hooks: hooksHandler
+    hooks: hooksHandler,
+    output: outputHandler
 } );
