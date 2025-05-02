@@ -83,3 +83,17 @@ export function checkAll (
     return true;
 
 }
+
+export function missingPkg (
+    method: string,
+    pkg: string | string[],
+    safe: boolean = true
+) : false {
+
+    return handleError( {
+        method, msg: `Missing packages detected <${ (
+            Array.isArray( pkg ) ? pkg.join( ', ' ) : pkg
+        ) }>`
+    }, safe );
+
+}
