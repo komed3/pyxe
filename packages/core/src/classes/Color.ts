@@ -3,7 +3,7 @@
 import type { ColorSpaceName, ColorInput, ColorObjectFactory, OutputOptions } from '@pyxe/types';
 import { ColorObject, type ColorObjectLike } from './ColorObject.js';
 
-export type ColorLike = Color | Color[] | any | false;
+export type ColorLike = Color | Color[] | any;
 
 export class Color {
 
@@ -13,13 +13,21 @@ export class Color {
 
     private static _wrap (
         input: ColorObjectLike | false
-    ) : Color | Color[] | any {
+    ) : ColorLike {
 
         return Array.isArray( input )
             ? input.map( ( item ) => Color._wrap( item ) )
             : input instanceof ColorObject
                 ? new Color ( input )
                 : input;
+
+    }
+
+    private static _unwrap (
+        input: Color | ColorObject
+    ) : ColorObject {
+
+        return input instanceof Color ? input.color : input;
 
     }
 
@@ -48,10 +56,7 @@ export class Color {
         tolerance: number = 0.0005
     ) : boolean {
 
-        return this.color.equals(
-            other instanceof Color ? other.color : other,
-            tolerance
-        );
+        return this.color.equals( Color._unwrap( other ), tolerance );
 
     }
 
@@ -191,11 +196,7 @@ export class Color {
         tolerance?: number
     ) : boolean {
 
-        return ColorObject.isEqual(
-            a instanceof Color ? a.color : a,
-            b instanceof Color ? b.color : b,
-            tolerance
-        );
+        return ColorObject.isEqual( Color._unwrap( a ), Color._unwrap( b ), tolerance );
 
     }
 
