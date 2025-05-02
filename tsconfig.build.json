@@ -4,6 +4,8 @@
     { "path": "packages/core" },
     { "path": "packages/pyxe" },
     { "path": "packages/types" },
+    { "path": "packages/spaces/hsl" },
+    { "path": "packages/spaces/hsv" },
     { "path": "packages/spaces/rgb" },
     { "path": "packages/utils" }
   ]

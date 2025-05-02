@@ -9,6 +9,8 @@
       "@pyxe/core/*": [ "packages/core/src/*" ],
       "@pyxe/pyxe": [ "packages/pyxe/src" ],
       "@pyxe/types": [ "packages/types/src" ],
+      "@pyxe/spaces/hsl": [ "packages/spaces/hsl/src" ],
+      "@pyxe/spaces/hsv": [ "packages/spaces/hsv/src" ],
       "@pyxe/spaces/rgb": [ "packages/spaces/rgb/src" ],
       "@pyxe/utils": [ "packages/utils/src" ]
     },
