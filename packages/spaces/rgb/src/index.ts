@@ -1,8 +1,10 @@
 'use strict';
 
 import { Registry } from '@pyxe/core/registry';
-import { hooksHandler } from './handler/hooks.js';
-import { outputHandler } from './handler/output.js';
+import { channels } from './handler/channels.js';
+import { output } from './handler/output.js';
+import { conversions } from './handler/conversions.js';
+import { hooks } from './handler/hooks.js';
 
 Registry.ColorSpace.add( 'rgb', {
     aliases: [ 'rgba', 'hex', '#' ],
@@ -10,12 +12,9 @@ Registry.ColorSpace.add( 'rgb', {
         name: 'RGB',
         description: 'Additive red-green-blue color model using 8-bit channels'
     },
-    channels: {
-        r: { type: 'numeric', min: 0, max: 255, decimals: 0, name: 'Red' },
-        g: { type: 'numeric', min: 0, max: 255, decimals: 0, name: 'Green' },
-        b: { type: 'numeric', min: 0, max: 255, decimals: 0, name: 'Blue' }
-    },
+    channels: channels,
     alpha: true,
-    hooks: hooksHandler,
-    output: outputHandler
+    output: output,
+    conversions: conversions,
+    hooks: hooks
 } );

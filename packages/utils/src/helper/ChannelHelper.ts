@@ -59,6 +59,23 @@ export class ChannelHelper {
 
     }
 
+    public static normalizeInstance (
+        input: Partial<ColorInstance>,
+        channels: Record<string, ColorChannel>
+    ) : Partial<ColorInstance> {
+
+        return Object.fromEntries(
+            Object.entries( input ).map(
+                ( [ key, value ] ) => [
+                    key, key in channels
+                        ? this.normalize( value, channels[ key ] )
+                        : undefined
+                ]
+            )
+        );
+
+    }
+
     public static denormalize (
         value: number,
         channel: ColorChannel
@@ -155,7 +172,7 @@ export class ChannelHelper {
         clamp: boolean = true
     ) : number | undefined {
 
-        return this.parse( value, { name: 'Alpha', type: 'normalized' }, clamp );
+        return this.parse( value, { type: 'normalized' }, clamp );
 
     }
 
@@ -198,7 +215,7 @@ export class ChannelHelper {
         tolerance: number = 0.0005
     ) : boolean {
 
-        return this.compare( a, b, { name: 'Alpha', type: 'normalized' }, tolerance );
+        return this.compare( a, b, { type: 'normalized' }, tolerance );
 
     }
 
@@ -274,7 +291,7 @@ export class ChannelHelper {
     ) : string {
 
         return value !== undefined || options.forceAlpha
-            ? this.format( value, { name: 'Alpha', type: 'normalized' }, options )
+            ? this.format( value, { type: 'normalized' }, options )
             : '';
 
     }

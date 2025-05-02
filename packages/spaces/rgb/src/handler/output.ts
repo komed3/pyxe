@@ -3,7 +3,7 @@
 import type { RGB, OutputFactory } from '@pyxe/types';
 import { ErrorUtils } from '@pyxe/core/services';
 
-export const outputHandler: OutputFactory = {
+export const output: OutputFactory = {
 
     html: 'string',
     css: 'string',

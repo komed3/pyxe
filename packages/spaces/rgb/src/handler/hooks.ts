@@ -3,7 +3,7 @@
 import type { ColorObjectFactory, HookHandler } from '@pyxe/types';
 import { Basic, ChannelHelper } from '@pyxe/utils';
 
-export const hooksHandler: Record<string, HookHandler> = {
+export const hooks: Record<string, HookHandler> = {
 
     'Parser::earlyParse': ( _, input, self ) : ColorObjectFactory | undefined => {
 

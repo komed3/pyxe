@@ -6,11 +6,11 @@ import { HookHandler } from './Services.js';
 export type ColorSpaceName = string;
 
 export interface ColorChannel {
-    name: string;
     type: 'normalized' | 'numeric' | 'cyclic' | 'percent';
     min?: number;
     max?: number;
     decimals?: number;
+    name?: string;
 }
 
 export interface ColorObjectFactory {
