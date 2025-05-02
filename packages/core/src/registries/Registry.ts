@@ -11,9 +11,7 @@ export abstract class Registry<Name extends string, Factory> {
         name: Name
     ) : Name {
 
-        return hook.filter( 'Registry::sanitize', ( String ( name )
-            .trim().replace( /[^a-zA-Z0-9\-]/g, '' ).toLowerCase()
-        ) as Name, name, this );
+        return hook.filter( 'Registry::sanitize', name.toString().trim().toLowerCase() as Name, name, this );
 
     }
 

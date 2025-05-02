@@ -63,11 +63,7 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
         }
 
-        if ( colorSpace.output ) {
-
-            outputRegistry.addMany( name, colorSpace.output );
-
-        }
+        outputRegistry.addMany( name, colorSpace.output ?? {} );
 
         hook.run( 'ColorSpaceRegistry::afterAdd', name, colorSpace, this );
 

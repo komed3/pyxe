@@ -180,13 +180,17 @@ export class Parser {
             ...ColorSpace.list()
         ] ) {
 
-            const result = this.parseAs( input, space, strict );
+            if ( space && space !== input ) {
 
-            if ( result !== false ) {
+                const result = this.parseAs( input, space, strict );
 
-                hook.run( 'Parser::afterAutoParse', input, strict, safe, result, this );
+                if ( result !== false ) {
 
-                return result;
+                    hook.run( 'Parser::afterAutoParse', input, strict, safe, result, this );
+
+                    return result;
+
+                }
 
             }
 

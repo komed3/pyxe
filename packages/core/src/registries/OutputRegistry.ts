@@ -18,6 +18,18 @@ export class OutputRegistry extends Registry<ColorSpaceName, OutputFactory> {
 
     }
 
+    private _safeInRegistry (
+        space: ColorSpaceName
+    ) : void {
+
+        if ( ! this.items.has( space ) ) {
+
+            this.items.set( space, {} );
+
+        }
+
+    }
+
     public add (
         space: ColorSpaceName,
         type: string,
@@ -27,11 +39,7 @@ export class OutputRegistry extends Registry<ColorSpaceName, OutputFactory> {
 
         hook.run( 'OutputRegistry::beforeAdd', space, type, handler, update, this );
 
-        if ( ! this.items.has( space ) ) {
-
-            this.items.set( space, {} );
-
-        }
+        this._safeInRegistry( space );
 
         this.items.get( space )![ type ] = handler;
 
@@ -48,6 +56,8 @@ export class OutputRegistry extends Registry<ColorSpaceName, OutputFactory> {
     ) : void {
 
         hook.run( 'OutputRegistry::addMany', space, factory, update, this );
+
+        this._safeInRegistry( space );
 
         for ( const [ type, handler ] of Object.entries( factory ) ) {
 
@@ -76,15 +86,7 @@ export class OutputRegistry extends Registry<ColorSpaceName, OutputFactory> {
 
             delete factory![ type ];
 
-            if ( Object.keys( factory! ).length ) {
-
-                this.items.set( space, factory! );
-
-            } else {
-
-                this.removeAll( space );
-
-            }
+            this.items.set( space, factory! );
 
             this.updateMethods( update );
 
