@@ -196,12 +196,12 @@ const main = async () => {
 
     parseArgs( args );
 
-    log( `🛠️  Starting build script in ${ toPosix( ROOT ) }` );
-
     Object.assign( FLAGS, FLAGS.ci ? {
         force: true, cleanOnly: false, noClean: true, watch: false,
         parallel: false, noise: false, logFile: null
     } : {} );
+
+    log( `🛠️  Starting build script in ${ toPosix( ROOT ) }` );
 
     ( FLAGS.listOnly && ( list() || true ) ) || ( ! FLAGS.noClean && clean() ) || ( ! FLAGS.cleanOnly && ( async () => {
 
