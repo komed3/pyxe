@@ -11,7 +11,7 @@ import { hook } from '../services/Hook.js';
 export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
     protected static override instances: Map<ColorSpaceName, OutputFactory> = new Map ();
-    protected static override registry = outputRegistry;
+    protected static override get registry () { return outputRegistry; }
 
     private colorSpace: ColorSpace;
 

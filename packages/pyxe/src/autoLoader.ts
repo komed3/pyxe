@@ -3,9 +3,9 @@
 import { Services } from '@pyxe/core/services';
 
 export const registry: Record<string, string[]> = {
-    space: [ 'hex', 'rgb', 'hsl', 'hsv', 'cmyk' ],
-    library: [ 'ral' ],
-    module: [ 'basic' ]
+    space: [ 'rgb', 'hsl', 'hsv' ],
+    library: [],
+    module: []
 };
 
 export const loaded: Map<string, string[]> = new Map ();

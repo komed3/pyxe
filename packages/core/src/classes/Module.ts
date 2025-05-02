@@ -9,7 +9,7 @@ import { ModuleMethod } from './ModuleMethod.js';
 export class Module extends Entity<string, ModuleFactory> {
 
     protected static override instances: Map<string, ModuleFactory> = new Map ();
-    protected static override registry = moduleRegistry;
+    protected static override get registry () { return moduleRegistry; }
 
     private cache: Map<string, ModuleMethod> = new Map ();
 

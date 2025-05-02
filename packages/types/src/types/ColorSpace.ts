@@ -10,6 +10,7 @@ export interface ColorChannel {
     type: 'normalized' | 'numeric' | 'cyclic' | 'percent';
     min?: number;
     max?: number;
+    decimals?: number;
 }
 
 export interface ColorObjectFactory {
