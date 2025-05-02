@@ -8,7 +8,7 @@
   ],
   "type": "module",
   "scripts": {
-    "clean": "node ./scripts/build.mjs --clean",
+    "clean": "node ./scripts/build.mjs --cleanOnly",
     "build": "node ./scripts/build.mjs --force",
     "build:only": "node ./scripts/build.mjs --force --noClean",
     "build:dry": "node ./scripts/build.mjs --dryRun",
