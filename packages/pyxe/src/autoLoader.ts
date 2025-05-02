@@ -12,33 +12,33 @@ export const loaded: Map<string, string[]> = new Map ();
 
 const loadPackages = async () : Promise<void> => {
 
-    for ( const [ type, packages ] of Object.entries( registry ) ) {
+    await Promise.all( Object.entries( registry ).map( async ( [ type, packages ] ) => {
 
-        const loadedPackages = packages.map( async ( name ) => {
+        const loadedPackages = await Promise.all( packages.map( async ( name ) => {
 
             try {
 
-                await import( `@pyxe/${type}-${name}` );
+                await import ( `@pyxe/${type}-${name}` );
 
-                Services.Debugger.log( 'AutoLoader', `package <${name}> of type <${type}> loaded` );
+                Services.Debugger.log( 'AutoLoader', `Package <${name}> of type <${type}> loaded` );
 
                 return name;
 
             } catch {
 
-                /** Skip uninstalled package */
+                /** skip uninstalled package */
+                return undefined;
 
             }
 
-        } );
 
-        loaded.set( type,
-            ( await Promise.all( loadedPackages ) ).filter(
-                ( pkg ) : pkg is string => pkg !== undefined
-            )
-        );
+        } ) );
 
-    }
+        loaded.set( type, loadedPackages.filter(
+            ( pkg ) : pkg is string => pkg !== undefined
+        ) );
+
+    } ) );
 
 };
 
