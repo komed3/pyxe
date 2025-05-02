@@ -12,9 +12,9 @@ Registry.ColorSpace.add( 'rgb', {
         name: 'RGB',
         description: 'Additive red-green-blue color model using 8-bit channels'
     },
-    channels: channels,
+    channels,
     alpha: true,
-    output: output,
-    conversions: conversions,
-    hooks: hooks
+    output,
+    conversions,
+    hooks
 } );
