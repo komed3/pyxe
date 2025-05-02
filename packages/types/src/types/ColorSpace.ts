@@ -19,7 +19,7 @@ export interface ColorObjectFactory {
     meta?: Record<string, any>;
 }
 
-export type ColorObjectLike = ColorObjectFactory | ColorObjectFactory[] | any;
+export type ColorObjectFactoryLike = ColorObjectFactory | ColorObjectFactory[] | any;
 
 export type ConversionHandler = (
     input: ColorObjectFactory

@@ -1,9 +1,9 @@
 'use strict';
 
 import type { ColorSpaceName, ColorInput, ColorObjectFactory, OutputOptions } from '@pyxe/types';
-import { ColorObject, type ColorLike } from './ColorObject.js';
+import { ColorObject, type ColorObjectLike } from './ColorObject.js';
 
-export { ColorLike };
+export type ColorLike = Color | Color[] | any | false;
 
 export class Color {
 
@@ -12,7 +12,7 @@ export class Color {
     ) {}
 
     private static _wrap (
-        input: ColorLike | false
+        input: ColorObjectLike | false
     ) : Color | Color[] | any {
 
         return Array.isArray( input )
@@ -20,15 +20,6 @@ export class Color {
             : input instanceof ColorObject
                 ? new Color ( input )
                 : input;
-
-    }
-
-    public apply (
-        method: string,
-        options?: Record<string, any>
-    ) : ColorLike {
-
-        return Color._wrap( this.color.apply( method, options ) );
 
     }
 
@@ -49,6 +40,84 @@ export class Color {
     ) : boolean {
 
         return this.color.instanceOf( space );
+
+    }
+
+    public equals (
+        other: Color | ColorObject,
+        tolerance: number = 0.0005
+    ) : boolean {
+
+        return this.color.equals(
+            other instanceof Color ? other.color : other,
+            tolerance
+        );
+
+    }
+
+    public meta (
+        key?: string
+    ) : any {
+
+        return this.color.getMeta( key );
+
+    }
+
+    public channel (
+        key: string
+    ) : number | undefined {
+
+        return this.color.channel( key );
+
+    }
+
+    public alpha () : number | undefined {
+
+        return this.channel( 'alpha' );
+
+    }
+
+    public formattedChannel (
+        key: string,
+        options?: OutputOptions
+    ) : string {
+
+        return this.color.formattedChannel( key, options );
+
+    }
+
+    public clone (
+        overrides: Partial<ColorObjectFactory> = {}
+    ) : ColorLike {
+
+        return Color._wrap( this.color.clone( overrides, true ) );
+
+    }
+
+    public as (
+        target: ColorSpaceName[] | ColorSpaceName,
+        strict: boolean = true
+    ) : ColorLike {
+
+        return Color._wrap( this.color.as( target, strict ) );
+
+    }
+
+    public asAll (
+        targets: ColorSpaceName[],
+        strict: boolean = true
+    ) : ColorLike {
+
+        return Color._wrap( this.color.asAll( targets, strict ) );
+
+    }
+
+    public apply (
+        method: string,
+        options?: Record<string, any>
+    ) : ColorLike {
+
+        return Color._wrap( this.color.apply( method, options ) );
 
     }
 
@@ -87,7 +156,7 @@ export class Color {
 
     public static from (
         input: ColorObjectFactory
-    ) : Color | false {
+    ) : ColorLike {
 
         return Color._wrap( ColorObject.from( input, true ) );
 
@@ -102,7 +171,7 @@ export class Color {
             strict?: boolean;
             tryConvert?: boolean;
         } = {}
-    ) : Promise<Color | false> {
+    ) : Promise<ColorLike> {
 
         return Color._wrap( ColorObject.fromLib( library, key, preferredSpaces, options, true ) );
 
@@ -110,9 +179,23 @@ export class Color {
 
     public static parse (
         input: ColorInput
-    ) : Color | false {
+    ) : ColorLike {
 
         return Color._wrap( ColorObject.parse( input, false, true ) );
+
+    }
+
+    public static isEqual (
+        a: Color | ColorObject,
+        b: Color | ColorObject,
+        tolerance?: number
+    ) : boolean {
+
+        return ColorObject.isEqual(
+            a instanceof Color ? a.color : a,
+            b instanceof Color ? b.color : b,
+            tolerance
+        );
 
     }
 

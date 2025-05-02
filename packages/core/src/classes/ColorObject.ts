@@ -1,6 +1,6 @@
 'use strict';
 
-import type { ColorInput, ColorInstance, ColorSpaceName, ColorObjectFactory, ColorObjectLike, OutputOptions } from '@pyxe/types';
+import type { ColorInput, ColorInstance, ColorSpaceName, ColorObjectFactory, ColorObjectFactoryLike, OutputOptions } from '@pyxe/types';
 import { ChannelHelper, TypeCheck } from '@pyxe/utils';
 import { ColorSpace } from './ColorSpace.js';
 import { test } from './Validator.js';
@@ -13,7 +13,7 @@ import { hook } from '../services/Hook.js';
 import { tracer, tracerTemplates as tpl } from '../services/Tracer.js';
 import { assert, catchToError } from '../services/ErrorUtils.js';
 
-export type ColorLike = ReturnType<typeof ColorObject.from> | ReturnType<typeof ColorObject.from>[] | any;
+export type ColorObjectLike = ReturnType<typeof ColorObject.from> | ReturnType<typeof ColorObject.from>[] | any;
 
 export class ColorObject {
 
@@ -58,10 +58,10 @@ export class ColorObject {
     }
 
     private static _wrap (
-        input: ColorObjectLike,
+        input: ColorObjectFactoryLike,
         safe: boolean = true,
         invoker?: ( result: any, input?: any ) => void
-    ) : ColorLike {
+    ) : ColorObjectLike {
 
         return Array.isArray( input )
             ? input.map( ( item ) => ColorObject._wrap( item, safe, invoker ) )
@@ -198,7 +198,7 @@ export class ColorObject {
     public as (
         target: ColorSpaceName[] | ColorSpaceName,
         strict: boolean = true
-    ) : ColorLike | false {
+    ) : ColorObjectLike | false {
 
         return catchToError( () => {
 
@@ -238,7 +238,7 @@ export class ColorObject {
     public apply (
         method: string,
         options?: Record<string, any>
-    ) : ColorLike | false {
+    ) : ColorObjectLike | false {
 
         return catchToError( () => {
 
@@ -303,7 +303,7 @@ export class ColorObject {
             tryConvert?: boolean;
         } = {},
         safe: boolean = true
-    ) : Promise<ColorLike | false> {
+    ) : Promise<ColorObjectLike | false> {
 
         return await catchToError( async () => {
 
@@ -328,7 +328,7 @@ export class ColorObject {
         input: ColorInput,
         strict: boolean = false,
         safe: boolean = true
-    ) : ColorLike | false {
+    ) : ColorObjectLike | false {
 
         return catchToError( () => {
 
