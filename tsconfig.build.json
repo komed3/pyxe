@@ -7,6 +7,7 @@
     { "path": "packages/spaces/hsl" },
     { "path": "packages/spaces/hsv" },
     { "path": "packages/spaces/rgb" },
+    { "path": "packages/spaces/xyz" },
     { "path": "packages/types" },
     { "path": "packages/utils" }
   ]
