@@ -178,7 +178,7 @@ export class Color {
         } = {}
     ) : Promise<ColorLike> {
 
-        return Color._wrap( ColorObject.fromLib( library, key, preferredSpaces, options, true ) );
+        return Color._wrap( await ColorObject.fromLib( library, key, preferredSpaces, options, true ) );
 
     }
 

@@ -192,7 +192,10 @@ export class ColorLib extends Entity<string, ColorLibFactory> {
 
                         }
 
-                        return await hook.filterAsync( 'ColorLib::color', key, color, this );
+                        return await hook.filterAsync(
+                            'ColorLib::color', color, key, preferredSpaces,
+                            options, safe, entry, candidates, space, this
+                        );
 
                     }
 
