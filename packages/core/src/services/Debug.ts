@@ -68,6 +68,12 @@ export class Debug {
 
     }
 
+    public isReady() : boolean {
+
+        return this.level && this.level !== 'silent';
+
+    }
+
     public error (
         msg: string,
         show: boolean = false
