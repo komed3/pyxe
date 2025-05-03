@@ -13,6 +13,11 @@ export interface ColorChannel {
     name?: string;
 }
 
+export interface GammaHandler {
+    encode: ( value: number ) => number;
+    decode: ( value: number ) => number;
+}
+
 export interface ColorObjectFactory {
     space: ColorSpaceName;
     value: ColorInstance;
@@ -53,6 +58,8 @@ export interface ColorSpaceMeta {
 export interface ColorSpaceFactory {
     channels: Record<string, ColorChannel>;
     alpha: boolean;
+    linear: boolean;
+    gamma?: GammaHandler;
     aliases?: ColorSpaceName[];
     hooks?: Record<string, HookHandler>;
     conversions?: ConversionFactory;
