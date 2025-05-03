@@ -3,6 +3,7 @@
 import type { ColorLibLoader } from '@pyxe/types';
 import { Registry } from '@pyxe/core/registry';
 import { RAL_Classic } from './lib/classic.js';
+import { RAL_DESIGN } from './lib/design.js';
 import { RAL_Effect } from './lib/effect.js';
 
 Registry.ColorLib.add( 'ral', {
@@ -16,6 +17,7 @@ Registry.ColorLib.add( 'ral', {
     autoLoad: [ 'classic' ],
     sources: {
         classic: RAL_Classic as ColorLibLoader,
+        design: RAL_DESIGN as ColorLibLoader,
         effect: RAL_Effect as ColorLibLoader
     }
 } );
