@@ -1,45 +1,58 @@
 'use strict';
 
-import { debug } from '@pyxe/core/root';
+import { Services } from '@pyxe/core/services';
 
 export const registry: Record<string, string[]> = {
-    space: [ 'hex', 'rgb', 'hsl', 'hsv', 'cmyk' ],
+    space: [ 'rgb', 'hsl', 'hsv' ],
     library: [ 'ral' ],
-    module: [ 'basic' ]
+    module: []
 };
 
 export const loaded: Map<string, string[]> = new Map ();
 
 const loadPackages = async () : Promise<void> => {
 
-    for ( const [ type, packages ] of Object.entries( registry ) ) {
+    await Promise.all( Object.entries( registry ).map( async ( [ type, packages ] ) => {
 
-        const loadedPackages = packages.map( async ( name ) => {
+        const loadedPackages = await Promise.all( packages.map( async ( name ) => {
+
+            const pkg = `@pyxe/${type}-${name}`;
 
             try {
 
-                await import( `@pyxe/${type}-${name}` );
+                /** try to import package */
 
-                debug.log( 'AUTO LOADER', `package <${name}> of type <${type}> loaded` );
+                await import ( pkg );
+
+                Services.Debugger.log( 'AutoLoader', `Package <${name}> of type <${type}> loaded` );
+
+                Services.Hook.run( 'AutoLoader::init', pkg, type, name );
 
                 return name;
 
             } catch {
 
-                /** Skip uninstalled package */
+                /** skip uninstalled package */
+
+                Services.Hook.run( 'AutoLoader::skip', pkg, type, name );
+
+                return undefined;
 
             }
 
-        } );
 
-        loaded.set( type,
-            ( await Promise.all( loadedPackages ) ).filter(
-                ( pkg ) : pkg is string => pkg !== undefined
-            )
-        );
+        } ) );
 
-    }
+        loaded.set( type, loadedPackages.filter(
+            ( pkg ) : pkg is string => pkg !== undefined
+        ) );
+
+    } ) );
 
 };
 
+Services.Hook.run( 'AutoLoader::start', registry );
+
 await loadPackages();
+
+Services.Hook.run( 'AutoLoader::finish', registry, loaded );

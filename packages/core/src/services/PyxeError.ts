@@ -5,9 +5,9 @@ import { debug } from './Debug.js';
 
 export class PyxeError extends Error {
 
-    readonly header: string;
-    readonly timestamp: string;
-    readonly method: string;
+    readonly header?: string;
+    readonly time?: string;
+    readonly method?: string;
     readonly msg?: string;
     readonly extra?: string;
 
@@ -21,25 +21,37 @@ export class PyxeError extends Error {
             'en-US', { hour12: false, timeStyle: 'medium' }
         );
 
-        const extra = err
-            ? ( err instanceof Error
-                ? err.message
-                : String ( err )
-            )
-            : undefined;
+        const extra = typeof err === 'string'
+            ? err : err instanceof Error
+                ? err.message : err !== null
+                    ? String ( err ) : undefined;
 
-        const header = `${time} [${ method.toUpperCase() }] ${ msg ?? '' }` +
+        const header = `${ time } [${ method.toUpperCase() }] ${ ( msg ?? '' ) }` +
                        `${ ( extra ? `: ${extra}` : '' ) }`;
 
         super( header );
 
         this.name = 'PyxeError';
 
-        this.header = header;
-        this.timestamp = time;
-        this.method = method;
-        this.msg = msg;
-        this.extra = extra;
+        Object.assign( this, { header, time, method, msg, extra } );
+
+    }
+
+    public static fromError (
+        method: string,
+        err: unknown
+    ) : PyxeError {
+
+        return new PyxeError ( {
+            err, method, msg: err instanceof Error
+                ? err.message : String ( err )
+        } );
+
+    }
+
+    private _getTrace () : string {
+
+        return this.stack?.split( '\n' ).slice( 1 ).join( '\n' ) || '';
 
     }
 
@@ -47,45 +59,27 @@ export class PyxeError extends Error {
         trace: boolean = true
     ) : string {
 
-        if ( trace ) {
-
-            return `${this.header}\n${
-                this.stack?.split( '\n' ).slice( 1 ).join( '\n' ) ?? ''
-            }`;
-
-        }
-
-        return this.header;
+        return trace && this.stack
+            ? `${ this.header }\n${ this._getTrace() }`
+            : this.header || this.name;
 
     }
 
-    public log (
-        trace: boolean = true
-    ) : void {
+    public log () : void {
 
-        debug.log( this.method, this.msg! );
-
-        console.error( this.toString( trace ) );
+        debug.error( this.toString(), true );
 
     }
 
-    public warn (
-        trace: boolean = false
-    ) : void {
+    public warn () : void {
 
-        debug.warn( this.method, this.msg! );
-
-        console.warn( this.toString( trace ) );
+        debug.warn( this.method ?? this.name, this.msg! );
 
     }
 
-    public info (
-        trace: boolean = false
-    ) : void {
+    public info () : void {
 
-        debug.info( this.method, this.msg! );
-
-        console.info( this.toString( trace ) );
+        debug.info( this.method ?? this.name, this.msg! );
 
     }
 

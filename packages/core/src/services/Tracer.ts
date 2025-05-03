@@ -1,23 +1,29 @@
 'use strict';
 
-import type { ColorInput, TracerFactory } from '@pyxe/types';
-import { ColorObject } from '../ColorObject.js';
+import type { ColorInput, ColorObjectFactory, ColorSpaceName, TracerFactory } from '@pyxe/types';
+import { ColorObject } from '../classes/ColorObject.js';
+import { hook } from './Hook.js';
+import { debug } from './Debug.js';
 
 export class Tracer {
 
     constructor (
-        private state: boolean = false
+        private state: boolean = !!process.env.TRACE
     ) {}
 
     public enable () : void {
 
         this.state = true;
 
+        debug.log( 'Tracer', `Color object tracer <enabled>` );
+
     }
 
     public disable () : void {
 
         this.state = false;
+
+        debug.log( 'Tracer', `Color object tracer <disabled>` );
 
     }
 
@@ -28,32 +34,46 @@ export class Tracer {
     }
 
     public flush (
-        color: ColorObject
+        input: any
     ) : void {
 
-        color.updateMeta( { trace: [] } );
+        if ( input instanceof ColorObject ) {
+
+            input.deleteMeta( 'trace' );
+
+        } else if ( input.meta?.trace ) {
+
+            delete input.meta.trace;
+
+        }
 
     }
 
     public add (
         color: ColorObject,
         entry: Partial<TracerFactory>,
-        flush: boolean = false
+        options: {
+            flush?: boolean,
+            clear?: boolean
+        } = {}
     ) : void {
 
         if ( this.state ) {
 
-            let trace = this.get( color )!;
+            debug.log( 'Tracer', `Add color object tracer for action: <${entry.action}>` );
 
-            if ( flush ) {
+            if ( options.flush ) {
 
-                trace = [];
+                this.flush( entry.meta?.input );
+                this.flush( entry.meta?.result );
 
             }
 
-            trace.push( {
+            let trace = options.clear ? [] : this.get( color )!;
+
+            trace.push( hook.filter( 'Tracer::entry', {
                 ...entry, timestamp: new Date()
-            } as TracerFactory );
+            }, color, this ) as TracerFactory );
 
             color.updateMeta( { trace } );
 
@@ -63,9 +83,45 @@ export class Tracer {
 
     public get (
         color: ColorObject
-    ) : TracerFactory[] | undefined {
+    ) : TracerFactory[] {
 
         return color.getMeta( 'trace' ) ?? [];
+
+    }
+
+    public export (
+        color: ColorObject,
+        options: {
+            format?: 'json' | 'object';
+            pretty?: boolean;
+            limit?: number;
+        } = {}
+    ) : TracerFactory[] | string {
+
+        const { format = 'object', pretty = false, limit = 0 } = options;
+
+        const _walker: TracerFactory[] = hook.filter(
+            'Tracer::export',
+            this.get( color ).slice( -limit ).map(
+                ( entry ) => ( { 
+                    ...entry, 
+                    meta: Object.fromEntries(
+                        Object.entries( entry.meta ?? {} ).map(
+                            ( [ key, value ] ) => [
+                                key, value instanceof ColorObject
+                                    ? ( this.flush( value ), value.toObject() )
+                                    : value
+                            ]
+                        )
+                    )
+                } )
+            ),
+            color, options, this
+        );
+
+        return format === 'json' 
+            ? JSON.stringify( _walker, null, pretty ? 2 : 0 ) 
+            : _walker;
 
     }
 
@@ -77,24 +133,36 @@ export const tracerTemplates = {
 
     parse: (
         input: ColorInput,
-        result: ColorObject
+        result: ColorObject | ColorObjectFactory
     ) : Partial<TracerFactory> => ( {
         action: 'parse',
         meta: {
-            input, result,
+            result, input,
             source: 'string',
             target: result.space
         }
     } ),
 
+    library: (
+        library: string,
+        key: string,
+        result: ColorObject | ColorObjectFactory
+    ) : Partial<TracerFactory> => ( {
+        action: 'library',
+        meta: {
+            result,
+            source: { library, key }
+        }
+    } ),
+
     convert: (
-        input: ColorObject,
-        result: ColorObject,
-        path?: string[] | unknown
+        input: ColorObject | ColorObjectFactory,
+        result: ColorObject | ColorObjectFactory,
+        path?: ColorSpaceName[] | unknown
     ) : Partial<TracerFactory> => ( {
         action: 'convert',
         meta: {
-            input, result,
+            result, input,
             source: input.space,
             target: result.space,
             path: path ?? null
@@ -103,12 +171,12 @@ export const tracerTemplates = {
 
     module: (
         module: string,
-        input: ColorObject,
-        result: ColorObject
+        input: ColorObject | ColorObjectFactory,
+        result: ColorObject | ColorObjectFactory
     ) : Partial<TracerFactory> => ( {
         action: `module::${ module.toLowerCase() }`,
         meta: {
-            input, result
+            result, input
         }
     } )
 

@@ -2,11 +2,16 @@
 
 import type { HookFactory, HookHandler } from '@pyxe/types';
 import { debug } from './Debug.js';
-import { PyxeError } from './PyxeError.js';
+import { catchToError } from './ErrorUtils.js';
 
 export class Hook {
 
     private registry: Map<string, HookFactory[]> = new Map ();
+    private cache: Map<string, [ string, HookFactory[] ][]> = new Map ();
+
+    constructor (
+        private safe: boolean = true
+    ) {}
 
     private _register (
         name: string,
@@ -32,27 +37,45 @@ export class Hook {
 
         }
 
+        this.cache.clear();
+
     }
 
     private _match (
         name: string
-    ) : [ string, HookFactory[] ][] {
+    ) : Array<[ string, HookFactory[] ]> {
 
-        if ( ! name.includes( '*' ) ) {
+        if ( this.cache.has( name ) ) {
 
-            return this.registry.has( name )
-                ? [ [ name, this.registry.get( name )! ] ]
-                : [];
+            return this.cache.get( name )!;
 
         }
 
-        const pattern = new RegExp (
-            '^' + name.replace( /\*/g, '.*' ) + '$'
-        );
+        let matches: Array<[ string, HookFactory[] ]> = [];
 
-        return [ ...this.registry.entries() ].filter(
-            ( [ key ] ) => pattern.test( key )
-        );
+        if ( ! name.includes( '*' ) ) {
+
+            const hooks = this.registry.get( name );
+
+            matches = hooks ? [ [ name, hooks ] ] : [];
+
+        } else {
+
+            const pattern = new RegExp (
+                '^' + name.split( '*' ).map(
+                    ( s ) => s.replace( /[-/\\^$+?.()|[\]{}]/g, '\\$&' )
+                ).join( '.*' ) + '$'
+            );
+
+            matches = [ ...this.registry.entries() ].filter (
+                ( [ key ] ) => pattern.test( key )
+            );
+
+        }
+
+        this.cache.set( name, matches );
+
+        return matches;
 
     }
 
@@ -103,6 +126,8 @@ export class Hook {
 
         if ( this.registry.has( name ) ) {
 
+            this.cache.clear();
+
             if ( ! handler ) {
 
                 this.registry.delete( name );
@@ -131,6 +156,20 @@ export class Hook {
 
     }
 
+    public clear (
+        pattern: string
+    ) : void {
+
+        this.cache.clear();
+
+        for ( const [ key ] of this._match( pattern ) ) {
+
+            this.registry.delete( key );
+
+        }
+
+    }
+
     public run (
         name: string,
         ...args: any[]
@@ -138,17 +177,17 @@ export class Hook {
 
         debug.log( 'Hook', `run hook <${name}>` );
 
-        try {
+        catchToError( () => {
 
-            for ( const [ key, entries ] of this._match( name ) ) {
+            for ( const [ key, hooks ] of this._match( name ) ) {
 
-                for ( const entry of [ ...entries ] ) {
+                for ( const hook of hooks ) {
 
-                    entry.handler( ...args );
+                    hook.handler( ...args );
 
-                    if ( entry.once ) {
+                    if ( hook.once ) {
 
-                        this.remove( key, entry.handler );
+                        this.remove( key, hook.handler );
 
                     }
 
@@ -156,14 +195,10 @@ export class Hook {
 
             }
 
-        } catch ( err ) {
-
-            throw new PyxeError ( {
-                err, method: 'Hook',
-                msg: `Failed to run hook for <${name}>`
-            } );
-
-        }
+        }, {
+            method: 'Hook',
+            msg: `Failed to run hook for <${name}>`
+        }, this.safe );
 
     }
 
@@ -174,17 +209,17 @@ export class Hook {
 
         debug.log( 'Hook', `run async hook <${name}>` );
 
-        try {
+        catchToError( async () => {
 
-            for ( const [ key, entries ] of this._match( name ) ) {
+            for ( const [ key, hooks ] of this._match( name ) ) {
 
-                for ( const entry of [ ...entries ] ) {
+                for ( const hook of hooks ) {
 
-                    await entry.handler( ...args );
+                    await hook.handler( ...args );
 
-                    if ( entry.once ) {
+                    if ( hook.once ) {
 
-                        this.remove( key, entry.handler );
+                        this.remove( key, hook.handler );
 
                     }
 
@@ -192,14 +227,10 @@ export class Hook {
 
             }
 
-        } catch ( err ) {
-
-            throw new PyxeError ( {
-                err, method: 'Hook',
-                msg: `Failed to run async hook for <${name}>`
-            } );
-
-        }
+        }, {
+            method: 'Hook',
+            msg: `Failed to run async hook for <${name}>`
+        }, this.safe );
 
     }
 
@@ -210,18 +241,10 @@ export class Hook {
 
         setImmediate ( () => {
 
-            try {
-
-                this.run( name, ...args );
-
-            } catch ( err ) {
-
-                throw new PyxeError ( {
-                    err, method: 'Hook',
-                    msg: `Failed to run deferred hook for <${name}>`
-                } );
-
-            }
+            catchToError( () => this.run( name, ...args ), {
+                method: 'Hook',
+                msg: `Failed to run deferred hook for <${name}>`
+            }, this.safe );
 
         } );
 
@@ -237,17 +260,17 @@ export class Hook {
 
         let result = input;
 
-        try {
+        catchToError( () => {
 
-            for ( const [ key, entries ] of this._match( name ) ) {
+            for ( const [ key, hooks ] of this._match( name ) ) {
 
-                for ( const entry of [ ...entries ] ) {
+                for ( const hook of hooks ) {
 
-                    result = entry.handler( result, ...args );
+                    result = hook.handler( result, ...args );
 
-                    if ( entry.once ) {
+                    if ( hook.once ) {
 
-                        this.remove( key, entry.handler );
+                        this.remove( key, hook.handler );
 
                     }
 
@@ -255,14 +278,10 @@ export class Hook {
 
             }
 
-        } catch ( err ) {
-
-            throw new PyxeError ( {
-                err, method: 'Hook',
-                msg: `Failed to apply filter for <${name}>`
-            } );
-
-        }
+        }, {
+            method: 'Hook',
+            msg: `Failed to apply filter for <${name}>`
+        }, this.safe );
 
         return result;
 
@@ -278,17 +297,17 @@ export class Hook {
 
         let result = input;
 
-        try {
+        catchToError( async () => {
 
-            for ( const [ key, entries ] of this._match( name ) ) {
+            for ( const [ key, hooks ] of this._match( name ) ) {
 
-                for ( const entry of [ ...entries ] ) {
+                for ( const hook of hooks ) {
 
-                    result = await entry.handler( result, ...args );
+                    result = await hook.handler( result, ...args );
 
-                    if ( entry.once ) {
-                        
-                        this.remove( key, entry.handler );
+                    if ( hook.once ) {
+
+                        this.remove( key, hook.handler );
 
                     }
 
@@ -296,16 +315,28 @@ export class Hook {
 
             }
 
-        } catch ( err ) {
-
-            throw new PyxeError ( {
-                err, method: 'Hook',
-                msg: `Failed to apply async filter for <${name}>`
-            } );
-
-        }
+        }, {
+            method: 'Hook',
+            msg: `Failed to apply async filter for <${name}>`
+        }, this.safe );
 
         return result;
+
+    }
+
+    public list (
+        pattern: string = '*'
+    ) : string[] {
+
+        return this._match( pattern ).map( ( [ key ] ) => key );
+
+    }
+
+    public has (
+        name: string
+    ) : boolean {
+
+        return this.registry.has( name );
 
     }
 

@@ -1,17 +1,16 @@
 'use strict';
 
 import type { HSL, ColorObjectFactory, ConversionFactory } from '@pyxe/types';
-import { Channel } from '@pyxe/utils';
 
 export const conversions: ConversionFactory = {
 
-    RGB: (
+    rgb: (
         input: ColorObjectFactory | undefined
     ) : ColorObjectFactory | undefined => {
 
-        if ( input && input.space === 'HSL' ) {
+        if ( input && input.space === 'hsl' ) {
 
-            const { h, s, l, a } = input.value as HSL;
+            const { h, s, l } = input.value as HSL;
 
             const c = ( 1 - Math.abs( 2 * l - 1 ) ) * s;
             const x = c * ( 1 - Math.abs( ( h / 60 ) % 2 - 1 ) );
@@ -27,11 +26,13 @@ export const conversions: ConversionFactory = {
             else                [ r, g, b ] = [ c, 0, x ];
 
             return {
-                space: 'RGB',
+                space: 'rgb',
                 value: {
-                    r: ( r + m ) * 255, g: ( g + m ) * 255, b: ( b + m ) * 255,
-                    ...Channel.safeAlpha( a ),
+                    r: ( r + m ) * 255,
+                    g: ( g + m ) * 255,
+                    b: ( b + m ) * 255
                 },
+                alpha: input.alpha,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
 
@@ -39,20 +40,21 @@ export const conversions: ConversionFactory = {
 
     },
 
-    HSV: (
+    hsv: (
         input: ColorObjectFactory | undefined
     ) : ColorObjectFactory | undefined => {
 
-        if ( input && input.space === 'HSL' ) {
+        if ( input && input.space === 'hsl' ) {
 
-            const { h, s, l, a } = input.value as HSL;
+            const { h, s, l } = input.value as HSL;
 
             const v = l + s * Math.min( l, 1 - l );
             const sv = v === 0 ? 0 : 2 * ( 1 - l / v );
 
             return {
-                space: 'HSV',
-                value: { h, s: sv, v, ...Channel.safeAlpha( a ) },
+                space: 'hsv',
+                value: { h, s: sv, v },
+                alpha: input.alpha,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
 

@@ -1,10 +1,20 @@
 'use strict';
 
-export { Color } from './Color.js';
-export { ColorSpace } from './ColorSpace.js';
-export { ColorLib } from './ColorLib.js';
-export { Module } from './Module.js';
-export { ModuleMethod } from './ModuleMethod.js';
-export { ConversionGraph } from './ConversionGraph.js';
-export { Validator } from './Validator.js';
-export { Parser } from './Parser.js';
+import { conversionGraph, type ConversionGraph } from './classes/ConversionGraph.js';
+import { test, validator, type Validator } from './classes/Validator.js';
+
+export { Color } from './classes/Color.js';
+export { ColorSpace } from './classes/ColorSpace.js';
+export { ColorLib } from './classes/ColorLib.js';
+export { Module } from './classes/Module.js';
+export { Output } from './classes/Output.js';
+
+export const Tools: {
+    Graph: ConversionGraph;
+    Validate: Validator;
+    Test: Validator;
+} = {
+    Graph: conversionGraph,
+    Validate: validator,
+    Test: test
+};

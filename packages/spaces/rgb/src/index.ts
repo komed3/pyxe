@@ -1,32 +1,17 @@
 'use strict';
 
-import { colorSpaceRegistry } from '@pyxe/core/root';
-
-import { validator } from './handler/validator.js';
-import { parser } from './handler/parser.js';
+import { Registry } from '@pyxe/core/registry';
+import { channels } from './handler/channels.js';
 import { conversions } from './handler/conversions.js';
 import { output } from './handler/output.js';
+import { hooks } from './handler/hooks.js';
 
-colorSpaceRegistry.add( 'RGB', {
-    name: 'RGB',
-    aliases: [ 'rgb', 'RGBA', 'rgba' ],
-    validator: validator,
-    parser: parser,
-    conversions: conversions,
-    output: output,
+Registry.ColorSpace.add( 'rgb', {
+    channels, alpha: true, conversions,
+    output, hooks,
+    aliases: [ 'rgba', 'hex', '#' ],
     meta: {
         name: 'RGB',
-        description: 'Additive red-green-blue color model using 8-bit channels',
-        type: 'numeric',
-        alpha: true,
-        channels: {
-            r: { name: 'Red', range: [ 0, 255 ] },
-            g: { name: 'Green', range: [ 0, 255 ] },
-            b: { name: 'Blue', range: [ 0, 255 ] },
-            a: { name: 'Alpha', range: [ 0, 1 ], unit: 'ratio' }
-        },
-        spaces: [ 'HEX', 'HSL', 'HSV' ],
-        output: [ 'string', 'css', 'html' ],
-        cssSupport: true
+        description: 'Additive red-green-blue color model using 8-bit channels'
     }
 } );

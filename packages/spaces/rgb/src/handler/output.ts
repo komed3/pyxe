@@ -1,39 +1,38 @@
 'use strict';
 
-import type { RGB, ColorObjectFactory, OutputFactory, OutputHandler } from '@pyxe/types';
-import { Channel } from '@pyxe/utils';
+import type { RGB, OutputFactory } from '@pyxe/types';
+import { ErrorUtils } from '@pyxe/core/services';
 
 export const output: OutputFactory = {
 
-    string: (
-        input: ColorObjectFactory,
-        options: {
-            format?: 'hex' | 'percent';
-            decimals?: number,
-            alpha?: boolean;
-        } = {}
-    ) : string => {
+    html: 'string',
+    css: 'string',
 
-        const { format = null, decimals = 0, alpha = false } = options;
-        const { r, g, b, a } = ( input.value ?? {} ) as RGB;
+    hex: ( input, options ) : string => {
 
-        const parts = [ r, g, b ].map(
-            ( c ) => Channel.format( Channel.clamp( c, 0, 255 ), {
-                unit: format, max: 255, decimals: decimals
-            } )
+        ErrorUtils.assert( input.space === 'rgb', {
+            method: 'Space::RGB',
+            msg: `Output format <hex> does not support color space <${input.space}>`
+        } );
+
+        const { r, g, b } = input.value as RGB;
+
+        const dec2hex = ( val: number, short?: boolean ) : string => short
+            ? ( val >> 4 ).toString( 16 )
+            : val.toString( 16 ).padStart( 2, '0' );
+
+        const canShorten = options?.short && [ r, g, b ].every(
+            ( val ) => ( val & 0xf0 ) >> 4 === ( val & 0x0f )
         );
 
-        return a !== undefined || alpha === true
-            ? `rgba( ${ parts.join( ', ' ) }, ${ Channel.formatAlpha( a ) } )`
-            : `rgb( ${ parts.join( ', ' ) } )`;
+        const hex = `#${ [ r, g, b ].map(
+            ( val ) => dec2hex( Math.round( val ), canShorten )
+        ).join( '' ) }`;
 
-    },
+        return options?.forceAlpha || ( input.alpha !== undefined && input.alpha !== 1 )
+            ? hex + dec2hex( Math.round( ( input.alpha ?? 1 ) * 255 ), options?.short )
+            : hex;
 
-    css: ( ...args ) => (
-        output.string as OutputHandler
-    )( ...args ),
-    html: ( ...args ) => (
-        output.string as OutputHandler
-    )( ...args )
+    }
 
 };

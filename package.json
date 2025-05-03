@@ -11,22 +11,24 @@
   ],
   "type": "module",
   "scripts": {
-    "clean": "node ./scripts/build.mjs --clean",
+    "clean": "node ./scripts/build.mjs --cleanOnly",
     "build": "node ./scripts/build.mjs --force",
-    "build:only": "node ./scripts/build.mjs --force --no-clean",
-    "build:dry": "node ./scripts/build.mjs --dry-run",
+    "build:only": "node ./scripts/build.mjs --force --noClean",
+    "build:dry": "node ./scripts/build.mjs --dryRun",
+    "build:list": "node ./scripts/build.mjs --listOnly",
     "build:ci": "node ./scripts/build.mjs --ci",
+    "build:core": "node ./scripts/build.mjs --only core --force",
     "build:watch": "node ./scripts/build.mjs --force --watch",
     "analyze": "node ./scripts/analyze.mjs",
     "lint": "npx tsc --noEmit && npx eslint . --ext .ts,.tsx",
-    "test": "cross-env DEBUG=1 node ./test/index.js"
+    "test": "cross-env TRACE=1 node ./test/index.js",
+    "debug": "cross-env DEBUG=1 TRACE=1 node ./test/index.js"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
     "@typescript-eslint/eslint-plugin": "^8.31.0",
     "@typescript-eslint/parser": "^8.31.0",
     "cross-env": "^7.0.3",
-    "glob": "^11.0.2",
     "typescript": "^5.8.3"
   }
 }

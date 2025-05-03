@@ -1,17 +1,16 @@
 'use strict';
 
 import type { HSV, ColorObjectFactory, ConversionFactory } from '@pyxe/types';
-import { Channel } from '@pyxe/utils';
 
 export const conversions: ConversionFactory = {
 
-    RGB: (
+    rgb: (
         input: ColorObjectFactory | undefined
     ) : ColorObjectFactory | undefined => {
 
-        if ( input && input.space === 'HSV' ) {
+        if ( input && input.space === 'hsv' ) {
 
-            const { h, s, v, a } = input.value as HSV;
+            const { h, s, v } = input.value as HSV;
 
             const hh = ( ( h % 360 ) + 360 ) % 360 / 60;
             const i = Math.floor( hh );
@@ -38,8 +37,9 @@ export const conversions: ConversionFactory = {
             } )().map( c => c * 255 );
 
             return {
-                space: 'RGB',
-                value: { r, g, b, ...Channel.safeAlpha( a ) },
+                space: 'rgb',
+                value: { r, g, b },
+                alpha: input.alpha,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
 
@@ -47,20 +47,21 @@ export const conversions: ConversionFactory = {
 
     },
 
-    HSL: (
+    hsl: (
         input: ColorObjectFactory | undefined
     ) : ColorObjectFactory | undefined => {
 
-        if ( input && input.space === 'HSV' ) {
+        if ( input && input.space === 'hsv' ) {
 
-            const { h, s, v, a } = input.value as HSV;
+            const { h, s, v } = input.value as HSV;
 
             const l = v * ( 1 - s / 2 );
             const sl = l === 0 || l === 1 ? 0 : ( v - l ) / Math.min( l, 1 - l );
 
             return {
-                space: 'HSL',
-                value: { h, s: sl, l, ...Channel.safeAlpha( a ) },
+                space: 'hsl',
+                value: { h, s: sl, l },
+                alpha: input.alpha,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
 

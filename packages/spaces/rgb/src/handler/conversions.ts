@@ -1,59 +1,27 @@
 'use strict';
 
 import type { RGB, ColorObjectFactory, ConversionFactory } from '@pyxe/types';
-import { Basic, Channel } from '@pyxe/utils';
+import { ChannelHelper } from '@pyxe/utils';
+import { channels } from './channels.js';
+import { minMaxDelta, computeHue } from './helper.js';
 
 export const conversions: ConversionFactory = {
 
-    HEX: (
+    hsl: (
         input: ColorObjectFactory | undefined
     ) : ColorObjectFactory | undefined => {
 
-        if ( input && input.space === 'RGB' ) {
+        if ( input && input.space === 'rgb' ) {
 
-            const { r, g, b, a } = input.value as RGB;
-
-            const parts = [ r, g, b ].map(
-                ( c ) => Basic.dechex( Channel.clamp( c, 0, 255 ) )
-            );
-
-            return {
-                space: 'HEX',
-                value: `#${ parts.join( '' ) }${ Basic.dechexAlpha( a ) }`,
-                meta: input.meta ?? {}
-            } as ColorObjectFactory;
-
-        }
-
-    },
-
-    HSL: (
-        input: ColorObjectFactory | undefined
-    ) : ColorObjectFactory | undefined => {
-
-        if ( input && input.space === 'RGB' ) {
-
-            const { r, g, b, a } = input.value as RGB;
-
-            const [ rN, gN, bN ] = [ r, g, b ].map(
-                ( c ) => Channel.normalize( c, 0, 255 )
-            );
-
-            const max = Math.max( rN, gN, bN ),
-                  min = Math.min( rN, gN, bN ),
-                  delta = max - min;
+            const { r, g, b } = ChannelHelper.normalizeInstance( input.value, channels ) as RGB;
+            const { min, max, delta } = minMaxDelta( r, g, b );
 
             const l = ( max + min ) / 2;
             let h = 0, s = 0;
 
             if ( delta !== 0 ) {
 
-                h = ( max === rN
-                    ? ( gN - bN ) / delta + ( gN < bN ? 6 : 0 )
-                    : max === gN
-                        ? ( bN - rN ) / delta + 2
-                        : ( rN - gN ) / delta + 4
-                ) * 60;
+                h = computeHue( r, g, b, max, delta );
 
                 s = l < 0.5
                     ? delta / ( max + min )
@@ -62,8 +30,9 @@ export const conversions: ConversionFactory = {
             }
 
             return {
-                space: 'HSL',
-                value: { h, s, l, ...Channel.safeAlpha( a ) },
+                space: 'hsl',
+                value: { h, s, l },
+                alpha: input.alpha,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
 
@@ -71,41 +40,30 @@ export const conversions: ConversionFactory = {
 
     },
 
-    HSV: (
+    hsv: (
         input: ColorObjectFactory | undefined
     ) : ColorObjectFactory | undefined => {
 
-        if ( input && input.space === 'RGB' ) {
+        if ( input && input.space === 'rgb' ) {
 
-            const { r, g, b, a } = input.value as RGB;
-
-            const [ rN, gN, bN ] = [ r, g, b ].map(
-                ( c ) => Channel.normalize( c, 0, 255 )
-            );
-
-            const max = Math.max( rN, gN, bN ),
-                  min = Math.min( rN, gN, bN ),
-                  delta = max - min;
+            const { r, g, b } = ChannelHelper.normalizeInstance( input.value, channels ) as RGB;
+            const { max, delta } = minMaxDelta( r, g, b );
 
             const v = max;
             let h = 0, s = 0;
 
             if ( delta !== 0 ) {
 
-                h = ( max === rN
-                    ? ( gN - bN ) / delta + ( gN < bN ? 6 : 0 )
-                    : max === gN
-                        ? ( bN - rN ) / delta + 2
-                        : ( rN - gN ) / delta + 4
-                ) * 60;
+                h = computeHue( r, g, b, max, delta );
 
                 s = delta / max;
 
             }
 
             return {
-                space: 'HSV',
-                value: { h, s, v, ...Channel.safeAlpha( a ) },
+                space: 'hsv',
+                value: { h, s, v },
+                alpha: input.alpha,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
 

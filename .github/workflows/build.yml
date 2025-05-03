@@ -1,9 +1,8 @@
 # .github/workflows/build.yml
-name: Build
+name: Build dists
 
 on:
   push:
-  pull_request:
 
 jobs:
   build:

@@ -3,47 +3,43 @@
 'use strict';
 
 import { execSync } from 'node:child_process';
-import { existsSync, readdirSync, statSync, appendFileSync, rmSync } from 'node:fs';
-import { resolve, join } from 'node:path';
-import { globSync } from 'glob';
+import { existsSync, rmSync, appendFileSync, readFileSync } from 'node:fs';
+import { resolve, join, sep } from 'node:path';
 
-const TSBUILDINFO_GLOB = 'packages/*/tsconfig.tsbuildinfo';
+// config
 
-const DIST_PATHS = [
-    'packages/*/dist',
-    'packages/*/*/dist',
-    'packages/*/*/*/dist'
-];
+const TSCONFIG = 'tsconfig.build.json';
+const ROOT = resolve();
 
-const flags = {
-    ci: false, force: false,
-    cleanOnly: false, noClean: false,
-    only: null, parallel: false,
-    dryRun: false, watch: false,
-    noise: true, logFile: null
+const PATHS = ( JSON.parse(
+    readFileSync( resolve( ROOT, TSCONFIG ), 'utf-8' )
+).references || [] ).map(
+    ( ref ) => resolve( ROOT, ref.path )
+);
+
+const FLAGS = {
+    ci: false, force: false, cleanOnly: false, noClean: false,
+    only: null, parallel: false, dryRun: false, watch: false,
+    noise: true, logFile: null, listOnly: false
 };
 
-const parseArgs = ( args ) => {
+// utils
 
-    args.map( ( arg, i ) => {
+const parseArgs = ( args ) => args.forEach( ( arg, i ) => {
 
-        switch ( arg ) {
+    if ( arg.startsWith( '--' ) ) {
 
-            case '--ci': flags.ci = true; break;
-            case '--log': flags.logFile = args[ i + 1 ]; break;
-            case '--force': flags.force = true; break;
-            case '--clean': flags.cleanOnly = true; break;
-            case '--no-clean': flags.noClean = true; break;
-            case '--only': flags.only = args[ i + 1 ]; break;
-            case '--dry-run': flags.dryRun = true; break;
-            case '--parallel': flags.parallel = true; break;
-            case '--watch': flags.watch = true; break;
+        FLAGS[ arg.slice( 2 ) ] = [ '--log', '--only' ].includes( arg )
+            ? args[ i + 1 ]
+            : true;
 
-        }
+    }
 
-    } );
+} );
 
-};
+const delay = ( ms ) => new Promise ( ( res ) => setTimeout( res, ms ) );
+
+const toPosix = ( p ) => p.split( sep ).join( '/' );
 
 const timestamp = () => ( new Date() ).toLocaleTimeString();
 
@@ -51,64 +47,32 @@ const log = ( msg ) => {
 
     const ts = `[${ timestamp() }]`;
 
-    if ( flags.noise ) {
+    ( FLAGS.logFile && appendFileSync( FLAGS.logFile, `${ts} ${msg}\n` ) );
 
-        console.log( `\x1b[36m${ts}\x1b[0m ${msg}` );
-
-    }
-
-    if ( flags.logFile ) {
-
-        appendFileSync( flags.logFile, `${ts} ${msg}\n` );
-
-    }
+    ( FLAGS.noise && console.log( `\x1b[36m${ts}\x1b[0m ${msg}` ) );
 
 };
 
-const findAllTsconfigs = ( dir = 'packages' ) => {
+const logPath = ( path ) => toPosix( path ).replace( toPosix( ROOT ) + '/', '' );
 
-    const tsconfigs = [ resolve( 'tsconfig.build.json' ) ];
+const logConfig = ( path ) => console.log( `  → ${ logPath( path ) }` );
 
-    const walk = ( current ) => {
+const resolveTsconfig = ( path ) => join( path, 'tsconfig.json' );
 
-        for ( const entry of readdirSync( current ) ) {
-
-            const full = join( current, entry );
-
-            if ( statSync( full ).isDirectory() ) {
-
-                walk( full );
-
-            } else if ( entry === 'tsconfig.json' ) {
-
-                tsconfigs.push( full );
-
-            }
-
-        }
-
-    };
-
-    walk( resolve( dir ) );
-
-    return tsconfigs;
-
-};
+// build steps
 
 const clean = () => {
 
-    log( `Cleaning artifacts …` );
+    log( `🔄 Cleaning artifacts …` );
 
-    for ( const path of [
-        ...DIST_PATHS.flatMap( ( pattern ) => globSync( pattern, { absolute: true } ) ),
-        ...globSync( TSBUILDINFO_GLOB, { absolute: true } )
-    ] ) {
+    const paths = PATHS.flatMap( ( pkg ) => [
+        join( pkg, 'tsconfig.tsbuildinfo' ),
+        join( pkg, 'dist' )
+    ] ).filter( existsSync );
 
-        if ( existsSync( path ) ) {
+    for ( const path of paths ) {
 
-            rmSync( path, { recursive: true, force: true } );
-
-        }
+        rmSync( path, { recursive: true, force: true } );
 
     }
 
@@ -118,101 +82,103 @@ const clean = () => {
 
 const verifyConfigs = () => {
 
-    log( `Verifying tsconfig files …` );
+    log( `🔄 Verifying tsconfig files …` );
 
-    const configs = findAllTsconfigs();
+    const configs = PATHS.map( resolveTsconfig ).filter(
+        ( config ) => ! existsSync( config )
+    );
 
-    for ( const config of configs ) {
+    if ( configs.length ) {
 
-        if ( ! existsSync( config ) ) {
-
-            throw new Error( `Config not found: ${ config }` );
-
-        }
+        throw new Error ( `❌ Config(s) not found: ${ configs.join( ', ' ) }` );
 
     }
 
-    log( `✅ Verified ${ configs.length } tsconfig files successfully` );
+    log( `✅ Verified tsconfig files successfully` );
 
 };
 
-const build = async ( flags ) => {
+const list = () => {
 
-    const { force, only, watch, parallel, dryRun, noise } = flags;
+    log( `📦 Referenced packages:` );
 
-    log( `Building packages …` );
+    PATHS.forEach( logConfig );
 
-    const cmd = ( config ) => `npx tsc -b -b ${ config } ${ [
-        force && '--force', noise && '--verbose', watch && '--watch'
-    ].filter( Boolean ).join( ' ' ) }`;
+    log( `✅ Found ${ PATHS.length } package(s)` );
 
-    if ( only ) {
+};
 
-        const configPath = `packages/${only}/tsconfig.json`;
+const build = async () => {
+
+    log( FLAGS.only
+        ? `📦 Building single package: ${ FLAGS.only }`
+        : `📦 Building ${ FLAGS.parallel ? 'all packages (parallel)' : 'all packages (sequential)' } …`
+    );
+
+    const makeCommand = ( config ) => [
+        'npx tsc -b', config,
+        FLAGS.force && '--force',
+        FLAGS.noise && '--verbose',
+        FLAGS.watch && '--watch'
+    ].filter( Boolean ).join( ' ' );
+
+    if ( FLAGS.only ) {
+
+        const configPath = join( ROOT, 'packages', FLAGS.only, 'tsconfig.json' );
 
         if ( ! existsSync( configPath ) ) {
 
-            throw new Error( `No tsconfig.json found for package: ${only}` );
+            throw new Error ( `❌ tsconfig.json not found for: ${ FLAGS.only }` );
 
         }
 
-        log( `Building only package: ${only} …` );
+        if ( ! FLAGS.dryRun ) {
 
-        if ( ! dryRun ) {
+            execSync( makeCommand( configPath ), { stdio: 'inherit' } );
 
-            execSync( cmd( configPath ), { stdio: 'inherit' } );
+        }
+
+    } else if ( FLAGS.parallel ) {
+
+        const configs = PATHS.map( resolveTsconfig );
+
+        configs.forEach( logConfig );
+
+        if ( ! FLAGS.dryRun ) {
+
+            const results = await Promise.allSettled( configs.map( ( cfg ) => {
+
+                try {
+
+                    execSync( makeCommand( cfg ), { stdio: 'inherit' } );
+
+                    return Promise.resolve();
+
+                } catch ( err ) {
+
+                    log( `❌ Failed: ${ logPath( cfg ) }` );
+
+                    return Promise.reject( err );
+
+                }
+
+            } ) );
+
+            const failures = results.filter( ( r ) => r.status === 'rejected' );
+
+            if ( failures.length ) {
+
+                throw new Error ( `❌ Build failed for ${ failures.length } package(s)` );
+
+            }
 
         }
 
     } else {
 
-        log( `Building all packages …` );
+        if ( ! FLAGS.dryRun ) {
 
-        if ( parallel ) {
-
-            const configs = findAllTsconfigs();
-
-            for ( const cfg of configs ) {
-
-                log( `→ ${cfg}` );
-
-            }
-
-            if ( ! dryRun ) {
-
-                await Promise.all(
-
-                    configs.map( ( cfg ) => (
-
-                        new Promise ( ( resolve, reject ) => {
-
-                            try {
-
-                                execSync( cmd( cfg ), { stdio: 'inherit' } );
-
-                                resolve();
-
-                            } catch ( err ) {
-
-                                reject( err );
-
-                            }
-
-                        } )
-
-                    ) )
-
-                );
-
-            }
-
-        } else {
-
-            if ( ! dryRun ) {
-
-                execSync( cmd( 'tsconfig.build.json' ), { stdio: 'inherit' } );
-
-            }
+            execSync( makeCommand( 'tsconfig.build.json' ), { stdio: 'inherit' } );
 
         }
 
@@ -222,54 +188,45 @@ const build = async ( flags ) => {
 
 };
 
+// main loop
+
 const main = async () => {
 
     const [ , , ...args ] = process.argv;
 
     parseArgs( args );
 
-    if ( flags.ci ) {
+    Object.assign( FLAGS, FLAGS.ci ? {
+        force: true, cleanOnly: false, noClean: true, watch: false,
+        parallel: false, noise: false, logFile: null
+    } : {} );
 
-        flags.force = true;
-        flags.cleanOnly = false;
-        flags.noClean = true;
-        flags.watch = false;
-        flags.parallel = false;
-        flags.noise = false;
-        flags.logFile = null;
+    log( `🛠️  Starting build script in ${ toPosix( ROOT ) }` );
 
-    }
+    ( FLAGS.listOnly && ( list() || true ) ) ||
+    ( ! FLAGS.noClean && ! FLAGS.only && clean() ) ||
+    ( ! FLAGS.cleanOnly && ( async () => {
 
-    if ( ! flags.noClean ) {
-
-        clean();
-
-    }
-
-    if ( ! flags.cleanOnly ) {
-
-        log( `Waiting briefly before build …` );
-
-        await new Promise( resolve => setTimeout( resolve, 1000 ) );
+        log( `⏳ Waiting briefly before build …` );
+        await delay( 1000 );
 
         verifyConfigs();
 
-        await build( flags );
+        await build();
 
-        if ( flags.watch ) {
+        if ( FLAGS.watch ) {
 
-            log( `Watching for changes (manual restart required on config changes) …` );
+            log( `👀 Watching for changes (restart on config changes required) …` );
 
         }
 
-    }
+    } )() );
 
 };
 
 main().catch( ( err ) => {
 
     console.error( `\n❌ Build failed:`, err.message );
-
     process.exit( 1 );
 
 } );
