@@ -26,6 +26,6 @@ export interface ColorLibMeta {
 
 export interface ColorLibFactory {
     sources: Record<string, ColorLibLoader>;
-    meta: ColorLibMeta;
+    meta?: ColorLibMeta;
     autoLoad?: string[];
 }
