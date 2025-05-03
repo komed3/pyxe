@@ -1,6 +1,8 @@
 'use strict';
 
+import type { ColorLibLoader } from '@pyxe/types';
 import { Registry } from '@pyxe/core/registry';
+import { RAL_Classic } from './lib/classic.js';
 
 Registry.ColorLib.add( 'ral', {
     meta: {
@@ -11,5 +13,7 @@ Registry.ColorLib.add( 'ral', {
         tags: [ 'standard', 'RAL', 'industry', 'europe' ]
     },
     autoLoad: [ 'classic' ],
-    sources: {}
+    sources: {
+        classic: RAL_Classic as ColorLibLoader
+    }
 } );

@@ -4,7 +4,7 @@ import { Services } from '@pyxe/core/services';
 
 export const registry: Record<string, string[]> = {
     space: [ 'rgb', 'hsl', 'hsv' ],
-    library: [],
+    library: [ 'ral' ],
     module: []
 };
 
