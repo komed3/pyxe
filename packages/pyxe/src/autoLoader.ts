@@ -16,17 +16,26 @@ const loadPackages = async () : Promise<void> => {
 
         const loadedPackages = await Promise.all( packages.map( async ( name ) => {
 
+            const pkg = `@pyxe/${type}-${name}`;
+
             try {
 
-                await import ( `@pyxe/${type}-${name}` );
+                /** try to import package */
+
+                await import ( pkg );
 
                 Services.Debugger.log( 'AutoLoader', `Package <${name}> of type <${type}> loaded` );
+
+                Services.Hook.run( 'AutoLoader::init', pkg, type, name );
 
                 return name;
 
             } catch {
 
                 /** skip uninstalled package */
+
+                Services.Hook.run( 'AutoLoader::skip', pkg, type, name );
+
                 return undefined;
 
             }
@@ -42,4 +51,8 @@ const loadPackages = async () : Promise<void> => {
 
 };
 
+Services.Hook.run( 'AutoLoader::start', registry );
+
 await loadPackages();
+
+Services.Hook.run( 'AutoLoader::finish', registry, loaded );
