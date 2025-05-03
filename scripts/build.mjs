@@ -203,7 +203,9 @@ const main = async () => {
 
     log( `🛠️  Starting build script in ${ toPosix( ROOT ) }` );
 
-    ( FLAGS.listOnly && ( list() || true ) ) || ( ! FLAGS.noClean && clean() ) || ( ! FLAGS.cleanOnly && ( async () => {
+    ( FLAGS.listOnly && ( list() || true ) ) ||
+    ( ! FLAGS.noClean && ! FLAGS.only && clean() ) ||
+    ( ! FLAGS.cleanOnly && ( async () => {
 
         log( `⏳ Waiting briefly before build …` );
         await delay( 1000 );

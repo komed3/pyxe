@@ -17,7 +17,7 @@
     "build:dry": "node ./scripts/build.mjs --dryRun",
     "build:list": "node ./scripts/build.mjs --listOnly",
     "build:ci": "node ./scripts/build.mjs --ci",
-    "build:core": "node ./scripts/build.mjs --only core --force --noClean",
+    "build:core": "node ./scripts/build.mjs --only core --force",
     "build:watch": "node ./scripts/build.mjs --force --watch",
     "analyze": "node ./scripts/analyze.mjs",
     "lint": "npx tsc --noEmit && npx eslint . --ext .ts,.tsx",
