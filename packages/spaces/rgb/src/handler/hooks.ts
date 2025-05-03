@@ -1,6 +1,7 @@
 'use strict';
 
 import type { ColorObjectFactory, HookHandler } from '@pyxe/types';
+import { ErrorUtils } from '@pyxe/core/services';
 import { Basic, ChannelHelper } from '@pyxe/utils';
 
 export const hooks: Record<string, HookHandler> = {
@@ -9,22 +10,29 @@ export const hooks: Record<string, HookHandler> = {
 
         if ( self.colorSpace.name === 'rgb' && input.startsWith( '#' ) ) {
 
-            const clean = input.replace( /^#/, '' );
+            return ErrorUtils.catchToError( () => {
 
-            if ( [ 3, 4, 6, 8 ].includes( clean.length ) ) {
+                const clean = input.replace( /^#/, '' );
 
-                const [ r, g, b, a ] = clean.length <= 4
-                    ? [ ...clean ].map( c => Basic.hexdec( c.repeat( 2 ) ) )
-                    : clean.match( /../g )!.map( Basic.hexdec );
+                if ( [ 3, 4, 6, 8 ].includes( clean.length ) ) {
 
-                return {
-                    space: 'rgb',
-                    value: ChannelHelper.parseInstance( { r, g, b }, self.colorSpace.getChannels() ),
-                    alpha: ChannelHelper.parseAlpha( a / 255, ! self.strict ),
-                    meta: { source: input }
-                } as ColorObjectFactory;
+                    const [ r, g, b, a ] = clean.length <= 4
+                        ? [ ...clean ].map( c => Basic.hexdec( c.repeat( 2 ) ) )
+                        : clean.match( /../g )!.map( Basic.hexdec );
 
-            }
+                    return {
+                        space: 'rgb',
+                        value: ChannelHelper.parseInstance( { r, g, b }, self.colorSpace.getChannels() ),
+                        alpha: ChannelHelper.parseAlpha( a / 255, ! self.strict ),
+                        meta: { source: input }
+                    } as ColorObjectFactory;
+
+                }
+
+            }, {
+                method: 'Space::RGB',
+                msg: `Parsing failed for HEX string <${input}>`
+            }, self.strict ) || undefined;
 
         }
 
