@@ -6,7 +6,7 @@ import { colorLibRegistry } from '../registries/ColorLibRegistry.js';
 import { ColorSpace } from './ColorSpace.js';
 import { Convert } from './Convert.js';
 import { hook } from '../services/Hook.js';
-import { catchToError } from '../services/ErrorUtils.js';
+import { catchToError, handleError } from '../services/ErrorUtils.js';
 
 export class ColorLib extends Entity<string, ColorLibFactory> {
 
@@ -202,6 +202,13 @@ export class ColorLib extends Entity<string, ColorLibFactory> {
                 }
 
             }
+
+            handleError( {
+                method: 'ColorLib',
+                msg: `Color <${key}> not found in loaded sources <${ (
+                    this.listSources( true  ).join( ', ' )
+                ) }> from library <${this.name}>`
+            }, safe );
 
         }, {
             method: 'ColorLib',
