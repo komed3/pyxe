@@ -35,15 +35,19 @@ export class ColorObject {
         value: ColorInstance,
         alpha: number | undefined = undefined,
         meta: Record<string, any> = {},
-        safe: boolean = true
+        safe: boolean = true,
+        isNormalized: boolean = false
     ) {
 
         this.colorSpace = ColorSpace.getInstance( space );
         this.channels = [ 'alpha', ...this.colorSpace.channels() ];
 
         this.space = this.colorSpace.name;
-        this.value = ChannelHelper.instance( 'normalize', value, this.colorSpace.getChannels() ) as ColorInstance;
         this.alpha = ChannelHelper.alpha( 'parse', alpha );
+
+        this.value = isNormalized ? value : ChannelHelper.instance(
+            'normalize', value, this.colorSpace.getChannels()
+        ) as ColorInstance;
 
         this.meta = meta;
         this.safe = safe;
@@ -60,15 +64,16 @@ export class ColorObject {
     private static _wrap (
         input: ColorObjectFactoryLike,
         safe: boolean = true,
-        invoker?: ( result: any, input?: any ) => void
+        invoker?: ( result: any, input?: any ) => void,
+        isNormalized?: boolean
     ) : ColorObjectLike {
 
         return Array.isArray( input )
-            ? input.map( ( item ) => ColorObject._wrap( item, safe, invoker ) )
+            ? input.map( ( item ) => ColorObject._wrap( item, safe, invoker, isNormalized ) )
             : TypeCheck.ColorObjectFactory( input )
                 ? ( () => {
 
-                    const result = ColorObject.from( input, safe );
+                    const result = ColorObject.from( input, safe, isNormalized );
 
                     invoker?.( result, input );
 
@@ -189,9 +194,9 @@ export class ColorObject {
     ) : ColorObject {
 
         return ColorObject.from( {
-            ...this.toObject(),
+            ...this._factory(),
             ...overrides
-        }, safe ?? this.safe ) as ColorObject;
+        }, safe ?? this.safe, true ) as ColorObject;
 
     }
 
@@ -204,7 +209,8 @@ export class ColorObject {
 
             return ColorObject._wrap(
                 ( this.convert ||= new Convert ( this._factory(), this.safe ) ).as( target, strict )!,
-                this.safe, ( result, input ) => tracer.add( result, tpl.convert( input, result ) )
+                this.safe, ( result, input ) => tracer.add( result, tpl.convert( input, result ) ),
+                true
             );
 
         }, {
@@ -241,7 +247,8 @@ export class ColorObject {
 
             return ColorObject._wrap(
                 ( ModuleMethod.getInstance( method ) as ModuleMethod ).apply( this._factory(), options ),
-                this.safe, ( result, input ) => tracer.add( result, tpl.module( method, input, result ) )
+                this.safe, ( result, input ) => tracer.add( result, tpl.module( method, input, result ) ),
+                true
             );
 
         }, {
@@ -271,13 +278,14 @@ export class ColorObject {
 
     public static from (
         input: ColorObjectFactory,
-        safe: boolean = true
+        safe: boolean = true,
+        isNormalized: boolean = false
     ) : ColorObject | false {
 
         return catchToError( () => {
 
             return ( ( { space, value, alpha, meta } ) => new ColorObject (
-                space, value, alpha, meta, safe
+                space, value, alpha, meta, safe, isNormalized
             ) )( input );
 
         }, {

@@ -160,10 +160,11 @@ export class Color {
     }
 
     public static from (
-        input: ColorObjectFactory
+        input: ColorObjectFactory,
+        isNormalized?: boolean
     ) : ColorLike {
 
-        return Color._wrap( ColorObject.from( input, true ) );
+        return Color._wrap( ColorObject.from( input, true, isNormalized ) );
 
     }
 
