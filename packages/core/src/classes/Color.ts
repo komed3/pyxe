@@ -190,13 +190,13 @@ export class Color {
 
     }
 
-    public static isEqual (
+    public static compare (
         a: Color | ColorObject,
         b: Color | ColorObject,
         tolerance?: number
     ) : boolean {
 
-        return ColorObject.isEqual( Color._unwrap( a ), Color._unwrap( b ), tolerance );
+        return ColorObject.compare( Color._unwrap( a ), Color._unwrap( b ), tolerance );
 
     }
 

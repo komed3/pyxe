@@ -333,7 +333,7 @@ export class ColorObject {
 
     }
 
-    public static isEqual (
+    public static compare (
         a: ColorObject,
         b: ColorObject,
         tolerance: number = 0.0005
