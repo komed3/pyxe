@@ -35,7 +35,7 @@ export class Parser {
         /** patterns for individual channels */
         const channels = Object.values( this.colorSpace.getChannels() ).map(
             ( channel ) => channel.type === 'cyclic'
-                ? '([\\d.]+(?:deg|°|)?+%?)'
+                ? '([\\d.]+(?:deg|°|)?%?)'
                 : '([\\d.]+%?)'
         );
 
