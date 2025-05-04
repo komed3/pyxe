@@ -180,9 +180,9 @@ export class ChannelHelper {
                 channel
             );
 
-            return format === 'percent' ? ( normalized * 100 ).toFixed( decimals ) + '%'
-                : format === 'normalized' ? normalized.toFixed( decimals )
-                : this.denormalize( normalized, channel ).toFixed( decimals ) + unit;
+            return format === 'percent' ? Number( ( normalized * 100 ).toFixed( decimals ) ) + '%'
+                : format === 'normalized' ? Number( normalized.toFixed( decimals ) ).toString()
+                : Number( this.denormalize( normalized, channel ).toFixed( decimals ) ) + unit;
 
         }
 

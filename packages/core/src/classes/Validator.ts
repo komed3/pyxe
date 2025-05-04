@@ -37,7 +37,7 @@ export class Validator {
 
             /** check for unexpected channels */
 
-            let keys = [];
+            let keys: string[] = [];
 
             if ( ( keys = Object.keys( factory.value ).filter(
                 ( k ) => ! channels.includes( k )
