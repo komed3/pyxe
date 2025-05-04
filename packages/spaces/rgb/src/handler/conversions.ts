@@ -1,8 +1,6 @@
 'use strict';
 
 import type { RGB, ColorObjectFactory, ConversionFactory } from '@pyxe/types';
-import { ChannelHelper } from '@pyxe/utils';
-import { channels } from './channels.js';
 import { minMaxDelta, computeHue } from './helper.js';
 
 export const conversions: ConversionFactory = {
@@ -13,7 +11,7 @@ export const conversions: ConversionFactory = {
 
         if ( input && input.space === 'rgb' ) {
 
-            const { r, g, b } = ChannelHelper.normalizeInstance( input.value, channels ) as RGB;
+            const { r, g, b } = input.value as RGB;
             const { min, max, delta } = minMaxDelta( r, g, b );
 
             const l = ( max + min ) / 2;
@@ -23,9 +21,11 @@ export const conversions: ConversionFactory = {
 
                 h = computeHue( r, g, b, max, delta );
 
-                s = l < 0.5
+                s = delta / ( l < 0.5 ? max + min : 2 - max - min );
+
+                /*s = l < 0.5
                     ? delta / ( max + min )
-                    : delta / ( 2 - max - min );
+                    : delta / ( 2 - max - min );*/
 
             }
 
@@ -46,7 +46,7 @@ export const conversions: ConversionFactory = {
 
         if ( input && input.space === 'rgb' ) {
 
-            const { r, g, b } = ChannelHelper.normalizeInstance( input.value, channels ) as RGB;
+            const { r, g, b } = input.value as RGB;
             const { max, delta } = minMaxDelta( r, g, b );
 
             const v = max;

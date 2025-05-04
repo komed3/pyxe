@@ -12,9 +12,8 @@ export const conversions: ConversionFactory = {
 
             const { h, s, v } = input.value as HSV;
 
-            const hh = ( ( h % 360 ) + 360 ) % 360 / 60;
-            const i = Math.floor( hh );
-            const f = hh - i;
+            const i = Math.floor( h * 6 ) % 6;
+            const f = h * 6 - i;
             const p = v * ( 1 - s );
             const q = v * ( 1 - s * f );
             const t = v * ( 1 - s * ( 1 - f ) );
@@ -23,18 +22,18 @@ export const conversions: ConversionFactory = {
 
                 switch ( i ) {
 
-                    case 0: return  [ v, t, p ];
-                    case 1: return  [ q, v, p ];
-                    case 2: return  [ p, v, t ];
-                    case 3: return  [ p, q, v ];
-                    case 4: return  [ t, p, v ];
-                    case 5: return  [ v, p, q ];
+                    case  0: return [ v, t, p ];
+                    case  1: return [ q, v, p ];
+                    case  2: return [ p, v, t ];
+                    case  3: return [ p, q, v ];
+                    case  4: return [ t, p, v ];
+                    case  5: return [ v, p, q ];
 
                     default: return [ v, p, p ];
 
                 }
 
-            } )().map( c => c * 255 );
+            } )();
 
             return {
                 space: 'rgb',
@@ -55,7 +54,7 @@ export const conversions: ConversionFactory = {
 
             const { h, s, v } = input.value as HSV;
 
-            const l = v * ( 1 - s / 2 );
+            const l = v * ( 1 - ( s / 2 ) );
             const sl = l === 0 || l === 1 ? 0 : ( v - l ) / Math.min( l, 1 - l );
 
             return {

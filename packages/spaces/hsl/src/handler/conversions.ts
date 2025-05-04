@@ -12,26 +12,21 @@ export const conversions: ConversionFactory = {
 
             const { h, s, l } = input.value as HSL;
 
-            const c = ( 1 - Math.abs( 2 * l - 1 ) ) * s;
-            const x = c * ( 1 - Math.abs( ( h / 60 ) % 2 - 1 ) );
-            const m = l - c / 2;
+            const q = l < 0.5 ? l * ( 1 + s ) : l + s - l * s;
+            const p = 2 * l - q;
 
-            let r, g, b;
+            const [ r, g, b ] = [ h + 1/3, h, h - 1/3 ].map( t => {
 
-            if ( h < 60 )       [ r, g, b ] = [ c, x, 0 ];
-            else if ( h < 120 ) [ r, g, b ] = [ x, c, 0 ];
-            else if ( h < 180 ) [ r, g, b ] = [ 0, c, x ];
-            else if ( h < 240 ) [ r, g, b ] = [ 0, x, c ];
-            else if ( h < 300 ) [ r, g, b ] = [ x, 0, c ];
-            else                [ r, g, b ] = [ c, 0, x ];
+                if ( t < 0 ) t++; else if ( t > 1 ) t--;
+
+                return t < 1/6 ? p + ( q - p ) * 6 * t : t < 1/2 ? q
+                     : t < 2/3 ? p + ( q - p ) * ( 2/3 - t ) * 6 : p;
+
+            } );
 
             return {
                 space: 'rgb',
-                value: {
-                    r: ( r + m ) * 255,
-                    g: ( g + m ) * 255,
-                    b: ( b + m ) * 255
-                },
+                value: { r, g, b },
                 alpha: input.alpha,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
@@ -49,7 +44,7 @@ export const conversions: ConversionFactory = {
             const { h, s, l } = input.value as HSL;
 
             const v = l + s * Math.min( l, 1 - l );
-            const sv = v === 0 ? 0 : 2 * ( 1 - l / v );
+            const sv = v === 0 ? 0 : 2 * ( 1 - ( l / v ) );
 
             return {
                 space: 'hsv',

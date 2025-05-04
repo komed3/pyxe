@@ -22,8 +22,8 @@ export const hooks: Record<string, HookHandler> = {
 
                     return {
                         space: 'rgb',
-                        value: ChannelHelper.parseInstance( { r, g, b }, self.colorSpace.getChannels() ),
-                        alpha: ChannelHelper.parseAlpha( a / 255, ! self.strict ),
+                        value: ChannelHelper.instance( 'parse', { r, g, b }, self.colorSpace.getChannels() ),
+                        alpha: ChannelHelper.alpha( 'parse', a / 255, ! self.strict ),
                         meta: { source: input }
                     } as ColorObjectFactory;
 
