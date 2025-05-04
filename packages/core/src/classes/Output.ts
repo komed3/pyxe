@@ -126,24 +126,11 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
         if ( schema ) {
 
-            let str = options.schema!;
-
-            for ( const [ key, c ] of Object.entries( channels ) ) {
-
-                str = str.replace(
-                    new RegExp( `\\b${key}\\b`, 'g' ),
-                    c.formatted
-                );
-
-            }
-
-            if ( this.colorSpace.alpha() && alpha ) {
-
-                str = str.replace( /\ba\b/g, alpha.formatted );
-
-            }
-
-            return hook.filter( 'Output::schema', str.trim(), input, options, this );
+            return hook.filter( 'Output::schema', schema.replace(
+                /\$\{(\w+)\}/ig, ( _, key ) => key === 'a' && this.colorSpace.alpha() 
+                    ? alpha?.formatted ?? 1 
+                    : channels[ key ]?.formatted ?? _
+            ).trim(), input, options, this );
 
         }
 
