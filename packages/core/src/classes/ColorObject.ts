@@ -42,8 +42,8 @@ export class ColorObject {
         this.channels = [ 'alpha', ...this.colorSpace.channels() ];
 
         this.space = this.colorSpace.name;
-        this.value = ChannelHelper.parseInstance( value, this.colorSpace.getChannels(), false ) as ColorInstance;
-        this.alpha = ChannelHelper.parseAlpha( alpha, true );
+        this.value = ChannelHelper.instance( 'normalize', value, this.colorSpace.getChannels() ) as ColorInstance;
+        this.alpha = ChannelHelper.alpha( 'parse', alpha );
 
         this.meta = meta;
         this.safe = safe;
@@ -97,7 +97,7 @@ export class ColorObject {
 
     public validate () : boolean {
 
-        return ( this.isValid ||= test.validate( this._factory() ) );
+        return ( this.isValid ||= test.validate( this._factory(), true ) );
 
     }
 
@@ -174,11 +174,11 @@ export class ColorObject {
         const value = this.channel( key );
 
         return key === 'alpha'
-            ? ChannelHelper.formatAlpha( value, options )
+            ? ChannelHelper.alpha( 'format', value, options )
             : ChannelHelper.format(
                 value!,
                 this.colorSpace.getChannel( key, this.safe )!,
-                options
+                options, true
             );
 
     }
@@ -204,10 +204,7 @@ export class ColorObject {
 
             return ColorObject._wrap(
                 ( this.convert ||= new Convert ( this._factory(), this.safe ) ).as( target, strict )!,
-                this.safe,
-                ( result, input ) => {
-                    tracer.add( result, tpl.convert( input, result ) );
-                }
+                this.safe, ( result, input ) => tracer.add( result, tpl.convert( input, result ) )
             );
 
         }, {
@@ -244,10 +241,7 @@ export class ColorObject {
 
             return ColorObject._wrap(
                 ( ModuleMethod.getInstance( method ) as ModuleMethod ).apply( this._factory(), options ),
-                this.safe,
-                ( result, input ) => {
-                    tracer.add( result, tpl.module( method, input, result ) );
-                }
+                this.safe, ( result, input ) => tracer.add( result, tpl.module( method, input, result ) )
             );
 
         }, {
@@ -282,9 +276,9 @@ export class ColorObject {
 
         return catchToError( () => {
 
-            const { space, value, alpha, meta } = input;
-
-            return new ColorObject ( space, value, alpha, meta, safe );
+            return ( ( { space, value, alpha, meta } ) => new ColorObject (
+                space, value, alpha, meta, safe
+            ) )( input );
 
         }, {
             method: 'ColorObject',
@@ -308,13 +302,8 @@ export class ColorObject {
         return await catchToError( async () => {
 
             return ColorObject._wrap(
-                await ( ColorLib.getInstance( library ) as ColorLib ).getColor(
-                    key, preferredSpaces, options, safe
-                ),
-                safe,
-                ( result ) => {
-                    tracer.add( result, tpl.library( library, key, result ) )
-                }
+                await ( ColorLib.getInstance( library ) as ColorLib ).getColor( key, preferredSpaces, options, safe ),
+                safe, ( result ) => tracer.add( result, tpl.library( library, key, result ) )
             );
 
         }, {
@@ -334,10 +323,7 @@ export class ColorObject {
 
             return ColorObject._wrap(
                 Parser.parseAuto( input, strict, safe ),
-                safe,
-                ( result ) => {
-                    tracer.add( result, tpl.parse( input, result ) );
-                }
+                safe, ( result ) => tracer.add( result, tpl.parse( input, result ) )
             );
 
         }, {

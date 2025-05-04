@@ -91,30 +91,24 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
     } {
 
         const { space, value, alpha } = input;
+        const channels = this.colorSpace.getChannels();
+        const result: Record<string, any> = {
+            space, channels: {}, alpha: undefined
+        };
 
-        const channels = Object.entries(
-            this.colorSpace.getChannels()
-        ).reduce<Record<string, any>> (
-            ( acc, [ key, channel ] ) => {
-                acc[ key ] = {
-                    raw: ( value as any )[ key ],
-                    formatted: ChannelHelper.format(
-                        ( value as any )[ key ], channel, options
-                    )
-                };
-                return acc;
-        }, {} );
+        for ( const [ c, val ] of Object.entries( value ) ) {
 
-        const result: Record<string, any> = { space, channels };
+            result.channels[ c ] = { raw: val, formatted: ChannelHelper.format(
+                val, channels[ c ], options, true
+            ) };
+
+        }
 
         if ( ( alpha !== undefined && alpha !== 1 ) || options?.forceAlpha ) {
 
-            result.alpha = {
-                raw: alpha ?? 1,
-                formatted: ChannelHelper.formatAlpha(
-                    alpha ?? 1, options
-                )
-            };
+            result.alpha = { raw: alpha ?? 1, formatted: ChannelHelper.alpha(
+                'format', alpha ?? 1, options, true
+            ) };
 
         }
 
@@ -149,7 +143,7 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
             }
 
-            return str.trim();
+            return hook.filter( 'Output::schema', str.trim(), input, options, this );
 
         }
 

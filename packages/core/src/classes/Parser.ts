@@ -56,13 +56,13 @@ export class Parser {
         input: ColorInput
     ) : ColorObjectFactory | false {
 
+        /** early hook allows parsing special cases */
+
         const early = hook.filter( 'Parser::earlyParse', undefined, input, this );
 
-        if ( early !== undefined ) {
+        if ( early !== undefined ) return early;
 
-            return early;
-
-        }
+        /** now run the actual parser / match against regex */
 
         hook.run( 'Parser::beforeParse', input, this );
 
@@ -75,6 +75,8 @@ export class Parser {
             return false;
 
         }
+
+        /** parse color space channels */
 
         const channels: Record<string, number> = {};
 
@@ -99,7 +101,7 @@ export class Parser {
         return hook.filter( 'Parser::result', {
             space: this.colorSpace.name,
             value: channels as Partial<ColorInstance>,
-            alpha: ChannelHelper.parseAlpha( match.shift(), ! this.strict ),
+            alpha: ChannelHelper.alpha( 'parse', match.shift(), ! this.strict ),
             meta: { source: input }
         }, input, this ) as ColorObjectFactory;
 
@@ -152,13 +154,9 @@ export class Parser {
 
             }
 
-            return false;
+        } catch {}
 
-        } catch {
-
-            return false;
-
-        }
+        return false;
 
     }
 
