@@ -148,64 +148,64 @@ export class ConversionGraph {
 
     }
 
-    public static tree (
-        root: ColorSpaceName,
-        maxDepth: number = 9
-    ) : string {
-
-        root = ColorSpace.resolve( root );
-
-        const visited: Set<string> = new Set ();
-        const seenNodes: Set<ColorSpaceName> = new Set ();
-        const result: string[] = [ root ];
-
-        const _subtree = (
-            current: ColorSpaceName,
-            depth: number,
-            prefix: string = ''
-        ) : void => {
-
-            const targets = conversionGraphRegistry.targets( current );
-
-            if ( depth > 0 && targets && targets.length > 0 ) {
-
-                const filtered = targets.filter( t => !seenNodes.has( t ) );
-
-                filtered.forEach( ( target, idx ) => {
-
-                    const pathKey = `${current}::${target}`;
-                    const isLast = idx === filtered.length - 1;
-
-                    if ( ! visited.has( pathKey ) ) {
-
-                        seenNodes.add( target );
-                        visited.add( pathKey );
-
-                        result.push( `${prefix}${ (
-                            isLast ? '└───' : '├───'
-                        ) }${target}` );
-
-                        _subtree(
-                            target, depth - 1,
-                            prefix + ( isLast ? '    ' : '│   ' )
-                        );
-
-                    }
-
-                } );
-
-            }
-
-        };
-
-        seenNodes.add( root );
-
-        _subtree( root, maxDepth );
-
-        return result.join( '\n' );
-
-    }
-
 }
 
 export const conversionGraph = new ConversionGraph ();
+
+export const tree = (
+    root: ColorSpaceName,
+    maxDepth: number = 9
+) : string => {
+
+    root = ColorSpace.resolve( root );
+
+    const visited: Set<string> = new Set ();
+    const seenNodes: Set<ColorSpaceName> = new Set ();
+    const result: string[] = [ root.toUpperCase() ];
+
+    const _subtree = (
+        current: ColorSpaceName,
+        depth: number,
+        prefix: string = ''
+    ) : void => {
+
+        const targets = conversionGraphRegistry.targets( current );
+
+        if ( depth > 0 && targets && targets.length > 0 ) {
+
+            const filtered = targets.filter( t => !seenNodes.has( t ) );
+
+            filtered.forEach( ( target, idx ) => {
+
+                const pathKey = `${current}::${target}`;
+                const isLast = idx === filtered.length - 1;
+
+                if ( ! visited.has( pathKey ) ) {
+
+                    seenNodes.add( target );
+                    visited.add( pathKey );
+
+                    result.push( `${prefix}${ (
+                        isLast ? '└───' : '├───'
+                    ) }${ target.toUpperCase() }` );
+
+                    _subtree(
+                        target, depth - 1,
+                        prefix + ( isLast ? '    ' : '│   ' )
+                    );
+
+                }
+
+            } );
+
+        }
+
+    };
+
+    seenNodes.add( root );
+
+    _subtree( root, maxDepth );
+
+    return result.join( '\n' );
+
+};
