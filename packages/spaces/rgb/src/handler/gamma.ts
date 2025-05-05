@@ -1,8 +1,8 @@
 'use strict';
 
-import type { GammaHandler } from '@pyxe/types';
+import type { GammaFactory } from '@pyxe/types';
 
-export const gamma: GammaHandler = {
+export const gamma: GammaFactory = {
     encode: ( val: number ) : number => val,
     decode: ( val: number ) : number => val
 };

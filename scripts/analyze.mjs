@@ -58,11 +58,11 @@ const analyzePackages = ( dir ) => {
 
     const results = [];
 
-    const walk = ( current ) => {
+    const walk = ( curr ) => {
 
-        for ( const entry of readdirSync( current ) ) {
+        for ( const entry of readdirSync( curr ) ) {
 
-            const full = join( current, entry );
+            const full = join( curr, entry );
 
             if ( statSync( full ).isDirectory() ) {
 

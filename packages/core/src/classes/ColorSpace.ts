@@ -1,6 +1,6 @@
 'use strict';
 
-import type { ColorChannel, ColorSpaceFactory, ColorSpaceName } from '@pyxe/types';
+import type { ColorChannel, ColorSpaceFactory, ColorSpaceName, GammaHandler } from '@pyxe/types';
 import { Entity } from './Entity.js';
 import { colorSpaceRegistry } from '../registries/ColorSpaceRegistry.js';
 import { assert } from '../services/ErrorUtils.js';
@@ -47,6 +47,22 @@ export class ColorSpace extends Entity<ColorSpaceName, ColorSpaceFactory> {
     public alpha () : boolean {
 
         return this.factory.alpha;
+
+    }
+
+    public linear () : boolean {
+
+        return this.factory.linear;
+
+    }
+
+    public gamma (
+        direction: 'encode' | 'decode'
+    ) : GammaHandler {
+
+        return this.factory.gamma
+            ? this.factory.gamma[ direction ]
+            : ( v => v );
 
     }
 

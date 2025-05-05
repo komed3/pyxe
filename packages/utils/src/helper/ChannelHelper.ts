@@ -1,6 +1,6 @@
 'use strict';
 
-import type { ColorInstance, ColorChannel, OutputOptions } from '@pyxe/types';
+import type { ColorInstance, ColorObjectFactory, ColorChannel, OutputOptions, GammaHandler } from '@pyxe/types';
 
 export class ChannelHelper {
 
@@ -227,6 +227,21 @@ export class ChannelHelper {
                 channel, tolerance
             )
         );
+
+    }
+
+    public static gamma (
+        input: ColorObjectFactory,
+        gamma: GammaHandler
+    ) : ColorObjectFactory {
+
+        input.value = Object.fromEntries(
+            Object.entries( input.value ).map(
+                ( [ k, v ] ) => [ k, gamma( v ) ]
+            )
+        ) as unknown as ColorInstance;
+
+        return input;
 
     }
 

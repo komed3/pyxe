@@ -1,6 +1,7 @@
 'use strict';
 
 import type { ColorSpaceName, ConversionHandler } from '@pyxe/types';
+import { ChannelHelper } from '@pyxe/utils';
 import { ColorSpace } from './ColorSpace.js';
 import { conversionGraphRegistry } from '../registries/ConversionGraphRegistry.js';
 import { handleError } from '../services/ErrorUtils.js';
@@ -64,13 +65,13 @@ export class ConversionGraph {
 
         while ( queue.length > 0 ) {
 
-            const [ current, path ] = queue.shift()!;
+            const [ curr, path ] = queue.shift()!;
 
-            if ( visited.has( current ) ) continue;
+            if ( visited.has( curr ) ) continue;
 
-            visited.add( current );
+            visited.add( curr );
 
-            for ( const next of conversionGraphRegistry.targets( current ) ) {
+            for ( const next of conversionGraphRegistry.targets( curr ) ) {
 
                 if ( visited.has( next ) ) continue;
 
@@ -136,10 +137,13 @@ export class ConversionGraph {
 
         for ( let i = 0; i < path.length - 1; i++ ) {
 
-            const current = path[ i ];
+            const curr = path[ i ];
             const next = path[ i + 1 ];
 
-            const cb = conversionGraphRegistry.get( current )[ next ];
+            const currSpace = ColorSpace.getInstance( curr ) as ColorSpace;
+            const nextSpace = ColorSpace.getInstance( next ) as ColorSpace;
+
+            const cb = conversionGraphRegistry.get( curr )[ next ];
 
             if ( ! cb ) {
 
@@ -147,12 +151,30 @@ export class ConversionGraph {
 
                 return handleError( {
                     method: 'ConversionGraph',
-                    msg: `Missing conversion step from <${current}> to <${next}>`
+                    msg: `Missing conversion step from <${curr}> to <${next}>`
                 }, this.safe );
 
             }
 
-            handler.push( cb );
+            handler.push( ( input: any ) => {
+
+                if ( ! currSpace.linear() && nextSpace.linear() ) {
+
+                    ChannelHelper.gamma( input, nextSpace.gamma( 'decode' ) );
+
+                }
+
+                const result = cb( input );
+
+                if ( currSpace.linear() && ! nextSpace.linear() ) {
+
+                    ChannelHelper.gamma( result!, currSpace.gamma( 'encode' ) );
+
+                }
+
+                return result;
+
+            } );
 
         }
 
@@ -193,12 +215,12 @@ export const tree = (
     const result: string[] = [ root.toUpperCase() ];
 
     const _subtree = (
-        current: ColorSpaceName,
+        curr: ColorSpaceName,
         depth: number,
         prefix: string = ''
     ) : void => {
 
-        const targets = conversionGraphRegistry.targets( current );
+        const targets = conversionGraphRegistry.targets( curr );
 
         if ( depth > 0 && targets && targets.length > 0 ) {
 
@@ -206,7 +228,7 @@ export const tree = (
 
             filtered.forEach( ( target, idx ) => {
 
-                const pathKey = `${current}::${target}`;
+                const pathKey = `${curr}::${target}`;
                 const isLast = idx === filtered.length - 1;
 
                 if ( ! visited.has( pathKey ) ) {
