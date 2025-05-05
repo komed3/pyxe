@@ -2,6 +2,12 @@
 
 export class Basic {
 
+    public static timestamp () {
+
+        return ( new Date() ).toISOString().slice( 11, 23 ).replace( 'T', ' ' );
+
+    }
+
     public static hexdec (
         hex: string
     ) : number {
@@ -14,19 +20,7 @@ export class Basic {
         value: number
     ) : string {
 
-        return Math.round( value )
-            .toString( 16 )
-            .padStart( 2, '0' );
-
-    }
-
-    public static dechexAlpha (
-        alpha?: number
-    ) : string {
-
-        return typeof alpha === 'number'
-            ? this.dechex( Math.round( alpha * 255 ) )
-            : '';
+        return Math.round( value ).toString( 16 ).padStart( 2, '0' );
 
     }
 

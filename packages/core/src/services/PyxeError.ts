@@ -1,6 +1,7 @@
 'use strict';
 
 import type { ErrorFactory } from '@pyxe/types';
+import { Basic } from '@pyxe/utils';
 import { debug } from './Debug.js';
 
 export class PyxeError extends Error {
@@ -17,9 +18,7 @@ export class PyxeError extends Error {
 
         const { method, msg, err } = factory;
 
-        const time = ( new Date() ).toLocaleTimeString(
-            'en-US', { hour12: false, timeStyle: 'medium' }
-        );
+        const time = Basic.timestamp();
 
         const extra = typeof err === 'string'
             ? err : err instanceof Error
