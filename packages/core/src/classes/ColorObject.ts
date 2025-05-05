@@ -4,6 +4,7 @@ import type { ColorInput, ColorInstance, ColorSpaceName, ColorObjectFactory, Col
 import { ChannelHelper, TypeCheck } from '@pyxe/utils';
 import { ColorSpace } from './ColorSpace.js';
 import { test } from './Validator.js';
+import { conversionGraph } from './ConversionGraph.js';
 import { Convert } from './Convert.js';
 import { ModuleMethod } from './ModuleMethod.js';
 import { Output } from './Output.js';
@@ -209,8 +210,9 @@ export class ColorObject {
 
             return ColorObject._wrap(
                 ( this.convert ||= new Convert ( this._factory(), this.safe ) ).as( target, strict )!,
-                this.safe, ( result, input ) => tracer.add( result, tpl.convert( input, result ) ),
-                true
+                this.safe, ( result, input ) => tracer.add( result, tpl.convert(
+                    input, result, conversionGraph.findPath( input.space, result.space )
+                ) ), true
             );
 
         }, {

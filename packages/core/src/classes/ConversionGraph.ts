@@ -1,7 +1,6 @@
 'use strict';
 
 import type { ColorSpaceName, ConversionHandler } from '@pyxe/types';
-import { ChannelHelper } from '@pyxe/utils';
 import { ColorSpace } from './ColorSpace.js';
 import { conversionGraphRegistry } from '../registries/ConversionGraphRegistry.js';
 import { handleError } from '../services/ErrorUtils.js';
@@ -140,9 +139,6 @@ export class ConversionGraph {
             const curr = path[ i ];
             const next = path[ i + 1 ];
 
-            const currSpace = ColorSpace.getInstance( curr ) as ColorSpace;
-            const nextSpace = ColorSpace.getInstance( next ) as ColorSpace;
-
             const cb = conversionGraphRegistry.get( curr )[ next ];
 
             if ( ! cb ) {
@@ -156,30 +152,12 @@ export class ConversionGraph {
 
             }
 
-            handler.push( ( input: any ) => {
-
-                if ( ! currSpace.linear() && nextSpace.linear() ) {
-
-                    ChannelHelper.gamma( input, nextSpace.gamma( 'decode' ) );
-
-                }
-
-                const result = cb( input );
-
-                if ( currSpace.linear() && ! nextSpace.linear() ) {
-
-                    ChannelHelper.gamma( result!, currSpace.gamma( 'encode' ) );
-
-                }
-
-                return result;
-
-            } );
+            handler.push( cb );
 
         }
 
         const callback = ( input: any ) => handler.reduce(
-            ( acc, cb ) => cb( acc ), input
+            ( acc, cb ) => cb( acc ) ?? acc, input
         );
 
         this.cbCache.set( cacheKey, callback );

@@ -6,11 +6,12 @@ import { conversions } from './handler/conversions.js';
 
 Registry.ColorSpace.add( 'hsv', {
     aliases: [ 'hsva', 'hsb', 'hsba' ],
-    channels, alpha: true, linear: false,
+    channels, alpha: true,
     conversions,
     output: { html: 'string', css: 'string' },
     meta: {
         name: 'HSV',
-        description: 'Hue-based model for brightness and saturation control'
+        description: 'Hue-based model for brightness and saturation control',
+        linear: false
     }
 } );

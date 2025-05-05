@@ -1,6 +1,7 @@
 'use strict';
 
 import type { ColorInput, ColorObjectFactory, ColorSpaceName, TracerFactory } from '@pyxe/types';
+import { Color } from '../classes/Color.js';
 import { ColorObject } from '../classes/ColorObject.js';
 import { hook } from './Hook.js';
 import { debug } from './Debug.js';
@@ -82,7 +83,7 @@ export class Tracer {
     }
 
     public get (
-        color: ColorObject
+        color: Color | ColorObject
     ) : TracerFactory[] {
 
         return color.getMeta( 'trace' ) ?? [];
@@ -90,7 +91,7 @@ export class Tracer {
     }
 
     public export (
-        color: ColorObject,
+        color: Color | ColorObject,
         options: {
             format?: 'json' | 'object';
             pretty?: boolean;

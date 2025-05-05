@@ -60,7 +60,7 @@ export class Color {
 
     }
 
-    public meta (
+    public getMeta (
         key?: string
     ) : any {
 

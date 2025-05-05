@@ -12,6 +12,10 @@ export interface HSV {
     h: number; s: number; v: number;
 }
 
+export interface XYZ {
+    x: number; y: number; z: number;
+}
+
 export interface Lab {
     l: number; a: number; b: number;
 }
@@ -24,6 +28,6 @@ export interface CMYK {
     c: number; m: number; y: number; k: number;
 }
 
-export type ColorInstance = RGB | HSL | HSV | Lab | LCh | CMYK;
+export type ColorInstance = RGB | HSL | HSV | XYZ | Lab | LCh | CMYK;
 
 export type ColorInput = ColorInstance | string;
