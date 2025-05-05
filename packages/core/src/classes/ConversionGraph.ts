@@ -4,18 +4,30 @@ import type { ColorSpaceName, ConversionHandler } from '@pyxe/types';
 import { ColorSpace } from './ColorSpace.js';
 import { conversionGraphRegistry } from '../registries/ConversionGraphRegistry.js';
 import { handleError } from '../services/ErrorUtils.js';
+import { hook } from '../services/Hook.js';
 
 export class ConversionGraph {
 
-    private cache: Map<string, ColorSpaceName[] | null> = new Map ();
+    private pathCache: Map<string, ColorSpaceName[] | null> = new Map ();
+    private cbCache: Map<string, ConversionHandler | null> = new Map ();
 
     constructor (
         private safe: boolean = true
     ) {}
 
+    private _cacheKey (
+        source: ColorSpaceName,
+        target: ColorSpaceName
+    ) : string {
+
+        return hook.filter( 'ConversionGraph::cacheKey', `${source}::${target}`, source, target, this );
+
+    }
+
     public flush () : void {
 
-        this.cache.clear();
+        this.pathCache.clear();
+        this.cbCache.clear();
 
     }
 
@@ -37,11 +49,11 @@ export class ConversionGraph {
 
         if ( source === target ) return [ source ];
 
-        const cacheKey = `${source}::${target}`;
+        const cacheKey = this._cacheKey( source, target );
 
-        if ( this.cache.has( cacheKey ) ) {
+        if ( this.pathCache.has( cacheKey ) ) {
 
-            return this.cache.get( cacheKey )!;
+            return this.pathCache.get( cacheKey )!;
 
         }
 
@@ -66,7 +78,7 @@ export class ConversionGraph {
 
                 if ( next === target ) {
 
-                    this.cache.set( cacheKey, newPath );
+                    this.pathCache.set( cacheKey, newPath );
 
                     return newPath;
 
@@ -78,7 +90,7 @@ export class ConversionGraph {
 
         }
 
-        this.cache.set( cacheKey, null );
+        this.pathCache.set( cacheKey, null );
 
         return null;
 
@@ -109,6 +121,17 @@ export class ConversionGraph {
 
         }
 
+        source = path[ 0 ];
+        target = path[ path.length - 1 ];
+
+        const cacheKey = this._cacheKey( source, target );
+
+        if ( this.cbCache.has( cacheKey ) ) {
+
+            return this.cbCache.get( cacheKey )!;
+
+        }
+
         const handler: ConversionHandler[] = [];
 
         for ( let i = 0; i < path.length - 1; i++ ) {
@@ -119,6 +142,8 @@ export class ConversionGraph {
             const cb = conversionGraphRegistry.get( current )[ next ];
 
             if ( ! cb ) {
+
+                this.cbCache.set( cacheKey, null );
 
                 return handleError( {
                     method: 'ConversionGraph',
@@ -131,9 +156,13 @@ export class ConversionGraph {
 
         }
 
-        return ( input: any ) => handler.reduce(
+        const callback = ( input: any ) => handler.reduce(
             ( acc, cb ) => cb( acc ), input
         );
+
+        this.cbCache.set( cacheKey, callback );
+
+        return callback;
 
     }
 
