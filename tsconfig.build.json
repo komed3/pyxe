@@ -6,6 +6,7 @@
     { "path": "packages/pyxe" },
     { "path": "packages/spaces/hsl" },
     { "path": "packages/spaces/hsv" },
+    { "path": "packages/spaces/lrgb" },
     { "path": "packages/spaces/rgb" },
     { "path": "packages/spaces/xyz" },
     { "path": "packages/types" },

@@ -13,6 +13,7 @@
       "@pyxe/space-hex": [ "packages/spaces/hex/src" ],
       "@pyxe/space-hsl": [ "packages/spaces/hsl/src" ],
       "@pyxe/space-hsv": [ "packages/spaces/hsv/src" ],
+      "@pyxe/space-lrgb": [ "packages/spaces/lrgb/src" ],
       "@pyxe/space-rgb": [ "packages/spaces/rgb/src" ],
       "@pyxe/space-xyz": [ "packages/spaces/xyz/src" ],
       "@pyxe/utils": [ "packages/utils/src" ]
