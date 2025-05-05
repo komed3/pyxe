@@ -5,10 +5,9 @@ import { channels } from './handler/channels.js';
 import { conversions } from './handler/conversions.js';
 
 Registry.ColorSpace.add( 'hsl', {
-    channels: channels,
-    alpha: true, linear: false,
     aliases: [ 'hsla' ],
-    conversions: conversions,
+    channels, alpha: true, linear: false,
+    conversions,
     output: { html: 'string', css: 'string' },
     meta: {
         name: 'HSL',

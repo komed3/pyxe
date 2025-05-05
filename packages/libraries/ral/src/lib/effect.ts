@@ -1,6 +1,6 @@
 'use strict';
 
-export const RAL_Effect = async () => [
+export const RAL_EFFECT = async () => [
 
   /** RAL 110 */
   { id: '110-1', spaces: { rgb: { r: 230, g: 231, b: 230 } } },

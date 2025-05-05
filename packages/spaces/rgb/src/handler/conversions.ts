@@ -23,10 +23,6 @@ export const conversions: ConversionFactory = {
 
                 s = delta / ( l < 0.5 ? max + min : 2 - max - min );
 
-                /*s = l < 0.5
-                    ? delta / ( max + min )
-                    : delta / ( 2 - max - min );*/
-
             }
 
             return {

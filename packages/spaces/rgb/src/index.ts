@@ -8,13 +8,9 @@ import { conversions } from './handler/conversions.js';
 import { output } from './handler/output.js';
 
 Registry.ColorSpace.add( 'rgb', {
-    channels: channels,
-    alpha: true, linear: false,
-    gamma: gamma,
     aliases: [ 'rgba', 'hex', '#' ],
-    hooks: hooks,
-    conversions: conversions,
-    output: output,
+    channels, alpha: true, linear: false, gamma,
+    hooks, conversions, output,
     meta: {
         name: 'RGB',
         description: 'Additive red-green-blue color model using 8-bit channels'
