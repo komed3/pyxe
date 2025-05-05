@@ -65,6 +65,32 @@ export const conversions: ConversionFactory = {
 
         }
 
+    },
+
+    lrgb: (
+        input: ColorObjectFactory | undefined
+    ) : ColorObjectFactory | undefined => {
+
+        if ( input && input.space === 'rgb' ) {
+
+            const { r, g, b } = input.value as RGB;
+
+            const gamma = ( v: number ) : number =>
+                v <= 0.04045 ? v / 12.92 : ( ( v + 0.055 ) / 1.055 ) ** 2.4;
+
+            return {
+                space: 'lrgb',
+                value: {
+                    r: gamma( r ),
+                    g: gamma( g ),
+                    b: gamma( b )
+                },
+                alpha: input.alpha,
+                meta: input.meta ?? {}
+            } as ColorObjectFactory;
+
+        }
+
     }
 
 };
