@@ -2,6 +2,7 @@
 
 import type { ColorSpaceName, ColorSpaceFactory } from '@pyxe/types';
 import { Registry } from './Registry.js';
+import { ColorMethodRegistry } from './ColorMethodRegistry.js';
 import { conversionGraphRegistry } from './ConversionGraphRegistry.js';
 import { outputRegistry } from './OutputRegistry.js';
 import { assert } from '../services/ErrorUtils.js';
@@ -10,6 +11,14 @@ import { hook } from '../services/Hook.js';
 export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFactory> {
 
     protected aliases: Map<ColorSpaceName, ColorSpaceName> = new Map ();
+
+    private _methodName (
+        name: ColorSpaceName
+    ) : string {
+
+        return hook.filter( 'ColorSpaceFactory::methodName', `as${ name.toUpperCase() }`, name, this );
+
+    }
 
     public resolve (
         name: ColorSpaceName
@@ -31,6 +40,13 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
         hook.run( 'ColorSpaceRegistry::beforeAdd', name, colorSpace, this );
 
         super._add( name, colorSpace );
+
+        outputRegistry.addMany( name, colorSpace.output ?? {} );
+
+        ColorMethodRegistry.bind(
+            name, this._methodName( name ),
+            ( self, method, options ) => self.as( method, options?.strict )
+        );
 
         if ( colorSpace.aliases ) {
 
@@ -63,8 +79,6 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
 
         }
 
-        outputRegistry.addMany( name, colorSpace.output ?? {} );
-
         hook.run( 'ColorSpaceRegistry::afterAdd', name, colorSpace, this );
 
     }
@@ -82,6 +96,8 @@ export class ColorSpaceRegistry extends Registry<ColorSpaceName, ColorSpaceFacto
         conversionGraphRegistry.removeAll( name );
 
         outputRegistry.removeAll( name );
+
+        ColorMethodRegistry.unbind( name );
 
         if ( colorSpace?.aliases ) {
 
