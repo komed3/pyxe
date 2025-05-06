@@ -202,7 +202,7 @@ export const tree = (
 
         if ( depth > 0 && targets && targets.length > 0 ) {
 
-            const filtered = targets.filter( t => !seenNodes.has( t ) );
+            const filtered = targets.filter( t => ! seenNodes.has( t ) );
 
             filtered.forEach( ( target, idx ) => {
 
