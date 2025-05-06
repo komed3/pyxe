@@ -20,19 +20,24 @@ export class PyxeError extends Error {
 
         const time = Basic.timestamp();
 
-        const extra = typeof err === 'string'
-            ? err : err instanceof Error
-                ? err.message : err !== null
-                    ? String ( err ) : undefined;
+        const extra = err instanceof Error
+            ? err.message : err !== null && err !== undefined
+                ? String ( err ) : undefined;
 
         const header = `${ time } [${ method.toUpperCase() }] ${ ( msg ?? '' ) }` +
-                       `${ ( extra ? `: ${extra}` : '' ) }`;
+                       `${ ( extra ? `\n└─ ${extra}` : '' ) }`;
 
         super( header );
 
         this.name = 'PyxeError';
 
-        Object.assign( this, { header, time, method, msg, extra } );
+        Object.defineProperties( this, {
+            header: { value: header, enumerable: false },
+            time: { value: time, enumerable: false },
+            method: { value: method, enumerable: false },
+            msg: { value: msg, enumerable: false },
+            extra: { value: extra, enumerable: false }
+        } );
 
     }
 

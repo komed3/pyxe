@@ -13,7 +13,7 @@ export const hooks: Record<string, HookHandler> = {
 
             state = ErrorUtils.check( x + y <= 1, {
                 method: 'ColorSpace::xyY',
-                msg: `Invalid chromaticity: <x + y must be ≤ 1> (received ${ ( x + y ) })`
+                msg: `Invalid chromaticity: <x + y must be ≤ 1> (received ${ Number( ( x + y ).toFixed( 6 ) ) })`
             }, self.safe );
 
         }
