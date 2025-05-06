@@ -5,6 +5,32 @@ import { minMaxDelta, computeHue } from './helper.js';
 
 export const conversions: ConversionFactory = {
 
+    lrgb: (
+        input: ColorObjectFactory | undefined
+    ) : ColorObjectFactory | undefined => {
+
+        if ( input && input.space === 'rgb' ) {
+
+            const { r, g, b } = input.value as RGB;
+
+            const gamma = ( v: number ) : number =>
+                v <= 0.04045 ? v / 12.92 : ( ( v + 0.055 ) / 1.055 ) ** 2.4;
+
+            return {
+                space: 'lrgb',
+                value: {
+                    r: gamma( r ),
+                    g: gamma( g ),
+                    b: gamma( b )
+                },
+                alpha: input.alpha,
+                meta: input.meta ?? {}
+            } as ColorObjectFactory;
+
+        }
+
+    },
+
     hsl: (
         input: ColorObjectFactory | undefined
     ) : ColorObjectFactory | undefined => {
@@ -67,24 +93,27 @@ export const conversions: ConversionFactory = {
 
     },
 
-    lrgb: (
+    hsi: (
         input: ColorObjectFactory | undefined
     ) : ColorObjectFactory | undefined => {
 
         if ( input && input.space === 'rgb' ) {
 
             const { r, g, b } = input.value as RGB;
+            const { min } = minMaxDelta( r, g, b );
 
-            const gamma = ( v: number ) : number =>
-                v <= 0.04045 ? v / 12.92 : ( ( v + 0.055 ) / 1.055 ) ** 2.4;
+            const i = ( r + g + b ) / 3;
+            const s = i > 0 ? ( 1 - min / i ) : 0;
+
+            const h = s > 0 ? Math.acos(
+                0.5 * ( ( r - g ) + ( r - b ) ) / (
+                    Math.sqrt( ( r - g ) ** 2 + ( r - b ) * ( g - b ) ) + 1e-10
+                )
+            ) / ( 2 * Math.PI ) : 0;
 
             return {
-                space: 'lrgb',
-                value: {
-                    r: gamma( r ),
-                    g: gamma( g ),
-                    b: gamma( b )
-                },
+                space: 'hsi',
+                value: { h: b > g ? 1 - h : h, s, i },
                 alpha: input.alpha,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
