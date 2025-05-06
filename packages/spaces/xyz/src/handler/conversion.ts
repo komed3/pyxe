@@ -57,6 +57,30 @@ export const conversions: ConversionFactory = {
 
         }
 
+    },
+
+    xyy: (
+        input: ColorObjectFactory | undefined
+    ) : ColorObjectFactory | undefined => {
+
+        if ( input && input.space === 'xyz' ) {
+
+            const { x, y, z } = input.value as XYZ;
+            const sum = x + y + z;
+
+            return {
+                space: 'xyy',
+                value: {
+                    x: sum > 0 ? x / sum : 0,
+                    y: sum > 0 ? y / sum : 0,
+                    Y: y
+                },
+                alpha: input.alpha,
+                meta: input.meta ?? {}
+            } as ColorObjectFactory;
+
+        }
+
     }
 
 };
