@@ -56,6 +56,8 @@ export class Parser {
         input: ColorInput
     ) : ColorObjectFactory | false {
 
+        input = input.toString().trim();
+
         /** early hook allows parsing special cases */
 
         const early = hook.filter( 'Parser::earlyParse', undefined, input, this );
@@ -66,7 +68,7 @@ export class Parser {
 
         hook.run( 'Parser::beforeParse', input, this );
 
-        const match = input.toString().trim().match( this.regex )?.slice( 1 );
+        const match = hook.filter( 'Parser::match', input.match( this.regex )?.slice( 1 ), input, this );
 
         if ( ! match || match.length < this.colorSpace.channels().length ) {
 
@@ -80,23 +82,31 @@ export class Parser {
 
         const channels: Record<string, number> = {};
 
+        hook.run( 'Parser::preparseChannels', channels, match, input, this );
+
         for ( const [ key, channel ] of Object.entries( this.colorSpace.getChannels() ) ) {
 
-            const value = ChannelHelper.parse( match.shift(), channel, ! this.strict );
+            if ( ! ( key in channels ) ) {
 
-            if ( value === undefined || isNaN( value ) ) {
+                const value = ChannelHelper.parse( match.shift(), channel, ! this.strict );
 
-                debug.info( 'Parser', `Missing or invalid value for channel <${key}>: ${value}` );
+                if ( value === undefined || isNaN( value ) ) {
 
-                return false;
+                    debug.info( 'Parser', `Missing or invalid value for channel <${key}>: ${value}` );
+
+                    return false;
+
+                }
+
+                channels[ key ] = value;
 
             }
 
-            channels[ key ] = value;
-
         }
 
-        hook.run( 'Parser::afterParse', input, this );
+        /** return result as color object factory */
+
+        hook.run( 'Parser::afterParse', channels, input, this );
 
         return hook.filter( 'Parser::result', {
             space: this.colorSpace.name,
