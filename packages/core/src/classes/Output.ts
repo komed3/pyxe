@@ -63,6 +63,18 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
     }
 
+    private _hasAlpha (
+        input: ColorObjectFactory,
+        options: OutputOptions = {}
+    ) : boolean {
+
+        return !! ( this.colorSpace.alpha() && (
+            input.alpha !== undefined && input.alpha !== 1 ||
+            options?.forceAlpha
+        ) );
+
+    }
+
     public format (
         type: string,
         input: ColorObjectFactory,
@@ -72,7 +84,7 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
         return catchToError( () => {
 
-            return this._resolve( type )!( input, options );
+            return this._resolve( type )!( input, options, this );
 
         }, {
             method: 'Output',
@@ -123,6 +135,7 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
         const { space, channels, alpha } = this.json( input, options );
         const { schema } = options ?? {};
+        const hasAlpha = this._hasAlpha( input, options );
 
         if ( schema ) {
 
@@ -136,14 +149,14 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
 
         const values = Object.values( channels ).map( c => c.formatted );
 
-        if ( this.colorSpace.alpha() && alpha ) {
+        if ( hasAlpha ) {
 
             values.push( alpha.formatted );
 
         }
 
         return hook.filter( 'Output::string', `${ (
-            this.colorSpace.alpha() && alpha ? `${space}a` : space
+            hasAlpha ? `${space}a` : space
         ) }( ${ values.join( ', ' ) } )`, input, options, this );
 
     }
@@ -153,10 +166,7 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
         options: OutputOptions = {}
     ) : string {
 
-        const hasAlpha = this.colorSpace.alpha() && (
-            input.alpha !== undefined && input.alpha !== 1 ||
-            options?.forceAlpha
-        );
+        const hasAlpha = this._hasAlpha( input, options );
 
         return hook.filter( 'Output::cli', `${ (
             ( hasAlpha ? `${input.space}a` : input.space ).toUpperCase()

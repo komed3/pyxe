@@ -39,7 +39,8 @@ export interface OutputOptions {
 
 export type OutputHandler = (
     input: ColorObjectFactory,
-    options?: OutputOptions
+    options?: OutputOptions,
+    ...args: any
 ) => any;
 
 export type OutputFactory = Record<string, OutputHandler | string>;
