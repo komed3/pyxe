@@ -60,7 +60,7 @@ export class Color {
 
     }
 
-    public meta (
+    public getMeta (
         key?: string
     ) : any {
 
@@ -160,10 +160,11 @@ export class Color {
     }
 
     public static from (
-        input: ColorObjectFactory
+        input: ColorObjectFactory,
+        isNormalized?: boolean
     ) : ColorLike {
 
-        return Color._wrap( ColorObject.from( input, true ) );
+        return Color._wrap( ColorObject.from( input, true, isNormalized ) );
 
     }
 
@@ -190,13 +191,13 @@ export class Color {
 
     }
 
-    public static isEqual (
+    public static compare (
         a: Color | ColorObject,
         b: Color | ColorObject,
         tolerance?: number
     ) : boolean {
 
-        return ColorObject.isEqual( Color._unwrap( a ), Color._unwrap( b ), tolerance );
+        return ColorObject.compare( Color._unwrap( a ), Color._unwrap( b ), tolerance );
 
     }
 

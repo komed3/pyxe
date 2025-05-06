@@ -47,6 +47,7 @@ export type OutputFactory = Record<string, OutputHandler | string>;
 export interface ColorSpaceMeta {
     name?: string;
     description?: string;
+    linear?: boolean;
     [ key: string ]: any;
 }
 

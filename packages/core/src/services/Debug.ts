@@ -1,6 +1,7 @@
 'use strict';
 
 import type { DebugLevel, DebugTypes } from '@pyxe/types';
+import { Basic } from '@pyxe/utils';
 
 export class Debug {
 
@@ -96,9 +97,9 @@ export class Debug {
 
         if ( this._canLog( mode ) || show ) {
 
-            ( console[ mode ] ?? console.debug )( `${ ( new Date() ).toLocaleTimeString(
-                'en-US', { hour12: false, timeStyle: 'medium' }
-            ) } [PYXE ${ method.trim().toUpperCase() }] ${ msg.trim() }` );
+            ( console[ mode ] ?? console.debug )(
+                `${ Basic.timestamp() } [PYXE ${ method.trim().toUpperCase() }] ${ msg.trim() }`
+            );
 
         }
 

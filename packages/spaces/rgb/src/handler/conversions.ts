@@ -1,11 +1,35 @@
 'use strict';
 
 import type { RGB, ColorObjectFactory, ConversionFactory } from '@pyxe/types';
-import { ChannelHelper } from '@pyxe/utils';
-import { channels } from './channels.js';
 import { minMaxDelta, computeHue } from './helper.js';
 
 export const conversions: ConversionFactory = {
+
+    lrgb: (
+        input: ColorObjectFactory | undefined
+    ) : ColorObjectFactory | undefined => {
+
+        if ( input && input.space === 'rgb' ) {
+
+            const { r, g, b } = input.value as RGB;
+
+            const gamma = ( v: number ) : number =>
+                v <= 0.04045 ? v / 12.92 : ( ( v + 0.055 ) / 1.055 ) ** 2.4;
+
+            return {
+                space: 'lrgb',
+                value: {
+                    r: gamma( r ),
+                    g: gamma( g ),
+                    b: gamma( b )
+                },
+                alpha: input.alpha,
+                meta: input.meta ?? {}
+            } as ColorObjectFactory;
+
+        }
+
+    },
 
     hsl: (
         input: ColorObjectFactory | undefined
@@ -13,7 +37,7 @@ export const conversions: ConversionFactory = {
 
         if ( input && input.space === 'rgb' ) {
 
-            const { r, g, b } = ChannelHelper.normalizeInstance( input.value, channels ) as RGB;
+            const { r, g, b } = input.value as RGB;
             const { min, max, delta } = minMaxDelta( r, g, b );
 
             const l = ( max + min ) / 2;
@@ -23,9 +47,7 @@ export const conversions: ConversionFactory = {
 
                 h = computeHue( r, g, b, max, delta );
 
-                s = l < 0.5
-                    ? delta / ( max + min )
-                    : delta / ( 2 - max - min );
+                s = delta / ( l < 0.5 ? max + min : 2 - max - min );
 
             }
 
@@ -46,7 +68,7 @@ export const conversions: ConversionFactory = {
 
         if ( input && input.space === 'rgb' ) {
 
-            const { r, g, b } = ChannelHelper.normalizeInstance( input.value, channels ) as RGB;
+            const { r, g, b } = input.value as RGB;
             const { max, delta } = minMaxDelta( r, g, b );
 
             const v = max;
@@ -63,6 +85,35 @@ export const conversions: ConversionFactory = {
             return {
                 space: 'hsv',
                 value: { h, s, v },
+                alpha: input.alpha,
+                meta: input.meta ?? {}
+            } as ColorObjectFactory;
+
+        }
+
+    },
+
+    hsi: (
+        input: ColorObjectFactory | undefined
+    ) : ColorObjectFactory | undefined => {
+
+        if ( input && input.space === 'rgb' ) {
+
+            const { r, g, b } = input.value as RGB;
+            const { min } = minMaxDelta( r, g, b );
+
+            const i = ( r + g + b ) / 3;
+            const s = i > 0 ? ( 1 - min / i ) : 0;
+
+            const h = s > 0 ? Math.acos(
+                0.5 * ( ( r - g ) + ( r - b ) ) / (
+                    Math.sqrt( ( r - g ) ** 2 + ( r - b ) * ( g - b ) ) + 1e-10
+                )
+            ) / ( 2 * Math.PI ) : 0;
+
+            return {
+                space: 'hsi',
+                value: { h: b > g ? 1 - h : h, s, i },
                 alpha: input.alpha,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;

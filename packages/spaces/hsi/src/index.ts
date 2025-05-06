@@ -4,14 +4,13 @@ import { Registry } from '@pyxe/core/registry';
 import { channels } from './handler/channels.js';
 import { conversions } from './handler/conversions.js';
 
-Registry.ColorSpace.add( 'hsl', {
-    aliases: [ 'hsla' ],
+Registry.ColorSpace.add( 'hsi', {
+    aliases: [ 'hsia' ],
     channels, alpha: true,
     conversions,
-    output: { html: 'string', css: 'string' },
     meta: {
-        name: 'HSL',
-        description: 'Cylindrical color space based on RGB',
+        name: 'HSI',
+        description: 'Hue-Saturation-Intensity color space, perceptually oriented',
         linear: false
     }
 } );

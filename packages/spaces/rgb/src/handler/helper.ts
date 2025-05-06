@@ -16,10 +16,14 @@ export const minMaxDelta = (
 export const computeHue = (
     r: number, g: number, b: number,
     max: number, delta: number
-) : number => (
-    max === r
+) : number => {
+
+    const hue = max === r
         ? ( g - b ) / delta + ( g < b ? 6 : 0 )
         : max === g
             ? ( b - r ) / delta + 2
-            : ( r - g ) / delta + 4
-) * 60;
+            : ( r - g ) / delta + 4;
+
+    return ( hue / 6 ) % 1;
+
+};

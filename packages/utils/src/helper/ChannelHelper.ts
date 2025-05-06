@@ -1,8 +1,16 @@
 'use strict';
 
-import type { ColorChannel, ColorInstance, OutputOptions } from '@pyxe/types';
+import type { ColorInstance, ColorChannel, OutputOptions } from '@pyxe/types';
 
 export class ChannelHelper {
+
+    private static _handler (
+        method: string
+    ) : Function {
+
+        return ( this[ method as keyof ChannelHelper ] as Function ).bind( this );
+
+    }
 
     private static _channel (
         channel: ColorChannel
@@ -22,6 +30,32 @@ export class ChannelHelper {
             }[ channel.type ],
             ...channel
         };
+
+    }
+
+    public static instance (
+        method: string,
+        input: Partial<ColorInstance>,
+        channels: Record<string, ColorChannel>,
+        ...args: any
+    ) : Partial<ColorInstance> {
+
+        return Object.fromEntries( Object.entries( input ).map(
+            ( [ key, val ] ) => ( [ key, key in channels
+                ? this._handler( method )( val, channels[ key ], ...args )
+                : undefined
+            ] )
+        ) );
+
+    }
+
+    public static alpha (
+        method: string,
+        value: number | any,
+        ...args: any
+    ) : any {
+
+        return this._handler( method )( value, { type: 'normalized' }, ...args );
 
     }
 
@@ -59,23 +93,6 @@ export class ChannelHelper {
 
     }
 
-    public static normalizeInstance (
-        input: Partial<ColorInstance>,
-        channels: Record<string, ColorChannel>
-    ) : Partial<ColorInstance> {
-
-        return Object.fromEntries(
-            Object.entries( input ).map(
-                ( [ key, value ] ) => [
-                    key, key in channels
-                        ? this.normalize( value, channels[ key ] )
-                        : undefined
-                ]
-            )
-        );
-
-    }
-
     public static denormalize (
         value: number,
         channel: ColorChannel
@@ -89,24 +106,15 @@ export class ChannelHelper {
 
     public static validate (
         value: any,
-        channel: ColorChannel
+        channel: ColorChannel,
+        isNormalized: boolean
     ) : boolean {
 
         if ( typeof value === 'number' && Number.isFinite( value ) ) {
 
-            const { type, min, max } = this._channel( channel );
+            const { min, max } = isNormalized ? { min: 0, max: 1 } : this._channel( channel );
 
-            switch ( type ) {
-
-                case 'normalized':
-                case 'numeric':
-                case 'percent':
-                    return value >= min && value <= max;
-
-                case 'cyclic':
-                    return true;
-
-            }
+            return value >= min && value <= max;
 
         }
 
@@ -123,80 +131,67 @@ export class ChannelHelper {
         if ( value !== null && value !== '' ) {
 
             const { type, min, max } = this._channel( channel );
-            const str = String ( value ).trim();
-            const isPercent = str.includes( '%' );
+            const str = String( value ).trim();
 
             let parsed = parseFloat( str.replace( /[^\d.\-+eE]/g, '' ) );
 
             if ( Number.isFinite( parsed ) ) {
 
-                switch ( type ) {
+                if ( str.includes( '%' ) ) {
 
-                    case 'normalized':
-                        if ( isPercent ) parsed /= 100;
-                        break;
+                    parsed = type === 'normalized' ? parsed / 100
+                        : type === 'percent' ? parsed
+                        : ( parsed / 100 ) * ( max - min ) + min;
 
-                    case 'numeric':
-                    case 'cyclic':
-                        if ( isPercent ) parsed = ( parsed / 100 ) * ( max - min ) + min;
-                        break;
+                } else if ( type === 'percent' ) {
 
-                    case 'percent':
-                        if ( ! isPercent ) parsed *= 100;
-                        break;
+                    parsed *= 100;
 
                 }
 
-                if ( type === 'cyclic' ) {
-
-                    parsed = this.wrap( parsed, channel );
-
-                } else if ( clamp ) {
-
-                    parsed = this.clamp( parsed, channel );
-
-                }
-
-                return parsed;
+                return type === 'cyclic'
+                    ? this.wrap( parsed, channel )
+                    : clamp ? this.clamp( parsed, channel )
+                    : parsed;
 
             }
 
         }
 
         return undefined;
-        
-    }
-
-    public static parseAlpha (
-        value: any,
-        clamp: boolean = true
-    ) : number | undefined {
-
-        return this.parse( value, { type: 'normalized' }, clamp );
 
     }
 
-    public static parseInstance (
-        input: Partial<ColorInstance>,
-        channels: Record<string, ColorChannel>,
-        fallback: any = 0
-    ) : Partial<ColorInstance> {
+    public static format (
+        value: number,
+        channel: ColorChannel,
+        options?: OutputOptions,
+        isNormalized: boolean = true
+    ) : string {
 
-        return Object.fromEntries(
-            Object.entries( input ).map(
-                ( [ key, value ] ) => [
-                    key, key in channels
-                        ? this.parse( value, channels[ key ] )
-                        : fallback
-                ]
-            )
-        );
+        if ( Number.isFinite( value ) ) {
+
+            const { format = 'auto', type, decimals, unit = '' } = {
+                ...this._channel( channel ), ...( options ?? {} )
+            };
+
+            const normalized = isNormalized ? value : this.normalize(
+                type === 'cyclic' ? this.wrap( value, channel ) : this.clamp( value, channel ),
+                channel
+            );
+
+            return format === 'percent' ? Number( ( normalized * 100 ).toFixed( decimals ) ) + '%'
+                : format === 'normalized' ? Number( normalized.toFixed( decimals ) ).toString()
+                : Number( this.denormalize( normalized, channel ).toFixed( decimals ) ) + unit;
+
+        }
+
+        return '';
 
     }
 
     public static compare (
-        a: any,
-        b: any,
+        a: any, b: any,
         channel: ColorChannel,
         tolerance: number = 0.0005
     ) : boolean {
@@ -210,8 +205,7 @@ export class ChannelHelper {
     }
 
     public static compareAlpha (
-        a: any,
-        b: any,
+        a: any, b: any,
         tolerance: number = 0.0005
     ) : boolean {
 
@@ -233,66 +227,6 @@ export class ChannelHelper {
                 channel, tolerance
             )
         );
-
-    }
-
-    public static format (
-        value: number,
-        channel: ColorChannel,
-        options: OutputOptions = {}
-    ) : string {
-
-        if ( Number.isFinite( value ) ) {
-
-            const { format = 'auto', type, decimals, unit = '' } = {
-                ...this._channel( channel ),
-                ...options
-            };
-
-            if ( type === 'cyclic' ) {
-
-                value = this.wrap( value, channel );
-
-            } else {
-
-                value = this.clamp( value, channel );
-
-            }
-
-            switch ( format ) {
-
-                case 'percent':
-                    return `${ Number (
-                        ( this.normalize( value, channel ) * 100 ).toFixed( decimals )
-                    ) }%`;
-
-                case 'normalized':
-                    return Number (
-                        this.normalize( value, channel ).toFixed( decimals )
-                    ).toString();
-
-                case 'auto':
-                default:
-                    return `${ Number (
-                        value.toFixed( decimals )
-                    ) }${unit}`;
-
-            }
-
-        }
-
-        return '';
-
-    }
-
-    public static formatAlpha (
-        value: any,
-        options: OutputOptions = {}
-    ) : string {
-
-        return value !== undefined || options.forceAlpha
-            ? this.format( value, { type: 'normalized' }, options )
-            : '';
 
     }
 
