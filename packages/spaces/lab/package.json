@@ -1,6 +1,6 @@
 {
   "name": "@pyxe/space-lab",
-  "description": "",
+  "description": "Perceptually uniform color space based on human vision",
   "version": "0.1.0",
   "license": "MIT",
   "author": {

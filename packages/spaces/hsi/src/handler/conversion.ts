@@ -13,7 +13,7 @@ export const conversions: ConversionFactory = {
             const { h, s, i } = input.value as HSI;
             const H = h * 2 * Math.PI;
 
-            const adjust = ( v: number ) => i * (
+            const adjust = ( v: number ) : number => i * (
                 1 + s * Math.cos( H - v * 2 * Math.PI / 3 ) /
                 Math.cos( Math.PI / 3 - ( H - v * 2 * Math.PI / 3 ) )
             );

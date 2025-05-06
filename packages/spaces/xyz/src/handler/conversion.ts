@@ -29,6 +29,34 @@ export const conversions: ConversionFactory = {
 
         }
 
+    },
+
+    lab: (
+        input: ColorObjectFactory | undefined
+    ) : ColorObjectFactory | undefined => {
+
+        if ( input && input.space === 'xyz' ) {
+
+            const { x, y, z } = input.value as XYZ;
+
+            const adjust = ( v: number ) : number =>
+                v > 0.008856 ? Math.cbrt( v ) : ( 7.787 * v ) + ( 16 / 116 );
+
+            const Y = adjust( y );
+
+            return {
+                space: 'lab',
+                value: {
+                    l: ( 116 * Y - 16 ) / 100,
+                    a: ( 500 * ( adjust( x ) - Y ) + 128 ) / 255,
+                    b: ( 200 * ( Y - adjust( z ) ) + 128 ) / 255
+                },
+                alpha: input.alpha,
+                meta: input.meta ?? {}
+            } as ColorObjectFactory;
+
+        }
+
     }
 
 };

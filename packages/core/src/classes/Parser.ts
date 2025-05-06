@@ -35,12 +35,12 @@ export class Parser {
         /** patterns for individual channels */
         const channels = Object.values( this.colorSpace.getChannels() ).map(
             ( channel ) => channel.type === 'cyclic'
-                ? '([\\d.]+(?:deg|°|)?%?)'
-                : '([\\d.]+%?)'
+                ? '(-?[\\d.]+(?:deg|°|)?%?)'
+                : '(-?[\\d.]+%?)'
         );
 
         /** expand alpha channel if supported */
-        if ( this.colorSpace.alpha() ) channels.push( '([\\d.]+%?)' );
+        if ( this.colorSpace.alpha() ) channels.push( '(-?[\\d.]+%?)' );
 
         /** flexible separators */
         const separator = '\\s*(?:[,/]|\\s)\\s*';
