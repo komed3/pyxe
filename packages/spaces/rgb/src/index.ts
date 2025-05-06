@@ -1,9 +1,9 @@
 'use strict';
 
 import { Registry } from '@pyxe/core/registry';
-import { channels } from './handler/channels.js';
-import { hooks } from './handler/hooks.js';
-import { conversions } from './handler/conversions.js';
+import { channels } from './handler/channel.js';
+import { hooks } from './handler/hook.js';
+import { conversions } from './handler/conversion.js';
 import { output } from './handler/output.js';
 
 Registry.ColorSpace.add( 'rgb', {

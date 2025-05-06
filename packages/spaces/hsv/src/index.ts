@@ -1,8 +1,8 @@
 'use strict';
 
 import { Registry } from '@pyxe/core/registry';
-import { channels } from './handler/channels.js';
-import { conversions } from './handler/conversions.js';
+import { channels } from './handler/channel.js';
+import { conversions } from './handler/conversion.js';
 
 Registry.ColorSpace.add( 'hsv', {
     aliases: [ 'hsva', 'hsb', 'hsba' ],
