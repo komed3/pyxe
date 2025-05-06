@@ -1,0 +1,35 @@
+{
+  "name": "@pyxe/space-xyy",
+  "description": "Chromaticity coordinates and luminance from XYZ",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": {
+    "name": "Paul Köhler (komed3)",
+    "email": "webmaster@komed3.de",
+    "url": "https://komed3.de"
+  },
+  "homepage": "https://pyxe.de",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "README.md",
+    "package.json",
+    "dist"
+  ],
+  "dependencies": {
+    "@pyxe/core": "^0.1.0",
+    "@pyxe/types": "^0.1.0",
+    "@pyxe/utils": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/komed3/pyxe.git",
+    "directory": "packages/spaces/xyy"
+  },
+  "bugs": {
+    "url": "https://github.com/komed3/pyxe/issues"
+  }
+}
