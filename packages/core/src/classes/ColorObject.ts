@@ -3,7 +3,7 @@
 import type { ColorInput, ColorInstance, ColorSpaceName, ColorObjectFactory, ColorObjectFactoryLike, OutputOptions } from '@pyxe/types';
 import { ChannelHelper, TypeCheck } from '@pyxe/utils';
 import { ColorSpace } from './ColorSpace.js';
-import { test } from './Validator.js';
+import { test, validator } from './Validator.js';
 import { conversionGraph } from './ConversionGraph.js';
 import { Convert } from './Convert.js';
 import { ModuleMethod } from './ModuleMethod.js';
@@ -103,7 +103,7 @@ export class ColorObject {
 
     public validate () : boolean {
 
-        return ( this.isValid ||= test.validate( this._factory(), true ) );
+        return ( this.isValid ||= ( this.safe ? validator : test ).validate( this._factory(), true ) );
 
     }
 
