@@ -30,7 +30,7 @@ export const hooks: Record<string, HookHandler> = {
                 }
 
             }, {
-                method: 'Space::RGB',
+                method: 'ColorSpace::RGB',
                 msg: `Parsing failed for HEX string <${input}>`
             }, self.strict );
 
