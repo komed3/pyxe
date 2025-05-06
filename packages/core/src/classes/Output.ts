@@ -162,10 +162,10 @@ export class Output extends Entity<ColorSpaceName, OutputFactory> {
             ( hasAlpha ? `${input.space}a` : input.space ).toUpperCase()
         ) } ${ (
             this.string( input, { ...options, ...{
-                schema: Object.keys(
+                schema: '${' + Object.keys(
                     this.colorSpace.getChannels()
-                ).join( ' ' ) + (
-                    hasAlpha ? ' a' : ''
+                ).join( '} ${' ) + '}' + (
+                    hasAlpha ? ' ${a}' : ''
                 )
             } } )
         ) }`, input, options, this );
