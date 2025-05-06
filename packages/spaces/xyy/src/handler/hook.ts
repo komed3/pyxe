@@ -5,16 +5,16 @@ import { ErrorUtils } from '@pyxe/core/services';
 
 export const hooks: Record<string, HookHandler> = {
 
-    'Validator::passed': ( state, factory, _, colorSpace ) : boolean => {
+    'Validator::passed': ( state, factory, _, colorSpace, self ) : boolean => {
 
         if ( state && colorSpace.name === 'xyy' ) {
 
             const { x, y } = factory.value;
 
-            ErrorUtils.assert( x + y <= 1, {
+            state = ErrorUtils.check( x + y <= 1, {
                 method: 'ColorSpace::xyY',
                 msg: `Invalid chromaticity: <x + y must be ≤ 1> (received ${ ( x + y ) })`
-            } );
+            }, self.safe );
 
         }
 
