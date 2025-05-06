@@ -24,10 +24,6 @@ export interface xyY {
     x: number; y: number; Y: number;
 }
 
-export interface Yxy {
-    Y: number; x: number; y: number;
-}
-
 export interface Lab {
     l: number; a: number; b: number;
 }
@@ -40,6 +36,6 @@ export interface CMYK {
     c: number; m: number; y: number; k: number;
 }
 
-export type ColorInstance = RGB | HSL | HSV | HSI | XYZ | xyY | Yxy | Lab | LCh | CMYK;
+export type ColorInstance = RGB | HSL | HSV | HSI | XYZ | xyY | Lab | LCh | CMYK;
 
 export type ColorInput = ColorInstance | string;

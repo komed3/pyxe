@@ -18,7 +18,6 @@
       "@pyxe/space-rgb": [ "packages/spaces/rgb/src" ],
       "@pyxe/space-xyy": [ "packages/spaces/xyy/src" ],
       "@pyxe/space-xyz": [ "packages/spaces/xyz/src" ],
-      "@pyxe/space-yxy": [ "packages/spaces/yxy/src" ],
       "@pyxe/utils": [ "packages/utils/src" ]
     },
     "declaration": true,

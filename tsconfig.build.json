@@ -12,7 +12,6 @@
     { "path": "packages/spaces/rgb" },
     { "path": "packages/spaces/xyy" },
     { "path": "packages/spaces/xyz" },
-    { "path": "packages/spaces/yxy" },
     { "path": "packages/types" },
     { "path": "packages/utils" }
   ]
