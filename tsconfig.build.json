@@ -16,6 +16,11 @@
     { "path": "packages/spaces/rgb" },
     { "path": "packages/spaces/xyy" },
     { "path": "packages/spaces/xyz" },
+    { "path": "packages/spaces/ycbcr" },
+    { "path": "packages/spaces/ydbdr" },
+    { "path": "packages/spaces/yiq" },
+    { "path": "packages/spaces/ypbpr" },
+    { "path": "packages/spaces/yuv" },
     { "path": "packages/types" },
     { "path": "packages/utils" }
   ]

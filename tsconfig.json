@@ -22,6 +22,11 @@
       "@pyxe/space-rgb": [ "packages/spaces/rgb/src" ],
       "@pyxe/space-xyy": [ "packages/spaces/xyy/src" ],
       "@pyxe/space-xyz": [ "packages/spaces/xyz/src" ],
+      "@pyxe/space-ycbcr": [ "packages/spaces/ycbcr/src" ],
+      "@pyxe/space-ydbdr": [ "packages/spaces/ydbdr/src" ],
+      "@pyxe/space-yiq": [ "packages/spaces/yiq/src" ],
+      "@pyxe/space-ypbpr": [ "packages/spaces/ypbpr/src" ],
+      "@pyxe/space-yuv": [ "packages/spaces/yuv/src" ],
       "@pyxe/utils": [ "packages/utils/src" ]
     },
     "declaration": true,
