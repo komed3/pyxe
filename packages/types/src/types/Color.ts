@@ -24,6 +24,26 @@ export interface HCG {
     h: number; c: number; g: number;
 }
 
+export interface YCbCr {
+    y: number; cb: number; cr: number;
+}
+
+export interface YDbDr {
+    y: number; db: number; dr: number;
+}
+
+export interface YIQ {
+    y: number; i: number; q: number;
+}
+
+export interface YPbPr {
+    y: number; pb: number; pr: number;
+}
+
+export interface YUV {
+    y: number; u: number; v: number;
+}
+
 export interface XYZ {
     x: number; y: number; z: number;
 }
@@ -53,7 +73,7 @@ export interface CMYK {
 }
 
 export type ColorInstance =
-    | RGB | HSL | HSV | HSI | HWB | HCG | XYZ | xyY | Lab | LMS
-    | LCh | CMY | CMYK;
+    | RGB | HSL | HSV | HSI | HWB | HCG | YCbCr | YDbDr | YIQ | YPbPr
+    | YUV | XYZ | xyY | Lab | LMS | LCh | CMY | CMYK;
 
 export type ColorInput = ColorInstance | string;
