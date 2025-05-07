@@ -11,7 +11,7 @@ export const conversions: ConversionFactory = {
         if ( input && input.space === 'hcg' ) {
 
             const { h, c, g: gray } = input.value as HCG;
-    
+
             const hi = Math.floor( h * 6 );
             const t = h * 6 - hi;
             const q = 1 - t;
@@ -31,15 +31,16 @@ export const conversions: ConversionFactory = {
                 }
 
             } )().map( v => gray + c * ( v - gray ) );
-    
+
             return {
                 space: 'rgb',
                 value: { r, g, b },
                 alpha: input.alpha,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
+
         }
+
     }
-    
 
 }
