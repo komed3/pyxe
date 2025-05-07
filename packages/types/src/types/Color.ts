@@ -16,6 +16,10 @@ export interface HSI {
     h: number; s: number; i: number;
 }
 
+export interface HWB {
+    h: number; w: number; b: number;
+}
+
 export interface XYZ {
     x: number; y: number; z: number;
 }
@@ -45,7 +49,7 @@ export interface CMYK {
 }
 
 export type ColorInstance =
-    | RGB | HSL | HSV | HSI | XYZ | xyY | Lab | LMS | LCh | CMY
-    | CMYK;
+    | RGB | HSL | HSV | HSI | HWB | XYZ | xyY | Lab | LMS | LCh
+    | CMY | CMYK;
 
 export type ColorInput = ColorInstance | string;

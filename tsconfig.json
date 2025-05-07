@@ -15,6 +15,7 @@
       "@pyxe/space-hsi": [ "packages/spaces/hsi/src" ],
       "@pyxe/space-hsl": [ "packages/spaces/hsl/src" ],
       "@pyxe/space-hsv": [ "packages/spaces/hsv/src" ],
+      "@pyxe/space-hwb": [ "packages/spaces/hwb/src" ],
       "@pyxe/space-lab": [ "packages/spaces/lab/src" ],
       "@pyxe/space-lrgb": [ "packages/spaces/lrgb/src" ],
       "@pyxe/space-rgb": [ "packages/spaces/rgb/src" ],
