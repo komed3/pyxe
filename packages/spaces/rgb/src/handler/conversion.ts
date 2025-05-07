@@ -220,6 +220,29 @@ export const conversions: ConversionFactory = {
 
         }
 
+    },
+
+    ydbdr: (
+        input: ColorObjectFactory | undefined
+    ) : ColorObjectFactory | undefined => {
+
+        if ( input && input.space === 'rgb' ) {
+
+            const { r, g, b } = input.value as RGB;
+
+            const y  = 0.299 * r + 0.587 * g + 0.114 * b;
+            const db = ( b - y ) * 1.333 + 0.5;
+            const dr = ( r - y ) * 1.333 + 0.5;
+
+            return {
+                space: 'ydbdr',
+                value: { y, db, dr },
+                alpha: input.alpha,
+                meta: input.meta ?? {}
+            } as ColorObjectFactory;
+
+        }
+
     }
 
 };
