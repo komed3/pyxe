@@ -173,7 +173,7 @@ export class ConversionGraph {
 
         const path = this.findPath( source, target );
 
-        return path ? path.join( ' → ' ) : 'n/a';
+        return path ? path.join( ' → ' ).toUpperCase() : 'n/a';
 
     }
 
