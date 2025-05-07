@@ -152,7 +152,7 @@ export const conversions: ConversionFactory = {
 
     cmyk: (
         input: ColorObjectFactory | undefined
-    ): ColorObjectFactory | undefined => {
+    ) : ColorObjectFactory | undefined => {
 
         if ( input && input.space === 'rgb' ) {
 
@@ -178,7 +178,7 @@ export const conversions: ConversionFactory = {
 
     yuv: (
         input: ColorObjectFactory | undefined
-    ): ColorObjectFactory | undefined => {
+    ) : ColorObjectFactory | undefined => {
 
         if ( input && input.space === 'rgb' ) {
 
@@ -237,6 +237,29 @@ export const conversions: ConversionFactory = {
             return {
                 space: 'ydbdr',
                 value: { y, db, dr },
+                alpha: input.alpha,
+                meta: input.meta ?? {}
+            } as ColorObjectFactory;
+
+        }
+
+    },
+
+    yiq: (
+        input: ColorObjectFactory | undefined
+    ) : ColorObjectFactory | undefined => {
+
+        if (input && input.space === 'rgb') {
+
+            const { r, g, b } = input.value as RGB;
+
+            return {
+                space: 'yiq',
+                value: {
+                    y: 0.299 * r + 0.587 * g + 0.114 * b,
+                    i: ( 0.596 * r - 0.274 * g - 0.322 * b ) * 0.5 + 0.5,
+                    q: ( 0.211 * r - 0.523 * g + 0.312 * b ) * 0.5 + 0.5
+                },
                 alpha: input.alpha,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
