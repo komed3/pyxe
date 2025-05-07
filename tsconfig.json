@@ -12,6 +12,7 @@
       "@pyxe/types": [ "packages/types/src" ],
       "@pyxe/space-cmy": [ "packages/spaces/cmy/src" ],
       "@pyxe/space-cmyk": [ "packages/spaces/cmyk/src" ],
+      "@pyxe/space-hcg": [ "packages/spaces/hcg/src" ],
       "@pyxe/space-hsi": [ "packages/spaces/hsi/src" ],
       "@pyxe/space-hsl": [ "packages/spaces/hsl/src" ],
       "@pyxe/space-hsv": [ "packages/spaces/hsv/src" ],

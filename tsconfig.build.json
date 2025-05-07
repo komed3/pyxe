@@ -6,6 +6,7 @@
     { "path": "packages/pyxe" },
     { "path": "packages/spaces/cmy" },
     { "path": "packages/spaces/cmyk" },
+    { "path": "packages/spaces/hcg" },
     { "path": "packages/spaces/hsi" },
     { "path": "packages/spaces/hsl" },
     { "path": "packages/spaces/hsv" },

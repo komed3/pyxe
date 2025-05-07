@@ -4,8 +4,8 @@ import { Services } from '@pyxe/core/services';
 
 export const registry: Record<string, string[]> = {
     space: [
-        'cmy', 'cmyk', 'hsi', 'hsl', 'hsv', 'hwb', 'lab', 'lrgb', 'rgb', 'xyy',
-        'xyz'
+        'cmy', 'cmyk', 'hcg', 'hsi', 'hsl', 'hsv', 'hwb', 'lab', 'lrgb', 'rgb',
+        'xyy', 'xyz'
     ],
     library: [ 'ral' ],
     module: []
