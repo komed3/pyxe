@@ -139,6 +139,32 @@ export const conversions: ConversionFactory = {
 
         }
 
+    },
+
+    cmyk: (
+        input: ColorObjectFactory | undefined
+    ): ColorObjectFactory | undefined => {
+
+        if ( input && input.space === 'rgb' ) {
+
+            const { r, g, b } = input.value as RGB;
+
+            const k = 1 - Math.max( r, g, b );
+
+            return {
+                space: 'cmyk',
+                value: {
+                    c: k === 1 ? 0 : ( 1 - r - k ) / ( 1 - k ),
+                    m: k === 1 ? 0 : ( 1 - g - k ) / ( 1 - k ),
+                    y: k === 1 ? 0 : ( 1 - b - k ) / ( 1 - k ),
+                    k
+                },
+                alpha: input.alpha,
+                meta: input.meta ?? {}
+            } as ColorObjectFactory;
+
+        }
+
     }
 
 };
