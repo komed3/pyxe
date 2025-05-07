@@ -21,7 +21,7 @@ export interface HWB {
 }
 
 export interface HCG {
-    h: number; s: number; l: number;
+    h: number; c: number; g: number;
 }
 
 export interface XYZ {

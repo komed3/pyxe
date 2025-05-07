@@ -18,12 +18,12 @@ export const computeHue = (
     max: number, delta: number
 ) : number => {
 
-    const hue = max === r
-        ? ( g - b ) / delta + ( g < b ? 6 : 0 )
-        : max === g
-            ? ( b - r ) / delta + 2
-            : ( r - g ) / delta + 4;
-
-    return ( hue / 6 ) % 1;
+    return delta !== 0
+        ? ( ( max === r
+            ? ( g - b ) / delta + ( g < b ? 6 : 0 )
+            : max === g
+                ? ( b - r ) / delta + 2
+                : ( r - g ) / delta + 4 ) / 6 ) % 1
+        : 0;
 
 };

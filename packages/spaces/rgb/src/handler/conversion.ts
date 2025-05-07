@@ -41,19 +41,11 @@ export const conversions: ConversionFactory = {
             const { min, max, delta } = minMaxDelta( r, g, b );
 
             const l = ( max + min ) / 2;
-            let h = 0, s = 0;
-
-            if ( delta !== 0 ) {
-
-                h = computeHue( r, g, b, max, delta );
-
-                s = delta / ( l < 0.5 ? max + min : 2 - max - min );
-
-            }
+            const s = delta !== 0 ? delta / ( l < 0.5 ? max + min : 2 - max - min ) : 0;
 
             return {
                 space: 'hsl',
-                value: { h, s, l },
+                value: { h: computeHue( r, g, b, max, delta ), s, l },
                 alpha: input.alpha,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
@@ -71,20 +63,13 @@ export const conversions: ConversionFactory = {
             const { r, g, b } = input.value as RGB;
             const { max, delta } = minMaxDelta( r, g, b );
 
-            const v = max;
-            let h = 0, s = 0;
-
-            if ( delta !== 0 ) {
-
-                h = computeHue( r, g, b, max, delta );
-
-                s = delta / max;
-
-            }
-
             return {
                 space: 'hsv',
-                value: { h, s, v },
+                value: {
+                    h: computeHue( r, g, b, max, delta ),
+                    s: delta !== 0 ? delta / max : 0,
+                    v: max
+                },
                 alpha: input.alpha,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
@@ -114,6 +99,30 @@ export const conversions: ConversionFactory = {
             return {
                 space: 'hsi',
                 value: { h: b > g ? 1 - h : h, s, i },
+                alpha: input.alpha,
+                meta: input.meta ?? {}
+            } as ColorObjectFactory;
+
+        }
+
+    },
+
+    hcg: (
+        input: ColorObjectFactory | undefined
+    ) : ColorObjectFactory | undefined => {
+
+        if ( input && input.space === 'rgb' ) {
+
+            const { r, g, b } = input.value as RGB;
+            const { min, max, delta } = minMaxDelta( r, g, b );
+
+            return {
+                space: 'hcg',
+                value: {
+                    h: computeHue( r, g, b, max, delta ),
+                    c: delta,
+                    g: delta < 1 ? min / ( 1 - delta ) : 0
+                },
                 alpha: input.alpha,
                 meta: input.meta ?? {}
             } as ColorObjectFactory;
