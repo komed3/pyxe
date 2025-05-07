@@ -66,6 +66,25 @@ export const conversions: ConversionFactory = {
 
         }
 
+    },
+
+    hwb: (
+        input: ColorObjectFactory | undefined
+    ) : ColorObjectFactory | undefined => {
+
+        if ( input && input.space === 'hsv' ) {
+
+            const { h, s, v } = input.value as HSV;
+
+            return {
+                space: 'hwb',
+                value: { h, w: ( 1 - s ) * v, b: 1 - v },
+                alpha: input.alpha,
+                meta: input.meta ?? {}
+            } as ColorObjectFactory;
+
+        }
+
     }
 
 };
