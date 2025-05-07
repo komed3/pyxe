@@ -46,8 +46,9 @@ export class ColorObject {
         this.space = this.colorSpace.name;
         this.alpha = ChannelHelper.alpha( 'parse', alpha );
 
-        this.value = isNormalized ? value : ChannelHelper.instance(
-            'normalize', value, this.colorSpace.getChannels()
+        this.value = ChannelHelper.instance(
+            isNormalized ? 'tolerance' : 'normalize',
+            value, this.colorSpace.getChannels()
         ) as ColorInstance;
 
         this.meta = meta;

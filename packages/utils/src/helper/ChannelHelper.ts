@@ -59,6 +59,14 @@ export class ChannelHelper {
 
     }
 
+    public static tolerance (
+        value: number
+    ) {
+
+        return Number ( value.toFixed( 12 ) );
+
+    }
+
     public static clamp (
         value: number,
         channel: ColorChannel
@@ -78,7 +86,9 @@ export class ChannelHelper {
         const { min, max } = this._channel( channel );
         const range = max - min;
 
-        return ( ( ( value - min ) % range + range ) % range ) + min;
+        return this.tolerance(
+            ( ( ( value - min ) % range + range ) % range ) + min
+        );
 
     }
 
@@ -89,7 +99,9 @@ export class ChannelHelper {
 
         const { min, max } = this._channel( channel );
 
-        return ( value - min ) / ( max - min );
+        return this.tolerance(
+            ( value - min ) / ( max - min )
+        );
 
     }
 
@@ -100,7 +112,9 @@ export class ChannelHelper {
 
         const { min, max } = this._channel( channel );
 
-        return value * ( max - min ) + min;
+        return this.tolerance(
+            value * ( max - min ) + min
+        );
 
     }
 
