@@ -28,6 +28,10 @@ export interface Lab {
     l: number; a: number; b: number;
 }
 
+export interface LMS {
+    l: number; m: number; s: number;
+}
+
 export interface LCh {
     l: number; c: number; h: number;
 }
@@ -36,6 +40,6 @@ export interface CMYK {
     c: number; m: number; y: number; k: number;
 }
 
-export type ColorInstance = RGB | HSL | HSV | HSI | XYZ | xyY | Lab | LCh | CMYK;
+export type ColorInstance = RGB | HSL | HSV | HSI | XYZ | xyY | Lab | LMS | LCh | CMYK;
 
 export type ColorInput = ColorInstance | string;

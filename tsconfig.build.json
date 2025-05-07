@@ -8,6 +8,7 @@
     { "path": "packages/spaces/hsl" },
     { "path": "packages/spaces/hsv" },
     { "path": "packages/spaces/lab" },
+    { "path": "packages/spaces/lms" },
     { "path": "packages/spaces/lrgb" },
     { "path": "packages/spaces/rgb" },
     { "path": "packages/spaces/xyy" },
