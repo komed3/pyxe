@@ -266,6 +266,29 @@ export const conversions: ConversionFactory = {
 
         }
 
+    },
+
+    ypbpr: (
+        input: ColorObjectFactory | undefined
+    ) : ColorObjectFactory | undefined => {
+
+        if ( input && input.space === 'rgb' ) {
+
+            const { r, g, b } = input.value as RGB;
+
+            return {
+                space: 'ypbpr',
+                value: {
+                    y: 0.299 * r + 0.587 * g + 0.114 * b,
+                    pb: ( -0.168736 * r - 0.331264 * g + 0.5 * b ) * 0.5 + 0.5,
+                    pr: ( 0.5 * r - 0.418688 * g - 0.081312 * b ) * 0.5 + 0.5
+                },
+                alpha: input.alpha,
+                meta: input.meta ?? {}
+            } as ColorObjectFactory;
+
+        }
+
     }
 
 };
