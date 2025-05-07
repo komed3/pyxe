@@ -17,7 +17,7 @@ export const conversions: ConversionFactory = {
                 value: {
                     c: ( c * ( 1 - k ) + k ),
                     m: ( m * ( 1 - k ) + k ),
-                    k: ( y * ( 1 - k ) + k )
+                    y: ( y * ( 1 - k ) + k )
                 },
                 alpha: input.alpha,
                 meta: input.meta ?? {}
