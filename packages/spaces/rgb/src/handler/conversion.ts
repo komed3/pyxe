@@ -120,6 +120,25 @@ export const conversions: ConversionFactory = {
 
         }
 
+    },
+
+    cmy: (
+        input: ColorObjectFactory | undefined
+    ) : ColorObjectFactory | undefined => {
+
+        if ( input && input.space === 'rgb' ) {
+
+            const { r, g, b } = input.value as RGB;
+
+            return {
+                space: 'cmy',
+                value: { c: 1 - r, m: 1 - g, y: 1 - b },
+                alpha: input.alpha,
+                meta: input.meta ?? {}
+            } as ColorObjectFactory;
+
+        }
+
     }
 
 };
