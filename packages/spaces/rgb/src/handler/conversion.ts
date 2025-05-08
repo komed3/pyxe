@@ -13,15 +13,15 @@ export const conversions: ConversionFactory = {
 
             const { r, g, b } = input.value as RGB;
 
-            const gamma = ( v: number ) : number =>
+            const adjust = ( v: number ) : number =>
                 v <= 0.04045 ? v / 12.92 : ( ( v + 0.055 ) / 1.055 ) ** 2.4;
 
             return {
                 space: 'lrgb',
                 value: {
-                    r: gamma( r ),
-                    g: gamma( g ),
-                    b: gamma( b )
+                    r: adjust( r ),
+                    g: adjust( g ),
+                    b: adjust( b )
                 },
                 alpha: input.alpha,
                 meta: input.meta ?? {}
