@@ -21,6 +21,7 @@
       "@pyxe/space-lrgb": [ "packages/spaces/lrgb/src" ],
       "@pyxe/space-rec709": [ "packages/spaces/rec709/src" ],
       "@pyxe/space-rec2020": [ "packages/spaces/rec2020/src" ],
+      "@pyxe/space-rec2100": [ "packages/spaces/rec2100/src" ],
       "@pyxe/space-rgb": [ "packages/spaces/rgb/src" ],
       "@pyxe/space-xyy": [ "packages/spaces/xyy/src" ],
       "@pyxe/space-xyz": [ "packages/spaces/xyz/src" ],

@@ -82,6 +82,70 @@ export const conversions: ConversionFactory = {
 
     },
 
+    rec2100pq: (
+        input: ColorObjectFactory | undefined
+    ) : ColorObjectFactory | undefined => {
+
+        if ( input && input.space === 'lrgb' ) {
+
+            const { r, g, b } = input.value as RGB;
+
+            const adjust = ( v: number ) : number => {
+
+                const pv = Math.pow(
+                    Math.max( v, 1e-9 ),
+                    0.1593017578125
+                );
+
+                return Math.pow(
+                    ( 0.8359375 + 18.8515625 * pv ) /
+                    ( 1 + 18.6875 * pv ),
+                    78.84375
+                );
+
+            };
+
+            return {
+                space: 'rec2100pq',
+                value: {
+                    r: adjust( r ),
+                    g: adjust( g ),
+                    b: adjust( b )
+                },
+                alpha: input.alpha,
+                meta: input.meta ?? {}
+            } as ColorObjectFactory;
+
+        }
+
+    },
+
+    rec2100hlg: (
+        input: ColorObjectFactory | undefined
+    ) : ColorObjectFactory | undefined => {
+
+        if ( input && input.space === 'lrgb' ) {
+
+            const { r, g, b } = input.value as RGB;
+
+            const adjust = ( v: number ) : number =>
+                v <= 1 / 12.0 ? Math.sqrt( 3 * v ) : 0.17883277 * Math.log( 12 * v - 0.28466892 ) + 0.55991073;
+
+            return {
+                space: 'rec2100hlg',
+                value: {
+                    r: adjust( r ),
+                    g: adjust( g ),
+                    b: adjust( b )
+                },
+                alpha: input.alpha,
+                meta: input.meta ?? {}
+            } as ColorObjectFactory;
+
+        }
+
+    },
+
     xyz: (
         input: ColorObjectFactory | undefined
     ) : ColorObjectFactory | undefined => {
