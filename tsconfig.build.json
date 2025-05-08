@@ -23,6 +23,7 @@
     { "path": "packages/spaces/ydbdr" },
     { "path": "packages/spaces/yiq" },
     { "path": "packages/spaces/ypbpr" },
+    { "path": "packages/spaces/yjk" },
     { "path": "packages/spaces/yuv" },
     { "path": "packages/types" },
     { "path": "packages/utils" }

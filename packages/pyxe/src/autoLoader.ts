@@ -6,7 +6,7 @@ export const registry: Record<string, string[]> = {
     space: [
         'cmy', 'cmyk', 'hcg', 'hsi', 'hsl', 'hsv', 'hwb', 'lab', 'lrgb', 'rec709',
         'rec2020', 'rec2100', 'rgb', 'xyy', 'xyz', 'ycbcr', 'ydbdr', 'yiq', 'ypbpr',
-        'yuv'
+        'yjk', 'yuv'
     ],
     library: [ 'ral' ],
     module: []

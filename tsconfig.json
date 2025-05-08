@@ -29,6 +29,7 @@
       "@pyxe/space-ydbdr": [ "packages/spaces/ydbdr/src" ],
       "@pyxe/space-yiq": [ "packages/spaces/yiq/src" ],
       "@pyxe/space-ypbpr": [ "packages/spaces/ypbpr/src" ],
+      "@pyxe/space-yjk": [ "packages/spaces/yjk/src" ],
       "@pyxe/space-yuv": [ "packages/spaces/yuv/src" ],
       "@pyxe/utils": [ "packages/utils/src" ]
     },

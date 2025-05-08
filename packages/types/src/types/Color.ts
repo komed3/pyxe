@@ -44,6 +44,10 @@ export interface YUV {
     y: number; u: number; v: number;
 }
 
+export interface YJK {
+    y: number; j: number; k: number;
+}
+
 export interface XYZ {
     x: number; y: number; z: number;
 }
@@ -74,6 +78,6 @@ export interface CMYK {
 
 export type ColorInstance =
     | RGB | HSL | HSV | HSI | HWB | HCG | YCbCr | YDbDr | YIQ | YPbPr
-    | YUV | XYZ | xyY | Lab | LMS | LCh | CMY | CMYK;
+    | YUV | YJK | XYZ | xyY | Lab | LMS | LCh | CMY | CMYK;
 
 export type ColorInput = ColorInstance | string;

@@ -289,6 +289,31 @@ export const conversions: ConversionFactory = {
 
         }
 
+    },
+
+    yjk: (
+        input: ColorObjectFactory | undefined
+    ) : ColorObjectFactory | undefined => {
+
+        if ( input && input.space === 'rgb' ) {
+
+            const { r, g, b } = input.value as RGB;
+
+            const y = b / 2 + r / 4 + g / 8;
+
+            return {
+                space: 'yjk',
+                value: {
+                    y: y,
+                    j: ( r - y + 1 ) / 2,
+                    k: ( g - y + 1 ) / 2
+                },
+                alpha: input.alpha,
+                meta: input.meta ?? {}
+            } as ColorObjectFactory;
+
+        }
+
     }
 
 };
