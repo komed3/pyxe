@@ -8,7 +8,7 @@ export const conversions: ConversionFactory = {
         input: ColorObjectFactory | undefined
     ) : ColorObjectFactory | undefined => {
 
-        if ( input && input.space === 'rec709' ) {
+        if ( input && input.space === 'rec2020' ) {
 
             const { r, g, b } = input.value as RGB;
 
