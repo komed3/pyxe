@@ -13,6 +13,8 @@
     { "path": "packages/spaces/hwb" },
     { "path": "packages/spaces/lab" },
     { "path": "packages/spaces/lrgb" },
+    { "path": "packages/spaces/rec709" },
+    { "path": "packages/spaces/rec2020" },
     { "path": "packages/spaces/rgb" },
     { "path": "packages/spaces/xyy" },
     { "path": "packages/spaces/xyz" },
