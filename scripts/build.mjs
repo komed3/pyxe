@@ -63,7 +63,7 @@ const resolveTsconfig = ( path ) => join( path, 'tsconfig.json' );
 
 const clean = () => {
 
-    log( `🔄 Cleaning artifacts …` );
+    log( `Cleaning artifacts …` );
 
     const paths = PATHS.flatMap( ( pkg ) => [
         join( pkg, 'tsconfig.tsbuildinfo' ),
@@ -76,13 +76,13 @@ const clean = () => {
 
     }
 
-    log( `✅ Cleanup finished successfully` );
+    log( `Cleanup finished successfully` );
 
 };
 
 const verifyConfigs = () => {
 
-    log( `🔄 Verifying tsconfig files …` );
+    log( `Verifying tsconfig files …` );
 
     const configs = PATHS.map( resolveTsconfig ).filter(
         ( config ) => ! existsSync( config )
@@ -94,13 +94,13 @@ const verifyConfigs = () => {
 
     }
 
-    log( `✅ Verified tsconfig files successfully` );
+    log( `Verified tsconfig files successfully` );
 
 };
 
 const list = () => {
 
-    log( `📦 Referenced packages:` );
+    log( `Referenced packages:` );
 
     PATHS.forEach( logConfig );
 
@@ -111,8 +111,8 @@ const list = () => {
 const build = async () => {
 
     log( FLAGS.only
-        ? `📦 Building single package: ${ FLAGS.only }`
-        : `📦 Building ${ FLAGS.parallel ? 'all packages (parallel)' : 'all packages (sequential)' } …`
+        ? `Building single package: ${ FLAGS.only }`
+        : `Building ${ FLAGS.parallel ? 'all packages (parallel)' : 'all packages (sequential)' } …`
     );
 
     const makeCommand = ( config ) => [
@@ -184,7 +184,7 @@ const build = async () => {
 
     }
 
-    log( `✅ Build finished successfully` );
+    log( `Build finished successfully` );
 
 };
 
@@ -201,13 +201,13 @@ const main = async () => {
         parallel: false, noise: false, logFile: null
     } : {} );
 
-    log( `🛠️  Starting build script in ${ toPosix( ROOT ) }` );
+    log( `Starting build script in ${ toPosix( ROOT ) }` );
 
     ( FLAGS.listOnly && ( list() || true ) ) ||
     ( ! FLAGS.noClean && ! FLAGS.only && clean() ) ||
     ( ! FLAGS.cleanOnly && ( async () => {
 
-        log( `⏳ Waiting briefly before build …` );
+        log( `Waiting briefly before build …` );
         await delay( 1000 );
 
         verifyConfigs();
@@ -216,7 +216,7 @@ const main = async () => {
 
         if ( FLAGS.watch ) {
 
-            log( `👀 Watching for changes (restart on config changes required) …` );
+            log( `Watching for changes (restart on config changes required) …` );
 
         }
 
