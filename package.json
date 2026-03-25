@@ -20,15 +20,12 @@
     "build:core": "node ./scripts/build.mjs --only core --force",
     "build:watch": "node ./scripts/build.mjs --force --watch",
     "analyze": "node ./scripts/analyze.mjs",
-    "lint": "npx tsc --noEmit && npx eslint . --ext .ts,.tsx",
     "test": "cross-env TRACE=1 node ./test/index.js",
     "debug": "cross-env DEBUG=1 TRACE=1 node ./test/index.js"
   },
   "devDependencies": {
     "@types/node": "^25.5.0",
-    "@typescript-eslint/eslint-plugin": "^8.57.2",
-    "@typescript-eslint/parser": "^8.57.1",
     "cross-env": "^10.1.0",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.2"
   }
 }
